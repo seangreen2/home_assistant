@@ -163,35 +163,6 @@ sensor:
         friendly_name: 'Laptop Power'
         value_template: '{{states.switch.laptop_socket.attributes.current_power_w}}'
 
-  - platform: template
-    sensors:
-      bedroom_battery_level:
-        unit_of_measurement: '%'
-        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.battery}}'
-        icon_template: >
-          {% set battery_level = states.sensor.bedroom_battery_level.state|default(0)|int %}
-          {% set battery_round = (battery_level / 10) |int * 10 %}
-          {% if battery_round >= 100 %}
-            mdi:battery
-          {% elif battery_round > 0 %}
-            mdi:battery-{{ battery_round }}
-          {% else %}
-            mdi:battery-alert
-          {% endif %}
-      office_battery_level:
-        unit_of_measurement: '%'
-        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.battery}}'
-        icon_template: >
-          {% set battery_level = states.sensor.office_battery_level.state|default(0)|int %}
-          {% set battery_round = (battery_level / 10) |int * 10 %}
-          {% if battery_round >= 100 %}
-            mdi:battery
-          {% elif battery_round > 0 %}
-            mdi:battery-{{ battery_round }}
-          {% else %}
-            mdi:battery-alert
-          {% endif %}
-
   - platform: darksky
     api_key: !secret dark_sky_api_key
     update_interval: '00:05:00'
@@ -253,7 +224,7 @@ sensor:
 # USPS Informed Delivery
 #usps:
 #  username: !secret usps_user
-#  password: !secret_ usps_password
+#  password: !secret usps_password
 #  name: USPS
 #  driver: 'chrome'
 

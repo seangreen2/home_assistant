@@ -1,24 +1,3 @@
-sensor.bedroom_battery_level:
-  custom_ui_state_card: state-card-custom-ui
-  friendly_name: "Bedroom Sensor Battery"
-  templates:
-    theme: >
-      if (state < 25) {
-        return 'alert_red';
-      } else if (state < 50) {
-        return 'alert_yellow';
-      }
-sensor.office_battery_level:
-  custom_ui_state_card: state-card-custom-ui
-  friendly_name: "Office Sensor Battery"
-  templates:
-    theme: >
-      if (state < 25) {
-        return 'alert_red';
-      } else if (state < 50) {
-        return 'alert_yellow';
-      }
-
 binary_sensor.floorplan:
   custom_ui_state_card: state-card-floorplan
   config: !include floorplan.yaml
@@ -88,15 +67,16 @@ light.brcl1:
 light.lr1:
   friendly_name: Living Room Light One
 sensor.bedroom_battery:
-  friendly_name: Bathroom Sensor Battery
+  friendly_name: Bedroom Sensor Battery
+  device_class: battery
 sensor.bathroom_motion_sensor:
   friendly_name: Bathroom Motion Sensor
-  device_class: motion
 sensor.plex:
   friendly_name: Plex Activity
   icon: mdi:plex
 sensor.office_battery:
   friendly_name: Office Sensor Battery
+  device_class: battery
 sensor.office_motion_motion_sensor:
   friendly_name: Office Motion Sensor
 sensor.office_lux:

@@ -98,7 +98,7 @@ bedroom_full:
   entities:
     - sensor.bathroom_motion_sensor
     - sensor.bedroom_temperature_f
-    - sensor.bedroom_battery_level
+    - sensor.bedroom_battery
 
 bedroom_lights_full:
   name: Bedroom Lights
@@ -142,10 +142,9 @@ office_full:
     - switch.smart_plug_one
     - sensor.office_motion_motion_sensor
     - sensor.office_temperature_f
-    - sensor.office_battery_level
+    - sensor.office_battery
     - sensor.office_lux
     - sensor.laptop_socket
-
 
 ### LIGHTS ###
 Living Room Lights:
