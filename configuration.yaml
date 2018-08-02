@@ -1,0 +1,330 @@
+homeassistant:
+  name: Home
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: 10
+  unit_system: imperial
+  time_zone: America/New_York
+  customize: !include customize.yaml
+
+cloud:
+
+customizer:
+  custom_ui: local
+
+frontend:
+  themes: !include themes.yaml
+  extra_html_url:
+    - /local/custom_ui/custom-weather-card.html
+    - /local/custom_ui/state-card-floorplan.html
+  extra_html_url_es5:
+    - /local/custom_ui/custom-weather-card.html
+
+panel_custom:
+  - name: floorplan
+    sidebar_title: Floor Plan
+    sidebar_icon: mdi:floor-plan
+    url_path: floorplan
+    config: !include floorplan.yaml
+
+binary_sensor:
+  - platform: mqtt
+    state_topic: dummy/floorplan/sensor
+    name: Floorplan
+
+
+# CUSTOM WEATHER CARD
+weather:
+  - platform: yweather
+    woeid: !secret woeid
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+
+input_boolean:
+  weather:
+
+sun:
+
+
+# BEGIN CONFIG
+config:
+http:
+  api_password: !secret api_password
+  base_url: !secret base_url
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+  cors_allowed_origins:
+
+updater:
+
+# Discover some devices automatically
+discovery:
+  ignore:
+    - roku
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+#conversation:
+
+# Enables support for tracking state changes over time
+history:
+  include:
+    domains:
+      - switch
+      - light
+    entities:
+      - device_tracker.androidb5fd101061eefa11
+      - device_tracker.android92a8793ea8df7b4e
+      - sensor.living_room_thermostat_hvac_state
+      - sensor.living_room_thermostat_temperature
+      - sensor.bedroom_temperature_f
+      - sensor.office_temperature_f
+      - sensor.dark_sky_temperature
+
+recorder:
+  purge_interval: 1
+  purge_keep_days: 7
+  include:
+    domains:
+      - switch
+      - light
+    entities:
+      - device_tracker.androidb5fd101061eefa11
+      - device_tracker.android92a8793ea8df7b4e
+      - sensor.living_room_thermostat_hvac_state
+      - sensor.living_room_thermostat_temperature
+      - sensor.bedroom_temperature_f
+      - sensor.office_temperature_f
+      - sensor.dark_sky_temperature
+
+# View all events in a logbook
+logbook:
+
+### SENSORS ###
+sensor:
+  - platform: template
+    sensors:
+      hue:
+        value_template: '{% if is_state("device_tracker.philipshue", "home") %}Online{% else %}Offline{% endif %}'
+        friendly_name: 'Hue Bridge'
+
+  - platform: template
+    sensors:
+      bedroom_temperature:
+        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.temperature}}'
+
+  - platform: template
+    sensors:
+      bedroom_battery:
+        friendly_name: 'Battery'
+        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.battery}}'
+        unit_of_measurement: '%'
+
+  - platform: template
+    sensors:
+      bedroom_temperature_f:
+        friendly_name: 'Bedroom Temperature'
+        entity_id:
+          - sensor.bedroom_temperature
+        unit_of_measurement: °F
+        value_template: >
+          {{ ((float(states('sensor.bedroom_temperature')) * 1.8) + 32) | round(1) }}
+
+  - platform: template
+    sensors:
+      office_temperature:
+        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.temperature}}'
+
+  - platform: template
+    sensors:
+      office_battery:
+        friendly_name: 'Battery'
+        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.battery}}'
+        unit_of_measurement: '%'
+
+  - platform: template
+    sensors:
+      office_temperature_f:
+        friendly_name: 'Office Temperature'
+        entity_id:
+          - sensor.office_temperature
+        unit_of_measurement: °F
+        value_template: >
+          {{ ((float(states('sensor.office_temperature')) * 9 / 5) + 32) | round(1) }}
+
+  - platform: template
+    sensors:
+      office_lux:
+        friendly_name: 'Lux'
+        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.lux}}'
+
+  - platform: template
+    sensors:
+      laptop_socket:
+        friendly_name: 'Laptop Power'
+        value_template: '{{states.switch.laptop_socket.attributes.current_power_w}}'
+
+  - platform: template
+    sensors:
+      bedroom_battery_level:
+        unit_of_measurement: '%'
+        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.battery}}'
+        icon_template: >
+          {% set battery_level = states.sensor.bedroom_battery_level.state|default(0)|int %}
+          {% set battery_round = (battery_level / 10) |int * 10 %}
+          {% if battery_round >= 100 %}
+            mdi:battery
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-alert
+          {% endif %}
+      office_battery_level:
+        unit_of_measurement: '%'
+        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.battery}}'
+        icon_template: >
+          {% set battery_level = states.sensor.office_battery_level.state|default(0)|int %}
+          {% set battery_round = (battery_level / 10) |int * 10 %}
+          {% if battery_round >= 100 %}
+            mdi:battery
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-alert
+          {% endif %}
+
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+    update_interval: '00:05:00'
+    monitored_conditions:
+      - temperature
+      - precip_probability
+      - precip_type
+      - humidity
+      - cloud_cover
+      - nearest_storm_distance
+
+  - platform: systemmonitor
+    resources:
+      - type: processor_use
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_use_percent
+      - type: ipv4_address
+        arg: eth0
+      - type: network_in
+        arg: eth0
+      - type: network_out
+        arg: eth0
+      - type: last_boot
+
+  - platform: pi_hole
+    host: !secret pihole_ip
+    monitored_conditions:
+      - ads_blocked_today
+      - ads_percentage_today
+      - dns_queries_today
+      - domains_being_blocked
+      - unique_clients
+
+  - platform: plex
+    host: !secret plex_ip
+
+  - platform: steam_online
+    api_key: !secret steam_api
+    accounts:
+      - !secret steam_account
+
+  - platform: speedtest
+    hour:
+      - 0
+      - 6
+      - 12
+      - 18
+    monitored_conditions:
+      - ping
+      - download
+      - upload
+
+  - platform: hue
+
+  - platform: pushbullet
+    api_key: !secret pushbullet_api
+
+# USPS Informed Delivery
+#usps:
+#  username: !secret usps_user
+#  password: !secret_ usps_password
+#  name: USPS
+#  driver: 'chrome'
+
+# Cameras
+#camera:
+#  - platform: usps
+
+# Nest Temperature
+nest:
+  client_id: !secret nest_id
+  client_secret: !secret nest_secret
+
+# Hue
+light:
+  - platform: hue
+    host: !secret hue_ip
+hue:
+  bridges:
+    - host: !secret hue_ip
+      allow_hue_groups: false
+
+# Wemo
+wemo:
+  static:
+    - !secret wemo_ip
+
+
+# Switches
+switch:
+ - platform: tplink
+   host: !secret tplink_switch_one_ip
+ - platform: tplink
+   host: !secret tplink_switch_two_ip
+
+
+# Text to speech
+tts:
+  - platform: google
+
+# Network Mapping
+device_tracker:
+  - platform: asuswrt
+    host: !secret router_ip
+    protocol: telnet
+    username: !secret router_user
+    password: !secret router_password
+    interval_seconds: 5
+
+#  - platform: google_maps
+#    username: !secret googlempas_user
+#    password: !secret googlemaps_password
+
+
+# Media
+media_player:
+  - platform: plex
+    entity_namespace: plex
+    include_non_clients: false
+    scan_interval: 1
+    show_all_controls: false
+    use_custom_entity_ids: false
+    use_episode_art: false
+    remove_unavailable_clients: false
+
+# Neato Vacuum
+neato:
+  username: !secret neato_user
+  password: !secret neato_password
+
+
+##########################
+scene: !include scenes.yaml
+group: !include groups.yaml
+automation: !include_dir_merge_list automations

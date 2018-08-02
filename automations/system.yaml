@@ -1,0 +1,7 @@
+# Restart HA at 4am
+#  - alias: "Restart HA at 4am"
+#    trigger:
+#      platform: time
+#      at: '04:00:00'
+#    action:
+#      service: homeassistant.restart

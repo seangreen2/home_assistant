@@ -1,0 +1,120 @@
+sensor.bedroom_battery_level:
+  custom_ui_state_card: state-card-custom-ui
+  friendly_name: "Bedroom Sensor Battery"
+  templates:
+    theme: >
+      if (state < 25) {
+        return 'alert_red';
+      } else if (state < 50) {
+        return 'alert_yellow';
+      }
+sensor.office_battery_level:
+  custom_ui_state_card: state-card-custom-ui
+  friendly_name: "Office Sensor Battery"
+  templates:
+    theme: >
+      if (state < 25) {
+        return 'alert_red';
+      } else if (state < 50) {
+        return 'alert_yellow';
+      }
+
+binary_sensor.floorplan:
+  custom_ui_state_card: state-card-floorplan
+  config: !include floorplan.yaml
+
+input_boolean.weather:
+  custom_ui_state_card: custom-weather-card
+  config:
+    weather: weather.yweather
+    sun: sun.sun
+
+group.emily:
+  friendly_name: Emily
+  entity_picture: !secret emily_pic
+group.sean:
+  friendly_name: Sean
+  entity_picture: !secret sean_pic
+climate.living_room:
+  entity_picture: !secret nest_pic
+switch.office_light:
+  icon: mdi:ceiling-light
+sensor.dark_sky_temperature:
+  friendly_name: Current Temperature
+  icon: mdi:thermometer-lines
+sensor.dark_sky_daily_high_temperature:
+  friendly_name: Temperature High
+  icon: mdi:weather-sunny
+sensor.dark_sky_daily_low_temperature:
+  friendly_name: Temperature Low
+  icon: mdi:weather-night
+sensor.dark_sky_humidity:
+  friendly_name: Humidity
+  icon: mdi:weather-sunset
+sensor.dark_sky_precip:
+  friendly_name: Type of Precipitation
+  icon:  mdi:weather-snowy-rainy
+sensor.dark_sky_precip_probability:
+  icon: mdi:weather-pouring
+  friendly_name: Chance of Precipitation
+sensor.hue:
+  icon: mdi:nest-protect
+sensor.steamlink:
+  icon: mdi:steam
+sensor.chromecast:
+  icon: mdi:cast-connected
+sensor.dark_sky_cloud_coverage:
+  icon: mdi:weather-partlycloudy
+  friendly_name: Cloud Coverage
+sensor.dark_sky_nearest_storm_distance:
+  icon: mdi:weather-windy-variant
+  friendly_name: Closest Storm
+sensor.living_room_thermostat_humidity:
+  friendly_name: Inside Humidity
+  icon: mdi:cup-water
+sensor.living_room_thermostat_hvac_state:
+  friendly_name: HVAC Status
+  icon: mdi:air-conditioner
+light.of1:
+  friendly_name: Office Light One
+light.of2:
+  friendly_name: Office Light Two
+light.br1:
+  friendly_name: Bedroom Light One
+light.br2:
+  friendly_name: Bedroom Light Two
+light.brcl1:
+  friendly_name: Bedroom Closet
+light.lr1:
+  friendly_name: Living Room Light One
+sensor.bedroom_battery:
+  friendly_name: Bathroom Sensor Battery
+sensor.bathroom_motion_sensor:
+  friendly_name: Bathroom Motion Sensor
+  device_class: motion
+sensor.plex:
+  friendly_name: Plex Activity
+  icon: mdi:plex
+sensor.office_battery:
+  friendly_name: Office Sensor Battery
+sensor.office_motion_motion_sensor:
+  friendly_name: Office Motion Sensor
+sensor.office_lux:
+  friendly_name: Office Lux
+  icon: mdi:white-balance-sunny
+sensor.usps_mail:
+  friendly_name: USPS Mail
+  icon: mdi:email
+sensor.usps_packages:
+  friendly_name: USPS Packages
+  icon: mdi:dropbox
+vacuum.rosie:
+  icon: mdi:broom
+group.family:
+  order: 1
+group.indoors:
+  order: 2
+group.lights:
+  order: 3
+group.weather:
+  order: 5

@@ -1,0 +1,60 @@
+# Turns on lights before sunset if people are home and if people get home when dark
+  - alias: 'Lights on in the evening'
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: "-01:30:00"
+      - platform: state
+        entity_id: group.family
+        to: home
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.family
+          state: 'home'
+        - condition: time
+          after: '17:00:00'
+          before: '22:00:00'
+        - condition: template
+          value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+    action:
+      service: light.turn_on
+      data:
+        entity_id: group.livingroom
+        brightness: '255'
+        transition: '5'
+
+# Turn off lights when everyone leaves house
+  - alias: 'Away Mode'
+    trigger:
+      platform: state
+      entity_id: group.family
+      to: 'not_home'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: group.lights
+      - service: climate.set_operation_mode
+        data:
+          entity_id: climate.living_room
+          operation_mode: 'eco'
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.living_room
+          away_mode: 'on'
+
+# Turn off Eco Mode Nest
+  - alias: 'Nest Normal Mode'
+    trigger:
+      platform: state
+      entity_id: group.family
+      to: 'home'
+    action:
+      - service: climate.set_operation_mode
+        data:
+          entity_id: climate.living_room
+          operation_mode: 'auto'
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.living_room
+          away_mode: 'off'

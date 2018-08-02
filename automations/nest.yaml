@@ -1,0 +1,53 @@
+# Temp goes down by 2 when Sean only at home (winter)
+#  - alias: 'Sean Home Preferences'
+#    trigger:
+#      - platform: state
+#        entity_id: device_tracker.android92a8793ea8df7b4e
+#        to: not_home
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: device_tracker.android92a8793ea8df7b4e
+#          state: 'not_home'
+#        - condition: state
+#          entity_id: device_tracker.androidb5fd101061eefa11
+#          state: 'home'
+#        - condition: state
+#          entity_id: sensor.living_room_thermostat_operation_mode
+#          state: 'heat'
+#        - condition: time
+#          after: '08:00:00'
+#          before: '20:30:00'
+#    action:
+#      service: climate.set_temperature
+#      entity_id: climate.living_room
+#      data_template:
+#        temperature: "{{ states.climate.living_room.attributes.temperature|float - 2 }}"
+
+# Temp goes back up by 2 when Family at home (winter)
+#  - alias: 'Family Home Preferences'
+#    trigger:
+#      - platform: state
+#        entity_id: device_tracker.android92a8793ea8df7b4e
+#        to: home
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: device_tracker.android92a8793ea8df7b4e
+#          state: 'home'
+#        - condition: state
+#          entity_id: device_tracker.androidb5fd101061eefa11
+#          state: 'home'
+#        - condition: state
+#          entity_id: sensor.living_room_thermostat_operation_mode
+#          state: 'heat'
+#        - condition: time
+#          after: '08:00:00'
+#          before: '20:30:00'
+#    action:
+#      - service: climate.set_temperature
+#        data:
+#          entity_id: climate.living_room
+#          temperature: 66

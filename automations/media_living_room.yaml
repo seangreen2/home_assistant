@@ -1,0 +1,85 @@
+# Lights back to full over 7 seconds after media stops
+  - alias: 'Media player stopped'
+    trigger:
+      - platform: state
+        entity_id: media_player.living_room_tv
+        from: 'playing'
+        to: 'idle'
+    condition:
+      - condition: time
+        after: '17:00:00'
+        before: '03:00:00'
+    action:
+      service: light.turn_on
+      data:
+        entity_id: group.livingroom
+        brightness: '255'
+        transition: '7'
+
+# Lights turn off while media is playing
+  - alias: 'Media player playing'
+    trigger:
+      - platform: state
+        entity_id: media_player.living_room_tv
+        to: 'playing'
+        from: 'idle'
+    condition:
+      - condition: time
+        after: '17:00:00'
+        before: '03:00:00'
+    action:
+      service: light.turn_off
+      data:
+        entity_id: group.livingroom
+
+# Lights dim when media is paused
+  - alias: 'Media player paused'
+    trigger:
+      - platform: state
+        entity_id: media_player.living_room_tv
+        from: 'playing'
+        to: 'paused'
+    condition:
+      - condition: time
+        after: '17:00:00'
+        before: '03:00:00'
+    action:
+      service: light.turn_on
+      data:
+        entity_id: group.livingroom
+        brightness: '125'
+        transition: '3'
+
+# Lights turn off when media is unpaused
+  - alias: 'Media player unpaused'
+    trigger:
+      - platform: state
+        entity_id: media_player.living_room_tv
+        from: 'paused'
+        to: 'playing'
+    condition:
+      - condition: time
+        after: '17:00:00'
+        before: '03:00:00'
+    action:
+      service: light.turn_off
+      data:
+        entity_id: group.livingroom
+
+# Lights dim to full going from paused to idle
+  - alias: 'Media player pause to idle'
+    trigger:
+      - platform: state
+        entity_id: media_player.living_room_tv
+        from: 'paused'
+        to: 'idle'
+    condition:
+      - condition: time
+        after: '17:00:00'
+        before: '03:00:00'
+    action:
+      service: light.turn_on
+      data:
+        entity_id: group.livingroom
+        brightness: '255'
+        transition: '3'

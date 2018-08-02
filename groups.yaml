@@ -1,0 +1,350 @@
+default_view:
+  name: Home
+  view: yes
+  icon: mdi:home
+  entities:
+    - group.family
+    - group.indoors
+    - group.lights
+    - group.weather
+
+### FAMILY ###
+family:
+  name: Family
+  view: no
+  entities:
+    - group.sean
+    - group.emily
+
+sean:
+  name: Sean
+  view: no
+  entities:
+    - device_tracker.androidb5fd101061eefa11
+
+emily:
+  name: Emily
+  view: no
+  entities:
+    - device_tracker.android92a8793ea8df7b4e
+
+
+### OVERVIEW ###
+lights:
+  name: Overview
+  control: hidden
+  entities:
+    - group.living_room_lights
+    - group.bedroom_lights
+    - group.office_lights
+    - vacuum.rosie
+    - sensor.plex
+    - sensor.usps_mail
+    - sensor.usps_packages
+    - camera.usps_mail
+#    - weather.yweather
+
+### CLIMATE ###
+indoors:
+  name: Indoor Climate
+  view: no
+  entities:
+    - climate.living_room
+    - sensor.living_room_thermostat_hvac_state
+    - sensor.living_room_thermostat_humidity
+    - sensor.bedroom_temperature_f
+    - sensor.office_temperature_f
+
+weather:
+  name: Weather Forecast
+  view: no
+  entities:
+      - input_boolean.weather
+
+
+
+### ROOMS ###
+# LIVING ROOM
+livingroom:
+  name: Living Room
+  view: yes
+  icon: mdi:sofa
+  entities:
+    - group.livingroom_full
+    - group.neato
+
+livingroom_full:
+  name: Living Room Lights
+  view: no
+  entities:
+    - light.lr1
+    - light.lr2
+    - scene.living_room_normal_lighting
+    - media_player.living_room_tv
+
+# BEDROOM
+bedroom:
+  name: Bedroom
+  view: yes
+  icon: mdi:hotel
+  entities:
+    - group.bedroom_lights_full
+    - group.bedroom_full
+    - media_player.bedroom_tv
+
+bedroom_full:
+  name: Bedroom
+  view: no
+  entities:
+    - sensor.bathroom_motion_sensor
+    - sensor.bedroom_temperature_f
+    - sensor.bedroom_battery_level
+
+bedroom_lights_full:
+  name: Bedroom Lights
+  view: no
+  entities:
+    - light.br1
+    - light.br2
+    - light.brcl1
+    - scene.mood_lighting
+    - scene.bedroom_normal_lighting
+
+bedroom_media:
+  name: Bedroom Media
+  view: no
+  entities:
+    - light.br1
+    - light.br2
+
+# OFFICE
+office:
+  name: Office
+  view: yes
+  icon: mdi:keyboard
+  entities:
+    - group.office_lights_full
+    - group.office_full
+
+office_lights_full:
+  name: Office Lights
+  view: no
+  entities:
+    - light.of1
+    - light.of2
+    - scene.office_normal_lighting
+
+office_full:
+  name: Office
+  view: no
+  entities:
+    - switch.office_fan
+    - switch.smart_plug_one
+    - sensor.office_motion_motion_sensor
+    - sensor.office_temperature_f
+    - sensor.office_battery_level
+    - sensor.office_lux
+    - sensor.laptop_socket
+
+
+### LIGHTS ###
+Living Room Lights:
+  icon: mdi:sofa
+  entities:
+    - light.lr1
+    - light.lr2
+
+Bedroom Lights:
+  icon: mdi:hotel
+  entities:
+    - light.br1
+    - light.br2
+    - light.brcl1
+
+Office Lights:
+  icon: mdi:keyboard
+  entities:
+    - light.of1
+    - light.of2
+
+
+### MEDIA ###
+media:
+  name: Media
+  view: yes
+  icon: mdi:television-classic
+  entities:
+    - group.plex1
+    - group.plex2
+    - group.mini_group
+
+
+plex1:
+  name: Plex Client 1
+  view: no
+  entities:
+    - media_player.living_room_tv
+
+
+plex2:
+  name: Plex Client 2
+  view: no
+  entities:
+    - media_player.bedroom_tv
+
+mini_group:
+  name: Home Mini Group
+  view: no
+  entities:
+    - media_player.welcome
+
+plex_activity:
+  name: Plex Activity
+  icon: mdi:plex
+  entities:
+    - sensor.plex
+
+
+### SETTINGS ###
+settings:
+  view: yes
+  name: Settings
+  icon: mdi:settings
+  entities:
+    - group.monitor
+    - group.pihole
+    - group.speedtest
+    - group.weatherdetails
+
+
+neato:
+  view: no
+  name: Neato Vacuum
+  icon: mdi:broom
+  entities:
+    - vacuum.rosie
+    - camera.rosie_cleaning_map
+
+
+monitor:
+  view: no
+  name: System
+  icon: mdi:settings
+  entities:
+    - sensor.processor_use
+    - sensor.disk_use_percent_home
+    - sensor.memory_use_percent
+    - sensor.ipv4_address_eth0
+    - sensor.network_in_eth0
+    - sensor.network_out_eth0
+    - sensor.last_boot
+
+pihole:
+  view: no
+  name: Pi-Hole
+  entities:
+    - sensor.pihole_ads_blocked_today
+    - sensor.pihole_ads_percentage_blocked_today
+    - sensor.pihole_dns_queries_today
+    - sensor.pihole_dns_unique_clients
+    - sensor.pihole_dns_unique_domains
+    - sensor.pihole_domains_blocked
+
+speedtest:
+  view: no
+  name: Internet Speed
+  entities:
+    - sensor.speedtest_ping
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+
+weatherdetails:
+  view: no
+  name: Weather Details
+  entities:
+    - sensor.dark_sky_cloud_coverage
+    - sensor.dark_sky_nearest_storm_distance
+    - sensor.dark_sky_precip_probability
+
+### GRAPHS ###
+graphs:
+  view: no
+  name: Power Usage
+  icon: mdi:chart-areaspline
+  entities:
+    - history_graph.lights
+    - history_graph.temperature
+
+
+### AUTOMATIONS ###
+auto:
+  view: yes
+  name: Automations
+  icon: mdi:creation
+  entities:
+    - group.automation
+    - group.office_auto
+    - group.automedia
+    - group.scene
+
+office_auto:
+  view: no
+  name: Office Automations
+  entities:
+    - automation.turn_on_fan_above_certain_temp
+    - automation.turn_off_fan_below_certain_temp
+    - automation.turn_off_office_fan_when_not_in_room
+    - automation.turn_on_office_lights_below_lux
+    - automation.turn_off_office_lights_above_lux
+    - automation.turn_on_office_lights_with_motion
+    - automation.turn_office_lights_without_motion_one_min
+    - automation.office_auto_100
+    - automation.office_auto_75
+    - automation.office_auto_50
+
+automation:
+  view: no
+  name: Home Automations
+  entities:
+    - automation.away_mode
+    - automation.lights_on_in_the_evening
+    - automation.lights_off_at_night
+    - automation.nest_normal_mode
+    - automation.voice_sean_is_home
+    - automation.voice_emily_is_home
+    - automation.morning_alarm_lights
+    - automation.turn_on_air_fresh
+    - automation.turn_off_air_fresh
+
+
+automedia:
+  view: no
+  name: Media Automations
+  entities:
+    - automation.media_player_playing
+    - automation.media_player_stopped
+    - automation.media_player_paused
+    - automation.media_player_unpaused
+    - automation.media_player_pause_to_idle
+    - automation.bedroom_player_playing
+    - automation.bedroom_player_stopped
+    - automation.bedroom_player_paused
+    - automation.bedroom_player_unpaused
+    - automation.bedroom_player_pause_to_idle
+
+
+### SCENES ###
+#scene:
+#  view: no
+#  name: Media Scenes
+#  entities:
+#    - scene.media_room_normal
+#    - scene.media_room_paused
+#    - scene.media_room_playing
+#    - scene.media_room_unpaused
+#    - scene.media_room_pause_idle
+#    - scene.bedroom_normal
+#    - scene.bedroom_paused
+#    - scene.bedroom_playing
+#    - scene.bedroom_unpaused
+#    - scene.bedroom_pause_idle

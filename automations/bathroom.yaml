@@ -1,0 +1,23 @@
+# Turn on air fresh for one minute each hour when home
+  - alias: Turn on air fresh
+    trigger:
+      platform: time
+      hours: '/1'
+      minutes: '00'
+      seconds: '00'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.family
+          state: 'home'
+        - condition: time
+          after: '06:00:00'
+          before: '22:15:00'
+    action:
+      - service: switch.turn_on
+        entity_id:  switch.smart_plug_one
+      - delay:
+          minutes: '10'
+      - service: switch.turn_off
+        entity_id:  switch.smart_plug_one
