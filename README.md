@@ -12,7 +12,7 @@ I've been using HA for about a year now and it's been a great experience. I'm a 
   - 10 A19 soft white bulbs
   - 2 Hue Motion Sensors
 - Nest Thermostat (Gen 2)
-- 55' TCL Roku TV (2017)
+- 55" TCL Roku TV (2017)
 - Chromecasts (Gen 1 and Gen 2)
 - 3 Google Home Minis
 - 2 TP Link Smart Plugs (HS 100)
