@@ -4,7 +4,9 @@ I've been using HA for about a year now and it's been a great experience. I'm a 
 
 #### Home Automation Philosophy
 
-You shouldn't have to work the room, the room should work you. True home automation is having your home anticipate what you want without needing input from you.
+You shouldn't have to work the room, the room should work you. True home automation is having your home anticipate what you want without needing any input from you.
+
+Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
 
 ## Current Goals
 - Have all lights turn on/off with motion and never have to use a physical switch or voice commands again. I have some Xiaomi equipment coming in which should finally complete this.
