@@ -19,13 +19,13 @@
     trigger:
       platform: time
       minutes: '/2'
-      seconds: '00'
+      seconds: '30'
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.laptop_socket
-          below: '7'
+          below: '3'
         - condition: state
           entity_id: sensor.office_motion_motion_sensor
           state: 'off'
@@ -48,7 +48,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.office_lux
-          below: 15.3
+          below: 16
         - condition: state
           entity_id: 'group.family'
           state: 'home'
@@ -83,7 +83,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.office_lux
-          above: 15.3
+          above: 16
         - condition: numeric_state
           entity_id: sensor.office_lux
           below: 20
