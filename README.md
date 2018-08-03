@@ -1,6 +1,6 @@
 ## Intro
 
-I've been using HA for about a year now and it's been a great experience. I'm a graphic designer, not a coder, so I'm sure my YAML isn't as advanced, simple, or clean as it could be. I'm just happy that I can solve every problem that I want to and stop there.
+I've been using HA for about a year now and it's been a great experience. I'm a graphic designer, not a coder, so I'm sure my YAML isn't as advanced, simple, or clean as it could be. I'm just happy that I can solve every problem that I want to.
 
 #### Home Automation Philosophy
 
@@ -25,6 +25,7 @@ Using voice commands are nice and all, but that ends up being just another switc
 - Wemo Mini Smart Plug
 - Neato Botvac D3
 - PiHole (Raspberry Pi Gen 1B)
+- Plex Server
 
 ## Dashboard
 ![1](https://i.imgur.com/4amTBzy.jpg)
