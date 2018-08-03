@@ -2,6 +2,10 @@
 
 I've been using HA for about a year now and it's been a great experience. I'm a graphic designer, not a coder, so I'm sure my YAML isn't as advanced, simple, or clean as it could be. I'm just happy that I can solve every problem that I want to and stop there.
 
+#### Home Automation Philosophy
+
+You shouldn't have to work the room, the room should work you. True home automation is having your home anticipate what you want without needing input from you.
+
 ## Current Goals
 - Have all lights turn on/off with motion and never have to use a physical switch or voice commands again. I have some Xiaomi equipment coming in which should finally complete this.
 - Have lights dynamically adjust brightness depending on the room's current ambient light. I've been testing this with my Office Lights with some good results.
