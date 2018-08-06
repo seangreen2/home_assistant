@@ -17,7 +17,7 @@
           after: '17:00:00'
           before: '22:00:00'
         - condition: template
-          value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+          value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
     action:
       service: light.turn_on
       data:

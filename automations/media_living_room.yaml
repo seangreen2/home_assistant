@@ -2,7 +2,7 @@
   - alias: 'Media player stopped'
     trigger:
       - platform: state
-        entity_id: media_player.living_room_tv
+        entity_id: media_player.plex_living_room_tv
         from: 'playing'
         to: 'idle'
     condition:
@@ -20,7 +20,7 @@
   - alias: 'Media player playing'
     trigger:
       - platform: state
-        entity_id: media_player.living_room_tv
+        entity_id: media_player.plex_living_room_tv
         to: 'playing'
         from: 'idle'
     condition:
@@ -36,7 +36,7 @@
   - alias: 'Media player paused'
     trigger:
       - platform: state
-        entity_id: media_player.living_room_tv
+        entity_id: media_player.plex_living_room_tv
         from: 'playing'
         to: 'paused'
     condition:
@@ -54,7 +54,7 @@
   - alias: 'Media player unpaused'
     trigger:
       - platform: state
-        entity_id: media_player.living_room_tv
+        entity_id: media_player.plex_living_room_tv
         from: 'paused'
         to: 'playing'
     condition:
@@ -70,7 +70,7 @@
   - alias: 'Media player pause to idle'
     trigger:
       - platform: state
-        entity_id: media_player.living_room_tv
+        entity_id: media_player.plex_living_room_tv
         from: 'paused'
         to: 'idle'
     condition:

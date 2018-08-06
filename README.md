@@ -1,6 +1,6 @@
 ## Intro
 
-I've been using HA for about a year now and it's been a great experience. I'm a graphic designer, not a coder, so I'm sure my YAML isn't as advanced, simple, or clean as it could be. I'm just happy that I can solve every problem that I want to.
+I've been using HA for about a year now and it's been a great experience. I'm a graphic designer, not a coder, so I'm sure my YAML isn't as advanced, simple, or clean as it could be. I'm just happy that I can solve every problem that I want to so far.
 
 #### Home Automation Philosophy
 
@@ -13,7 +13,7 @@ Using voice commands are nice and all, but that ends up being just another switc
 - Have lights dynamically adjust brightness depending on the room's current ambient light. I've been testing this with my Office Lights with some good results.
 
 ## Equipment
-- Home Assistant using Debian on a VM
+- Home Assistant using Ubuntu on a VM
 - Hue Bridge
   - 10 A19 soft white bulbs
   - 2 Hue Motion Sensors
