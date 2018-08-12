@@ -90,6 +90,8 @@ sensor.usps_packages:
   icon: mdi:dropbox
 vacuum.rosie:
   icon: mdi:broom
+sensor.work_commute_time:
+  icon: mdi:car
 group.family:
   order: 1
 group.indoors:

@@ -15,6 +15,7 @@ family:
   entities:
     - group.sean
     - group.emily
+    - sensor.work_commute_time
 
 sean:
   name: Sean
