@@ -2,7 +2,7 @@
   - alias: 'Morning Alarm Lights'
     trigger:
       - platform: time
-        at: '06:10:00'
+        at: '05:40:00'
     condition:
       condition: and
       conditions:

@@ -70,7 +70,8 @@ sensor.bedroom_battery:
   friendly_name: Bedroom Sensor Battery
   device_class: battery
 sensor.bathroom_motion_sensor:
-  friendly_name: Bathroom Motion Sensor
+  friendly_name: Bedroom Motion Sensor
+  device_class: motion_sensor
 sensor.plex:
   friendly_name: Plex Activity
   icon: mdi:plex
@@ -79,6 +80,7 @@ sensor.office_battery:
   device_class: battery
 sensor.office_motion_motion_sensor:
   friendly_name: Office Motion Sensor
+  device_class: motion_sensor
 sensor.office_lux:
   friendly_name: Office Lux
   icon: mdi:white-balance-sunny
@@ -92,6 +94,20 @@ vacuum.rosie:
   icon: mdi:broom
 sensor.work_commute_time:
   icon: mdi:car
+binary_sensor.motion_sensor_158d0002047afe:
+  friendly_name: Living Room Motion Sensor
+sensor.illumination_158d0002047afe:
+  friendly_name: Living Room Lux
+binary_sensor.motion_sensor_158d000237a64a:
+  friendly_name: Bathroom Motion Sensor
+sensor.illumination_158d000237a64a:
+  friendly_name: Bathroom Lux
+sensor.temperature_158d0002478a21:
+  friendly_name: Bathroom Temperature
+sensor.humidity_158d0002478a21:
+  friendly_name: Bathroom Humidity
+binary_sensor.door_window_sensor_158d00023eb0bb:
+  friendly_name: Sliding Door Sensor
 group.family:
   order: 1
 group.indoors:

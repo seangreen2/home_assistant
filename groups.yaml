@@ -80,8 +80,10 @@ livingroom_full:
   entities:
     - light.lr1
     - light.lr2
+    - binary_sensor.motion_sensor_158d0002047afe
+    - sensor.illumination_158d0002047afe
     - scene.living_room_normal_lighting
-    - media_player.living_room_tv
+    - media_player.plex_living_room_tv
 
 # BEDROOM
 bedroom:
@@ -100,6 +102,11 @@ bedroom_full:
     - sensor.bathroom_motion_sensor
     - sensor.bedroom_temperature_f
     - sensor.bedroom_battery
+    - binary_sensor.motion_sensor_158d000237a64a
+    - sensor.temperature_158d0002478a21
+    - sensor.humidity_158d0002478a21
+    - sensor.illumination_158d000237a64a
+
 
 bedroom_lights_full:
   name: Bedroom Lights
@@ -183,7 +190,7 @@ plex1:
   name: Plex Client 1
   view: no
   entities:
-    - media_player.living_room_tv
+    - media_player.plex_living_room_tv
 
 
 plex2:
