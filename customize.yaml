@@ -69,7 +69,7 @@ light.lr1:
 sensor.bedroom_battery:
   friendly_name: Bedroom Sensor Battery
   device_class: battery
-sensor.bathroom_motion_sensor:
+sensor.bedroom_motion_sensor:
   friendly_name: Bedroom Motion Sensor
   device_class: motion_sensor
 sensor.plex:

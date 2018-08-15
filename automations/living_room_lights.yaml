@@ -1,0 +1,84 @@
+# Living Room Lights on with Motion
+- alias: Living Room Lights on motion
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0002047afe
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0002047afe
+        below: 6
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: media_player.plex_living_room_tv
+            state: 'idle'
+          - condition: state
+            entity_id: media_player.plex_living_room_tv
+            state: 'unavailable'
+      - condition: or
+        conditions:
+          - condition: numeric_state
+            entity_id: sensor.phone_socket
+            below: '.5'
+          - condition: template
+            value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
+  action:
+    service: light.turn_on
+    data:
+      entity_id: group.livingroom
+      brightness: '255'
+
+# Living Room Lights on with Motion at Bedtime
+- alias: Living Room Lights on motion bedtime
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0002047afe
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0002047afe
+        below: 6
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: media_player.plex_living_room_tv
+            state: 'idle'
+          - condition: state
+            entity_id: media_player.plex_living_room_tv
+            state: 'unavailable'
+      - condition: or
+        conditions:
+          - condition: numeric_state
+            entity_id: sensor.phone_socket
+            above: '.5'
+          - condition: state
+            entity_id: media_player.bedroom_speaker
+            state: 'playing'
+  action:
+    service: light.turn_on
+    data:
+      entity_id: group.livingroom
+      brightness: '128'
+
+# Living Room Lights off without Motion
+- alias: Living Room Lights off no motion
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0002047afe
+    to: 'off'
+    for:
+      minutes: 5
+  action:
+    service: light.turn_off
+    entity_id: group.livingroom

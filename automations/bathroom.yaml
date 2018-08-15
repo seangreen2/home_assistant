@@ -1,23 +1,77 @@
+# Bathroom Lights on with Motion
+- alias: Bathroom Lights on motion
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d000237a64a
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: time
+        after: '10:00:00'
+        before: '21:00:00'
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.brcl1
+      brightness: '255'
+
+# Bathroom Lights on with Motion at Bedtime
+- alias: Bathroom Lights on motion bedtime
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d000237a64a
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: time
+        after: '21:00:00'
+        before: '07:00:00'
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.brcl1
+      brightness: '77'
+
+# Bathroom Lights off without Motion
+- alias: Bathroom Lights off no motion
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d000237a64a
+    to: 'off'
+    for:
+      minutes: 1
+  action:
+    service: light.turn_off
+    entity_id: light.brcl1
+
 # Turn on air fresh for one minute each hour when home
-  - alias: Turn on air fresh
-    trigger:
-      platform: time
-      hours: '/1'
-      minutes: '00'
-      seconds: '00'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'home'
-        - condition: time
-          after: '06:00:00'
-          before: '22:15:00'
-    action:
-      - service: switch.turn_on
-        entity_id:  switch.smart_plug_one
-      - delay:
-          minutes: '10'
-      - service: switch.turn_off
-        entity_id:  switch.smart_plug_one
+#  - alias: Turn on air fresh
+#    trigger:
+#      platform: time
+#      hours: '/1'
+#      minutes: '00'
+#      seconds: '00'
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: group.family
+#          state: 'home'
+#        - condition: time
+#          after: '06:00:00'
+#          before: '22:15:00'
+#    action:
+#      - service: switch.turn_on
+#        entity_id:  switch.smart_plug_one
+#      - delay:
+#          minutes: '10'
+#      - service: switch.turn_off
+#        entity_id:  switch.smart_plug_one

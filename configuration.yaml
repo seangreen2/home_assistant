@@ -110,13 +110,13 @@ sensor:
   - platform: template
     sensors:
       bedroom_temperature:
-        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.temperature}}'
+        value_template: '{{states.sensor.bedroom_motion_sensor.attributes.temperature}}'
 
   - platform: template
     sensors:
       bedroom_battery:
         friendly_name: 'Battery'
-        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.battery}}'
+        value_template: '{{states.sensor.bedroom_motion_sensor.attributes.battery}}'
         unit_of_measurement: '%'
 
   - platform: template
@@ -128,6 +128,12 @@ sensor:
         unit_of_measurement: °F
         value_template: >
           {{ ((float(states('sensor.bedroom_temperature')) * 1.8) + 32) | round(1) }}
+
+  - platform: template
+    sensors:
+      phone_socket:
+        friendly_name: 'Phone Power'
+        value_template: '{{states.switch.smart_plug_one.attributes.current_power_w}}'
 
   - platform: template
     sensors:

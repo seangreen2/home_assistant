@@ -99,9 +99,10 @@ bedroom_full:
   name: Bedroom
   view: no
   entities:
-    - sensor.bathroom_motion_sensor
+    - sensor.bedroom_motion_sensor
     - sensor.bedroom_temperature_f
     - sensor.bedroom_battery
+    - sensor.phone_socket
     - binary_sensor.motion_sensor_158d000237a64a
     - sensor.temperature_158d0002478a21
     - sensor.humidity_158d0002478a21
@@ -147,7 +148,6 @@ office_full:
   view: no
   entities:
     - switch.office_fan
-    - switch.smart_plug_one
     - sensor.office_motion_motion_sensor
     - sensor.office_temperature_f
     - sensor.office_battery
@@ -183,7 +183,6 @@ media:
   entities:
     - group.plex1
     - group.plex2
-    - group.mini_group
 
 
 plex1:
@@ -223,7 +222,6 @@ settings:
     - group.speedtest
     - group.weatherdetails
 
-
 neato:
   view: no
   name: Neato Vacuum
@@ -231,7 +229,6 @@ neato:
   entities:
     - vacuum.rosie
     - camera.rosie_cleaning_map
-
 
 monitor:
   view: no
@@ -282,7 +279,6 @@ graphs:
     - history_graph.lights
     - history_graph.temperature
 
-
 ### AUTOMATIONS ###
 auto:
   view: yes
@@ -290,6 +286,8 @@ auto:
   icon: mdi:creation
   entities:
     - group.automation
+    - group.livingroom_auto
+    - group.bedroom_auto
     - group.office_auto
     - group.automedia
     - group.scene
@@ -309,6 +307,24 @@ office_auto:
     - automation.office_auto_75
     - automation.office_auto_50
 
+livingroom_auto:
+  view: no
+  name: Living Room Automations
+  entities:
+    - automation.living_room_lights_on_motion
+    - automation.living_room_lights_on_motion_bedtime
+    - automation.living_room_lights_off_no_motion
+
+bedroom_auto:
+  view: no
+  name: Bedroom Automations
+  entities:
+    - automation.bedroom_lights_on_motion
+    - automation.bedroom_lights_off_no_motion
+    - automation.bathroom_lights_on_motion
+    - automation.bathroom_lights_on_motion_bedtime
+    - automation.bathroom_lights_off_no_motion
+
 automation:
   view: no
   name: Home Automations
@@ -322,7 +338,6 @@ automation:
     - automation.morning_alarm_lights
     - automation.turn_on_air_fresh
     - automation.turn_off_air_fresh
-
 
 automedia:
   view: no

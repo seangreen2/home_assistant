@@ -1,0 +1,37 @@
+# Bedroom Lights on with Motion
+- alias: Bedroom Lights on motion
+  trigger:
+    platform: state
+    entity_id: sensor.bedroom_motion_sensor
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: time
+        after: '10:00:00'
+        before: '22:00:00'
+      - condition: numeric_state
+        entity_id: sensor.phone_socket
+        below: '.5'
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+  action:
+    service: light.turn_on
+    data:
+      entity_id: group.bedroom_media
+      brightness: '255'
+
+# Bedroom Lights off without Motion
+- alias: Bedroom Lights off no motion
+  trigger:
+    platform: state
+    entity_id: sensor.bedroom_motion_sensor
+    to: 'off'
+    for:
+      minutes: 2
+  action:
+    service: light.turn_off
+    entity_id: group.bedroom_media
