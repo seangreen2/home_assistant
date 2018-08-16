@@ -25,7 +25,7 @@
         conditions:
           - condition: numeric_state
             entity_id: sensor.phone_socket
-            below: '.5'
+            below: '.1'
           - condition: template
             value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
   action:
@@ -61,7 +61,7 @@
         conditions:
           - condition: numeric_state
             entity_id: sensor.phone_socket
-            above: '.5'
+            above: '.1'
           - condition: state
             entity_id: media_player.bedroom_speaker
             state: 'playing'

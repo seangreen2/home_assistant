@@ -80,10 +80,9 @@ livingroom_full:
   entities:
     - light.lr1
     - light.lr2
+    - binary_sensor.door_window_sensor_158d00023eb0bb
     - binary_sensor.motion_sensor_158d0002047afe
     - sensor.illumination_158d0002047afe
-    - binary_sensor.door_window_sensor_158d00023eb0bb
-    - scene.living_room_normal_lighting
     - media_player.plex_living_room_tv
 
 # BEDROOM
@@ -95,20 +94,19 @@ bedroom:
     - group.bedroom_lights_full
     - group.bedroom_full
     - media_player.bedroom_tv
+    - media_player.bedroom_speaker
 
 bedroom_full:
   name: Bedroom
   view: no
   entities:
-    - sensor.bedroom_motion_sensor
     - sensor.bedroom_temperature_f
+    - sensor.bedroom_motion_sensor
     - sensor.bedroom_battery
     - sensor.phone_socket
     - binary_sensor.motion_sensor_158d000237a64a
-    - sensor.temperature_158d0002478a21
     - sensor.humidity_158d0002478a21
     - sensor.illumination_158d000237a64a
-
 
 bedroom_lights_full:
   name: Bedroom Lights
@@ -149,8 +147,8 @@ office_full:
   view: no
   entities:
     - switch.office_fan
-    - sensor.office_motion_motion_sensor
     - sensor.office_temperature_f
+    - sensor.office_motion_motion_sensor
     - sensor.office_battery
     - sensor.office_lux
     - sensor.laptop_socket
@@ -184,6 +182,7 @@ media:
   entities:
     - group.plex1
     - group.plex2
+    - media_player.bedroom_speaker
 
 
 plex1:

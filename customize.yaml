@@ -83,7 +83,7 @@ sensor.office_motion_motion_sensor:
   device_class: motion_sensor
 sensor.office_lux:
   friendly_name: Office Lux
-  icon: mdi:white-balance-sunny
+  icon: mdi:brightness-5
 sensor.usps_mail:
   friendly_name: USPS Mail
   icon: mdi:email
@@ -96,10 +96,12 @@ sensor.work_commute_time:
   icon: mdi:car
 binary_sensor.motion_sensor_158d0002047afe:
   friendly_name: Living Room Motion Sensor
+  icon: mdi:run-fast
 sensor.illumination_158d0002047afe:
   friendly_name: Living Room Lux
 binary_sensor.motion_sensor_158d000237a64a:
   friendly_name: Bathroom Motion Sensor
+  icon: mdi:run-fast
 sensor.illumination_158d000237a64a:
   friendly_name: Bathroom Lux
 sensor.temperature_158d0002478a21:

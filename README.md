@@ -9,7 +9,7 @@ You shouldn't have to work the room, the room should work you. True home automat
 Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
 
 ## Current Goals
-- Have all lights turn on/off with motion and never have to use a physical switch or voice commands again. I have some Xiaomi equipment coming in which should finally complete this.
+- (DONE) Have all lights turn on/off with motion and never have to use a physical switch or voice commands again. I have some Xiaomi equipment coming in which should finally complete this.
 - Have lights dynamically adjust brightness depending on the room's current ambient light. I've been testing this with my Office Lights with some good results.
 
 ## Equipment
@@ -17,6 +17,10 @@ Using voice commands are nice and all, but that ends up being just another switc
 - Hue Bridge
   - 10 A19 soft white bulbs
   - 2 Hue Motion Sensors
+- Xiaomi Gateway
+  - 2 Xiaomi Motion Sensors
+  - Window/Door Sensor
+  - Temperature and Humidity Sensor
 - Nest Thermostat (Gen 2)
 - 55" TCL Roku TV (2017)
 - Chromecasts (Gen 1 and Gen 2)

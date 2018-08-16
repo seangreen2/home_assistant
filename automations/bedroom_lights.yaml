@@ -15,7 +15,7 @@
         before: '22:00:00'
       - condition: numeric_state
         entity_id: sensor.phone_socket
-        below: '.5'
+        below: '.1'
       - condition: template
         value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
   action:
