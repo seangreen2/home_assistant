@@ -1,3 +1,32 @@
+# When porch door is open turn off nest
+ - alias: Door open turn off nest
+   trigger:
+     platform: state
+     entity_id: binary_sensor.door_window_sensor_158d00023eb0bb
+     to: 'on'
+     for:
+       seconds: '30'
+   action:
+     - service: climate.set_operation_mode
+       data:
+         entity_id: climate.living_room
+         operation_mode: 'off'
+
+# When porch door is closed turn Nest back on
+ - alias: Door closed turn on nest
+   trigger:
+     platform: state
+     entity_id: binary_sensor.door_window_sensor_158d00023eb0bb
+     to: 'off'
+     for:
+       seconds: '10'
+   action:
+     - service: climate.set_operation_mode
+       data:
+         entity_id: climate.living_room
+         operation_mode: 'auto'
+
+
 # Temp goes down by 2 when Sean only at home (winter)
 #  - alias: 'Sean Home Preferences'
 #    trigger:

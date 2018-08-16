@@ -82,6 +82,7 @@ livingroom_full:
     - light.lr2
     - binary_sensor.motion_sensor_158d0002047afe
     - sensor.illumination_158d0002047afe
+    - binary_sensor.door_window_sensor_158d00023eb0bb
     - scene.living_room_normal_lighting
     - media_player.plex_living_room_tv
 
@@ -314,6 +315,8 @@ livingroom_auto:
     - automation.living_room_lights_on_motion
     - automation.living_room_lights_on_motion_bedtime
     - automation.living_room_lights_off_no_motion
+    - automation.door_closed_turn_on_nest
+    - automation.door_open_turn_off_nest
 
 bedroom_auto:
   view: no
