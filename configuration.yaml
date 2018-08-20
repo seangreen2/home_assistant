@@ -18,8 +18,8 @@ zone:
 proximity:
   home:
     devices:
-      - device_tracker.google_maps_104320808194225996474
-      - device_tracker.google_maps_117703622599905742645
+      - !secret gtracker1
+      - !secret gtracker2
     tolerance: 200
     unit_of_measurement: mi
 
