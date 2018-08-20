@@ -12,6 +12,9 @@ Using voice commands are nice and all, but that ends up being just another switc
 - (DONE) Have all lights turn on/off with motion and never have to use a physical switch or voice commands again. I have some Xiaomi equipment coming in which should finally complete this.
 - Have lights dynamically adjust brightness depending on the room's current ambient light. I've been testing this with my Office Lights with some good results.
 
+#### Custom Components Used
+To use the Hue Motion Sensors in Home Assistant I use https://github.com/robmarkcole/Hue-sensors-HASS
+
 ## Equipment
 - Home Assistant using Ubuntu on a VM
 - Hue Bridge
