@@ -11,7 +11,7 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '10:00:00'
+        after: '07:00:00'
         before: '21:00:00'
   action:
     service: light.turn_on
@@ -32,7 +32,7 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '21:00:00'
+        after: '21:30:00'
         before: '07:00:00'
   action:
     service: light.turn_on

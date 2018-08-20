@@ -12,15 +12,9 @@
         state: 'home'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002047afe
-        below: 6
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: media_player.plex_living_room_tv
-            state: 'idle'
-          - condition: state
-            entity_id: media_player.plex_living_room_tv
-            state: 'unavailable'
+        below: 7
+      - condition: template
+        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
       - condition: or
         conditions:
           - condition: numeric_state
@@ -48,15 +42,9 @@
         state: 'home'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002047afe
-        below: 6
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: media_player.plex_living_room_tv
-            state: 'idle'
-          - condition: state
-            entity_id: media_player.plex_living_room_tv
-            state: 'unavailable'
+        below: 7
+      - condition: template
+        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
       - condition: or
         conditions:
           - condition: numeric_state
@@ -69,7 +57,7 @@
     service: light.turn_on
     data:
       entity_id: group.livingroom
-      brightness: '128'
+      brightness: '85'
 
 # Living Room Lights off without Motion
 - alias: Living Room Lights off no motion
@@ -78,7 +66,25 @@
     entity_id: binary_sensor.motion_sensor_158d0002047afe
     to: 'off'
     for:
-      minutes: 5
+      minutes: 13
   action:
     service: light.turn_off
-    entity_id: group.livingroom
+    data:
+      entity_id: group.livingroom
+      transition: 2
+
+# Turn off Living Room lights above lux
+- alias: Turn off living room lights above lux
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.illumination_158d0002047afe
+    above: 115
+  condition:
+    - condition: time
+      after: '06:00:00'
+      before: '20:00:00'
+  action:
+    service: light.turn_off
+    data:
+      entity_id: group.livingroom
+      transition: 2

@@ -2,10 +2,26 @@ homeassistant:
   name: Home
   latitude: !secret latitude
   longitude: !secret longitude
-  elevation: 10
+  elevation: 5
   unit_system: imperial
   time_zone: America/New_York
   customize: !include customize.yaml
+
+map:
+
+zone:
+  - name: home
+    latitude: !secret latitude
+    longitude: !secret longitude
+    radius: 1610
+
+proximity:
+  home:
+    devices:
+      - device_tracker.google_maps_104320808194225996474
+      - device_tracker.google_maps_117703622599905742645
+    tolerance: 200
+    unit_of_measurement: mi
 
 cloud:
 
@@ -27,10 +43,10 @@ panel_custom:
     url_path: floorplan
     config: !include floorplan.yaml
 
-binary_sensor:
-  - platform: mqtt
-    state_topic: dummy/floorplan/sensor
-    name: Floorplan
+#binary_sensor:
+#  - platform: mqtt
+#    state_topic: dummy/floorplan/sensor
+#    name: Floorplan
 
 
 # CUSTOM WEATHER CARD
@@ -60,7 +76,6 @@ updater:
 # Discover some devices automatically
 discovery:
   ignore:
-    - roku
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 #conversation:
@@ -224,11 +239,11 @@ sensor:
 
   - platform: hue
 
-  - platform: google_travel_time
-    name: Work Commute Time
-    api_key: !secret travel_api_key
+  - platform: waze_travel_time
     origin: !secret travel_origin
     destination: !secret travel_destination
+    region: 'NA'
+    name: Work Commute
 
   - platform: pushbullet
     api_key: !secret pushbullet_api
@@ -290,10 +305,10 @@ device_tracker:
     password: !secret router_password
     interval_seconds: 5
 
-#  - platform: google_maps
-#    username: !secret googlempas_user
-#    password: !secret googlemaps_password
-
+  - platform: google_maps
+    username: !secret googlemaps_user
+    password: !secret googlemaps_password
+    max_gps_accuracy: 500
 
 # Media
 media_player:

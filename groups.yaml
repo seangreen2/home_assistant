@@ -16,6 +16,7 @@ family:
     - group.sean
     - group.emily
     - sensor.work_commute_time
+    - sensor.work_commute
 
 sean:
   name: Sean

@@ -11,13 +11,15 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '10:00:00'
-        before: '22:00:00'
+        after: '08:00:00'
+        before: '21:00:00'
       - condition: numeric_state
         entity_id: sensor.phone_socket
         below: '.1'
       - condition: template
         value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
   action:
     service: light.turn_on
     data:
@@ -34,4 +36,6 @@
       minutes: 2
   action:
     service: light.turn_off
-    entity_id: group.bedroom_media
+    data:
+      entity_id: group.bedroom_media
+      transition: 2
