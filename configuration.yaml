@@ -18,8 +18,8 @@ zone:
 proximity:
   home:
     devices:
-      - !secret gtracker1
-      - !secret gtracker2
+      - !secret gtracker_one
+      - !secret gtracker_two
     tolerance: 200
     unit_of_measurement: mi
 
@@ -308,7 +308,7 @@ device_tracker:
   - platform: google_maps
     username: !secret googlemaps_user
     password: !secret googlemaps_password
-    max_gps_accuracy: 500
+    max_gps_accuracy: 200
 
 # Media
 media_player:

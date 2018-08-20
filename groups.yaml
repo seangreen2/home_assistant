@@ -30,6 +30,12 @@ emily:
   entities:
     - device_tracker.android92a8793ea8df7b4e
 
+gtracker:
+  name: Google Tracker
+  view: no
+  entities:
+    - !secret gtracker_one
+    - !secret gtracker_two
 
 ### OVERVIEW ###
 lights:
@@ -339,8 +345,7 @@ automation:
     - automation.voice_sean_is_home
     - automation.voice_emily_is_home
     - automation.morning_alarm_lights
-    - automation.turn_on_air_fresh
-    - automation.turn_off_air_fresh
+    - automation.nest_normal_mode_google_tracker
 
 automedia:
   view: no

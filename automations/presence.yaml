@@ -57,3 +57,21 @@
         data:
           entity_id: climate.living_room
           away_mode: 'off'
+
+# Turn off Eco Mode Nest Google Tracker
+  - alias: 'Nest Normal Mode Google Tracker'
+    trigger:
+      platform: state
+      entity_id: group.gtracker
+      to: 'home'
+      for:
+        seconds: '30'
+    action:
+      - service: climate.set_operation_mode
+        data:
+          entity_id: climate.living_room
+          operation_mode: 'auto'
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.living_room
+          away_mode: 'off'
