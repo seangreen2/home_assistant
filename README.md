@@ -32,9 +32,9 @@ Using voice commands are nice and all, but that ends up being just another switc
 - Plex Server
 
 ## Dashboard
-![1](https://i.imgur.com/4amTBzy.jpg)
-![2](https://i.imgur.com/yuIG7Mn.jpg)
-![3](https://i.imgur.com/42z1zjH.jpg)
-![4](https://i.imgur.com/N4C6Nt3.jpg)
-![5](https://i.imgur.com/3rQtX1t.jpg)
-![6](https://i.imgur.com/oHiYDjN.jpg)
+![1](https://i.imgur.com/Pm1EF5u.jpg)
+![2](https://i.imgur.com/7FXiCDn.jpg)
+![3](https://i.imgur.com/ICEhZFK.jpg)
+![4](https://i.imgur.com/dBqltpE.jpg)
+![5](https://i.imgur.com/9lztfUv.jpg)
+![6](https://i.imgur.com/ZZvm06v.jpg)
