@@ -61,11 +61,17 @@
 # Turn off Eco Mode Nest Google Tracker
   - alias: 'Nest Normal Mode Google Tracker'
     trigger:
-      platform: state
-      entity_id: group.gtracker
-      to: 'home'
-      for:
-        seconds: '30'
+      platform: numeric_state
+      entity_id: proximity.home
+      below: 3
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.family
+          state: 'not_home'
+        - condition: template
+          value_template: '{{ states.proximity.home.attributes.dir_of_travel == "towards" }}'
     action:
       - service: climate.set_operation_mode
         data:

@@ -13,14 +13,14 @@ zone:
   - name: home
     latitude: !secret latitude
     longitude: !secret longitude
-    radius: 1610
+    radius: 2500
 
 proximity:
   home:
     devices:
       - !secret gtracker_one
       - !secret gtracker_two
-    tolerance: 200
+    tolerance: 300
     unit_of_measurement: mi
 
 cloud:
