@@ -40,6 +40,9 @@
       - condition: state
         entity_id: group.family
         state: 'home'
+      - condition: time
+        after: '20:00:00'
+        before: '03:00:00'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002047afe
         below: 7
@@ -49,7 +52,7 @@
         conditions:
           - condition: numeric_state
             entity_id: sensor.phone_socket
-            above: '.1'
+            above: '0'
           - condition: state
             entity_id: media_player.bedroom_speaker
             state: 'playing'

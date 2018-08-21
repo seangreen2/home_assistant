@@ -37,6 +37,12 @@
         data:
           entity_id: media_player.bedroom_speaker
           volume_level: .5
+      - service: homeassistant.turn_off
+        entity_id: automation.bedroom_lights_off_no_motion
+      - delay:
+          minutes: '60'
+      - service: homeassistant.turn_on
+        entity_id: automation.bedroom_lights_off_no_motion
 
 # Turn lights off at night
   - alias: 'Lights off at night'
