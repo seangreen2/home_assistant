@@ -50,7 +50,6 @@ lights:
     - sensor.usps_mail
     - sensor.usps_packages
     - camera.usps_mail
-#    - weather.yweather
 
 ### CLIMATE ###
 indoors:
@@ -67,7 +66,8 @@ weather:
   name: Weather Forecast
   view: no
   entities:
-      - input_boolean.weather
+    - weather.dark_sky
+    #  - input_boolean.weather
 
 
 
@@ -342,10 +342,10 @@ automation:
     - automation.lights_on_in_the_evening
     - automation.lights_off_at_night
     - automation.nest_normal_mode
+    - automation.nest_normal_mode_google_tracker
     - automation.voice_sean_is_home
     - automation.voice_emily_is_home
     - automation.morning_alarm_lights
-    - automation.nest_normal_mode_google_tracker
 
 automedia:
   view: no

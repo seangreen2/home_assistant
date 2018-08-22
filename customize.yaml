@@ -110,6 +110,8 @@ sensor.humidity_158d0002478a21:
   friendly_name: Bathroom Humidity
 binary_sensor.door_window_sensor_158d00023eb0bb:
   friendly_name: Sliding Door Sensor
+weather.dark_sky:
+  friendly_name: Weather Forcast
 group.family:
   order: 1
 group.indoors:

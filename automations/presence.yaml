@@ -63,7 +63,7 @@
     trigger:
       platform: numeric_state
       entity_id: proximity.home
-      below: 3
+      below: 10
     condition:
       condition: and
       conditions:

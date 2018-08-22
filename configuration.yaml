@@ -13,14 +13,14 @@ zone:
   - name: home
     latitude: !secret latitude
     longitude: !secret longitude
-    radius: 2500
+    radius: 200
 
 proximity:
   home:
     devices:
       - !secret gtracker_one
       - !secret gtracker_two
-    tolerance: 300
+    tolerance: 100
     unit_of_measurement: mi
 
 cloud:
@@ -55,6 +55,12 @@ weather:
     woeid: !secret woeid
   - platform: darksky
     api_key: !secret dark_sky_api_key
+    forecast:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
 
 input_boolean:
   weather:
