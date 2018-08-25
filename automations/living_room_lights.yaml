@@ -37,7 +37,7 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '21:00:00'
+        after: '20:00:00'
         before: '02:00:00'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002047afe

@@ -8,7 +8,7 @@
     condition:
       - condition: time
         after: '10:00:00'
-        before: '22:00:00'
+        before: '21:00:00'
     action:
       - service: media_player.volume_set
         data:
@@ -33,7 +33,7 @@
     condition:
       - condition: time
         after: '10:00:00'
-        before: '22:00:00'
+        before: '21:00:00'
     action:
       - service: media_player.volume_set
         data:

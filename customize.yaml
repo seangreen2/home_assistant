@@ -118,5 +118,7 @@ group.indoors:
   order: 2
 group.lights:
   order: 3
-group.weather:
+group.wather_one:
+  order: 4
+group.weather_two:
   order: 5

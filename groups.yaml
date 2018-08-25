@@ -6,7 +6,8 @@ default_view:
     - group.family
     - group.indoors
     - group.lights
-    - group.weather
+    - group.weather_one
+    - group.weather_two
 
 ### FAMILY ###
 family:
@@ -62,11 +63,19 @@ indoors:
     - sensor.bedroom_temperature_f
     - sensor.office_temperature_f
 
-weather:
+weather_one:
   name: Weather Forecast
   view: no
   entities:
     - weather.dark_sky
+
+weather_two:
+  name: Weather Details
+  view: no
+  entities:
+    - sensor.dark_sky_cloud_coverage
+    - sensor.dark_sky_nearest_storm_distance
+    - sensor.dark_sky_precip_probability
     #  - input_boolean.weather
 
 
@@ -227,7 +236,6 @@ settings:
     - group.monitor
     - group.pihole
     - group.speedtest
-    - group.weatherdetails
 
 neato:
   view: no

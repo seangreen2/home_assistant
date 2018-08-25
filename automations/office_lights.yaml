@@ -17,23 +17,24 @@
 # Turn off Office Lights after one minute of no activity
   - alias: Turn office lights without motion one min
     trigger:
-      platform: time
-      minutes: '/2'
-      seconds: '30'
+      platform: state
+      entity_id: sensor.office_motion_motion_sensor
+      to: 'off'
+      for:
+        minutes: 3
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.laptop_socket
           below: '3'
-        - condition: state
-          entity_id: sensor.office_motion_motion_sensor
-          state: 'off'
         - condition: template
           value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
     action:
-      - service: homeassistant.turn_off
-        entity_id: group.office_lights
+      - service: light.turn_off
+        data:
+          entity_id: group.office_lights
+          transition: 2
       - service: switch.turn_off
         entity_id: switch.office_fan
 

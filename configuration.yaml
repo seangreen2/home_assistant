@@ -55,12 +55,6 @@ weather:
     woeid: !secret woeid
   - platform: darksky
     api_key: !secret dark_sky_api_key
-    forecast:
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
 
 input_boolean:
   weather:
