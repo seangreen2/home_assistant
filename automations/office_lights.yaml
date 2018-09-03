@@ -31,12 +31,8 @@
         - condition: template
           value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
     action:
-      - service: light.turn_off
-        data:
-          entity_id: group.office_lights
-          transition: 2
-      - service: switch.turn_off
-        entity_id: switch.office_fan
+      - service: homeassistant.turn_off
+        entity_id: group.office_lights
 
 # Office Quick Brightness 100%
   - alias: Turn on office lights below lux

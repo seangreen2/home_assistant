@@ -313,7 +313,7 @@ office_auto:
   entities:
     - automation.turn_on_fan_above_certain_temp
     - automation.turn_off_fan_below_certain_temp
-    - automation.turn_off_office_fan_when_not_in_room
+    - automation.turn_off_office_fan_without_motion
     - automation.turn_on_office_lights_below_lux
     - automation.turn_off_office_lights_above_lux
     - automation.turn_on_office_lights_with_motion
@@ -329,6 +329,7 @@ livingroom_auto:
     - automation.living_room_lights_on_motion
     - automation.living_room_lights_on_motion_bedtime
     - automation.living_room_lights_off_no_motion
+    - automation.turn_off_living_room_lights_above_lux
     - automation.door_closed_turn_on_nest
     - automation.door_open_turn_off_nest
 
