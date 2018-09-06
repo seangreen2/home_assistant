@@ -7,12 +7,53 @@
     condition:
       - condition: numeric_state
         entity_id: sensor.office_lux
-        below: '6'
+        below: '16'
+      - condition: time
+        after: '05:00:00'
+        before: '20:00:00'
     action:
       service: light.turn_on
       data:
         entity_id: group.office_lights
         brightness: '255'
+
+# Office Motion Lights 75
+  - alias: Turn on office lights with motion 75
+    trigger:
+      platform: state
+      entity_id: sensor.office_motion_motion_sensor
+      to: 'on'
+    condition:
+      - condition: numeric_state
+        entity_id: sensor.office_lux
+        below: '16'
+      - condition: time
+        after: '20:00:00'
+        before: '21:00:00'
+    action:
+      service: light.turn_on
+      data:
+        entity_id: group.office_lights
+        brightness: '190'
+
+# Office Motion Lights 65
+  - alias: Turn on office lights with motion 65
+    trigger:
+      platform: state
+      entity_id: sensor.office_motion_motion_sensor
+      to: 'on'
+    condition:
+      - condition: numeric_state
+        entity_id: sensor.office_lux
+        below: '16'
+      - condition: time
+        after: '21:00:00'
+        before: '05:00:00'
+    action:
+      service: light.turn_on
+      data:
+        entity_id: group.office_lights
+        brightness: '155'
 
 # Turn off Office Lights after one minute of no activity
   - alias: Turn office lights without motion one min
@@ -21,7 +62,7 @@
       entity_id: sensor.office_motion_motion_sensor
       to: 'off'
       for:
-        minutes: 3
+        minutes: '6'
     condition:
       condition: and
       conditions:
@@ -31,233 +72,10 @@
         - condition: template
           value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
     action:
-      - service: homeassistant.turn_off
-        entity_id: group.office_lights
-
-# Office Quick Brightness 100%
-  - alias: Turn on office lights below lux
-    trigger:
-      platform: state
-      entity_id: sensor.office_motion_motion_sensor
-      to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          below: 16
-        - condition: state
-          entity_id: 'group.family'
-          state: 'home'
-        - condition: state
-          entity_id: group.office_lights
-          state: 'off'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: sensor.steam_76561197976250572
-              state: 'online'
-            - condition: state
-              entity_id: sensor.office_motion_motion_sensor
-              state: 'on'
-            - condition: numeric_state
-              entity_id: sensor.laptop_socket
-              above: 5
-    action:
-      service: light.turn_on
+      service: light.turn_off
       data:
         entity_id: group.office_lights
-        brightness: '255'
-
-# Office Quick Brightness 75%
-  - alias: Office Quick 75
-    trigger:
-      platform: state
-      entity_id: sensor.office_motion_motion_sensor
-      to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          above: 16
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          below: 20
-        - condition: state
-          entity_id: 'group.family'
-          state: 'home'
-        - condition: state
-          entity_id: group.office_lights
-          state: 'off'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: sensor.steam_76561197976250572
-              state: 'online'
-            - condition: state
-              entity_id: sensor.office_motion_motion_sensor
-              state: 'on'
-            - condition: numeric_state
-              entity_id: sensor.laptop_socket
-              above: 5
-    action:
-      service: light.turn_on
-      data:
-        entity_id: group.office_lights
-        brightness: '191'
-
-# Office Quick Brightness 50%
-  - alias: Office Quick 50
-    trigger:
-      platform: state
-      entity_id: sensor.office_motion_motion_sensor
-      to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          above: 20
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          below: 28
-        - condition: state
-          entity_id: 'group.family'
-          state: 'home'
-        - condition: state
-          entity_id: group.office_lights
-          state: 'off'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: sensor.steam_76561197976250572
-              state: 'online'
-            - condition: state
-              entity_id: sensor.office_motion_motion_sensor
-              state: 'on'
-            - condition: numeric_state
-              entity_id: sensor.laptop_socket
-              above: 5
-    action:
-      service: light.turn_on
-      data:
-        entity_id: group.office_lights
-        brightness: '153'
-
-# Office Auto Brightness 100%
-  - alias: Office Auto 100
-    trigger:
-      platform: time
-      minutes: '/3'
-      seconds: '00'
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          below: 16
-        - condition: state
-          entity_id: 'group.family'
-          state: 'home'
-        - condition: state
-          entity_id: group.office_lights
-          state: 'on'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: sensor.steam_76561197976250572
-              state: 'online'
-            - condition: state
-              entity_id: sensor.office_motion_motion_sensor
-              state: 'on'
-            - condition: numeric_state
-              entity_id: sensor.laptop_socket
-              above: 5
-    action:
-      service: light.turn_on
-      data:
-        entity_id: group.office_lights
-        brightness: '255'
-        transition: '30'
-
-# Office Auto Brightness 75%
-  - alias: Office Auto 75
-    trigger:
-      platform: time
-      minutes: '/3'
-      seconds: '00'
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          above: 16
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          below: 21
-        - condition: state
-          entity_id: 'group.family'
-          state: 'home'
-        - condition: state
-          entity_id: group.office_lights
-          state: 'on'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: sensor.steam_76561197976250572
-              state: 'online'
-            - condition: state
-              entity_id: sensor.office_motion_motion_sensor
-              state: 'on'
-            - condition: numeric_state
-              entity_id: sensor.laptop_socket
-              above: 5
-    action:
-      service: light.turn_on
-      data:
-        entity_id: group.office_lights
-        brightness: '191'
-        transition: '30'
-
-# Office Auto Brightness 50%
-  - alias: Office Auto 50
-    trigger:
-      platform: time
-      minutes: '/3'
-      seconds: '00'
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          above: 21
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          below: 28
-        - condition: state
-          entity_id: 'group.family'
-          state: 'home'
-        - condition: state
-          entity_id: group.office_lights
-          state: 'on'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: sensor.steam_76561197976250572
-              state: 'online'
-            - condition: state
-              entity_id: sensor.office_motion_motion_sensor
-              state: 'on'
-            - condition: numeric_state
-              entity_id: sensor.laptop_socket
-              above: 5
-    action:
-      service: light.turn_on
-      data:
-        entity_id: group.office_lights
-        brightness: '153'
-        transition: '30'
+        transition: 2
 
 # Turn off Office lights above lux
   - alias: Turn off office lights above lux
@@ -270,5 +88,7 @@
         after: '06:00:00'
         before: '20:00:00'
     action:
-      - service: homeassistant.turn_off
+      service: light.turn_off
+      data:
         entity_id: group.office_lights
+        transition: 2

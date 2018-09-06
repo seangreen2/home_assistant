@@ -15,7 +15,7 @@
         below: 7
       - condition: time
         after: '06:00:00'
-        before: '21:00:00'
+        before: '19:00:00'
       - condition: template
         value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
   action:
@@ -23,6 +23,58 @@
     data:
       entity_id: group.livingroom
       brightness: '255'
+
+# Living Room Lights on with Motion 75
+- alias: Living Room Lights on motion 75
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0002047afe
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0002047afe
+        below: 7
+      - condition: time
+        after: '19:00:00'
+        before: '20:00:00'
+      - condition: template
+        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+  action:
+    service: light.turn_on
+    data:
+      entity_id: group.livingroom
+      brightness: '190'
+
+# Living Room Lights on with Motion 50
+- alias: Living Room Lights on motion 50
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0002047afe
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0002047afe
+        below: 7
+      - condition: time
+        after: '20:00:00'
+        before: '21:00:00'
+      - condition: template
+        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+  action:
+    service: light.turn_on
+    data:
+      entity_id: group.livingroom
+      brightness: '128'
 
 # Living Room Lights on with Motion at Bedtime
 - alias: Living Room Lights on motion bedtime
@@ -37,8 +89,8 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '20:00:00'
-        before: '02:00:00'
+        after: '21:00:00'
+        before: '23:00:00'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002047afe
         below: 7
@@ -49,6 +101,32 @@
     data:
       entity_id: group.livingroom
       brightness: '85'
+
+# Living Room Lights on with Motion at early morning
+- alias: Living Room Lights on motion morning
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0002047afe
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: time
+        after: '23:00:00'
+        before: '6:00:00'
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0002047afe
+        below: 7
+      - condition: template
+        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+  action:
+    service: light.turn_on
+    data:
+      entity_id: group.livingroom
+      brightness: '30'
 
 # Living Room Lights off without Motion
 - alias: Living Room Lights off no motion

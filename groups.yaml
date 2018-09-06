@@ -318,15 +318,16 @@ office_auto:
     - automation.turn_off_office_lights_above_lux
     - automation.turn_on_office_lights_with_motion
     - automation.turn_office_lights_without_motion_one_min
-    - automation.office_auto_100
-    - automation.office_auto_75
-    - automation.office_auto_50
+    - automation.turn_on_office_lights_with_motion_75
+    - automation.turn_on_office_lights_with_motion_65
 
 livingroom_auto:
   view: no
   name: Living Room Automations
   entities:
     - automation.living_room_lights_on_motion
+    - automation.living_room_lights_on_motion_75
+    - automation.living_room_lights_on_motion_50
     - automation.living_room_lights_on_motion_bedtime
     - automation.living_room_lights_off_no_motion
     - automation.turn_off_living_room_lights_above_lux

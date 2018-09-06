@@ -45,7 +45,7 @@
       entity_id: sensor.office_motion_motion_sensor
       to: 'off'
       for:
-        minutes: 3
+        minutes: 6
     condition:
       condition: and
       conditions:
