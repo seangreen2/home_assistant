@@ -39,11 +39,16 @@
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002047afe
         below: 7
-      - condition: time
-        after: '19:00:00'
-        before: '20:00:00'
       - condition: template
         value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+      - condition: or
+        conditions:
+          - condition: time
+            after: '19:00:00'
+            before: '20:00:00'
+          - condition: sun
+            after: sunset
+            after_offset: "00:00:00"
   action:
     service: light.turn_on
     data:
@@ -65,11 +70,16 @@
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002047afe
         below: 7
-      - condition: time
-        after: '20:00:00'
-        before: '21:00:00'
       - condition: template
         value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+      - condition: or
+        conditions:
+          - condition: time
+            after: '20:00:00'
+            before: '21:00:00'
+          - condition: sun
+            after: sunset
+            after_offset: "02:00:00"
   action:
     service: light.turn_on
     data:
@@ -88,14 +98,19 @@
       - condition: state
         entity_id: group.family
         state: 'home'
-      - condition: time
-        after: '21:00:00'
-        before: '23:00:00'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002047afe
         below: 7
       - condition: template
         value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+      - condition: or
+        conditions:
+          - condition: time
+            after: '21:00:00'
+            before: '23:00:00'
+          - condition: sun
+            after: sunset
+            after_offset: "04:00:00"
   action:
     service: light.turn_on
     data:
