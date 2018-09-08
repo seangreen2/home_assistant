@@ -23,7 +23,7 @@
   action:
     service: light.turn_on
     data:
-      entity_id: group.bedroom_media
+      entity_id: light.bedroom
       brightness: '255'
 
 # Bedroom Lights off without Motion
@@ -37,5 +37,5 @@
   action:
     service: light.turn_off
     data:
-      entity_id: group.bedroom_media
+      entity_id: light.bedroom
       transition: 2

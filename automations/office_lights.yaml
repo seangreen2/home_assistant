@@ -7,14 +7,14 @@
     condition:
       - condition: numeric_state
         entity_id: sensor.office_lux
-        below: '16'
+        below: '6'
       - condition: time
         after: '05:00:00'
-        before: '20:00:00'
+        before: '19:00:00'
     action:
       service: light.turn_on
       data:
-        entity_id: group.office_lights
+        entity_id: light.office
         brightness: '255'
 
 # Office Motion Lights 75
@@ -24,23 +24,15 @@
       entity_id: sensor.office_motion_motion_sensor
       to: 'on'
     condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          below: '16'
-        - condition: or
-          conditions:
-            - condition: time
-              after: '19:00:00'
-              before: '20:00:00'
-            - condition: sun
-              after: sunset
-              after_offset: "00:00:00"
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: '{{ state.attributes.elevation }}'
+        below: -6.0
+        above: -18.0
     action:
       service: light.turn_on
       data:
-        entity_id: group.office_lights
+        entity_id: light.office
         brightness: '190'
 
 # Office Motion Lights 65
@@ -50,23 +42,14 @@
       entity_id: sensor.office_motion_motion_sensor
       to: 'on'
     condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.office_lux
-          below: '16'
-        - condition: or
-          conditions:
-            - condition: time
-              after: '20:00:00'
-              before: '21:00:00'
-            - condition: sun
-              after: sunset
-              after_offset: "02:00:00"
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: '{{ state.attributes.elevation }}'
+        below: -18.0
     action:
       service: light.turn_on
       data:
-        entity_id: group.office_lights
+        entity_id: light.office
         brightness: '155'
 
 # Turn off Office Lights after one minute of no activity
@@ -88,7 +71,7 @@
     action:
       service: light.turn_off
       data:
-        entity_id: group.office_lights
+        entity_id: light.office
         transition: 2
 
 # Turn off Office lights above lux
@@ -104,5 +87,5 @@
     action:
       service: light.turn_off
       data:
-        entity_id: group.office_lights
+        entity_id: light.office
         transition: 2
