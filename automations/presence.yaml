@@ -21,7 +21,7 @@
       service: light.turn_on
       data:
         entity_id: group.livingroom
-        brightness: '255'
+        brightness_pct: '100'
         transition: '5'
 
 # Turn off lights when everyone leaves house

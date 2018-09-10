@@ -11,13 +11,13 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '07:00:00'
-        before: '21:00:00'
+        after: '04:00:00'
+        before: '22:00:00'
   action:
     service: light.turn_on
     data:
       entity_id: light.bathroom
-      brightness: '255'
+      brightness_pct: '100'
 
 # Bathroom Lights on with Motion at Bedtime
 - alias: Bathroom Lights on motion bedtime
@@ -32,34 +32,13 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '21:30:00'
+        after: '22:00:00'
         before: '04:00:00'
   action:
     service: light.turn_on
     data:
       entity_id: light.bathroom
-      brightness: '13'
-
-# Bathroom Lights on with Motion at early morning
-- alias: Bathroom Lights on motion early morning
-  trigger:
-    platform: state
-    entity_id: binary_sensor.motion_sensor_158d000237a64a
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: group.family
-        state: 'home'
-      - condition: time
-        after: '04:00:00'
-        before: '07:00:00'
-  action:
-    service: light.turn_on
-    data:
-      entity_id: light.bathroom
-      brightness: '155'
+      brightness_pct: '3'
 
 # Bathroom Lights off without Motion
 - alias: Bathroom Lights off no motion
@@ -69,6 +48,10 @@
     to: 'off'
     for:
       minutes: 1
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.humidity_158d0002478a21
+      below: '67'
   action:
     service: light.turn_off
     data:

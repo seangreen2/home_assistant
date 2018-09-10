@@ -23,7 +23,7 @@
       - service: light.turn_on
         data:
           entity_id: group.bedroom_media
-          brightness: '255'
+          brightness_pct: '100'
           transition: '1200'
       - service: media_player.volume_set
         data:
@@ -43,16 +43,3 @@
           minutes: '60'
       - service: homeassistant.turn_on
         entity_id: automation.bedroom_lights_off_no_motion
-
-# Turn lights off at night
-  - alias: 'Lights off at night'
-    trigger:
-      - platform: time
-        at: '23:59:59'
-    condition:
-      - condition: state
-        entity_id: group.family
-        state: 'home'
-    action:
-      - service: light.turn_off
-        entity_id: group.livingroom

@@ -10,19 +10,29 @@
       - condition: state
         entity_id: group.family
         state: 'home'
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002047afe
         below: 6
-      - condition: time
-        after: '06:00:00'
-        before: '19:00:00'
-      - condition: template
-        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: '{{ state.attributes.elevation }}'
+        below: 90.0
+        above: -6.0
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
   action:
     service: light.turn_on
     data:
       entity_id: light.living_room
-      brightness: '255'
+      brightness_pct: '100'
+      transition: 1
 
 # Living Room Lights on with Motion 75
 - alias: Living Room Lights on motion 75
@@ -36,18 +46,64 @@
       - condition: state
         entity_id: group.family
         state: 'home'
-      - condition: template
-        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
       - condition: numeric_state
         entity_id: sun.sun
         value_template: '{{ state.attributes.elevation }}'
         below: -6.0
         above: -15.0
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
   action:
     service: light.turn_on
     data:
       entity_id: light.living_room
-      brightness: '190'
+      brightness_pct: '75'
+      transition: 1
+
+# Living Room Lights on with Motion 75 transition
+- alias: Living Room Lights 75 transition
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      to: 'on'
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      below: -6.0
+      above: -15.0
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: state
+        entity_id: light.living_room
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: '{{ state.attributes.elevation }}'
+        below: -6.0
+        above: -15.0
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.living_room
+      brightness_pct: '75'
+      transition: 10
 
 # Living Room Lights on with Motion 50
 - alias: Living Room Lights on motion 50
@@ -61,18 +117,64 @@
       - condition: state
         entity_id: group.family
         state: 'home'
-      - condition: template
-        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
       - condition: numeric_state
         entity_id: sun.sun
         value_template: '{{ state.attributes.elevation }}'
         below: -15.0
         above: -25.0
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
   action:
     service: light.turn_on
     data:
       entity_id: light.living_room
-      brightness: '128'
+      brightness_pct: '50'
+      transition: 1
+
+# Living Room Lights on with Motion 50 transition
+- alias: Living Room Lights 50 transition
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      to: 'on'
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      below: -15.0
+      above: -25.0
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: state
+        entity_id: light.living_room
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: '{{ state.attributes.elevation }}'
+        below: -15.0
+        above: -25.0
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.living_room
+      brightness_pct: '50'
+      transition: 10
 
 # Living Room Lights on with Motion at Bedtime
 - alias: Living Room Lights on motion bedtime
@@ -86,17 +188,61 @@
       - condition: state
         entity_id: group.family
         state: 'home'
-      - condition: template
-        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
       - condition: numeric_state
         entity_id: sun.sun
         value_template: '{{ state.attributes.elevation }}'
         below: -25.0
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
   action:
     service: light.turn_on
     data:
       entity_id: light.living_room
-      brightness: '50'
+      brightness_pct: '20'
+      transition: 1
+
+# Living Room Lights on with Motion at Bedtime transition
+- alias: Living Room Lights bedtime transition
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      to: 'on'
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      below: -25.0
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: state
+        entity_id: light.living_room
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: '{{ state.attributes.elevation }}'
+        below: -25.0
+      - condition: or
+        conditions:
+          - condition: template
+            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.living_room
+      brightness_pct: '20'
+      transition: 10
 
 # Living Room Lights off without Motion
 - alias: Living Room Lights off no motion

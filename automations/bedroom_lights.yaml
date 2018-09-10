@@ -24,7 +24,7 @@
     service: light.turn_on
     data:
       entity_id: light.bedroom
-      brightness: '255'
+      brightness_pct: '100'
 
 # Bedroom Lights off without Motion
 - alias: Bedroom Lights off no motion

@@ -14,7 +14,7 @@
       service: light.turn_on
       data:
         entity_id: group.bedroom_media
-        brightness: '255'
+        brightness_pct: '100'
         transition: '7'
 
 # Lights turn off while media is playing
@@ -48,7 +48,7 @@
       service: light.turn_on
       data:
         entity_id: group.bedroom_media
-        brightness: '125'
+        brightness_pct: '25'
         transition: '3'
 
 # Lights turn off when media is unpaused
@@ -82,5 +82,5 @@
       service: light.turn_on
       data:
         entity_id: group.bedroom_media
-        brightness: '255'
-        transition: '3'
+        brightness_pct: '25'
+        transition: '5'
