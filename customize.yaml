@@ -112,6 +112,18 @@ binary_sensor.door_window_sensor_158d00023eb0bb:
   friendly_name: Sliding Door Sensor
 weather.dark_sky:
   friendly_name: Weather Forcast
+sensor.dark_sky_precip_intensity:
+  friendly_name: Precipitation Intensity
+sensor.dark_sky_wind_speed:
+  friendly_name: Wind Speed
+light.living_room:
+  icon: mdi:sofa
+light.bedroom:
+  icon: mdi:hotel
+light.office:
+  icon: mdi:keyboard
+light.bathroom:
+  icon: mdi:shower
 group.family:
   order: 1
 group.indoors:

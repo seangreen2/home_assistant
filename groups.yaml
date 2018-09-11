@@ -16,7 +16,6 @@ family:
   entities:
     - group.sean
     - group.emily
-    - sensor.work_commute_time
     - sensor.work_commute
 
 sean:
@@ -43,9 +42,10 @@ lights:
   name: Overview
   control: hidden
   entities:
-    - group.living_room_lights
-    - group.bedroom_lights
-    - group.office_lights
+    - light.living_room
+    - light.bedroom
+    - light.bathroom
+    - light.office
     - vacuum.rosie
     - sensor.plex
     - sensor.usps_mail
@@ -75,10 +75,9 @@ weather_two:
   entities:
     - sensor.dark_sky_cloud_coverage
     - sensor.dark_sky_nearest_storm_distance
+    - sensor.dark_sky_wind_speed
     - sensor.dark_sky_precip_probability
-    #  - input_boolean.weather
-
-
+    - sensor.dark_sky_precip_intensity
 
 ### ROOMS ###
 # LIVING ROOM
@@ -108,6 +107,7 @@ bedroom:
   icon: mdi:hotel
   entities:
     - group.bedroom_lights_full
+    - group.bathroom_lights
     - group.bedroom_full
     - media_player.bedroom_tv
     - media_player.bedroom_speaker
@@ -130,9 +130,17 @@ bedroom_lights_full:
   entities:
     - light.br1
     - light.br2
-    - light.brcl1
     - scene.mood_lighting
     - scene.bedroom_normal_lighting
+
+bathroom_lights:
+  name: Bathroom Lights
+  view: no
+  entities:
+    - light.ba1
+    - light.ba2
+    - light.ba3
+    - light.ba4
 
 bedroom_media:
   name: Bedroom Media
