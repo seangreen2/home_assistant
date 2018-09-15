@@ -34,10 +34,9 @@ To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmar
 - PiHole (Raspberry Pi Gen 1B)
 - Plex Server
 
-## Dashboard
-![1](https://i.imgur.com/Pm1EF5u.jpg)
-![2](https://i.imgur.com/7FXiCDn.jpg)
-![3](https://i.imgur.com/ICEhZFK.jpg)
-![4](https://i.imgur.com/dBqltpE.jpg)
-![5](https://i.imgur.com/9lztfUv.jpg)
-![6](https://i.imgur.com/ZZvm06v.jpg)
+## Dashboard (New Custom Theme!)
+![1](https://i.imgur.com/0anG8vT.jpg)
+![2](https://i.imgur.com/Z1Cs4SC.jpg)
+![3](https://i.imgur.com/49QStQb.jpg)
+![4](https://i.imgur.com/RjEg0SL.jpg)
+![5](https://i.imgur.com/pf8QbjK.jpg)
