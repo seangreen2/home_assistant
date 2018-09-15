@@ -53,8 +53,13 @@
     trigger:
       - platform: numeric_state
         entity_id: sensor.dark_sky_wind_speed
-        above: '69.9'
+        above: '70'
+        for:
+          minutes: 6
     condition:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
       - condition: time
         after: '08:00:00'
         before: '21:00:00'
@@ -67,6 +72,7 @@
         data:
           entity_id: media_player.office_speaker
           volume_level: .5
+      - delay: '00:00:02'
       - service: tts.google_say
         entity_id: media_player.welcome
         data:

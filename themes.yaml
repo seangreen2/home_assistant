@@ -1,47 +1,41 @@
-  alert_yellow:
-#    primary-text-color: '#f9c536'
-    paper-item-icon-color: '#f9c536'
-  alert_red:
-#    primary-text-color: '#ab1f23'
-    paper-item-icon-color: '#ab1f23'
-
   dark_theme:
     # Main colors
-    primary-color: '#5294E2'                                                        # Header
-    accent-color: '#E45E65'                                                         # Accent color
-    dark-primary-color: 'var(--accent-color)'                                       # Hyperlinks
-    light-primary-color: 'var(--accent-color)'                                      # Horizontal line in about
+    primary-color: '#2980b9'
+    accent-color: '#2980b9'
+    dark-primary-color: 'var(--accent-color)'
+    light-primary-color: 'var(--accent-color)'
     # Text colors
-    primary-text-color: '#FFFFFF'                                                   # Primary text colour, here is referencing dark-primary-color
-    text-primary-color: 'var(--primary-text-color)'                                 # Primary text colour
-    secondary-text-color: '#5294E2'                                                 # For secondary titles in more info boxes etc.
-    disabled-text-color: '#7F848E'                                                  # Disabled text colour
-    label-badge-border-color: 'green'                                               # Label badge border, just a reference value
+    primary-text-color: '#FFFFFF'
+    text-primary-color: 'var(--primary-text-color)'
+    secondary-text-color: '#b58e31'
+    disabled-text-color: '#777777'
+    label-badge-border-color: 'green'
+    # Sidebar
+    sidebar-icon-color: '#777777'
     # Background colors
-    primary-background-color: '#383C45'                                             # Settings background
-    secondary-background-color: '#383C45'                                           # Main card UI background
-    divider-color: 'rgba(0, 0, 0, .12)'                                             # Divider
-    # Table rows
-    table-row-background-color: '#353840'                                           # Table row
-    table-row-alternative-background-color: '#3E424B'                               # Table row alternative
+    primary-background-color: '#222222'
+    secondary-background-color: '#222222'
+    divider-color: 'rgba(0, 0, 0, .12)'
+    table-row-background-color: '#292929'
+    table-row-alternative-background-color: '#292929'
     # Nav Menu
-    paper-listbox-color: '#5294E2'                                                  # Navigation menu selection hoover
-    paper-listbox-background-color: '#2E333A'                                       # Navigation menu background
+    paper-listbox-color: '#777777'
+    paper-listbox-background-color: '#141414'
     paper-grey-50: 'var(--primary-text-color)'
-    paper-grey-200: '#414A59'                                                       # Navigation menu selection
+    paper-grey-200: '#222222'
     # Paper card
-    paper-card-header-color: 'var(--accent-color)'                                  # Card header text colour
-    paper-card-background-color: '#434954'                                          # Card background colour
-    paper-dialog-background-color: '#434954'                                        # Card dialog background colour
-    paper-item-icon-color: 'var(--primary-text-color)'                              # Icon color
-    paper-item-icon-active-color: '#F9C536'                                         # Icon color active
+    paper-card-header-color: 'var(--accent-color)'
+    paper-card-background-color: '#292929'
+    paper-dialog-background-color: '#292929'
+    paper-item-icon-color: 'var(--primary-text-color)'
+    paper-item-icon-active-color: '#b58e31'
     paper-item-icon_-_color: 'green'
-    paper-item-selected_-_background-color: '#434954'                               # Popup item select
+    paper-item-selected_-_background-color: '#292929'
     paper-tabs-selection-bar-color: 'green'
     # Labels
-    label-badge-red: 'var(--accent-color)'                                          # References the brand colour label badge border
-    label-badge-text-color: 'var(--primary-text-color)'                             # Now same as label badge border but that's a matter of taste
-    label-badge-background-color: '#2E333A'                                         # Same, but can also be set to transparent here
+    label-badge-red: 'var(--accent-color)'
+    label-badge-text-color: 'var(--primary-text-color)'
+    label-badge-background-color: '#222222'
     # Switches
     paper-toggle-button-checked-button-color: 'var(--accent-color)'
     paper-toggle-button-checked-bar-color: 'var(--accent-color)'
@@ -59,5 +53,5 @@
     paper-slider-disabled-active-color: 'var(--disabled-text-color)'
     paper-slider-disabled-secondary-color: 'var(--disabled-text-color)'
     # Google colors
-    google-red-500: '#E45E65'
-    google-green-500: '#39E949'
+    google-red-500: '#b58e31'
+    google-green-500: '#2980b9'

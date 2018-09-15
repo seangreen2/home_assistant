@@ -49,7 +49,7 @@
       data:
         entity_id: group.bedroom_media
         brightness_pct: '25'
-        transition: '3'
+        transition: '7'
 
 # Lights turn off when media is unpaused
   - alias: 'Bedroom player unpaused'
@@ -83,4 +83,4 @@
       data:
         entity_id: group.bedroom_media
         brightness_pct: '25'
-        transition: '5'
+        transition: '7'

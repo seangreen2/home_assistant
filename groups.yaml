@@ -75,7 +75,6 @@ weather_two:
   entities:
     - sensor.dark_sky_cloud_coverage
     - sensor.dark_sky_nearest_storm_distance
-    - sensor.dark_sky_wind_speed
     - sensor.dark_sky_precip_probability
     - sensor.dark_sky_precip_intensity
 
@@ -350,6 +349,7 @@ bedroom_auto:
     - automation.bedroom_lights_off_no_motion
     - automation.bathroom_lights_on_motion
     - automation.bathroom_lights_on_motion_bedtime
+    - automation.bathroom_lights_on_motion_early_morning
     - automation.bathroom_lights_off_no_motion
 
 automation:
@@ -364,6 +364,7 @@ automation:
     - automation.voice_sean_is_home
     - automation.voice_emily_is_home
     - automation.morning_alarm_lights
+    - automation.hurricane_winds
 
 automedia:
   view: no
