@@ -35,7 +35,7 @@ To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmar
 - Plex Server
 
 ## Dashboard (New Custom Theme!)
-![1](https://i.imgur.com/0anG8vT.jpg)
+![1](https://i.imgur.com/p0VlC8e.jpg)
 ![2](https://i.imgur.com/Z1Cs4SC.jpg)
 ![3](https://i.imgur.com/49QStQb.jpg)
 ![4](https://i.imgur.com/RjEg0SL.jpg)
