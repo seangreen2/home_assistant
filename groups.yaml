@@ -177,25 +177,13 @@ office_full:
     - sensor.laptop_socket
 
 ### LIGHTS ###
-Living Room Lights:
-  icon: mdi:sofa
+bedtime_lights:
+  name: Bedtime Lights
+  view: no
   entities:
-    - light.lr1
-    - light.lr2
-
-Bedroom Lights:
-  icon: mdi:hotel
-  entities:
-    - light.br1
-    - light.br2
-    - light.brcl1
-
-Office Lights:
-  icon: mdi:keyboard
-  entities:
-    - light.of1
-    - light.of2
-
+    - light.bedroom
+    - light.office
+    - light.living_room
 
 ### MEDIA ###
 media:
@@ -310,9 +298,21 @@ auto:
     - group.automation
     - group.livingroom_auto
     - group.bedroom_auto
+    - group.bedtime_auto
     - group.office_auto
     - group.automedia
     - group.scene
+
+bedtime_auto:
+  view: no
+  name: Bedtime Automations
+  entities:
+    - automation.bedtime
+    - automation.bedtime_emily
+    - automation.morning
+    - automation.morning_emily
+    - automation.rain_sounds
+    - automation.rain_sounds_off
 
 office_auto:
   view: no

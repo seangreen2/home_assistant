@@ -43,24 +43,16 @@ panel_custom:
     url_path: floorplan
     config: !include floorplan.yaml
 
-#binary_sensor:
-#  - platform: mqtt
-#    state_topic: dummy/floorplan/sensor
-#    name: Floorplan
-
-
-# CUSTOM WEATHER CARD
-weather:
-  - platform: yweather
-    woeid: !secret woeid
-  - platform: darksky
-    api_key: !secret dark_sky_api_key
-
 input_boolean:
-  weather:
+  bedtime_sean:
+    name: Sean Bedtime
+    initial: false
+
+  bedtime_emily:
+    name: Emily Bedtime
+    initial: false
 
 sun:
-
 
 # BEGIN CONFIG
 config:
@@ -68,7 +60,6 @@ http:
   api_password: !secret api_password
   base_url: !secret base_url
   ip_ban_enabled: true
-  login_attempts_threshold: 3
   cors_allowed_origins:
 
 updater:
@@ -85,8 +76,11 @@ history:
   include:
     domains:
       - switch
-      - light
     entities:
+      - light.bathroom
+      - light.bedroom
+      - light.living_room
+      - light.office
       - device_tracker.androidb5fd101061eefa11
       - device_tracker.android92a8793ea8df7b4e
       - sensor.living_room_thermostat_hvac_state
@@ -101,8 +95,11 @@ recorder:
   include:
     domains:
       - switch
-      - light
     entities:
+      - light.bathroom
+      - light.bedroom
+      - light.living_room
+      - light.office
       - device_tracker.androidb5fd101061eefa11
       - device_tracker.android92a8793ea8df7b4e
       - sensor.living_room_thermostat_hvac_state
@@ -184,6 +181,32 @@ sensor:
         friendly_name: 'Laptop Power'
         value_template: '{{states.switch.laptop_socket.attributes.current_power_w}}'
 
+  - platform: template
+    sensors:
+      hvac:
+        friendly_name: "HVAC Status"
+        value_template: >
+          {% if is_state('sensor.living_room_thermostat_hvac_state', 'off') %}
+             'Off'
+          {% elif is_state('sensor.living_room_thermostat_hvac_state', 'cooling') %}
+             'Cooling'
+          {%elif is_state('sensor.living_room_thermostat_hvac_state', 'heating') %}
+             'Heating'
+          {% endif %}
+        entity_picture_template: >-
+          {% if is_state('sensor.living_room_thermostat_hvac_state', 'off') %}
+             /local/nest_off.png
+          {% elif is_state('sensor.living_room_thermostat_hvac_state', 'cooling') %}
+             /local/nest_cool.png
+          {% elif is_state('sensor.living_room_thermostat_hvac_state', 'heating') %}
+             /local/nest_heat.png
+          {% endif %}
+
+  - platform: template
+    sensors:
+      hvac_pic:
+        value_template: '{{states.sensor.hvac.attributes.entity_picture}}'
+
   - platform: darksky
     api_key: !secret dark_sky_api_key
     update_interval: '00:05:00'
@@ -194,6 +217,8 @@ sensor:
       - humidity
       - cloud_cover
       - nearest_storm_distance
+      - precip_intensity
+      - wind_speed
 
   - platform: systemmonitor
     resources:
@@ -248,6 +273,9 @@ sensor:
   - platform: pushbullet
     api_key: !secret pushbullet_api
 
+  - platform: season
+    type: astronomical
+
 # USPS Informed Delivery
 #usps:
 #  username: !secret usps_user
@@ -271,7 +299,7 @@ light:
 hue:
   bridges:
     - host: !secret hue_ip
-      allow_hue_groups: false
+      allow_hue_groups: true
 
 # Wemo
 wemo:
@@ -326,8 +354,14 @@ neato:
   username: !secret neato_user
   password: !secret neato_password
 
+# IFTTT
+ifttt:
+  key: !secret ifttt_key
+
+
 
 ##########################
 scene: !include scenes.yaml
 group: !include groups.yaml
 automation: !include_dir_merge_list automations
+script: !include scripts.yaml

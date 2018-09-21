@@ -1,0 +1,89 @@
+  bedtime:
+    sequence:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: group.sean
+            state: 'home'
+          - condition: time
+            after: '20:00:00'
+            before: '02:00:00'
+          - condition: template
+            value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT  condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT conditio
+      - service: light.turn_off
+        data:
+          entity_id: group.bedtime_lights
+          transition: 2
+      - service: automation.turn_off
+        entity_id: automation.bedroom_lights_on_motion
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.bedtime_sean
+
+  bedtime_emily:
+    sequence:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: group.emily
+            state: 'home'
+          - condition: time
+            after: '19:00:00'
+            before: '02:00:00'
+          - condition: template
+            value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+          - condition: template
+            value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+      - service: light.turn_off
+        data:
+          entity_id: light.bedroom
+          transition: 2
+      - service: automation.turn_off
+        entity_id: automation.bedroom_lights_on_motion
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.bedtime_emily
+
+  morning:
+    sequence:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.bedtime_sean
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: group.sean
+            state: 'home'
+          - condition: state
+            entity_id: input_boolean.bedtime_emily
+            state: 'off'
+      - service: automation.turn_on
+        entity_id: automation.bedroom_lights_on_motion
+#      - service: automation.trigger
+#        entity_id: automation.rain_sounds_off
+
+  morning_emily:
+    sequence:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.bedtime_emily
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: group.emily
+            state: 'home'
+          - condition: state
+            entity_id: input_boolean.bedtime_sean
+            state: 'off'
+      - service: automation.turn_on
+        entity_id: automation.bedroom_lights_on_motion
+#      - service: automation.trigger
+#        entity_id: automation.rain_sounds_off

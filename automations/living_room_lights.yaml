@@ -103,7 +103,7 @@
     data:
       entity_id: light.living_room
       brightness_pct: '75'
-      transition: 10
+      transition: 30
 
 # Living Room Lights on with Motion 50
 - alias: Living Room Lights on motion 50
@@ -174,7 +174,7 @@
     data:
       entity_id: light.living_room
       brightness_pct: '50'
-      transition: 10
+      transition: 30
 
 # Living Room Lights on with Motion at Bedtime
 - alias: Living Room Lights on motion bedtime
@@ -242,7 +242,7 @@
     data:
       entity_id: light.living_room
       brightness_pct: '20'
-      transition: 10
+      transition: 30
 
 # Living Room Lights off without Motion
 - alias: Living Room Lights off no motion
