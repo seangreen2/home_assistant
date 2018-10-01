@@ -6,8 +6,8 @@
             entity_id: group.sean
             state: 'home'
           - condition: time
-            after: '20:00:00'
-            before: '02:00:00'
+            after: '21:00:00'
+            before: '08:00:00'
           - condition: template
             value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
           - condition: template
@@ -18,12 +18,12 @@
             value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT  condition
           - condition: template
             value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT conditio
+      - service: automation.turn_off
+        entity_id: automation.bedroom_lights_on_motion
       - service: light.turn_off
         data:
           entity_id: group.bedtime_lights
           transition: 2
-      - service: automation.turn_off
-        entity_id: automation.bedroom_lights_on_motion
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.bedtime_sean
@@ -37,17 +37,17 @@
             state: 'home'
           - condition: time
             after: '19:00:00'
-            before: '02:00:00'
+            before: '08:00:00'
           - condition: template
             value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
           - condition: template
             value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+      - service: automation.turn_off
+        entity_id: automation.bedroom_lights_on_motion
       - service: light.turn_off
         data:
           entity_id: light.bedroom
           transition: 2
-      - service: automation.turn_off
-        entity_id: automation.bedroom_lights_on_motion
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.bedtime_emily

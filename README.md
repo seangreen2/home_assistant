@@ -9,8 +9,8 @@ You shouldn't have to work the room, the room should work you. True home automat
 Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
 
 ## Current Goals
+- My Hue lights have a strange issue of not coming at full brightness at random times despite what my YAML says. To fix this, I've added a one second delay on all lighting automations followed by another brightness command to ensure the lights always come on to the brightness they should. So far this fix has a 100% success rate on all lighting.
 - (DONE) Have all lights turn on/off with motion and never have to use a physical switch or voice commands again. I have some Xiaomi equipment coming in which should finally complete this.
-- ~~Have lights dynamically adjust brightness depending on the room's current ambient light. I've been testing this with my Office Lights with some good results.~~ This hasn't been as satisfactory as I had hoped. After a lot more testing I have discovered light levels are super finicky. I've changed to having light levels adjust ~~based on a time and sunset~~ sun elevation instead.
 
 #### Custom Components
 To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmarkcole/Hue-sensors-HASS

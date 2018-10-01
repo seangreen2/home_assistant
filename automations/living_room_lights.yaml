@@ -28,11 +28,16 @@
       - condition: template
         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
   action:
-    service: light.turn_on
-    data:
-      entity_id: light.living_room
-      brightness_pct: '100'
-      transition: 1
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: '100'
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: '100'
 
 # Living Room Lights on with Motion 75
 - alias: Living Room Lights on motion 75
@@ -61,11 +66,16 @@
       - condition: template
         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
   action:
-    service: light.turn_on
-    data:
-      entity_id: light.living_room
-      brightness_pct: '75'
-      transition: 1
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: '75'
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: '75'
 
 # Living Room Lights on with Motion 75 transition
 - alias: Living Room Lights 75 transition
@@ -132,11 +142,16 @@
       - condition: template
         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
   action:
-    service: light.turn_on
-    data:
-      entity_id: light.living_room
-      brightness_pct: '50'
-      transition: 1
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: '50'
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: '50'
 
 # Living Room Lights on with Motion 50 transition
 - alias: Living Room Lights 50 transition
@@ -202,11 +217,16 @@
       - condition: template
         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
   action:
-    service: light.turn_on
-    data:
-      entity_id: light.living_room
-      brightness_pct: '20'
-      transition: 1
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: '20'
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: '20'
 
 # Living Room Lights on with Motion at Bedtime transition
 - alias: Living Room Lights bedtime transition

@@ -12,12 +12,18 @@
         state: 'home'
       - condition: time
         after: '07:00:00'
-        before: '22:00:00'
+        before: '21:30:00'
   action:
-    service: light.turn_on
-    data:
-      entity_id: light.bathroom
-      brightness_pct: '100'
+    - service: light.turn_on
+      data:
+        entity_id: light.bathroom
+        brightness_pct: '100'
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.bathroom
+        brightness_pct: '100'
 
 # Bathroom Lights on with Motion at Bedtime
 - alias: Bathroom Lights on motion bedtime
@@ -32,13 +38,19 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '22:00:00'
+        after: '21:30:00'
         before: '04:00:00'
   action:
-    service: light.turn_on
-    data:
-      entity_id: light.bathroom
-      brightness_pct: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.bathroom
+        brightness_pct: '1'
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.bathroom
+        brightness_pct: '1'
 
 # Bathroom Lights on with Motion at Early Morning
 - alias: Bathroom Lights on motion early morning
@@ -59,11 +71,56 @@
         after: '04:00:00'
         before: '07:00:00'
   action:
-    service: light.turn_on
-    data:
+    - service: light.turn_on
+      data:
+        entity_id: light.bathroom
+        brightness_pct: '100'
+        transition: 60
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.bathroom
+        brightness_pct: '100'
+        transition: 60
+
+# Bathroom Lights dim from full in bed
+- alias: Bathroom Lights Dim in Bed
+  trigger:
+    - platform: state
+      entity_id: input_boolean.sean
+      to: 'on'
+    - platform: state
+      entity_id: input_boolean.emily
+      to: 'on'
+  condition:
+    - condition: time
+      after: '19:00:00'
+      before: '23:00:00'
+    - condition: state
       entity_id: light.bathroom
-      brightness_pct: '100'
-      transition: 60
+      state: 'on'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_boolean.sean
+          state: 'on'
+        - condition: state
+          entity_id: input_boolean.emily
+          state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bathroom
+        brightness_pct: '1'
+        transition: 3
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.bathroom
+        brightness_pct: '1'
+        transition: 3
 
 # Bathroom Lights off without Motion night
 - alias: Bathroom Lights off no motion night

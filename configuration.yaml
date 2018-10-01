@@ -43,6 +43,10 @@ panel_custom:
     url_path: floorplan
     config: !include floorplan.yaml
 
+weather:
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+
 input_boolean:
   bedtime_sean:
     name: Sean Bedtime
@@ -181,32 +185,6 @@ sensor:
         friendly_name: 'Laptop Power'
         value_template: '{{states.switch.laptop_socket.attributes.current_power_w}}'
 
-  - platform: template
-    sensors:
-      hvac:
-        friendly_name: "HVAC Status"
-        value_template: >
-          {% if is_state('sensor.living_room_thermostat_hvac_state', 'off') %}
-             'Off'
-          {% elif is_state('sensor.living_room_thermostat_hvac_state', 'cooling') %}
-             'Cooling'
-          {%elif is_state('sensor.living_room_thermostat_hvac_state', 'heating') %}
-             'Heating'
-          {% endif %}
-        entity_picture_template: >-
-          {% if is_state('sensor.living_room_thermostat_hvac_state', 'off') %}
-             /local/nest_off.png
-          {% elif is_state('sensor.living_room_thermostat_hvac_state', 'cooling') %}
-             /local/nest_cool.png
-          {% elif is_state('sensor.living_room_thermostat_hvac_state', 'heating') %}
-             /local/nest_heat.png
-          {% endif %}
-
-  - platform: template
-    sensors:
-      hvac_pic:
-        value_template: '{{states.sensor.hvac.attributes.entity_picture}}'
-
   - platform: darksky
     api_key: !secret dark_sky_api_key
     update_interval: '00:05:00'
@@ -269,9 +247,6 @@ sensor:
     destination: !secret travel_destination
     region: 'NA'
     name: Work Commute
-
-  - platform: pushbullet
-    api_key: !secret pushbullet_api
 
   - platform: season
     type: astronomical

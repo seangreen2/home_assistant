@@ -118,7 +118,6 @@ bedroom_full:
     - sensor.bedroom_temperature_f
     - sensor.bedroom_motion_sensor
     - sensor.bedroom_battery
-    - sensor.phone_socket
     - binary_sensor.motion_sensor_158d000237a64a
     - sensor.humidity_158d0002478a21
     - sensor.illumination_158d000237a64a

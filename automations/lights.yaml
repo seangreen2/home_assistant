@@ -1,5 +1,5 @@
 # Morning Light Alarm
-  - alias: 'Morning Alarm Lights'
+#  - alias: 'Morning Alarm Lights'
     trigger:
       - platform: time
         at: '05:40:00'
@@ -14,11 +14,11 @@
           state: 'home'
         - condition: time
           weekday:
-            - mon
-            - tue
-            - wed
-            - thu
-            - fri
+  #          - mon
+  #          - tue
+  #          - wed
+  #          - thu
+  #          - fri
     action:
       - service: light.turn_on
         data:

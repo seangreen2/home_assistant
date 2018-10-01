@@ -20,11 +20,16 @@
         below: 90.0
         above: -6.0
     action:
-      service: light.turn_on
-      data:
-        entity_id: light.office
-        brightness_pct: '100'
-        transition: 1
+      - service: light.turn_on
+        data:
+          entity_id: light.office
+          brightness_pct: '100'
+      - delay:
+          seconds: '1'
+      - service: light.turn_on
+        data:
+          entity_id: light.office
+          brightness_pct: '100'
 
 # Office Motion Lights 75
   - alias: Turn on office lights with motion 75
@@ -45,11 +50,16 @@
         below: -6.0
         above: -18.0
     action:
-      service: light.turn_on
-      data:
-        entity_id: light.office
-        brightness_pct: '75'
-        transition: 1
+      - service: light.turn_on
+        data:
+          entity_id: light.office
+          brightness_pct: '75'
+      - delay:
+          seconds: '1'
+      - service: light.turn_on
+        data:
+          entity_id: light.office
+          brightness_pct: '75'
 
 # Office Motion Lights 75 transition
   - alias: Turn on office lights 75 transition
@@ -99,11 +109,16 @@
         value_template: '{{ state.attributes.elevation }}'
         below: -18.0
     action:
-      service: light.turn_on
-      data:
-        entity_id: light.office
-        brightness_pct: '60'
-        transition: 1
+      - service: light.turn_on
+        data:
+          entity_id: light.office
+          brightness_pct: '60'
+      - delay:
+          seconds: '1'
+      - service: light.turn_on
+        data:
+          entity_id: light.office
+          brightness_pct: '60'
 
 # Office Motion Lights 65 transition
   - alias: Turn on office lights 65 transition
