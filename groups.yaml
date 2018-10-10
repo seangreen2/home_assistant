@@ -108,6 +108,7 @@ bedroom:
     - group.bedroom_lights_full
     - group.bathroom_lights
     - group.bedroom_full
+    - group.input
     - media_player.bedroom_tv
     - media_player.bedroom_speaker
 
@@ -119,6 +120,7 @@ bedroom_full:
     - sensor.bedroom_motion_sensor
     - sensor.bedroom_battery
     - binary_sensor.motion_sensor_158d000237a64a
+    - sensor.temperature_158d0002478a21
     - sensor.humidity_158d0002478a21
     - sensor.illumination_158d000237a64a
 
@@ -128,8 +130,6 @@ bedroom_lights_full:
   entities:
     - light.br1
     - light.br2
-    - scene.mood_lighting
-    - scene.bedroom_normal_lighting
 
 bathroom_lights:
   name: Bathroom Lights
@@ -279,14 +279,15 @@ weatherdetails:
     - sensor.dark_sky_nearest_storm_distance
     - sensor.dark_sky_precip_probability
 
-### GRAPHS ###
-graphs:
+### Input Booleans ###
+input:
   view: no
-  name: Power Usage
-  icon: mdi:chart-areaspline
+  name: Input Booleans
+  icon: mdi:toggle_switch
   entities:
-    - history_graph.lights
-    - history_graph.temperature
+    - input_boolean.bedtime_sean
+    - input_boolean.bedtime_emily
+    - input_boolean.showering
 
 ### AUTOMATIONS ###
 auto:
@@ -350,6 +351,8 @@ bedroom_auto:
     - automation.bathroom_lights_on_motion_bedtime
     - automation.bathroom_lights_on_motion_early_morning
     - automation.bathroom_lights_off_no_motion
+    - automation.showering
+    - automation.not_showering
 
 automation:
   view: no

@@ -147,7 +147,7 @@
     entity_id: binary_sensor.motion_sensor_158d000237a64a
     to: 'off'
     for:
-      minutes: 5
+      minutes: 3
   condition:
     - condition: time
       after: '04:20:01'
@@ -158,26 +158,52 @@
       entity_id: light.bathroom
       transition: 2
 
+# Detect if someone is showering and disables lights off automations
+- alias: Showering
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.humidity_158d0002478a21
+    above: '66'
+  action:
+    - service: automation.turn_off
+      entity_id: automation.bathroom_lights_off_no_motion
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.showering
+
+# Detect if someone is not showering and enables lights off automations
+- alias: Not Showering
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.humidity_158d0002478a21
+    below: '66'
+  action:
+    - service: automation.turn_on
+      entity_id: automation.bathroom_lights_off_no_motion
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.showering
+
 # Turn on air fresh for one minute each hour when home
-#  - alias: Turn on air fresh
-#    trigger:
-#      platform: time
-#      hours: '/1'
-#      minutes: '00'
-#      seconds: '00'
-#    condition:
-#      condition: and
-#      conditions:
-#        - condition: state
-#          entity_id: group.family
-#          state: 'home'
-#        - condition: time
-#          after: '06:00:00'
-#          before: '22:15:00'
-#    action:
-#      - service: switch.turn_on
-#        entity_id:  switch.smart_plug_one
-#      - delay:
-#          minutes: '10'
-#      - service: switch.turn_off
-#        entity_id:  switch.smart_plug_one
+- alias: Turn on air fresh
+  trigger:
+    platform: time
+    hours: '/1'
+    minutes: '00'
+    seconds: '00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: time
+        after: '06:00:00'
+        before: '22:15:00'
+  action:
+    - service: switch.turn_on
+      entity_id:  switch.smart_plug_one
+    - delay:
+        minutes: '10'
+    - service: switch.turn_off
+      entity_id:  switch.smart_plug_one

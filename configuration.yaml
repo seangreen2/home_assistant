@@ -56,6 +56,10 @@ input_boolean:
     name: Emily Bedtime
     initial: false
 
+  showering:
+    name: Showering
+    initial: false
+
 sun:
 
 # BEGIN CONFIG
