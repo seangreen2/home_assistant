@@ -43,14 +43,14 @@
   action:
     - service: light.turn_on
       data:
-        entity_id: light.bathroom
-        brightness_pct: '1'
+        entity_id: light.ba4
+        brightness_pct: '10'
     - delay:
         seconds: '1'
     - service: light.turn_on
       data:
-        entity_id: light.bathroom
-        brightness_pct: '1'
+        entity_id: light.ba4
+        brightness_pct: '10'
 
 # Bathroom Lights on with Motion at Early Morning
 - alias: Bathroom Lights on motion early morning
@@ -89,9 +89,11 @@
   trigger:
     - platform: state
       entity_id: input_boolean.sean
+      from: 'off'
       to: 'on'
     - platform: state
       entity_id: input_boolean.emily
+      from: 'off'
       to: 'on'
   condition:
     - condition: time
@@ -100,14 +102,6 @@
     - condition: state
       entity_id: light.bathroom
       state: 'on'
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_boolean.sean
-          state: 'on'
-        - condition: state
-          entity_id: input_boolean.emily
-          state: 'on'
   action:
     - service: light.turn_on
       data:
@@ -184,7 +178,7 @@
       data:
         entity_id: input_boolean.showering
 
-# Turn on air fresh for one minute each hour when home
+# Turn on air fresh for ten minutes each hour when home
 - alias: Turn on air fresh
   trigger:
     platform: time

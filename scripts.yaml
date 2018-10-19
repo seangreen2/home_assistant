@@ -6,7 +6,7 @@
             entity_id: group.sean
             state: 'home'
           - condition: time
-            after: '21:00:00'
+            after: '20:00:00'
             before: '08:00:00'
           - condition: template
             value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition

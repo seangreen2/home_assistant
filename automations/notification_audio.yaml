@@ -19,9 +19,9 @@
           entity_id: media_player.office_speaker
           volume_level: .5
       - service: tts.google_say
-        entity_id: media_player.welcome
+        entity_id: media_player.living_room_speaker
         data:
-          message: 'Sean is home!'
+          message: 'Sean, the Lord of the Manor and King of the Castle is home!'
 
 # TTS Emily is Home
   - alias: 'Voice Emily is Home'
@@ -44,7 +44,7 @@
           entity_id: media_player.office_speaker
           volume_level: .5
       - service: tts.google_say
-        entity_id: media_player.welcome
+        entity_id: media_player.living_room_speaker
         data:
           message: 'Emily is home!'
 
@@ -74,6 +74,6 @@
           volume_level: .5
       - delay: '00:00:02'
       - service: tts.google_say
-        entity_id: media_player.welcome
+        entity_id: media_player.living_room_speaker
         data:
           message: 'Warning! Wind speeds have reached Hurricane levels!'

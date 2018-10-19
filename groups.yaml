@@ -169,6 +169,7 @@ office_full:
   view: no
   entities:
     - switch.office_fan
+    - switch.smart_plug_one
     - sensor.office_temperature_f
     - sensor.office_motion_motion_sensor
     - sensor.office_battery
@@ -346,6 +347,8 @@ bedroom_auto:
   name: Bedroom Automations
   entities:
     - automation.bedroom_lights_on_motion
+    - automation.bedroom_lights_on_motion_75
+    - automation.bedroom_lights_on_motion_50
     - automation.bedroom_lights_off_no_motion
     - automation.bathroom_lights_on_motion
     - automation.bathroom_lights_on_motion_bedtime
@@ -367,6 +370,7 @@ automation:
     - automation.voice_emily_is_home
     - automation.morning_alarm_lights
     - automation.hurricane_winds
+    - automation.turn_on_air_fresh
 
 automedia:
   view: no

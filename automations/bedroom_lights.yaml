@@ -1,4 +1,4 @@
-# Bedroom Lights on with Motion
+# Bedroom Lights on with Motion 100
 - alias: Bedroom Lights on motion
   trigger:
     platform: state
@@ -10,9 +10,14 @@
       - condition: state
         entity_id: group.family
         state: 'home'
-      - condition: time
-        after: '08:00:00'
-        before: '21:00:00'
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: '{{ state.attributes.elevation }}'
+        below: 90.0
+        above: -6.0
+#      - condition: time
+#        after: '08:00:00'
+#        before: '21:00:00'
       - condition: template
         value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
       - condition: template
@@ -30,6 +35,81 @@
       data:
         entity_id: light.bedroom
         brightness_pct: '100'
+
+# Bedroom Lights on with Motion 75
+- alias: Bedroom Lights on motion 75
+  trigger:
+    platform: state
+    entity_id: sensor.bedroom_motion_sensor
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: '{{ state.attributes.elevation }}'
+        below: -6.0
+        above: -18.0
+#      - condition: time
+#        after: '08:00:00'
+#        before: '21:00:00'
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: '75'
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: '75'
+
+# Bedroom Lights on with Motion 50
+- alias: Bedroom Lights on motion 50
+  trigger:
+    platform: state
+    entity_id: sensor.bedroom_motion_sensor
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: '{{ state.attributes.elevation }}'
+        below: -18.0
+#      - condition: time
+#        after: '08:00:00'
+#        before: '21:00:00'
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: '50'
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: '50'
 
 # Bedroom Lights off without Motion
 - alias: Bedroom Lights off no motion
