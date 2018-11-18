@@ -118,12 +118,16 @@ sensor.dark_sky_wind_speed:
   friendly_name: Wind Speed
 light.living_room:
   icon: mdi:sofa
+  friendly_name: Living Room Lights
 light.bedroom:
   icon: mdi:hotel
+  friendly_name: Bedroom Lights
 light.office:
   icon: mdi:keyboard
+  friendly_name: Office Lights
 light.bathroom:
   icon: mdi:shower
+  friendly_name: Bathroom Lights
 group.family:
   order: 1
 group.indoors:

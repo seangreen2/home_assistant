@@ -44,7 +44,7 @@
       data:
         entity_id: group.livingroom
         brightness_pct: '25'
-        transition: '7'
+        transition: '4'
 
 # Lights turn off when media is unpaused
   - alias: 'Media player unpaused'

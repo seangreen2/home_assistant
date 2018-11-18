@@ -7,7 +7,7 @@
     condition:
       - condition: numeric_state
         entity_id: sensor.office_lux
-        below: '6'
+        below: '9'
       - condition: state
         entity_id: group.family
         state: 'home'

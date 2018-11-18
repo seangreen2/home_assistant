@@ -257,7 +257,7 @@
     entity_id: binary_sensor.motion_sensor_158d0002047afe
     to: 'off'
     for:
-      minutes: 13
+      minutes: 18
   action:
     service: light.turn_off
     data:

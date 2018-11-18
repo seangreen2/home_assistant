@@ -28,6 +28,8 @@
         data:
           entity_id: group.bedtime_lights
           transition: 2
+      - service: switch.turn_off
+        entity_id: switch.outside_lights
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.bedtime_sean

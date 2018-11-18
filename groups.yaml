@@ -22,13 +22,13 @@ sean:
   name: Sean
   view: no
   entities:
-    - device_tracker.androidb5fd101061eefa11
+    - device_tracker.404e36d4e5de
 
 emily:
   name: Emily
   view: no
   entities:
-    - device_tracker.android92a8793ea8df7b4e
+    - device_tracker.404e36d1fdd3
 
 gtracker:
   name: Google Tracker
@@ -94,6 +94,7 @@ livingroom_full:
   entities:
     - light.lr1
     - light.lr2
+    - switch.outside_lights
     - binary_sensor.door_window_sensor_158d00023eb0bb
     - binary_sensor.motion_sensor_158d0002047afe
     - sensor.illumination_158d0002047afe
@@ -116,8 +117,8 @@ bedroom_full:
   name: Bedroom
   view: no
   entities:
-    - sensor.bedroom_temperature_f
     - sensor.bedroom_motion_sensor
+    - sensor.bedroom_temperature_f
     - sensor.bedroom_battery
     - binary_sensor.motion_sensor_158d000237a64a
     - sensor.temperature_158d0002478a21
@@ -184,6 +185,7 @@ bedtime_lights:
     - light.bedroom
     - light.office
     - light.living_room
+    - light.bathroom
 
 ### MEDIA ###
 media:
@@ -363,14 +365,14 @@ automation:
   entities:
     - automation.away_mode
     - automation.lights_on_in_the_evening
-    - automation.lights_off_at_night
     - automation.nest_normal_mode
     - automation.nest_normal_mode_google_tracker
     - automation.voice_sean_is_home
     - automation.voice_emily_is_home
     - automation.morning_alarm_lights
-    - automation.hurricane_winds
     - automation.turn_on_air_fresh
+    - automation.outside_lights_on_at_sunset
+    - automation.outside_lights_off_at_ten
 
 automedia:
   view: no

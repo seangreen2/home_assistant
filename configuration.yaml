@@ -46,6 +46,7 @@ panel_custom:
 weather:
   - platform: darksky
     api_key: !secret dark_sky_api_key
+    mode: daily
 
 input_boolean:
   bedtime_sean:
@@ -298,6 +299,8 @@ switch:
    host: !secret tplink_switch_one_ip
  - platform: tplink
    host: !secret tplink_switch_two_ip
+ - platform: tplink
+   host: !secret tplink_switch_three_ip
 
 
 # Text to speech

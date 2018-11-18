@@ -1,45 +1,78 @@
+# Adjusts light birghtness by time of day
+#  - alias: Set light level by time of day
+#    trigger:
+#      platform: state
+#      from: 'off'
+#      to: 'on'
+#      entity_id:
+#        - light.office
+#    action:
+#      data_template:
+  #    brightness: "{% if now().hour > 20 %}30{% elif now().hour < 7 %}30{% else %}200{% endif %}"
+      # color_temp: "{% if now().hour > 20 %}250{% elif now().hour < 7 %}250{% else %}1{% endif %}"
+#      service: light.turn_on
+#      entity_id: "{{trigger.entity_id}}"
+
+# Outside lights turn on at sunset
+  - alias: Outside lights on at sunset
+    trigger:
+      platform: sun
+      event: sunset
+    action:
+      service: homeassistant.turn_on
+      entity_id: switch.outside_lights
+
+# Outside lights off at 10pm
+  - alias: Outside lights off at ten
+    trigger:
+      platform: time
+      at: '22:00:00'
+    action:
+      service: homeassistant.turn_off
+      entity_id: switch.outside_lights
+
 # Morning Light Alarm
 #  - alias: 'Morning Alarm Lights'
-    trigger:
-      - platform: time
-        at: '05:40:00'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.emily
-          state: 'not_home'
-        - condition: state
-          entity_id: group.sean
-          state: 'home'
-        - condition: time
-          weekday:
+#    trigger:
+#      - platform: time
+#        at: '05:40:00'
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: group.emily
+#          state: 'not_home'
+#        - condition: state
+#          entity_id: group.sean
+#          state: 'home'
+#        - condition: time
+#          weekday:
   #          - mon
   #          - tue
   #          - wed
   #          - thu
   #          - fri
-    action:
-      - service: light.turn_on
-        data:
-          entity_id: group.bedroom_media
-          brightness_pct: '100'
-          transition: '1200'
-      - service: media_player.volume_set
-        data:
-          entity_id: media_player.living_room_speaker
-          volume_level: .6
-      - service: media_player.volume_set
-        data:
-          entity_id: media_player.office_speaker
-          volume_level: .5
-      - service: media_player.volume_set
-        data:
-          entity_id: media_player.bedroom_speaker
-          volume_level: .5
-      - service: homeassistant.turn_off
-        entity_id: automation.bedroom_lights_off_no_motion
-      - delay:
-          minutes: '60'
-      - service: homeassistant.turn_on
-        entity_id: automation.bedroom_lights_off_no_motion
+#    action:
+#      - service: light.turn_on
+#        data:
+#          entity_id: group.bedroom_media
+#          brightness_pct: '100'
+#          transition: '1200'
+#      - service: media_player.volume_set
+#        data:
+#          entity_id: media_player.living_room_speaker
+#          volume_level: .6
+#      - service: media_player.volume_set
+#        data:
+#          entity_id: media_player.office_speaker
+#          volume_level: .5
+#      - service: media_player.volume_set
+#        data:
+#          entity_id: media_player.bedroom_speaker
+#        volume_level: .5
+#      - service: homeassistant.turn_off
+#        entity_id: automation.bedroom_lights_off_no_motion
+#      - delay:
+#          minutes: '60'
+#      - service: homeassistant.turn_on
+#        entity_id: automation.bedroom_lights_off_no_motion
