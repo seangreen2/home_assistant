@@ -1,0 +1,29 @@
+# Christmas Tree on when home
+  - alias: 'Tree on when home'
+    trigger:
+      - platform: state
+        entity_id: group.family
+        to: home
+    action:
+      service: switch.turn_on
+      entity_id: switch.office_fan
+
+# Motion turns on Tree
+  - alias: Tree on motion
+    trigger:
+      platform: state
+      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      to: 'on'
+    action:
+      service: switch.turn_on
+      entity_id: switch.office_fan
+
+# Turn off tree when everyone leaves house
+  - alias: Tree off when away
+    trigger:
+      platform: state
+      entity_id: group.family
+      to: 'not_home'
+    action:
+      - service: switch.turn_off
+        entity_id: switch.office_fan

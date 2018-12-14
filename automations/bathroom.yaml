@@ -11,8 +11,8 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '07:00:00'
-        before: '21:30:00'
+        after: '07:30:00'
+        before: '21:00:00'
   action:
     - service: light.turn_on
       data:
@@ -27,6 +27,7 @@
 
 # Bathroom Lights on with Motion at Bedtime
 - alias: Bathroom Lights on motion bedtime
+  initial_state: off
   trigger:
     platform: state
     entity_id: binary_sensor.motion_sensor_158d000237a64a
@@ -38,8 +39,8 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '21:30:00'
-        before: '04:00:00'
+        after: '21:00:00'
+        before: '08:00:00'
   action:
     - service: light.turn_on
       data:
@@ -54,6 +55,7 @@
 
 # Bathroom Lights on with Motion at Early Morning
 - alias: Bathroom Lights on motion early morning
+  initial_state: off
   trigger:
     platform: state
     entity_id: binary_sensor.motion_sensor_158d000237a64a
@@ -69,7 +71,7 @@
         state: 'off'
       - condition: time
         after: '04:00:00'
-        before: '07:00:00'
+        before: '07:30:00'
   action:
     - service: light.turn_on
       data:
@@ -83,38 +85,6 @@
         entity_id: light.bathroom
         brightness_pct: '100'
         transition: 60
-
-# Bathroom Lights dim from full in bed
-- alias: Bathroom Lights Dim in Bed
-  trigger:
-    - platform: state
-      entity_id: input_boolean.sean
-      from: 'off'
-      to: 'on'
-    - platform: state
-      entity_id: input_boolean.emily
-      from: 'off'
-      to: 'on'
-  condition:
-    - condition: time
-      after: '19:00:00'
-      before: '23:00:00'
-    - condition: state
-      entity_id: light.bathroom
-      state: 'on'
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: light.bathroom
-        brightness_pct: '1'
-        transition: 3
-    - delay:
-        seconds: '1'
-    - service: light.turn_on
-      data:
-        entity_id: light.bathroom
-        brightness_pct: '1'
-        transition: 3
 
 # Bathroom Lights off without Motion night
 - alias: Bathroom Lights off no motion night
@@ -157,7 +127,7 @@
   trigger:
     platform: numeric_state
     entity_id: sensor.humidity_158d0002478a21
-    above: '66'
+    above: '68'
   action:
     - service: automation.turn_off
       entity_id: automation.bathroom_lights_off_no_motion
@@ -170,7 +140,7 @@
   trigger:
     platform: numeric_state
     entity_id: sensor.humidity_158d0002478a21
-    below: '66'
+    below: '68'
   action:
     - service: automation.turn_on
       entity_id: automation.bathroom_lights_off_no_motion

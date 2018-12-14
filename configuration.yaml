@@ -183,7 +183,7 @@ sensor:
     sensors:
       office_lux:
         friendly_name: 'Lux'
-        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.lux}}'
+        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.lx}}'
 
   - platform: template
     sensors:
@@ -247,6 +247,8 @@ sensor:
       - upload
 
   - platform: hue
+    ip_address: !secret hue_ip
+    token: !secret hue_token
 
   - platform: waze_travel_time
     origin: !secret travel_origin
@@ -256,6 +258,11 @@ sensor:
 
   - platform: season
     type: astronomical
+
+#  - platform: qbittorrent
+#    url: !secret qbit_http
+#    username: !secret qbit_user
+#    password: !secret qbit_password
 
 # USPS Informed Delivery
 #usps:
@@ -307,14 +314,22 @@ switch:
 tts:
   - platform: google
 
-# Network Mapping
+# Device Tracking
+#asuswrt:
+#  host: !secret router_ip
+#  protocol: telnet
+#  port: 23
+#  username: !secret router_user
+#  password: !secret router_password
+
 device_tracker:
   - platform: asuswrt
     host: !secret router_ip
     protocol: telnet
+#    port: 23
     username: !secret router_user
     password: !secret router_password
-    interval_seconds: 5
+    interval_seconds: 10
 
   - platform: google_maps
     username: !secret googlemaps_user

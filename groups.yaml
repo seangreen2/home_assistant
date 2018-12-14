@@ -22,13 +22,14 @@ sean:
   name: Sean
   view: no
   entities:
-    - device_tracker.404e36d4e5de
+    - device_tracker.3c286d29fe2d
 
 emily:
   name: Emily
   view: no
   entities:
-    - device_tracker.404e36d1fdd3
+    - device_tracker.3c286d238618
+
 
 gtracker:
   name: Google Tracker

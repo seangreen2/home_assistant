@@ -22,9 +22,9 @@
         below: 90.0
         above: -6.0
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'paused') }}" # NOT condition
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT condition
   action:
     - service: light.turn_on
       data:
@@ -58,9 +58,9 @@
         below: -6.0
         above: -15.0
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'paused') }}" # NOT condition
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT condition
   action:
     - service: light.turn_on
       data:
@@ -99,9 +99,9 @@
         below: -6.0
         above: -15.0
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'paused') }}" # NOT condition
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT condition
   action:
     service: light.turn_on
     data:
@@ -130,9 +130,9 @@
         below: -15.0
         above: -25.0
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'paused') }}" # NOT condition
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT condition
   action:
     - service: light.turn_on
       data:
@@ -171,9 +171,9 @@
         below: -15.0
         above: -25.0
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'paused') }}" # NOT condition
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT condition
   action:
     service: light.turn_on
     data:
@@ -201,9 +201,9 @@
         value_template: '{{ state.attributes.elevation }}'
         below: -25.0
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'paused') }}" # NOT condition
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT condition
   action:
     - service: light.turn_on
       data:
@@ -240,9 +240,9 @@
         value_template: '{{ state.attributes.elevation }}'
         below: -25.0
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'paused') }}" # NOT condition
       - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT condition
   action:
     service: light.turn_on
     data:
