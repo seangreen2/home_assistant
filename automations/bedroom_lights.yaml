@@ -2,7 +2,7 @@
 - alias: Bedroom Lights on motion
   trigger:
     platform: state
-    entity_id: sensor.bedroom_motion_sensor
+    entity_id: binary_sensor.motion_sensor_158d000237a64a
     to: 'on'
   condition:
     condition: and
@@ -40,7 +40,7 @@
 - alias: Bedroom Lights on motion 75
   trigger:
     platform: state
-    entity_id: sensor.bedroom_motion_sensor
+    entity_id: binary_sensor.motion_sensor_158d000237a64a
     to: 'on'
   condition:
     condition: and
@@ -78,7 +78,7 @@
 - alias: Bedroom Lights on motion 50
   trigger:
     platform: state
-    entity_id: sensor.bedroom_motion_sensor
+    entity_id: binary_sensor.motion_sensor_158d000237a64a
     to: 'on'
   condition:
     condition: and
@@ -115,10 +115,10 @@
 - alias: Bedroom Lights off no motion
   trigger:
     platform: state
-    entity_id: sensor.bedroom_motion_sensor
+    entity_id: binary_sensor.motion_sensor_158d000237a64a
     to: 'off'
     for:
-      minutes: 2
+      minutes: 5
   action:
     service: light.turn_off
     data:

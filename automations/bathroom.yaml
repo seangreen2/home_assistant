@@ -2,7 +2,7 @@
 - alias: Bathroom Lights on motion
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d000237a64a
+    entity_id: sensor.bathroom_motion_sensor
     to: 'on'
   condition:
     condition: and
@@ -11,7 +11,7 @@
         entity_id: group.family
         state: 'home'
       - condition: time
-        after: '07:30:00'
+        after: '07:00:00'
         before: '21:00:00'
   action:
     - service: light.turn_on
@@ -27,10 +27,9 @@
 
 # Bathroom Lights on with Motion at Bedtime
 - alias: Bathroom Lights on motion bedtime
-  initial_state: off
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d000237a64a
+    entity_id: sensor.bathroom_motion_sensor
     to: 'on'
   condition:
     condition: and
@@ -40,7 +39,7 @@
         state: 'home'
       - condition: time
         after: '21:00:00'
-        before: '08:00:00'
+        before: '07:00:00'
   action:
     - service: light.turn_on
       data:
@@ -58,7 +57,7 @@
   initial_state: off
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d000237a64a
+    entity_id: sensor.bathroom_motion_sensor
     to: 'on'
   condition:
     condition: and
@@ -71,7 +70,7 @@
         state: 'off'
       - condition: time
         after: '04:00:00'
-        before: '07:30:00'
+        before: '07:00:00'
   action:
     - service: light.turn_on
       data:
@@ -93,7 +92,7 @@
     entity_id: binary_sensor.motion_sensor_158d000237a64a
     to: 'off'
     for:
-      seconds: 30
+      minutes: 2
   condition:
     - condition: time
       after: '21:00:01'
@@ -108,10 +107,10 @@
 - alias: Bathroom Lights off no motion
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d000237a64a
+    entity_id: sensor.bathroom_motion_sensor
     to: 'off'
     for:
-      minutes: 3
+      minutes: 5
   condition:
     - condition: time
       after: '04:20:01'
@@ -121,32 +120,6 @@
     data:
       entity_id: light.bathroom
       transition: 2
-
-# Detect if someone is showering and disables lights off automations
-- alias: Showering
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.humidity_158d0002478a21
-    above: '68'
-  action:
-    - service: automation.turn_off
-      entity_id: automation.bathroom_lights_off_no_motion
-    - service: input_boolean.turn_on
-      data:
-        entity_id: input_boolean.showering
-
-# Detect if someone is not showering and enables lights off automations
-- alias: Not Showering
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.humidity_158d0002478a21
-    below: '68'
-  action:
-    - service: automation.turn_on
-      entity_id: automation.bathroom_lights_off_no_motion
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.showering
 
 # Turn on air fresh for ten minutes each hour when home
 - alias: Turn on air fresh

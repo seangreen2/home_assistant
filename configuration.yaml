@@ -131,25 +131,25 @@ sensor:
 
   - platform: template
     sensors:
-      bedroom_temperature:
-        value_template: '{{states.sensor.bedroom_motion_sensor.attributes.temperature}}'
+      bathroom_temperature:
+        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.temperature}}'
 
   - platform: template
     sensors:
-      bedroom_battery:
+      bathroom_battery:
         friendly_name: 'Battery'
-        value_template: '{{states.sensor.bedroom_motion_sensor.attributes.battery}}'
+        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.battery}}'
         unit_of_measurement: '%'
 
   - platform: template
     sensors:
-      bedroom_temperature_f:
-        friendly_name: 'Bedroom Temperature'
+      bathroom_temperature_f:
+        friendly_name: 'Bathroom Temperature'
         entity_id:
-          - sensor.bedroom_temperature
+          - sensor.bathroom_temperature
         unit_of_measurement: °F
         value_template: >
-          {{ ((float(states('sensor.bedroom_temperature')) * 1.8) + 32) | round(1) }}
+          {{ ((float(states('sensor.bathroom_temperature')) * 1.8) + 32) | round(1) }}
 
   - platform: template
     sensors:
@@ -259,10 +259,14 @@ sensor:
   - platform: season
     type: astronomical
 
-#  - platform: qbittorrent
-#    url: !secret qbit_http
-#    username: !secret qbit_user
-#    password: !secret qbit_password
+  - platform: time_date
+    display_options:
+      - 'time'
+
+  - platform: qbittorrent
+    url: !secret qbit_http
+    username: !secret qbit_user
+    password: !secret qbit_password
 
 # USPS Informed Delivery
 #usps:
@@ -309,27 +313,27 @@ switch:
  - platform: tplink
    host: !secret tplink_switch_three_ip
 
-
 # Text to speech
 tts:
   - platform: google
 
 # Device Tracking
-#asuswrt:
-#  host: !secret router_ip
-#  protocol: telnet
-#  port: 23
-#  username: !secret router_user
-#  password: !secret router_password
+asuswrt:
+  host: !secret router_ip
+  protocol: telnet
+  port: 23
+  username: !secret router_user
+  password: !secret router_password
+#  interval_seconds: 10
 
 device_tracker:
-  - platform: asuswrt
-    host: !secret router_ip
-    protocol: telnet
+#  - platform: asuswrt
+#    host: !secret router_ip
+#    protocol: telnet
 #    port: 23
-    username: !secret router_user
-    password: !secret router_password
-    interval_seconds: 10
+#    username: !secret router_user
+#    password: !secret router_password
+#    interval_seconds: 10
 
   - platform: google_maps
     username: !secret googlemaps_user

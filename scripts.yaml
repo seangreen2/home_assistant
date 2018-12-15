@@ -7,7 +7,7 @@
             state: 'home'
           - condition: time
             after: '20:00:00'
-            before: '08:00:00'
+            before: '07:00:00'
           - condition: template
             value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
           - condition: template
@@ -49,7 +49,7 @@
             state: 'home'
           - condition: time
             after: '19:00:00'
-            before: '08:00:00'
+            before: '07:00:00'
           - condition: template
             value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
           - condition: template
@@ -60,8 +60,6 @@
         entity_id: automation.bedroom_lights_on_motion_50
       - service: automation.turn_off
         entity_id: automation.bedroom_lights_on_motion_75
-      - service: automation.turn_off
-        entity_id: automation.bathroom_lights_on_motion
       - service: automation.turn_on
         entity_id: automation.bathroom_lights_on_motion_bedtime
       - service: light.turn_off

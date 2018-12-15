@@ -6,7 +6,7 @@ default_view:
     - group.family
     - group.indoors
     - group.lights
-    - group.weather_one
+#    - group.weather_one
     - group.weather_two
 
 ### FAMILY ###
@@ -61,7 +61,8 @@ indoors:
     - climate.living_room
     - sensor.living_room_thermostat_hvac_state
     - sensor.living_room_thermostat_humidity
-    - sensor.bedroom_temperature_f
+    - sensor.temperature_158d0002478a21
+    - sensor.bathroom_temperature_f
     - sensor.office_temperature_f
 
 weather_one:
@@ -118,13 +119,13 @@ bedroom_full:
   name: Bedroom
   view: no
   entities:
-    - sensor.bedroom_motion_sensor
-    - sensor.bedroom_temperature_f
-    - sensor.bedroom_battery
     - binary_sensor.motion_sensor_158d000237a64a
     - sensor.temperature_158d0002478a21
     - sensor.humidity_158d0002478a21
     - sensor.illumination_158d000237a64a
+    - sensor.bathroom_motion_sensor
+    - sensor.bathroom_temperature_f
+    - sensor.bathroom_battery
 
 bedroom_lights_full:
   name: Bedroom Lights
@@ -233,6 +234,7 @@ settings:
   entities:
     - group.monitor
     - group.pihole
+    - group.qbit
     - group.speedtest
 
 neato:
@@ -266,6 +268,14 @@ pihole:
     - sensor.pihole_dns_unique_clients
     - sensor.pihole_dns_unique_domains
     - sensor.pihole_domains_blocked
+
+qbit:
+  view: no
+  name: qBittorrent
+  entities:
+    - sensor.qbittorrent_status
+    - sensor.qbittorrent_down_speed
+    - sensor.qbittorrent_up_speed
 
 speedtest:
   view: no
