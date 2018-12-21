@@ -19,15 +19,7 @@
           - condition: template
             value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT conditio
       - service: automation.turn_off
-        entity_id: automation.bedroom_lights_on_motion
-      - service: automation.turn_off
-        entity_id: automation.bedroom_lights_on_motion_50
-      - service: automation.turn_off
-        entity_id: automation.bedroom_lights_on_motion_75
-      - service: automation.turn_off
-        entity_id: automation.bathroom_lights_on_motion
-      - service: automation.turn_on
-        entity_id: automation.bathroom_lights_on_motion_bedtime
+        entity_id: automation.bedroom_auto_brightness
       - service: light.turn_off
         data:
           entity_id: group.bedtime_lights
@@ -55,13 +47,7 @@
           - condition: template
             value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
       - service: automation.turn_off
-        entity_id: automation.bedroom_lights_on_motion
-      - service: automation.turn_off
-        entity_id: automation.bedroom_lights_on_motion_50
-      - service: automation.turn_off
-        entity_id: automation.bedroom_lights_on_motion_75
-      - service: automation.turn_on
-        entity_id: automation.bathroom_lights_on_motion_bedtime
+        entity_id: automation.bedroom_auto_brightness
       - service: light.turn_off
         data:
           entity_id: light.bedroom
@@ -83,18 +69,8 @@
           - condition: state
             entity_id: input_boolean.bedtime_emily
             state: 'off'
-      - service: automation.turn_off
-        entity_id: automation.bathroom_lights_on_motion_bedtime
       - service: automation.turn_on
-        entity_id: automation.bedroom_lights_on_motion
-      - service: automation.turn_on
-        entity_id: automation.bedroom_lights_on_motion_50
-      - service: automation.turn_on
-        entity_id: automation.bedroom_lights_on_motion_75
-      - service: automation.turn_on
-        entity_id: automation.bathroom_lights_on_motion_early_morning
-      - service: automation.turn_on
-        entity_id: automation.bathroom_lights_on_motion
+        entity_id: automation.bedroom_auto_brightness
 #      - service: automation.trigger
 #        entity_id: automation.rain_sounds_off
 
@@ -111,17 +87,7 @@
           - condition: state
             entity_id: input_boolean.bedtime_sean
             state: 'off'
-      - service: automation.turn_off
-        entity_id: automation.bathroom_lights_on_motion_bedtime
       - service: automation.turn_on
-        entity_id: automation.bedroom_lights_on_motion
-      - service: automation.turn_on
-        entity_id: automation.bedroom_lights_on_motion_50
-      - service: automation.turn_on
-        entity_id: automation.bedroom_lights_on_motion_75
-      - service: automation.turn_on
-        entity_id: automation.bathroom_lights_on_motion_early_morning
-      - service: automation.turn_on
-        entity_id: automation.bathroom_lights_on_motion
+        entity_id: automation.bedroom_auto_brightness
 #      - service: automation.trigger
 #        entity_id: automation.rain_sounds_off

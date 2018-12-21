@@ -1,9 +1,11 @@
-# Office Motion Lights
-  - alias: Turn on office lights with motion
+# Auto Office Brightness
+  - alias: Office Auto Brightness
     trigger:
-      platform: state
-      entity_id: sensor.office_motion_motion_sensor
-      to: 'on'
+      - platform: state
+        entity_id: sensor.office_motion_motion_sensor
+        to: 'on'
+#      - platform: state
+#        entity_id: sun.sun
     condition:
       - condition: numeric_state
         entity_id: sensor.office_lux
@@ -14,64 +16,17 @@
       - condition: state
         entity_id: light.office
         state: 'off'
-      - condition: numeric_state
-        entity_id: sun.sun
-        value_template: '{{ state.attributes.elevation }}'
-        below: 90.0
-        above: -6.0
     action:
       - service: light.turn_on
-        data:
+        data_template:
           entity_id: light.office
-          brightness_pct: '100'
-      - delay:
-          seconds: '1'
-      - service: light.turn_on
-        data:
-          entity_id: light.office
-          brightness_pct: '100'
+          brightness_pct: '{% if states.sun.sun.attributes.elevation <= -18 %}60{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
 
-# Office Motion Lights 75
-  - alias: Turn on office lights with motion 75
-    trigger:
-      platform: state
-      entity_id: sensor.office_motion_motion_sensor
-      to: 'on'
-    condition:
-      - condition: state
-        entity_id: group.family
-        state: 'home'
-      - condition: state
-        entity_id: light.office
-        state: 'off'
-      - condition: numeric_state
-        entity_id: sun.sun
-        value_template: '{{ state.attributes.elevation }}'
-        below: -6.0
-        above: -18.0
-    action:
-      - service: light.turn_on
-        data:
-          entity_id: light.office
-          brightness_pct: '75'
-      - delay:
-          seconds: '1'
-      - service: light.turn_on
-        data:
-          entity_id: light.office
-          brightness_pct: '75'
-
-# Office Motion Lights 75 transition
-  - alias: Turn on office lights 75 transition
+# Auto Office Brightness Transition
+  - alias: Office Auto Brightness Transition
     trigger:
       - platform: state
-        entity_id: sensor.office_motion_motion_sensor
-        to: 'on'
-      - platform: numeric_state
         entity_id: sun.sun
-        value_template: '{{ state.attributes.elevation }}'
-        below: -6.0
-        above: -18.0
     condition:
       - condition: state
         entity_id: group.family
@@ -79,74 +34,12 @@
       - condition: state
         entity_id: light.office
         state: 'on'
-      - condition: numeric_state
-        entity_id: sun.sun
-        value_template: '{{ state.attributes.elevation }}'
-        below: -6.0
-        above: -18.0
-    action:
-      service: light.turn_on
-      data:
-        entity_id: light.office
-        brightness_pct: '75'
-        transition: 30
-
-# Office Motion Lights 65
-  - alias: Turn on office lights with motion 65
-    trigger:
-      platform: state
-      entity_id: sensor.office_motion_motion_sensor
-      to: 'on'
-    condition:
-      - condition: state
-        entity_id: group.family
-        state: 'home'
-      - condition: state
-        entity_id: light.office
-        state: 'off'
-      - condition: numeric_state
-        entity_id: sun.sun
-        value_template: '{{ state.attributes.elevation }}'
-        below: -18.0
     action:
       - service: light.turn_on
-        data:
+        data_template:
           entity_id: light.office
-          brightness_pct: '60'
-      - delay:
-          seconds: '1'
-      - service: light.turn_on
-        data:
-          entity_id: light.office
-          brightness_pct: '60'
-
-# Office Motion Lights 65 transition
-  - alias: Turn on office lights 65 transition
-    trigger:
-      - platform: state
-        entity_id: sensor.office_motion_motion_sensor
-        to: 'on'
-      - platform: numeric_state
-        entity_id: sun.sun
-        value_template: '{{ state.attributes.elevation }}'
-        below: -18.0
-    condition:
-      - condition: state
-        entity_id: group.family
-        state: 'home'
-      - condition: state
-        entity_id: light.office
-        state: 'on'
-      - condition: numeric_state
-        entity_id: sun.sun
-        value_template: '{{ state.attributes.elevation }}'
-        below: -18.0
-    action:
-      service: light.turn_on
-      data:
-        entity_id: light.office
-        brightness_pct: '60'
-        transition: 30
+          brightness_pct: '{% if states.sun.sun.attributes.elevation <= -18 %}60{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+          transition: 30
 
 # Turn off Office Lights after one minute of no activity
   - alias: Turn office lights without motion one min
