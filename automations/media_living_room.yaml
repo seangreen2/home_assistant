@@ -15,7 +15,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation > -15 %}50{% elif states.sun.sun.attributes.elevation > -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
         transition: 7
 
 # Lights turn off while media is playing
@@ -30,7 +30,7 @@
     action:
       service: light.turn_off
       data:
-        entity_id: light.livingroom
+        entity_id: light.living_room
 
 # Lights dim when media is paused
   - alias: 'Media player paused'
@@ -48,7 +48,7 @@
     action:
       service: light.turn_on
       data:
-        entity_id: light.livingroom
+        entity_id: light.living_room
         brightness_pct: '25'
         transition: '4'
 
@@ -68,7 +68,7 @@
     action:
       service: light.turn_off
       data:
-        entity_id: light.livingroom
+        entity_id: light.living_room
 
 # Lights dim to full going from paused to idle
   - alias: 'Media player pause to idle'
@@ -87,5 +87,5 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation > -15 %}50{% elif states.sun.sun.attributes.elevation > -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
         transition: 4

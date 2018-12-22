@@ -324,7 +324,6 @@ asuswrt:
   port: 23
   username: !secret router_user
   password: !secret router_password
-#  interval_seconds: 10
 
 device_tracker:
 #  - platform: asuswrt

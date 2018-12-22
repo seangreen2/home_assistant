@@ -6,7 +6,7 @@ default_view:
     - group.family
     - group.indoors
     - group.lights
-#    - group.weather_one
+    - group.weather_one
     - group.weather_two
 
 ### FAMILY ###
@@ -332,24 +332,20 @@ office_auto:
   view: no
   name: Office Automations
   entities:
+    - automation.office_auto_brightness
+    - automation.office_auto_brightness_transition
     - automation.turn_on_fan_above_certain_temp
     - automation.turn_off_fan_below_certain_temp
     - automation.turn_off_office_fan_without_motion
-    - automation.turn_on_office_lights_below_lux
     - automation.turn_off_office_lights_above_lux
-    - automation.turn_on_office_lights_with_motion
     - automation.turn_office_lights_without_motion_one_min
-    - automation.turn_on_office_lights_with_motion_75
-    - automation.turn_on_office_lights_with_motion_65
 
 livingroom_auto:
   view: no
   name: Living Room Automations
   entities:
-    - automation.living_room_lights_on_motion
-    - automation.living_room_lights_on_motion_75
-    - automation.living_room_lights_on_motion_50
-    - automation.living_room_lights_on_motion_bedtime
+    - automation.living_room_auto_brightness
+    - automation.living_room_auto_brightness_transition
     - automation.living_room_lights_off_no_motion
     - automation.turn_off_living_room_lights_above_lux
     - automation.door_closed_turn_on_nest
@@ -359,9 +355,8 @@ bedroom_auto:
   view: no
   name: Bedroom Automations
   entities:
-    - automation.bedroom_lights_on_motion
-    - automation.bedroom_lights_on_motion_75
-    - automation.bedroom_lights_on_motion_50
+    - automation.bedroom_auto_brightness
+    - automation.bedroom_auto_brightness_transition
     - automation.bedroom_lights_off_no_motion
     - automation.bathroom_lights_on_motion
     - automation.bathroom_lights_on_motion_bedtime

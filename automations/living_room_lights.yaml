@@ -4,8 +4,6 @@
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0002047afe
       to: 'on'
-#      - platform: state
-#        entity_id: sun.sun
   condition:
     - condition: numeric_state
       entity_id: sensor.illumination_158d0002047afe
@@ -24,7 +22,13 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation > -15 %}50{% elif states.sun.sun.attributes.elevation > -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+    - delay:
+        seconds: '1'
+    - service: light.turn_on
+      data_template:
+        entity_id: light.living_room
+        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
 
 # Auto Living Room Brightness Transition
 - alias: Living Room Auto Brightness Transition

@@ -1,18 +1,3 @@
-# Adjusts light birghtness by time of day
-#  - alias: Set light level by time of day
-#    trigger:
-#      platform: state
-#      from: 'off'
-#      to: 'on'
-#      entity_id:
-#        - light.office
-#    action:
-#      data_template:
-  #    brightness: "{% if now().hour > 20 %}30{% elif now().hour < 7 %}30{% else %}200{% endif %}"
-      # color_temp: "{% if now().hour > 20 %}250{% elif now().hour < 7 %}250{% else %}1{% endif %}"
-#      service: light.turn_on
-#      entity_id: "{{trigger.entity_id}}"
-
 # Outside lights turn on at sunset
   - alias: Outside lights on at sunset
     trigger:

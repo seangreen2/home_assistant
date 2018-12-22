@@ -41,7 +41,7 @@
         state: 'home'
       - condition: time
         after: '21:00:01'
-        before: '04:00:00'
+        before: '04:30:00'
   action:
     - service: light.turn_on
       data:
@@ -70,7 +70,7 @@
         entity_id: light.bathroom
         state: 'off'
       - condition: time
-        after: '04:00:01'
+        after: '04:30:01'
         before: '07:00:00'
   action:
     - service: light.turn_on
@@ -93,7 +93,7 @@
     entity_id: sensor.bathroom_motion_sensor
     to: 'off'
     for:
-      seconds: 30
+      seconds: 90
   condition:
     - condition: time
       after: '21:00:01'
