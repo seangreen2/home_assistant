@@ -1,5 +1,6 @@
 # TTS Sean is Home
   - alias: 'Voice Sean is Home'
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: group.sean
@@ -25,6 +26,7 @@
 
 # TTS Emily is Home
   - alias: 'Voice Emily is Home'
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: group.emily
@@ -50,6 +52,7 @@
 
 # Hurricane Winds
   - alias: 'Hurricane Winds'
+    initial_state: 'on'
     trigger:
       - platform: numeric_state
         entity_id: sensor.dark_sky_wind_speed

@@ -1,5 +1,6 @@
 # Auto Bedroom Brightness
 - alias: Bedroom Auto Brightness
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d000237a64a
@@ -33,6 +34,7 @@
 
 # Auto Bedroom Brightness Transition
 - alias: Bedroom Auto Brightness Transition
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id: sun.sun
@@ -52,6 +54,7 @@
 
 # Bedroom Lights off without Motion
 - alias: Bedroom Lights off no motion
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id: binary_sensor.motion_sensor_158d000237a64a

@@ -1,5 +1,6 @@
 # Lights back to full over 7 seconds after media stops
   - alias: 'Media player stopped'
+    initial_state: 'on'
     trigger:
 #      - platform: webhook
 #        webhook_id: plex-idle
@@ -20,6 +21,7 @@
 
 # Lights turn off while media is playing
   - alias: 'Media player playing'
+    initial_state: 'on'
     trigger:
 #      - platform: webhook
 #        webhook_id: plex-playing
@@ -34,6 +36,7 @@
 
 # Lights dim when media is paused
   - alias: 'Media player paused'
+    initial_state: 'on'
     trigger:
   #    - platform: webhook
   #      webhook_id: plex-paused
@@ -54,6 +57,7 @@
 
 # Lights turn off when media is unpaused
   - alias: 'Media player unpaused'
+    initial_state: 'on'
     trigger:
 #      - platform: webhook
 #        webhook_id: plex-unpaused
@@ -72,6 +76,7 @@
 
 # Lights dim to full going from paused to idle
   - alias: 'Media player pause to idle'
+    initial_state: 'on'
     trigger:
   #    - platform: webhook
   #      webhook_id: plex-pause-idle

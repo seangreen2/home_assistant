@@ -1,5 +1,6 @@
 # When porch door is open turn off nest
  - alias: Door open turn off nest
+   initial_state: 'on'
    trigger:
      platform: state
      entity_id: binary_sensor.door_window_sensor_158d00023eb0bb
@@ -14,6 +15,7 @@
 
 # When porch door is closed turn Nest back on
  - alias: Door closed turn on nest
+   initial_state: 'on'
    trigger:
      platform: state
      entity_id: binary_sensor.door_window_sensor_158d00023eb0bb

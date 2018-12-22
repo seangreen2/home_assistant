@@ -1,6 +1,7 @@
 
 # Bathroom Lights on with Motion
 - alias: Bathroom Lights on motion
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id: sensor.bathroom_motion_sensor
@@ -56,6 +57,7 @@
 
 # Bathroom Lights on with Motion at Early Morning
 - alias: Bathroom Lights on motion early morning
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id: sensor.bathroom_motion_sensor
@@ -88,6 +90,7 @@
 
 # Bathroom Lights off without Motion night
 - alias: Bathroom Lights off no motion night
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id: sensor.bathroom_motion_sensor
@@ -106,6 +109,7 @@
 
 # Bathroom Lights off without Motion
 - alias: Bathroom Lights off no motion
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id: sensor.bathroom_motion_sensor
@@ -124,6 +128,7 @@
 
 # Turn on air fresh for ten minutes each hour when home
 - alias: Turn on air fresh
+  initial_state: 'on'
   trigger:
     platform: time
     hours: '/1'

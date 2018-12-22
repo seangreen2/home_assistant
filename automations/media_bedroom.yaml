@@ -1,6 +1,7 @@
 #### BEDROOM MEDIA ####
 # Lights back to full over 7 seconds after media stops
   - alias: 'Bedroom player stopped'
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: media_player.bedroom_tv
@@ -19,6 +20,7 @@
 
 # Lights turn off while media is playing
   - alias: 'Bedroom player playing'
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: media_player.bedroom_tv
@@ -35,6 +37,7 @@
 
 # Lights dim when media is paused
   - alias: 'Bedroom player paused'
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: media_player.bedroom_tv
@@ -53,6 +56,7 @@
 
 # Lights turn off when media is unpaused
   - alias: 'Bedroom player unpaused'
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: media_player.bedroom_tv
@@ -69,6 +73,7 @@
 
 # Lights dim to full going from paused to idle
   - alias: 'Bedroom player pause to idle'
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: media_player.bedroom_tv
