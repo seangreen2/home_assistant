@@ -59,7 +59,14 @@
     entity_id: binary_sensor.motion_sensor_158d0002047afe
     to: 'off'
     for:
-      minutes: 18
+      minutes: 3
+  condition:
+    - condition: state
+      entity_id: input_boolean.sean_living_room_presence
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.emily_living_room_presence
+      state: 'off'
   action:
     service: light.turn_off
     data:

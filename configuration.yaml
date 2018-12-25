@@ -57,8 +57,28 @@ input_boolean:
     name: Emily Bedtime
     initial: false
 
-  showering:
-    name: Showering
+  sean_office_presence:
+    name: Sean Office Presence
+    initial: false
+
+  sean_living_room_presence:
+    name: Sean Living Room Presence
+    initial: false
+
+  sean_bedroom_presence:
+    name: Sean Bedroom Presence
+    initial: false
+
+  emily_office_presence:
+    name: Emily Office Presence
+    initial: false
+
+  emily_living_room_presence:
+    name: Emily Living Room Presence
+    initial: false
+
+  emily_bedroom_presence:
+    name: Emily Bedroom Presence
     initial: false
 
 sun:
@@ -330,6 +350,15 @@ sensor:
 input_select:
   sean_room_location:
     name: Sean's Room Location
+    options:
+      - Home, Bedroom
+      - Home, Living Room
+      - Home, Office
+      - Away
+      - Home
+
+  emily_room_location:
+    name: Emily's Room Location
     options:
       - Home, Bedroom
       - Home, Living Room

@@ -119,7 +119,6 @@ bedroom:
     - group.bedroom_lights_full
     - group.bathroom_lights
     - group.bedroom_full
-    - group.input
     - media_player.bedroom_tv
     - media_player.bedroom_speaker
 
@@ -245,6 +244,7 @@ settings:
     - group.qbit
     - group.speedtest
     - group.rssi
+    - group.input
 
 neato:
   view: no
@@ -322,7 +322,13 @@ input:
   entities:
     - input_boolean.bedtime_sean
     - input_boolean.bedtime_emily
-    - input_boolean.showering
+    - input_boolean.sean_bedroom_presence
+    - input_boolean.sean_living_room_presence
+    - input_boolean.sean_office_presence
+    - input_boolean.emily_bedroom_presence
+    - input_boolean.emily_living_room_presence
+    - input_boolean.emily_office_presence
+
 
 ### AUTOMATIONS ###
 auto:

@@ -19,6 +19,15 @@
         value_template: "{{ ( states.sensor.office_sean_gh_rssi.state ) > ( states.sensor.livingroom_sean_gh_rssi.state )  }}"
       - condition: template
         value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.livingroom_sean_gh_rssi.state )  }}"
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.sean_living_room_presence
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.sean_bedroom_presence
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.sean_office_presence
     - service: input_select.select_option
       data:
         entity_id: input_select.sean_room_location
@@ -45,6 +54,15 @@
         value_template: "{{ ( states.sensor.livingroom_sean_gh_rssi.state ) > ( states.sensor.office_sean_gh_rssi.state  )  }}"
       - condition: template
         value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.office_sean_gh_rssi.state )  }}"
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.sean_living_room_presence
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.sean_bedroom_presence
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.sean_office_presence
     - service: input_select.select_option
       data:
         entity_id: input_select.sean_room_location
@@ -71,6 +89,15 @@
         value_template: "{{ ( states.sensor.livingroom_sean_gh_rssi.state ) > ( states.sensor.bedroom_sean_gh_rssi.state )  }}"
       - condition: template
         value_template: "{{ ( states.sensor.office_sean_gh_rssi.state ) > ( states.sensor.bedroom_sean_gh_rssi.state )  }}"
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.sean_living_room_presence
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.sean_bedroom_presence
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.sean_office_presence
     - service: input_select.select_option
       data:
         entity_id: input_select.sean_room_location
