@@ -9,7 +9,8 @@ You shouldn't have to work the room, the room should work you. True home automat
 Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
 
 ## Current Goals
-- My Hue lights have a strange issue of not coming at full brightness at random times despite what my YAML says. To fix this, I've added a one second delay on all lighting automations followed by another brightness command to ensure the lights always come on to the brightness they should. So far this fix has a 100% success rate on all lighting.
+- Currently adapting my Google Home Minis to also detect our phones via Bluetooth for potential Room Presence. So far, my settings seem to have a very minor delay but can detect which room we are located within ten seconds. More testing required.
+- (DONE) My Hue lights have a strange issue of not coming at full brightness at random times despite what my YAML says. To fix this, I've added a one second delay on all lighting automations followed by another brightness command to ensure the lights always come on to the brightness they should. So far this fix has a 100% success rate on all lighting.
 - (DONE) Have all lights turn on/off with motion and never have to use a physical switch or voice commands again. I have some Xiaomi equipment coming in which should finally complete this.
 
 #### Custom Components
