@@ -191,6 +191,12 @@ sensor:
         friendly_name: 'Laptop Power'
         value_template: '{{states.switch.laptop_socket.attributes.current_power_w}}'
 
+  - platform: template
+    sensors:
+      sun_elevation:
+        friendly_name: Sun Elevation
+        value_template: '{{states.sun.sun.attributes.elevation}}'
+
   - platform: darksky
     api_key: !secret dark_sky_api_key
     update_interval: '00:05:00'
@@ -333,6 +339,33 @@ device_tracker:
 #    username: !secret router_user
 #    password: !secret router_password
 #    interval_seconds: 10
+
+# Office Speaker
+  - platform: googlehome
+    host: 192.168.1.208
+    rssi_threshold: -100
+    interval_seconds: 8
+    consider_home: 20
+    new_device_defaults:
+      track_new_devices: false
+
+# Bedroom Speaker
+  - platform: googlehome
+    host: 192.168.1.149
+    rssi_threshold: -100
+    interval_seconds: 8
+    consider_home: 20
+    new_device_defaults:
+      track_new_devices: false
+
+# Living Room Speaker
+  - platform: googlehome
+    host: 192.168.1.38
+    rssi_threshold: -100
+    interval_seconds: 8
+    consider_home: 20
+    new_device_defaults:
+      track_new_devices: false
 
   - platform: google_maps
     username: !secret googlemaps_user

@@ -15,6 +15,7 @@ family:
   view: no
   entities:
     - group.sean
+    - sensor.sean_room_status
     - group.emily
     - sensor.work_commute
 
@@ -22,13 +23,19 @@ sean:
   name: Sean
   view: no
   entities:
-    - device_tracker.3c286d29fe2d
+    - device_tracker.3c286d29fe2d #Phone
+    - device_tracker.sean_bt_bedroom
+    - device_tracker.sean_bt_living_room
+    - device_tracker.sean_bt_office
 
 emily:
   name: Emily
   view: no
   entities:
-    - device_tracker.3c286d238618
+    - device_tracker.3c286d238618 #Phone
+    - device_tracker.emily_bt_bedroom
+    - device_tracker.emily_bt_living_room
+    - device_tracker.emily_bt_office
 
 
 gtracker:
@@ -75,10 +82,10 @@ weather_two:
   name: Weather Details
   view: no
   entities:
+    - sensor.sun_elevation
     - sensor.dark_sky_cloud_coverage
     - sensor.dark_sky_nearest_storm_distance
     - sensor.dark_sky_precip_probability
-    - sensor.dark_sky_precip_intensity
 
 ### ROOMS ###
 # LIVING ROOM
@@ -236,6 +243,7 @@ settings:
     - group.pihole
     - group.qbit
     - group.speedtest
+    - group.rssi
 
 neato:
   view: no
@@ -285,10 +293,19 @@ speedtest:
     - sensor.speedtest_download
     - sensor.speedtest_upload
 
+rssi:
+  view: no
+  name: BT RSSI
+  entities:
+    - sensor.bedroom_sean_gh_rssi
+    - sensor.livingroom_sean_gh_rssi
+    - sensor.office_sean_gh_rssi
+
 weatherdetails:
   view: no
   name: Weather Details
   entities:
+    - sensor.sun_elevation
     - sensor.dark_sky_cloud_coverage
     - sensor.dark_sky_nearest_storm_distance
     - sensor.dark_sky_precip_probability
@@ -362,6 +379,7 @@ bedroom_auto:
     - automation.bathroom_lights_on_motion_bedtime
     - automation.bathroom_lights_on_motion_early_morning
     - automation.bathroom_lights_off_no_motion
+    - automation.bathroom_lights_off_no_motion_night
     - automation.showering
     - automation.not_showering
 
@@ -379,6 +397,9 @@ automation:
     - automation.turn_on_air_fresh
     - automation.outside_lights_on_at_sunset
     - automation.outside_lights_off_at_ten
+    - automation.sean_in_bedroom
+    - automation.sean_in_living_room
+    - automation.sean_in_office
 
 automedia:
   view: no
@@ -394,20 +415,3 @@ automedia:
     - automation.bedroom_player_paused
     - automation.bedroom_player_unpaused
     - automation.bedroom_player_pause_to_idle
-
-
-### SCENES ###
-#scene:
-#  view: no
-#  name: Media Scenes
-#  entities:
-#    - scene.media_room_normal
-#    - scene.media_room_paused
-#    - scene.media_room_playing
-#    - scene.media_room_unpaused
-#    - scene.media_room_pause_idle
-#    - scene.bedroom_normal
-#    - scene.bedroom_paused
-#    - scene.bedroom_playing
-#    - scene.bedroom_unpaused
-#    - scene.bedroom_pause_idle
