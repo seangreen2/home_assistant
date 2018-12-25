@@ -14,9 +14,10 @@ family:
   name: Family
   view: no
   entities:
-    - group.sean
+#    - group.sean
     - sensor.sean_room_status
-    - group.emily
+    - sensor.emily_room_status
+#    - group.emily
     - sensor.work_commute
 
 sean:
@@ -300,6 +301,9 @@ rssi:
     - sensor.bedroom_sean_gh_rssi
     - sensor.livingroom_sean_gh_rssi
     - sensor.office_sean_gh_rssi
+    - sensor.bedroom_emily_gh_rssi
+    - sensor.livingroom_emily_gh_rssi
+    - sensor.office_emily_gh_rssi
 
 weatherdetails:
   view: no
@@ -327,6 +331,7 @@ auto:
   icon: mdi:creation
   entities:
     - group.automation
+    - group.presence
     - group.livingroom_auto
     - group.bedroom_auto
     - group.bedtime_auto
@@ -397,9 +402,20 @@ automation:
     - automation.turn_on_air_fresh
     - automation.outside_lights_on_at_sunset
     - automation.outside_lights_off_at_ten
+
+presence:
+  view: no
+  name: Room Presence
+  entities:
     - automation.sean_in_bedroom
     - automation.sean_in_living_room
     - automation.sean_in_office
+    - automation.sean_is_away
+    - automation.emily_in_bedroom
+    - automation.emily_in_living_room
+    - automation.emily_in_office
+    - automation.emily_is_away
+
 
 automedia:
   view: no

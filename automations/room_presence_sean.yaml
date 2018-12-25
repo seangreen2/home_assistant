@@ -1,4 +1,4 @@
-# Sean is inthe living room
+# Sean is in the living Room using Google Home BT tracking
 - alias: Sean in Living Room
   initial_state: 'on'
   trigger:
@@ -12,7 +12,7 @@
     - condition: template
       value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.livingroom_sean_gh_rssi.state )  }}"
   action:
-    - delay: '00:00:03'
+    - delay: '00:00:05'
     - condition: and
       conditions:
       - condition: template
@@ -22,8 +22,9 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.sean_room_location
-        option: Living Room
+        option: Home, Living Room
 
+# Sean is in the Office using Google Home BT tracking
 - alias: Sean in Office
   initial_state: 'on'
   trigger:
@@ -37,7 +38,7 @@
     - condition: template
       value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.office_sean_gh_rssi.state )  }}"
   action:
-    - delay: '00:00:03'
+    - delay: '00:00:05'
     - condition: and
       conditions:
       - condition: template
@@ -47,8 +48,9 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.sean_room_location
-        option: Office
+        option: Home, Office
 
+# Sean is in the bedroom using Google Home BT tracking
 - alias: Sean in Bedroom
   initial_state: 'on'
   trigger:
@@ -62,7 +64,7 @@
     - condition: template
       value_template: "{{ ( states.sensor.office_sean_gh_rssi.state ) > ( states.sensor.bedroom_sean_gh_rssi.state )  }}"
   action:
-    - delay: '00:00:03'
+    - delay: '00:00:05'
     - condition: and
       conditions:
       - condition: template
@@ -72,4 +74,17 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.sean_room_location
-        option: Bedroom
+        option: Home, Bedroom
+
+# Sean is away from the house
+- alias: 'Sean is Away'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.sean
+    to: 'not_home'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.sean_room_location
+        option: Away

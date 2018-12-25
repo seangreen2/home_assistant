@@ -11,8 +11,12 @@ input_boolean.weather:
 group.emily:
   friendly_name: Emily
   entity_picture: !secret emily_pic
+sensor.emily_room_status:
+  entity_picture: !secret emily_pic
 group.sean:
   friendly_name: Sean
+  entity_picture: !secret sean_pic
+sensor.sean_room_status:
   entity_picture: !secret sean_pic
 climate.living_room:
   entity_picture: !secret nest_pic
@@ -66,11 +70,11 @@ light.brcl1:
   friendly_name: Bedroom Closet
 light.lr1:
   friendly_name: Living Room Light One
-sensor.bedroom_battery:
-  friendly_name: Bedroom Sensor Battery
+sensor.bathroom_battery:
+  friendly_name: Bathroom Sensor Battery
   device_class: battery
-sensor.bedroom_motion_sensor:
-  friendly_name: Bedroom Motion Sensor
+sensor.bathroom_motion_sensor:
+  friendly_name: Bathroom Motion Sensor
   device_class: motion_sensor
 sensor.plex:
   friendly_name: Plex Activity
@@ -100,14 +104,14 @@ binary_sensor.motion_sensor_158d0002047afe:
 sensor.illumination_158d0002047afe:
   friendly_name: Living Room Lux
 binary_sensor.motion_sensor_158d000237a64a:
-  friendly_name: Bathroom Motion Sensor
+  friendly_name: Bedroom Motion Sensor
   icon: mdi:run-fast
 sensor.illumination_158d000237a64a:
-  friendly_name: Bathroom Lux
+  friendly_name: Bedroom Lux
 sensor.temperature_158d0002478a21:
-  friendly_name: Bathroom Temperature
+  friendly_name: Bedroom Temperature
 sensor.humidity_158d0002478a21:
-  friendly_name: Bathroom Humidity
+  friendly_name: Bedroom Humidity
 binary_sensor.door_window_sensor_158d00023eb0bb:
   friendly_name: Sliding Door Sensor
 weather.dark_sky:
@@ -128,6 +132,8 @@ light.office:
 light.bathroom:
   icon: mdi:shower
   friendly_name: Bathroom Lights
+sensor.sun_elevation:
+  icon: mdi:weather-sunny
 group.family:
   order: 1
 group.indoors:

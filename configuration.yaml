@@ -197,6 +197,48 @@ sensor:
         friendly_name: Sun Elevation
         value_template: '{{states.sun.sun.attributes.elevation}}'
 
+  - platform: template
+    sensors:
+      bedroom_sean_gh_rssi:
+        value_template: '{{ states.device_tracker.sean_bt_bedroom.attributes.rssi }}'
+
+  - platform: template
+    sensors:
+      livingroom_sean_gh_rssi:
+        value_template: '{{ states.device_tracker.sean_bt_living_room.attributes.rssi }}'
+
+  - platform: template
+    sensors:
+      office_sean_gh_rssi:
+        value_template: '{{ states.device_tracker.sean_bt_office.attributes.rssi }}'
+
+  - platform: template
+    sensors:
+      sean_room_status:
+        value_template: '{{ states.input_select.sean_room_location.state }}'
+        friendly_name: 'Sean'
+
+  - platform: template
+    sensors:
+      bedroom_emily_gh_rssi:
+        value_template: '{{ states.device_tracker.emily_bt_bedroom.attributes.rssi }}'
+
+  - platform: template
+    sensors:
+      livingroom_emily_gh_rssi:
+        value_template: '{{ states.device_tracker.emily_bt_living_room.attributes.rssi }}'
+
+  - platform: template
+    sensors:
+      office_emily_gh_rssi:
+        value_template: '{{ states.device_tracker.emily_bt_office.attributes.rssi }}'
+
+  - platform: template
+    sensors:
+      emily_room_status:
+        value_template: '{{ states.input_select.emily_room_location.state }}'
+        friendly_name: 'Emily'
+
   - platform: darksky
     api_key: !secret dark_sky_api_key
     update_interval: '00:05:00'
@@ -285,6 +327,16 @@ sensor:
 #camera:
 #  - platform: usps
 
+input_select:
+  sean_room_location:
+    name: Sean's Room Location
+    options:
+      - Home, Bedroom
+      - Home, Living Room
+      - Home, Office
+      - Away
+      - Home
+
 # Nest Temperature
 nest:
   client_id: !secret nest_id
@@ -344,8 +396,8 @@ device_tracker:
   - platform: googlehome
     host: 192.168.1.208
     rssi_threshold: -100
-    interval_seconds: 8
-    consider_home: 20
+    interval_seconds: 5
+    consider_home: 10
     new_device_defaults:
       track_new_devices: false
 
@@ -353,8 +405,8 @@ device_tracker:
   - platform: googlehome
     host: 192.168.1.149
     rssi_threshold: -100
-    interval_seconds: 8
-    consider_home: 20
+    interval_seconds: 5
+    consider_home: 10
     new_device_defaults:
       track_new_devices: false
 
@@ -362,8 +414,8 @@ device_tracker:
   - platform: googlehome
     host: 192.168.1.38
     rssi_threshold: -100
-    interval_seconds: 8
-    consider_home: 20
+    interval_seconds: 5
+    consider_home: 10
     new_device_defaults:
       track_new_devices: false
 
