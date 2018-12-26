@@ -124,3 +124,16 @@
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.sean_office_presence
+
+# Sean is now home and BT is unknown
+- alias: 'Sean is Home'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.sean
+    to: 'home'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.sean_room_location
+        option: Home
