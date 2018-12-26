@@ -4,8 +4,8 @@ default_view:
   icon: mdi:home
   entities:
     - group.family
-    - group.indoors
     - group.lights
+    - group.indoors
     - group.weather_one
     - group.weather_two
 
@@ -14,10 +14,10 @@ family:
   name: Family
   view: no
   entities:
-#    - group.sean
+    - group.sean
     - sensor.sean_room_status
+    - group.emily
     - sensor.emily_room_status
-#    - group.emily
     - sensor.work_commute
 
 sean:

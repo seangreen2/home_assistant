@@ -31,7 +31,7 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.emily_room_location
-        option: Home, Living Room
+        option: Living Room
 
 # Emily is in the Office using Google Home BT tracking
 - alias: Emily in Office
@@ -66,7 +66,7 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.emily_room_location
-        option: Home, Office
+        option: Office
 
 # Emily is in the bedroom using Google Home BT tracking
 - alias: Emily in Bedroom
@@ -101,7 +101,7 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.emily_room_location
-        option: Home, Bedroom
+        option: Bedroom
 
 # Emily is away from the house
 - alias: 'Emily is Away'
@@ -115,6 +115,15 @@
       data:
         entity_id: input_select.emily_room_location
         option: Away
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.emily_living_room_presence
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.emily_bedroom_presence
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.emily_office_presence
 
 # Emily is now home and BT is unknown
 - alias: 'Emily is Home'

@@ -31,7 +31,7 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.sean_room_location
-        option: Home, Living Room
+        option: Living Room
 
 # Sean is in the Office using Google Home BT tracking
 - alias: Sean in Office
@@ -66,7 +66,7 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.sean_room_location
-        option: Home, Office
+        option: Office
 
 # Sean is in the bedroom using Google Home BT tracking
 - alias: Sean in Bedroom
@@ -101,7 +101,7 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.sean_room_location
-        option: Home, Bedroom
+        option: Bedroom
 
 # Sean is away from the house
 - alias: 'Sean is Away'
@@ -115,3 +115,12 @@
       data:
         entity_id: input_select.sean_room_location
         option: Away
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.sean_living_room_presence
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.sean_bedroom_presence
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.sean_office_presence

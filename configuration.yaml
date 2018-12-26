@@ -236,7 +236,7 @@ sensor:
     sensors:
       sean_room_status:
         value_template: '{{ states.input_select.sean_room_location.state }}'
-        friendly_name: 'Sean'
+        friendly_name: 'Room Location'
 
   - platform: template
     sensors:
@@ -257,7 +257,7 @@ sensor:
     sensors:
       emily_room_status:
         value_template: '{{ states.input_select.emily_room_location.state }}'
-        friendly_name: 'Emily'
+        friendly_name: 'Room Location'
 
   - platform: darksky
     api_key: !secret dark_sky_api_key
@@ -351,18 +351,18 @@ input_select:
   sean_room_location:
     name: Sean's Room Location
     options:
-      - Home, Bedroom
-      - Home, Living Room
-      - Home, Office
+      - Bedroom
+      - Living Room
+      - Office
       - Away
       - Home
 
   emily_room_location:
     name: Emily's Room Location
     options:
-      - Home, Bedroom
-      - Home, Living Room
-      - Home, Office
+      - Bedroom
+      - Living Room
+      - Office
       - Away
       - Home
 

@@ -55,11 +55,9 @@
 - alias: Living Room Lights off no motion
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: binary_sensor.motion_sensor_158d0002047afe
-    to: 'off'
-    for:
-      minutes: 3
+    platform: time
+    minutes: '/5'
+    seconds: 00
   condition:
     - condition: state
       entity_id: input_boolean.sean_living_room_presence
@@ -67,11 +65,20 @@
     - condition: state
       entity_id: input_boolean.emily_living_room_presence
       state: 'off'
+    - condition: state
+      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      state: 'off'
   action:
-    service: light.turn_off
-    data:
-      entity_id: light.living_room
-      transition: 2
+    - service: light.turn_off
+      data:
+        entity_id: light.living_room
+        transition: 2
+    - delay:
+        seconds: '1'
+    - service: light.turn_off
+      data:
+        entity_id: light.living_room
+        transition: 2
 
 # Turn off Living Room lights above lux
 - alias: Turn off living room lights above lux

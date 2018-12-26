@@ -12,12 +12,12 @@ group.emily:
   friendly_name: Emily
   entity_picture: !secret emily_pic
 sensor.emily_room_status:
-  entity_picture: !secret emily_pic
+  icon: mdi:home-map-marker
 group.sean:
   friendly_name: Sean
   entity_picture: !secret sean_pic
 sensor.sean_room_status:
-  entity_picture: !secret sean_pic
+  icon: mdi:home-map-marker
 climate.living_room:
   entity_picture: !secret nest_pic
 switch.office_light:
@@ -134,13 +134,3 @@ light.bathroom:
   friendly_name: Bathroom Lights
 sensor.sun_elevation:
   icon: mdi:weather-sunny
-group.family:
-  order: 1
-group.indoors:
-  order: 2
-group.lights:
-  order: 3
-group.wather_one:
-  order: 4
-group.weather_two:
-  order: 5
