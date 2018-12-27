@@ -44,6 +44,10 @@
     - condition: state
       entity_id: light.living_room
       state: 'on'
+    - condition: template
+      value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'paused') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT condition
   action:
     - service: light.turn_on
       data_template:

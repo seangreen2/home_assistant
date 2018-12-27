@@ -45,6 +45,10 @@
     - condition: state
       entity_id: light.bedroom
       state: 'on'
+    - condition: template
+      value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
   action:
     - service: light.turn_on
       data_template:
@@ -56,11 +60,19 @@
 - alias: Bedroom Lights off no motion
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: binary_sensor.motion_sensor_158d000237a64a
-    to: 'off'
-    for:
-      minutes: 3
+    platform: time
+    minutes: '/5'
+    seconds: 00
+  condition:
+    - condition: state
+      entity_id: input_boolean.sean_bedroom_presence
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.emily_bedroom_presence
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      state: 'off'
   action:
     service: light.turn_off
     data:
