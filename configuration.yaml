@@ -25,6 +25,8 @@ proximity:
 
 cloud:
 
+lovelace:
+
 customizer:
   custom_ui: local
 
@@ -425,7 +427,7 @@ device_tracker:
   - platform: googlehome
     host: 192.168.1.208
     rssi_threshold: -100
-    interval_seconds: 5
+    interval_seconds: 2
     consider_home: 10
     new_device_defaults:
       track_new_devices: false
@@ -434,7 +436,7 @@ device_tracker:
   - platform: googlehome
     host: 192.168.1.149
     rssi_threshold: -100
-    interval_seconds: 5
+    interval_seconds: 2
     consider_home: 10
     new_device_defaults:
       track_new_devices: false
@@ -443,7 +445,7 @@ device_tracker:
   - platform: googlehome
     host: 192.168.1.38
     rssi_threshold: -100
-    interval_seconds: 5
+    interval_seconds: 2
     consider_home: 10
     new_device_defaults:
       track_new_devices: false

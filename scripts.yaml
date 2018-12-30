@@ -71,8 +71,6 @@
             state: 'off'
       - service: automation.turn_on
         entity_id: automation.bedroom_auto_brightness
-#      - service: automation.trigger
-#        entity_id: automation.rain_sounds_off
 
   morning_emily:
     sequence:
@@ -89,5 +87,19 @@
             state: 'off'
       - service: automation.turn_on
         entity_id: automation.bedroom_auto_brightness
-#      - service: automation.trigger
-#        entity_id: automation.rain_sounds_off
+
+
+  emily_car:
+    sequence:
+      - condition: and
+        conditions:
+          - condition: time
+            after: '04:00:00'
+            before: '09:00:00'
+          - condition: state
+            entity_id: input_boolean.bedtime_sean
+            state: 'on'
+      - service: light.turn_off
+        data:
+          entity_id: group.all_lights
+          transition: 2
