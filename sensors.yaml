@@ -69,17 +69,32 @@
   - platform: template
     sensors:
       bedroom_sean_gh_rssi:
-        value_template: '{{ states.device_tracker.sean_bt_bedroom.attributes.rssi }}'
+        value_template: >-
+          {% if is_state("device_tracker.sean_bt_bedroom", "home") %}
+            {{ states.device_tracker.sean_bt_bedroom.attributes.rssi }}
+          {% else %}
+            -99
+          {% endif %}
 
   - platform: template
     sensors:
       livingroom_sean_gh_rssi:
-        value_template: '{{ states.device_tracker.sean_bt_living_room.attributes.rssi }}'
+        value_template: >-
+          {% if is_state("device_tracker.sean_bt_living_room", "home") %}
+            {{ states.device_tracker.sean_bt_living_room.attributes.rssi }}
+          {% else %}
+            -99
+          {% endif %}
 
   - platform: template
     sensors:
       office_sean_gh_rssi:
-        value_template: '{{ states.device_tracker.sean_bt_office.attributes.rssi }}'
+        value_template: >-
+          {% if is_state("device_tracker.sean_bt_office", "home") %}
+            {{ states.device_tracker.sean_bt_office.attributes.rssi }}
+          {% else %}
+            -99
+          {% endif %}
 
   - platform: template
     sensors:
@@ -90,17 +105,32 @@
   - platform: template
     sensors:
       bedroom_emily_gh_rssi:
-        value_template: '{{ states.device_tracker.emily_bt_bedroom.attributes.rssi }}'
+        value_template: >-
+          {% if is_state("device_tracker.emily_bt_bedroom", "home") %}
+            {{ states.device_tracker.emily_bt_bedroom.attributes.rssi }}
+          {% else %}
+            -99
+          {% endif %}
 
   - platform: template
     sensors:
       livingroom_emily_gh_rssi:
-        value_template: '{{ states.device_tracker.emily_bt_living_room.attributes.rssi }}'
+        value_template: >-
+          {% if is_state("device_tracker.emily_bt_living_roomm", "home") %}
+            {{ states.device_tracker.emily_bt_living_room.attributes.rssi }}
+          {% else %}
+            -99
+          {% endif %}
 
   - platform: template
     sensors:
       office_emily_gh_rssi:
-        value_template: '{{ states.device_tracker.emily_bt_office.attributes.rssi }}'
+        value_template: >-
+          {% if is_state("device_tracker.emily_bt_office", "home") %}
+            {{ states.device_tracker.emily_bt_office.attributes.rssi }}
+          {% else %}
+            -99
+          {% endif %}
 
   - platform: template
     sensors:
