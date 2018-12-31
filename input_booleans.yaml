@@ -1,0 +1,31 @@
+  bedtime_sean:
+    name: Sean Bedtime
+    initial: false
+
+  bedtime_emily:
+    name: Emily Bedtime
+    initial: false
+
+  sean_office_presence:
+    name: Sean Office Presence
+    initial: false
+
+  sean_living_room_presence:
+    name: Sean Living Room Presence
+    initial: false
+
+  sean_bedroom_presence:
+    name: Sean Bedroom Presence
+    initial: false
+
+  emily_office_presence:
+    name: Emily Office Presence
+    initial: false
+
+  emily_living_room_presence:
+    name: Emily Living Room Presence
+    initial: false
+
+  emily_bedroom_presence:
+    name: Emily Bedroom Presence
+    initial: false

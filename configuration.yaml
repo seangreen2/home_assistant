@@ -45,46 +45,6 @@ panel_custom:
     url_path: floorplan
     config: !include floorplan.yaml
 
-weather:
-  - platform: darksky
-    api_key: !secret dark_sky_api_key
-    mode: daily
-
-input_boolean:
-  bedtime_sean:
-    name: Sean Bedtime
-    initial: false
-
-  bedtime_emily:
-    name: Emily Bedtime
-    initial: false
-
-  sean_office_presence:
-    name: Sean Office Presence
-    initial: false
-
-  sean_living_room_presence:
-    name: Sean Living Room Presence
-    initial: false
-
-  sean_bedroom_presence:
-    name: Sean Bedroom Presence
-    initial: false
-
-  emily_office_presence:
-    name: Emily Office Presence
-    initial: false
-
-  emily_living_room_presence:
-    name: Emily Living Room Presence
-    initial: false
-
-  emily_bedroom_presence:
-    name: Emily Bedroom Presence
-    initial: false
-
-sun:
-
 # BEGIN CONFIG
 config:
 http:
@@ -143,230 +103,12 @@ recorder:
 # View all events in a logbook
 logbook:
 
-### SENSORS ###
-sensor:
-  - platform: template
-    sensors:
-      hue:
-        value_template: '{% if is_state("device_tracker.philipshue", "home") %}Online{% else %}Offline{% endif %}'
-        friendly_name: 'Hue Bridge'
-
-  - platform: template
-    sensors:
-      bathroom_temperature:
-        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.temperature}}'
-
-  - platform: template
-    sensors:
-      bathroom_battery:
-        friendly_name: 'Battery'
-        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.battery}}'
-        unit_of_measurement: '%'
-
-  - platform: template
-    sensors:
-      bathroom_temperature_f:
-        friendly_name: 'Bathroom Temperature'
-        entity_id:
-          - sensor.bathroom_temperature
-        unit_of_measurement: °F
-        value_template: >
-          {{ ((float(states('sensor.bathroom_temperature')) * 1.8) + 32) | round(1) }}
-
-  - platform: template
-    sensors:
-      phone_socket:
-        friendly_name: 'Phone Power'
-        value_template: '{{states.switch.smart_plug_one.attributes.current_power_w}}'
-
-  - platform: template
-    sensors:
-      office_temperature:
-        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.temperature}}'
-
-  - platform: template
-    sensors:
-      office_battery:
-        friendly_name: 'Battery'
-        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.battery}}'
-        unit_of_measurement: '%'
-
-  - platform: template
-    sensors:
-      office_temperature_f:
-        friendly_name: 'Office Temperature'
-        entity_id:
-          - sensor.office_temperature
-        unit_of_measurement: °F
-        value_template: >
-          {{ ((float(states('sensor.office_temperature')) * 9 / 5) + 32) | round(1) }}
-
-  - platform: template
-    sensors:
-      office_lux:
-        friendly_name: 'Lux'
-        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.lx}}'
-
-  - platform: template
-    sensors:
-      laptop_socket:
-        friendly_name: 'Laptop Power'
-        value_template: '{{states.switch.laptop_socket.attributes.current_power_w}}'
-
-  - platform: template
-    sensors:
-      sun_elevation:
-        friendly_name: Sun Elevation
-        value_template: '{{states.sun.sun.attributes.elevation}}'
-
-  - platform: template
-    sensors:
-      bedroom_sean_gh_rssi:
-        value_template: '{{ states.device_tracker.sean_bt_bedroom.attributes.rssi }}'
-
-  - platform: template
-    sensors:
-      livingroom_sean_gh_rssi:
-        value_template: '{{ states.device_tracker.sean_bt_living_room.attributes.rssi }}'
-
-  - platform: template
-    sensors:
-      office_sean_gh_rssi:
-        value_template: '{{ states.device_tracker.sean_bt_office.attributes.rssi }}'
-
-  - platform: template
-    sensors:
-      sean_room_status:
-        value_template: '{{ states.input_select.sean_room_location.state }}'
-        friendly_name: 'Room Location'
-
-  - platform: template
-    sensors:
-      bedroom_emily_gh_rssi:
-        value_template: '{{ states.device_tracker.emily_bt_bedroom.attributes.rssi }}'
-
-  - platform: template
-    sensors:
-      livingroom_emily_gh_rssi:
-        value_template: '{{ states.device_tracker.emily_bt_living_room.attributes.rssi }}'
-
-  - platform: template
-    sensors:
-      office_emily_gh_rssi:
-        value_template: '{{ states.device_tracker.emily_bt_office.attributes.rssi }}'
-
-  - platform: template
-    sensors:
-      emily_room_status:
-        value_template: '{{ states.input_select.emily_room_location.state }}'
-        friendly_name: 'Room Location'
-
+weather:
   - platform: darksky
     api_key: !secret dark_sky_api_key
-    update_interval: '00:05:00'
-    monitored_conditions:
-      - temperature
-      - precip_probability
-      - precip_type
-      - humidity
-      - cloud_cover
-      - nearest_storm_distance
-      - precip_intensity
-      - wind_speed
+    mode: daily
 
-  - platform: systemmonitor
-    resources:
-      - type: processor_use
-      - type: disk_use_percent
-        arg: /home
-      - type: memory_use_percent
-      - type: ipv4_address
-        arg: eth0
-      - type: network_in
-        arg: eth0
-      - type: network_out
-        arg: eth0
-      - type: last_boot
-
-  - platform: pi_hole
-    host: !secret pihole_ip
-    monitored_conditions:
-      - ads_blocked_today
-      - ads_percentage_today
-      - dns_queries_today
-      - domains_being_blocked
-      - unique_clients
-
-  - platform: plex
-    host: !secret plex_ip
-
-  - platform: steam_online
-    api_key: !secret steam_api
-    accounts:
-      - !secret steam_account
-
-  - platform: speedtest
-    hour:
-      - 0
-      - 6
-      - 12
-      - 18
-    monitored_conditions:
-      - ping
-      - download
-      - upload
-
-  - platform: hue
-    ip_address: !secret hue_ip
-    token: !secret hue_token
-
-  - platform: waze_travel_time
-    origin: !secret travel_origin
-    destination: !secret travel_destination
-    region: 'NA'
-    name: Work Commute
-
-  - platform: season
-    type: astronomical
-
-  - platform: time_date
-    display_options:
-      - 'time'
-
-  - platform: qbittorrent
-    url: !secret qbit_http
-    username: !secret qbit_user
-    password: !secret qbit_password
-
-# USPS Informed Delivery
-#usps:
-#  username: !secret usps_user
-#  password: !secret usps_password
-#  name: USPS
-#  driver: 'chrome'
-
-# Cameras
-#camera:
-#  - platform: usps
-
-input_select:
-  sean_room_location:
-    name: Sean's Room Location
-    options:
-      - Bedroom
-      - Living Room
-      - Office
-      - Away
-      - Home
-
-  emily_room_location:
-    name: Emily's Room Location
-    options:
-      - Bedroom
-      - Living Room
-      - Office
-      - Away
-      - Home
+sun:
 
 # Nest Temperature
 nest:
@@ -382,11 +124,6 @@ hue:
     - host: !secret hue_ip
       allow_hue_groups: true
 
-# Wemo
-wemo:
-  static:
-    - !secret wemo_ip
-
 # Xiaomi
 xiaomi_aqara:
   discovery_retry: 10
@@ -401,6 +138,10 @@ switch:
    host: !secret tplink_switch_two_ip
  - platform: tplink
    host: !secret tplink_switch_three_ip
+
+wemo:
+  static:
+    - !secret wemo_ip
 
 # Text to speech
 tts:
@@ -475,10 +216,11 @@ neato:
 ifttt:
   key: !secret ifttt_key
 
-
-
 ##########################
 scene: !include scenes.yaml
 group: !include groups.yaml
 automation: !include_dir_merge_list automations
 script: !include scripts.yaml
+input_boolean: !include input_booleans.yaml
+sensor: !include sensors.yaml
+input_select: !include input_select.yaml

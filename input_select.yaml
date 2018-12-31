@@ -1,0 +1,17 @@
+  sean_room_location:
+    name: Sean's Room Location
+    options:
+      - Bedroom
+      - Living Room
+      - Office
+      - Away
+      - Home
+
+  emily_room_location:
+    name: Emily's Room Location
+    options:
+      - Bedroom
+      - Living Room
+      - Office
+      - Away
+      - Home

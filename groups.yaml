@@ -57,9 +57,9 @@ lights:
     - light.office
     - vacuum.rosie
     - sensor.plex
-    - sensor.usps_mail
-    - sensor.usps_packages
-    - camera.usps_mail
+#    - sensor.usps_mail
+#    - sensor.usps_packages
+#    - camera.usps_mail
 
 ### CLIMATE ###
 indoors:
@@ -196,43 +196,6 @@ bedtime_lights:
     - light.living_room
     - light.bathroom
 
-### MEDIA ###
-media:
-  name: Media
-  view: yes
-  icon: mdi:television-classic
-  entities:
-    - group.plex1
-    - group.plex2
-    - media_player.bedroom_speaker
-
-
-plex1:
-  name: Plex Client 1
-  view: no
-  entities:
-    - media_player.plex_living_room_tv
-
-
-plex2:
-  name: Plex Client 2
-  view: no
-  entities:
-    - media_player.bedroom_tv
-
-mini_group:
-  name: Home Mini Group
-  view: no
-  entities:
-    - media_player.welcome
-
-plex_activity:
-  name: Plex Activity
-  icon: mdi:plex
-  entities:
-    - sensor.plex
-
-
 ### SETTINGS ###
 settings:
   view: yes
@@ -262,9 +225,9 @@ monitor:
     - sensor.processor_use
     - sensor.disk_use_percent_home
     - sensor.memory_use_percent
-    - sensor.ipv4_address_eth0
-    - sensor.network_in_eth0
-    - sensor.network_out_eth0
+#    - sensor.ipv4_address_eth0
+#    - sensor.network_in_eth0
+#    - sensor.network_out_eth0
     - sensor.last_boot
 
 pihole:
@@ -305,15 +268,6 @@ rssi:
     - sensor.livingroom_emily_gh_rssi
     - sensor.office_emily_gh_rssi
 
-weatherdetails:
-  view: no
-  name: Weather Details
-  entities:
-    - sensor.sun_elevation
-    - sensor.dark_sky_cloud_coverage
-    - sensor.dark_sky_nearest_storm_distance
-    - sensor.dark_sky_precip_probability
-
 ### Input Booleans ###
 input:
   view: no
@@ -328,7 +282,6 @@ input:
     - input_boolean.emily_bedroom_presence
     - input_boolean.emily_living_room_presence
     - input_boolean.emily_office_presence
-
 
 ### AUTOMATIONS ###
 auto:
@@ -421,7 +374,6 @@ presence:
     - automation.emily_in_living_room
     - automation.emily_in_office
     - automation.emily_is_away
-
 
 automedia:
   view: no
