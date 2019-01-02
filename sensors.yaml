@@ -116,7 +116,7 @@
     sensors:
       livingroom_emily_gh_rssi:
         value_template: >-
-          {% if is_state("device_tracker.emily_bt_living_roomm", "home") %}
+          {% if is_state("device_tracker.emily_bt_living_room", "home") %}
             {{ states.device_tracker.emily_bt_living_room.attributes.rssi }}
           {% else %}
             -99
