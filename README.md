@@ -15,7 +15,7 @@ Due to renting and lack of any overhead lighting, we use Hue smart bulbs in stan
 
 The automations are highly customizable with each room having different light values attached to them. My only requirement for this was to avoid having the lights initially turn on to 100% brightness and then dim to the appropriate setting. Fortunately, these automations avoid that problem and turn on to the appropriate brightness depending on the Sun’s location. Another bonus of tracking the Sun for brightness is that these automations double for the morning and don’t blind you as you are still waking up.
 
-I wrote up a short tutorial on setting these automations up here:
+I wrote up a short tutorial on setting these automations up [here.](https://www.reddit.com/r/homeassistant/comments/a8h5tu/heres_a_simple_automation_to_have_your_lights/)
 
 #### [Room Presence](https://github.com/seangreen2/home_assistant/blob/master/automations/room_presence_sean.yaml)
 
@@ -23,7 +23,7 @@ This is kind of like the Holy Grail for me. With accurate room presence, a lot o
 
 So far this has been incredibly accurate with the automations taking roughly ten seconds or less to determine where we are located and displays it on my frontend. I have successfully been using the results of the room presence to affect my lighting automations without any problems.
 
-I wrote a tutorial on how I accomplished this here:
+I wrote a tutorial on how I accomplished this [here.](https://www.reddit.com/r/homeassistant/comments/a9sj4y/i_successfully_got_room_presence_working_using/)
 
 #### [Sleep Detection with Tasker](https://github.com/seangreen2/home_assistant/blob/master/scripts.yaml)
 
