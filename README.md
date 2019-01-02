@@ -1,20 +1,33 @@
-## Intro
-
-I've been using HA for about a year now and it's been a great experience. I'm a graphic designer, not a coder, so I'm sure my YAML isn't as advanced, simple, or clean as it could be. I'm just happy that I can solve every problem that I want to so far.
-
-#### Home Automation Philosophy
+## Home Automation Philosophy
 
 You shouldn't have to work the room, the room should work you. True home automation is having your home anticipate what you want without needing any input from you.
 
 Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
 
-## Current Goals
-- Currently adapting my Google Home Minis to also detect our phones via Bluetooth for potential Room Presence. So far, my settings seem to have a very minor delay but can detect which room we are located within ten seconds. More testing required.
-- (DONE) My Hue lights have a strange issue of not coming at full brightness at random times despite what my YAML says. To fix this, I've added a one second delay on all lighting automations followed by another brightness command to ensure the lights always come on to the brightness they should. So far this fix has a 100% success rate on all lighting.
-- (DONE) Have all lights turn on/off with motion and never have to use a physical switch or voice commands again. I have some Xiaomi equipment coming in which should finally complete this.
+## Notable Automations
+#### [Media](https://github.com/seangreen2/home_assistant/blob/master/automations/media_living_room.yaml)
 
-#### Custom Components
-To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmarkcole/Hue-sensors-HASS
+While these are simple automations, they do have some “wow” factor to them. Whenever watching any media on Plex after 5:00 p.m., the lights will automatically turn off until either paused or stopped. When paused, the lights will slowly brighten to 25% brightness. When media is stopped, the lights will slowly brighten to either 100% or to another brightness depending on the time of day. The later in the day, the dimmer it will brighten to.
+
+#### [Automatic Brightness for Lighting](https://github.com/seangreen2/home_assistant/blob/master/automations/living_room_lights.yaml)
+
+Due to renting and lack of any overhead lighting, we use Hue smart bulbs in standing lamps. We don’t have any of the expensive color bulbs, but I still wanted our normal white bulbs to slowly dim during the evening to encourage sleepiness. I developed two automations to take care of this problem and wanted to avoid using any custom components in the process. One automation for turning on the lights to the desired brightness, the other automation being a transitional one where it tracks the Sun and only dims the lights if they are already on.
+
+The automations are highly customizable with each room having different light values attached to them. My only requirement for this was to avoid having the lights initially turn on to 100% brightness and then dim to the appropriate setting. Fortunately, these automations avoid that problem and turn on to the appropriate brightness depending on the Sun’s location. Another bonus of tracking the Sun for brightness is that these automations double for the morning and don’t blind you as you are still waking up.
+
+I wrote up a short tutorial on setting these automations up here:
+
+#### [Room Presence](https://github.com/seangreen2/home_assistant/blob/master/automations/room_presence_sean.yaml)
+
+This is kind of like the Holy Grail for me. With accurate room presence, a lot of possibilities open up for more exciting automations. My system works via the Bluetooth on our Google Home Minis and they look for where our android phones are in our home using RSSI values. As we typically take our phones with us to each room, this works out rather nicely for detection purposes. Of course, you can use any BLE devices to accomplish this as well such as a smart watch.
+
+So far this has been incredibly accurate with the automations taking roughly ten seconds or less to determine where we are located and displays it on my frontend. I have successfully been using the results of the room presence to affect my lighting automations without any problems.
+
+I wrote a tutorial on how I accomplished this here:
+
+#### [Sleep Detection with Tasker](https://github.com/seangreen2/home_assistant/blob/master/scripts.yaml)
+
+Using a fantastic android app called Tasker, whenever we plug in our phones to charge at night, a script is triggered to turn off all the lights and disable the automation that turns on the bedroom lights from motion. When unplugging our phones in the morning, another script is triggered to turn the automations back on. Before Tasker we used to use voice commands to accomplish this, but this is far more elegant and was surprisingly simple to accomplish.
 
 ## Equipment
 - Home Assistant using Ubuntu on a VM
@@ -34,6 +47,9 @@ To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmar
 - Neato Botvac D3
 - PiHole (Raspberry Pi Gen 1B)
 - Plex Server
+
+#### Custom Components
+To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmarkcole/Hue-sensors-HASS
 
 ## Dashboard (New Custom Theme!)
 ![1](https://i.imgur.com/p0VlC8e.jpg)

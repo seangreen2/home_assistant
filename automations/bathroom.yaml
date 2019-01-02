@@ -1,4 +1,3 @@
-
 # Bathroom Lights on with Motion
 - alias: Bathroom Lights on motion
   initial_state: 'on'
@@ -150,3 +149,28 @@
         minutes: '10'
     - service: switch.turn_off
       entity_id:  switch.smart_plug_one
+
+# Bathroom Lights off early morning with bedroom motion
+- alias: Bathroom Lights off Bedroom Motion
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d000237a64a
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: time
+        after: '04:30:00'
+        before: '06:00:00'
+  action:
+    service: light.turn_off
+    data:
+      entity_id: light.bathroom
+      transition: 2
