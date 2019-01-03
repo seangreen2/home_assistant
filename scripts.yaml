@@ -13,11 +13,11 @@
           - condition: template
             value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
           - condition: template
-            value_template: "{{ not is_state('media_player.living_room_tv_2', 'playing') }}" # NOT condition
+            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
           - condition: template
-            value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'paused') }}" # NOT  condition
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT  condition
           - condition: template
-            value_template: "{{ not is_state('media_player.plex_living_room_tv_2', 'playing') }}" # NOT conditio
+            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT conditio
       - service: automation.turn_off
         entity_id: automation.bedroom_auto_brightness
       - service: light.turn_off
@@ -87,7 +87,6 @@
             state: 'off'
       - service: automation.turn_on
         entity_id: automation.bedroom_auto_brightness
-
 
   emily_car:
     sequence:

@@ -22,13 +22,11 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
-    - delay:
-        seconds: '1'
+        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -50 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -50 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
 
 # Turn off lights when everyone leaves house
   - alias: 'Away Mode'

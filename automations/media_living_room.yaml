@@ -5,7 +5,7 @@
 #      - platform: webhook
 #        webhook_id: plex-idle
       - platform: state
-        entity_id: media_player.plex_living_room_tv_2
+        entity_id: media_player.plex_living_room_tv
         from: 'playing'
         to: 'idle'
     condition:
@@ -16,7 +16,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -50 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
         transition: 7
 
 # Lights turn off while media is playing
@@ -26,7 +26,7 @@
 #      - platform: webhook
 #        webhook_id: plex-playing
       - platform: state
-        entity_id: media_player.plex_living_room_tv_2
+        entity_id: media_player.plex_living_room_tv
         to: 'playing'
         from: 'idle'
     action:
@@ -41,7 +41,7 @@
   #    - platform: webhook
   #      webhook_id: plex-paused
       - platform: state
-        entity_id: media_player.plex_living_room_tv_2
+        entity_id: media_player.plex_living_room_tv
         from: 'playing'
         to: 'paused'
     condition:
@@ -62,7 +62,7 @@
 #      - platform: webhook
 #        webhook_id: plex-unpaused
       - platform: state
-        entity_id: media_player.plex_living_room_tv_2
+        entity_id: media_player.plex_living_room_tv
         from: 'paused'
         to: 'playing'
     condition:
@@ -81,7 +81,7 @@
   #    - platform: webhook
   #      webhook_id: plex-pause-idle
       - platform: state
-        entity_id: media_player.plex_living_room_tv_2
+        entity_id: media_player.plex_living_room_tv
         from: 'paused'
         to: 'idle'
     condition:
@@ -92,5 +92,5 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -35 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -50 %}10{% elif states.sun.sun.attributes.elevation <= -22 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
         transition: 4
