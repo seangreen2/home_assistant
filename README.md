@@ -16,17 +16,17 @@ The automations are highly customizable with each room having different light va
 I wrote up a short tutorial on setting these automations up [here.](https://www.reddit.com/r/homeassistant/comments/a8h5tu/heres_a_simple_automation_to_have_your_lights/)
 
 ### [Room Presence](https://github.com/seangreen2/home_assistant/blob/master/automations/room_presence_sean.yaml)
-This is kind of like the Holy Grail for me. With accurate room presence, a lot of possibilities open up for more exciting automations. My system works via the Bluetooth on our Google Home Minis and they look for where our android phones are in our home using RSSI values. As we typically take our phones with us to each room, this works out rather nicely for detection purposes. Of course, you can use any BLE devices to accomplish this as well such as a smart watch.
+This is kind of like the Holy Grail for me. With accurate room presence, a lot of possibilities open up for more exciting automations. My system works via the Bluetooth on our Google Home Minis and they look for where our Android phones are in our home using RSSI values. This works out rather nicely for detection purposes as we typically take our phones with us to each room. Of course, you can use any BLE devices to accomplish this as well such as a smart watch.
 
 So far this has been incredibly accurate with the automations taking roughly ten seconds or less to determine where we are located and displays it on my frontend. I have successfully been using the results of the room presence to affect my lighting automations without any problems.
 
 I wrote a tutorial on how I accomplished this [here.](https://www.reddit.com/r/homeassistant/comments/a9sj4y/i_successfully_got_room_presence_working_using/)
 
 ### [Sleep Detection with Tasker](https://github.com/seangreen2/home_assistant/blob/master/scripts.yaml)
-Using a fantastic android app called Tasker, whenever we plug in our phones to charge at night, a script is triggered to turn off all the lights and disable the automation that turns on the bedroom lights from motion. When unplugging our phones in the morning, another script is triggered to turn the automations back on. Before Tasker we used to use voice commands to accomplish this, but this is far more elegant and was surprisingly simple to accomplish.
+Using a fantastic Android app called [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en_US), whenever we plug in our phones to charge at night, a script is triggered to turn off all the lights and disable the automation that turns on the bedroom motion sensor. When unplugging our phones in the morning, another script is triggered to turn the automations back on. Before Tasker we used to use voice commands to accomplish this, but this is far more elegant and was surprisingly simple to accomplish.
 
 ## Equipment
-- Home Assistant using Ubuntu on a VM
+- Home Assistant using Lubuntu on a VM
 - Hue Bridge
   - 10 A19 soft white bulbs
   - 2 Hue Motion Sensors
@@ -36,11 +36,11 @@ Using a fantastic android app called Tasker, whenever we plug in our phones to c
   - Temperature and Humidity Sensor
 - Nest Thermostat (Gen 2)
 - 55" TCL Roku TV (2017)
-- Chromecasts (Gen 1 and Gen 2)
+- 2 Chromecasts (Gen 1 and Gen 2)
 - 3 Google Home Minis
-- 2 TP Link Smart Plugs (HS 100)
+- 3 TP Link Smart Plugs (HS 100)
 - Wemo Mini Smart Plug
-- Neato Botvac D3
+- Neato Botvac D3 Connected
 - PiHole (Raspberry Pi Gen 1B)
 - Plex Server
 
