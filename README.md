@@ -5,11 +5,11 @@ You shouldn't have to work the room, the room should work you. True home automat
 Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
 
 ## Notable Automations
-#### [Media](https://github.com/seangreen2/home_assistant/blob/master/automations/media_living_room.yaml)
+### [Media](https://github.com/seangreen2/home_assistant/blob/master/automations/media_living_room.yaml)
 
 While these are simple automations, they do have some “wow” factor to them. Whenever watching any media on Plex after 5:00 p.m., the lights will automatically turn off until either paused or stopped. When paused, the lights will slowly brighten to 25% brightness. When media is stopped, the lights will slowly brighten to either 100% or to another brightness depending on the time of day. The later in the day, the dimmer it will brighten to.
 
-#### [Automatic Brightness for Lighting](https://github.com/seangreen2/home_assistant/blob/master/automations/living_room_lights.yaml)
+### [Automatic Brightness for Lighting](https://github.com/seangreen2/home_assistant/blob/master/automations/living_room_lights.yaml)
 
 Due to renting and lack of any overhead lighting, we use Hue smart bulbs in standing lamps. We don’t have any of the expensive color bulbs, but I still wanted our normal white bulbs to slowly dim during the evening to encourage sleepiness. I developed two automations to take care of this problem and wanted to avoid using any custom components in the process. One automation for turning on the lights to the desired brightness, the other automation being a transitional one where it tracks the Sun and only dims the lights if they are already on.
 
@@ -17,7 +17,7 @@ The automations are highly customizable with each room having different light va
 
 I wrote up a short tutorial on setting these automations up [here.](https://www.reddit.com/r/homeassistant/comments/a8h5tu/heres_a_simple_automation_to_have_your_lights/)
 
-#### [Room Presence](https://github.com/seangreen2/home_assistant/blob/master/automations/room_presence_sean.yaml)
+### [Room Presence](https://github.com/seangreen2/home_assistant/blob/master/automations/room_presence_sean.yaml)
 
 This is kind of like the Holy Grail for me. With accurate room presence, a lot of possibilities open up for more exciting automations. My system works via the Bluetooth on our Google Home Minis and they look for where our android phones are in our home using RSSI values. As we typically take our phones with us to each room, this works out rather nicely for detection purposes. Of course, you can use any BLE devices to accomplish this as well such as a smart watch.
 
@@ -25,7 +25,7 @@ So far this has been incredibly accurate with the automations taking roughly ten
 
 I wrote a tutorial on how I accomplished this [here.](https://www.reddit.com/r/homeassistant/comments/a9sj4y/i_successfully_got_room_presence_working_using/)
 
-#### [Sleep Detection with Tasker](https://github.com/seangreen2/home_assistant/blob/master/scripts.yaml)
+### [Sleep Detection with Tasker](https://github.com/seangreen2/home_assistant/blob/master/scripts.yaml)
 
 Using a fantastic android app called Tasker, whenever we plug in our phones to charge at night, a script is triggered to turn off all the lights and disable the automation that turns on the bedroom lights from motion. When unplugging our phones in the morning, another script is triggered to turn the automations back on. Before Tasker we used to use voice commands to accomplish this, but this is far more elegant and was surprisingly simple to accomplish.
 
@@ -51,9 +51,9 @@ Using a fantastic android app called Tasker, whenever we plug in our phones to c
 #### Custom Components
 To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmarkcole/Hue-sensors-HASS
 
-## Dashboard (New Custom Theme!)
-![1](https://i.imgur.com/p0VlC8e.jpg)
-![2](https://i.imgur.com/Z1Cs4SC.jpg)
-![3](https://i.imgur.com/49QStQb.jpg)
-![4](https://i.imgur.com/RjEg0SL.jpg)
-![5](https://i.imgur.com/pf8QbjK.jpg)
+## Dashboard
+![1](https://i.imgur.com/eQiPeQr.jpg)
+![2](https://i.imgur.com/ETI6aEs.jpg)
+![3](https://i.imgur.com/i4bC3HA.jpg)
+![4](https://i.imgur.com/ZuTkEBc.jpg)
+![5](https://i.imgur.com/wvB9JgS.jpg)
