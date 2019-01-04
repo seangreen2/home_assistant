@@ -8,14 +8,14 @@ Using voice commands are nice and all, but that ends up being just another switc
 ### [Media](https://github.com/seangreen2/home_assistant/blob/master/automations/media_living_room.yaml)
 While these are simple automations, they do have some “wow” factor to them. Whenever watching any media on Plex after 5:00 p.m., the lights will automatically turn off until either paused or stopped. When paused, the lights will slowly brighten to 25% brightness. When media is stopped, the lights will slowly brighten to either 100% or to another brightness depending on the time of day. The later in the evening, the dimmer the lights will brighten to.
 
-### [Automatic Brightness for Lighting](https://github.com/seangreen2/home_assistant/blob/master/automations/living_room_lights.yaml)
+### [Automatic Brightness for Lighting](https://github.com/seangreen2/home_assistant/wiki/Automatic-Brightness-for-Lighting)
 Due to renting and lack of any overhead lighting, we use Hue smart bulbs in standing lamps. We don’t have any of the expensive color bulbs, but I still wanted our normal white bulbs to slowly dim during the evening to encourage sleepiness. I developed two automations to take care of this problem and wanted to avoid using any custom components in the process. One automation for turning on the lights to the desired brightness, the other automation being a transitional one where it tracks the Sun and only dims the lights if they are already on.
 
 The automations are highly customizable with each room having different light values attached to them. My only requirement for this was to avoid having the lights initially turn on to 100% brightness and then dim to the appropriate setting. Fortunately, these automations avoid that problem and turn on to the appropriate brightness depending on the Sun’s location. Another bonus of tracking the Sun for brightness is that these automations double for the morning and don’t blind you as you are still waking up.
 
 I wrote up a short tutorial on setting these automations up [here.](https://www.reddit.com/r/homeassistant/comments/a8h5tu/heres_a_simple_automation_to_have_your_lights/)
 
-### [Room Presence](https://github.com/seangreen2/home_assistant/blob/master/automations/room_presence_sean.yaml)
+### [Room Presence](https://github.com/seangreen2/home_assistant/wiki/Room-Presence-with-Google-Homes)
 This is kind of like the Holy Grail for me. With accurate room presence, a lot of possibilities open up for more exciting automations. My system works via the Bluetooth on our Google Home Minis and they look for where our Android phones are in our home using RSSI values. This works out rather nicely for detection purposes as we typically take our phones with us to each room. Of course, you can use any BLE devices to accomplish this as well such as a smart watch.
 
 So far this has been incredibly accurate with the automations taking roughly ten seconds or less to determine where we are located and displays it on my frontend. I have successfully been using the results of the room presence to affect my lighting automations without any problems.
