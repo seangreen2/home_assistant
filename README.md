@@ -1,5 +1,3 @@
-[![](https://img.shields.io/github/commit-activity/y/:seangreen2/:home_assistant.svg?style=flat-square)](https://github.com/seangreen2/home_assistant)
-
 ## Home Automation Philosophy
 
 You shouldn't have to work the room, the room should work you. True home automation is having your home anticipate what you want without needing any input from you.
