@@ -1,4 +1,4 @@
-[![](https://img.shields.io/github/release/qubyte/rubidium.svg?style=flat-square)](https://github.com/home-assistant/home-assistant) [![](https://img.shields.io/github/commit-activity/y/:user/:repo.svg?style=flat-square)](https://github.com/seangreen2/home_assistant)
+![](https://img.shields.iohttps://github.com/home-assistant/home-assistant?style=flat-square) ![](https://img.shields.io/github/commit-activity/y/:https://github.com/seangreen2/home_assistant/:repo.svg?style=flat-square)
 
 ## Home Automation Philosophy
 
