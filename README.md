@@ -1,3 +1,5 @@
+[![Generic badge](https://img.shields.io/badge/Home%20Assistant-84.6-blue.svg?style=flat-square)](https://shields.io/)
+
 ## Home Automation Philosophy
 
 You shouldn't have to work the room, the room should work you. True home automation is having your home anticipate what you want without needing any input from you.
