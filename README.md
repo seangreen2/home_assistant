@@ -13,14 +13,10 @@ Due to renting and lack of any overhead lighting, we use Hue smart bulbs in stan
 
 The automations are highly customizable with each room having different light values attached to them. My only requirement for this was to avoid having the lights initially turn on to 100% brightness and then dim to the appropriate setting. Fortunately, these automations avoid that problem and turn on to the appropriate brightness depending on the Sun’s location. Another bonus of tracking the Sun for brightness is that these automations double for the morning and don’t blind you as you are still waking up.
 
-I wrote up a short tutorial on setting these automations up [here.](https://www.reddit.com/r/homeassistant/comments/a8h5tu/heres_a_simple_automation_to_have_your_lights/)
-
 ### [Room Presence](https://github.com/seangreen2/home_assistant/wiki/Room-Presence-with-Google-Homes)
 This is kind of like the Holy Grail for me. With accurate room presence, a lot of possibilities open up for more exciting automations. My system works via the Bluetooth on our Google Home Minis and they look for where our Android phones are in our home using RSSI values. This works out rather nicely for detection purposes as we typically take our phones with us to each room. Of course, you can use any BLE devices to accomplish this as well such as a smart watch.
 
 So far this has been incredibly accurate with the automations taking roughly ten seconds or less to determine where we are located and displays it on my frontend. I have successfully been using the results of the room presence to affect my lighting automations without any problems.
-
-I wrote a tutorial on how I accomplished this [here.](https://www.reddit.com/r/homeassistant/comments/a9sj4y/i_successfully_got_room_presence_working_using/)
 
 ### [Sleep Detection with Tasker](https://github.com/seangreen2/home_assistant/blob/master/scripts.yaml)
 Using a fantastic Android app called [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en_US), whenever we plug in our phones to charge at night, a script is triggered to turn off all the lights and disable the automation that turns on the bedroom motion sensor. When unplugging our phones in the morning, another script is triggered to turn the automations back on. Before Tasker we used to use voice commands to accomplish this, but this is far more elegant and was surprisingly simple to accomplish.
