@@ -26,24 +26,10 @@ proximity:
 cloud:
 
 lovelace:
-
-customizer:
-  custom_ui: local
+  mode: yaml
 
 frontend:
   themes: !include themes.yaml
-  extra_html_url:
-    - /local/custom_ui/custom-weather-card.html
-    - /local/custom_ui/state-card-floorplan.html
-  extra_html_url_es5:
-    - /local/custom_ui/custom-weather-card.html
-
-panel_custom:
-  - name: floorplan
-    sidebar_title: Floor Plan
-    sidebar_icon: mdi:floor-plan
-    url_path: floorplan
-    config: !include floorplan.yaml
 
 # BEGIN CONFIG
 config:
@@ -69,17 +55,22 @@ history:
     domains:
       - switch
     entities:
+      - group.sean
+      - group.emily
       - light.bathroom
       - light.bedroom
       - light.living_room
       - light.office
-      - device_tracker.androidb5fd101061eefa11
-      - device_tracker.android92a8793ea8df7b4e
       - sensor.living_room_thermostat_hvac_state
       - sensor.living_room_thermostat_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
+      - sensor.temperature_158d0002478a21
+      - sensor.bathroom_temperature_f
       - sensor.dark_sky_temperature
+      - sensor.sun_elevation
+      - sensor.dark_sky_nearest_storm_distance
+      - sensor.dark_sky_precip_probability
 
 recorder:
   purge_interval: 1
@@ -88,17 +79,22 @@ recorder:
     domains:
       - switch
     entities:
+      - group.sean
+      - group.emily
       - light.bathroom
       - light.bedroom
       - light.living_room
       - light.office
-      - device_tracker.androidb5fd101061eefa11
-      - device_tracker.android92a8793ea8df7b4e
       - sensor.living_room_thermostat_hvac_state
       - sensor.living_room_thermostat_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
+      - sensor.temperature_158d0002478a21
+      - sensor.bathroom_temperature_f
       - sensor.dark_sky_temperature
+      - sensor.sun_elevation
+      - sensor.dark_sky_nearest_storm_distance
+      - sensor.dark_sky_precip_probability
 
 # View all events in a logbook
 logbook:

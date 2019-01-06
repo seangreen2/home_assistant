@@ -3,9 +3,9 @@
     new_device_defaults:
       track_new_devices: false
 
-  - platform: hue
-    new_device_defaults:
-      track_new_devices: false
+#  - platform: hue
+#    new_device_defaults:
+#      track_new_devices: false
 
 # Office Speaker
   - platform: googlehome

@@ -1,0 +1,306 @@
+title: Home
+
+resources:
+  - url: /local/mini-graph-card-bundle.js
+    type: module
+
+views:
+  - path: default_view
+    title: Home
+    icon: 'mdi:home'
+    badges: []
+    cards:
+      - type: entities
+        title: Family
+        entities:
+          - device_tracker.sean_phone
+          - sensor.sean_room_status
+          - device_tracker.emily_phone
+          - sensor.emily_room_status
+          - sensor.work_commute
+        show_header_toggle: false
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.living_room
+                name: Living Room Lights
+              - type: light
+                entity: light.bedroom
+                name: Bedroom Lights
+          - type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.bathroom
+                name: Bathroom Lights
+              - type: light
+                entity: light.office
+                name: Office Lights
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                entity: vacuum.rosie
+                name: Rosie
+                image: /local/images/neato.png
+              - type: picture-entity
+                entity: sensor.plex
+                name: Plex
+                image: /local/images/plex.png
+        show_header_toggle: false
+      - type: vertical-stack
+        cards:
+          - type: thermostat
+            entity: climate.living_room
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entity: sensor.temperature_158d0002478a21
+                name: Bedroom
+                line_color: '#3498db'
+                line_width: 8
+              - type: custom:mini-graph-card
+                entity: sensor.bathroom_temperature_f
+                name: Bathroom
+                line_color: '#f5cb43'
+                line_width: 8
+              - type: custom:mini-graph-card
+                entity: sensor.office_temperature_f
+                name: Office
+                line_color: '#e74c3c'
+                line_width: 8
+      - type: vertical-stack
+        cards:
+          - type: weather-forecast
+            entity: weather.dark_sky
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Sun Elevation
+                entity: sensor.sun_elevation
+                line_color: '#f5cb43'
+                line_width: 8
+#              - type: custom:mini-graph-card
+#                name: Closest Storm
+#                entity: sensor.dark_sky_nearest_storm_distance
+#                line_color: '#e74c3c'
+#                line_width: 8
+              - type: custom:mini-graph-card
+                name: Chance of Rain
+                entity: sensor.dark_sky_precip_probability
+                line_color: '#3498db'
+                line_width: 8
+  - path: livingroom
+    title: Living Room
+    icon: 'mdi:sofa'
+    badges: []
+    cards:
+      - title: Living Room Lights
+        type: entities
+        entities:
+          - light.lr1
+          - light.lr2
+          - switch.outside_lights
+          - binary_sensor.door_window_sensor_158d00023eb0bb
+          - binary_sensor.motion_sensor_158d0002047afe
+          - sensor.illumination_158d0002047afe
+        show_header_toggle: false
+      - type: media-control
+        entity: media_player.plex_living_room_tv
+      - title: Neato Vacuum
+        type: entities
+        entities:
+          - vacuum.rosie
+          - camera.rosie_cleaning_map
+        show_header_toggle: false
+  - path: bedroom
+    title: Bedroom
+    icon: 'mdi:hotel'
+    badges: []
+    cards:
+      - title: Bedroom Lights
+        type: entities
+        entities:
+          - light.br1
+          - light.br2
+        show_header_toggle: false
+      - title: Bathroom Lights
+        type: entities
+        entities:
+          - light.ba1
+          - light.ba2
+          - light.ba3
+          - light.ba4
+        show_header_toggle: false
+      - title: Bedroom
+        type: entities
+        entities:
+          - binary_sensor.motion_sensor_158d000237a64a
+          - sensor.temperature_158d0002478a21
+          - sensor.humidity_158d0002478a21
+          - sensor.illumination_158d000237a64a
+          - sensor.bathroom_motion_sensor
+          - sensor.bathroom_temperature_f
+          - sensor.bathroom_battery
+        show_header_toggle: false
+      - type: media-control
+        entity: media_player.bedroom_tv
+      - type: media-control
+        entity: media_player.bedroom_speaker
+  - path: office
+    title: Office
+    icon: 'mdi:keyboard'
+    badges: []
+    cards:
+      - title: Office Lights
+        type: entities
+        entities:
+          - light.of1
+          - light.of2
+        show_header_toggle: false
+      - title: Office
+        type: entities
+        entities:
+          - switch.office_fan
+          - switch.smart_plug_one
+          - sensor.office_temperature_f
+          - sensor.office_motion_motion_sensor
+          - sensor.office_battery
+          - sensor.office_lux
+          - sensor.laptop_socket
+        show_header_toggle: false
+  - path: settings
+    title: Settings
+    icon: 'mdi:settings'
+    badges: []
+    cards:
+      - title: System
+        type: entities
+        entities:
+          - sensor.processor_use
+          - sensor.disk_use_percent_home
+          - sensor.memory_use_percent
+          - sensor.last_boot
+        show_header_toggle: false
+      - title: Pi-Hole
+        type: entities
+        entities:
+          - sensor.pihole_ads_blocked_today
+          - sensor.pihole_ads_percentage_blocked_today
+          - sensor.pihole_dns_queries_today
+          - sensor.pihole_domains_blocked
+        show_header_toggle: false
+      - title: qBittorrent
+        type: entities
+        entities:
+          - sensor.qbittorrent_status
+          - sensor.qbittorrent_down_speed
+          - sensor.qbittorrent_up_speed
+        show_header_toggle: false
+      - title: Internet Speed
+        type: entities
+        entities:
+          - sensor.speedtest_ping
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
+        show_header_toggle: false
+      - title: BT RSSI
+        type: entities
+        entities:
+          - sensor.bedroom_sean_gh_rssi
+          - sensor.livingroom_sean_gh_rssi
+          - sensor.office_sean_gh_rssi
+          - sensor.bedroom_emily_gh_rssi
+          - sensor.livingroom_emily_gh_rssi
+          - sensor.office_emily_gh_rssi
+        show_header_toggle: false
+      - title: Input Booleans
+        type: entities
+        entities:
+          - input_boolean.bedtime_sean
+          - input_boolean.bedtime_emily
+          - input_boolean.sean_bedroom_presence
+          - input_boolean.sean_living_room_presence
+          - input_boolean.sean_office_presence
+          - input_boolean.emily_bedroom_presence
+          - input_boolean.emily_living_room_presence
+          - input_boolean.emily_office_presence
+        show_header_toggle: false
+  - path: auto
+    title: Automations
+    icon: 'mdi:creation'
+    badges: []
+    cards:
+      - title: Home Automations
+        type: entities
+        entities:
+          - automation.away_mode
+          - automation.lights_on_in_the_evening
+          - automation.nest_normal_mode
+          - automation.nest_normal_mode_google_tracker
+          - automation.voice_sean_is_home
+          - automation.voice_emily_is_home
+          - automation.morning_alarm_lights
+          - automation.turn_on_air_fresh
+          - automation.outside_lights_on_at_sunset
+          - automation.outside_lights_off_at_ten
+        show_header_toggle: true
+      - title: Room Presence
+        type: entities
+        entities:
+          - automation.sean_in_bedroom
+          - automation.sean_in_living_room
+          - automation.sean_in_office
+          - automation.sean_is_away
+          - automation.emily_in_bedroom
+          - automation.emily_in_living_room
+          - automation.emily_in_office
+          - automation.emily_is_away
+        show_header_toggle: true
+      - title: Living Room Automations
+        type: entities
+        entities:
+          - automation.living_room_auto_brightness
+          - automation.living_room_auto_brightness_transition
+          - automation.living_room_lights_off_no_motion
+          - automation.turn_off_living_room_lights_above_lux
+          - automation.door_closed_turn_on_nest
+          - automation.door_open_turn_off_nest
+        show_header_toggle: true
+      - title: Bedroom Automations
+        type: entities
+        entities:
+          - automation.bedroom_auto_brightness
+          - automation.bedroom_auto_brightness_transition
+          - automation.bedroom_lights_off_no_motion
+          - automation.bathroom_lights_on_motion
+          - automation.bathroom_lights_on_motion_bedtime
+          - automation.bathroom_lights_on_motion_early_morning
+          - automation.bathroom_lights_off_no_motion
+          - automation.bathroom_lights_off_no_motion_night
+        show_header_toggle: true
+      - title: Office Automations
+        type: entities
+        entities:
+          - automation.office_auto_brightness
+          - automation.office_auto_brightness_transition
+          - automation.turn_on_fan_above_certain_temp
+          - automation.turn_off_fan_below_certain_temp
+          - automation.turn_off_office_fan_without_motion
+          - automation.turn_off_office_lights_above_lux
+          - automation.turn_office_lights_without_motion_one_min
+        show_header_toggle: true
+      - title: Media Automations
+        type: entities
+        entities:
+          - automation.media_player_playing
+          - automation.media_player_stopped
+          - automation.media_player_paused
+          - automation.media_player_unpaused
+          - automation.media_player_pause_to_idle
+          - automation.bedroom_player_playing
+          - automation.bedroom_player_stopped
+          - automation.bedroom_player_paused
+          - automation.bedroom_player_unpaused
+          - automation.bedroom_player_pause_to_idle
+        show_header_toggle: true

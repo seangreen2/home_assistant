@@ -24,7 +24,7 @@ sean:
   name: Sean
   view: no
   entities:
-    - device_tracker.3c286d29fe2d #Phone
+    - device_tracker.sean_phone #Phone
     - device_tracker.sean_bt_bedroom
     - device_tracker.sean_bt_living_room
     - device_tracker.sean_bt_office
@@ -33,7 +33,7 @@ emily:
   name: Emily
   view: no
   entities:
-    - device_tracker.3c286d238618 #Phone
+    - device_tracker.emily_phone #Phone
     - device_tracker.emily_bt_bedroom
     - device_tracker.emily_bt_living_room
     - device_tracker.emily_bt_office

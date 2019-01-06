@@ -1,32 +1,32 @@
 # Christmas Tree on when home
-  - alias: 'Tree on when home'
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: group.family
-        to: home
-    action:
-      service: switch.turn_on
-      entity_id: switch.office_fan
+#  - alias: 'Tree on when home'
+#    initial_state: 'on'
+#    trigger:
+#      - platform: state
+#        entity_id: group.family
+#        to: home
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.office_fan
 
 # Motion turns on Tree
-  - alias: Tree on motion
-    initial_state: 'on'
-    trigger:
-      platform: state
-      entity_id: binary_sensor.motion_sensor_158d0002047afe
-      to: 'on'
-    action:
-      service: switch.turn_on
-      entity_id: switch.office_fan
+#  - alias: Tree on motion
+#    initial_state: 'on'
+#    trigger:
+#      platform: state
+#      entity_id: binary_sensor.motion_sensor_158d0002047afe
+#      to: 'on'
+#    action:
+#      service: switch.turn_on
+#      entity_id: switch.office_fan
 
 # Turn off tree when everyone leaves house
-  - alias: Tree off when away
-    initial_state: 'on'
-    trigger:
-      platform: state
-      entity_id: group.family
-      to: 'not_home'
-    action:
-      - service: switch.turn_off
-        entity_id: switch.office_fan
+#  - alias: Tree off when away
+#    initial_state: 'on'
+#    trigger:
+#      platform: state
+#      entity_id: group.family
+#      to: 'not_home'
+#    action:
+#      - service: switch.turn_off
+#        entity_id: switch.office_fan
