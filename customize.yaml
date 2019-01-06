@@ -2,14 +2,14 @@ group.emily:
   friendly_name: Emily
   entity_picture: !secret emily_pic
   icon: mdi:human-female
-sensor.emily_room_status:
-  icon: mdi:home-map-marker
+#sensor.emily_room_status:
+#  icon: mdi:home-map-marker
 group.sean:
   friendly_name: Sean
   entity_picture: !secret sean_pic
   icon: mdi:human-male
-sensor.sean_room_status:
-  icon: mdi:home-map-marker
+#sensor.sean_room_status:
+#  icon: mdi:home-map-marker
 climate.living_room:
   entity_picture: !secret nest_pic
 switch.office_light:

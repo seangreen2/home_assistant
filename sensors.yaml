@@ -102,7 +102,20 @@
       sean_room_status:
         value_template: '{{ states.input_select.sean_room_location.state }}'
         friendly_name: 'Room Location'
-
+        icon_template: >
+          {% if is_state('input_select.sean_room_location', 'Office') %}
+            mdi:keyboard
+          {% elif is_state('input_select.sean_room_location', 'Bedroom') %}
+            mdi:hotel
+          {% elif is_state('input_select.sean_room_location', 'Living Room') %}
+            mdi:sofa
+          {% elif is_state('input_select.sean_room_location', 'Away') %}
+            mdi:exit-run
+          {% elif is_state('input_select.sean_room_location', 'Home') %}
+            mdi:exit-run
+          {% else %}
+            mdi:exit-run
+          {% endif %}
   - platform: template
     sensors:
       bedroom_emily_gh_rssi:
@@ -138,6 +151,20 @@
       emily_room_status:
         value_template: '{{ states.input_select.emily_room_location.state }}'
         friendly_name: 'Room Location'
+        icon_template: >
+          {% if is_state('input_select.emily_room_location', 'Office') %}
+            mdi:keyboard
+          {% elif is_state('input_select.emily_room_location', 'Bedroom') %}
+            mdi:hotel
+          {% elif is_state('input_select.emily_room_location', 'Living Room') %}
+            mdi:sofa
+          {% elif is_state('input_select.emily_room_location', 'Away') %}
+            mdi:exit-run
+          {% elif is_state('input_select.emily_room_location', 'Home') %}
+            mdi:exit-run
+          {% else %}
+            mdi:exit-run
+          {% endif %}
 
   - platform: darksky
     api_key: !secret dark_sky_api_key
