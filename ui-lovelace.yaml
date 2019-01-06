@@ -10,13 +10,26 @@ views:
     icon: 'mdi:home'
     badges: []
     cards:
+      - type: horizontal-stack
+        cards:
+          - type: picture-glance
+            title: Sean
+            entities:
+              - sensor.sean_room_status
+            state_image:
+              "home": /local/images/sean_16x9.jpg
+              "not_home": /local/images/sean_16x9_gray.jpg
+            entity: device_tracker.sean_phone
+          - type: picture-glance
+            title: Emily
+            entities:
+              - sensor.emily_room_status
+            state_image:
+              "home": /local/images/emily_16x9.jpg
+              "not_home": /local/images/emily_16x9_gray.jpg
+            entity: device_tracker.emily_phone
       - type: entities
-        title: Family
         entities:
-          - device_tracker.sean_phone
-          - sensor.sean_room_status
-          - device_tracker.emily_phone
-          - sensor.emily_room_status
           - sensor.work_commute
         show_header_toggle: false
       - type: vertical-stack
@@ -79,7 +92,7 @@ views:
                 name: Sun Elevation
                 entity: sensor.sun_elevation
                 line_color: '#f5cb43'
-                line_width: 8
+                line_width: 4
 #              - type: custom:mini-graph-card
 #                name: Closest Storm
 #                entity: sensor.dark_sky_nearest_storm_distance
@@ -89,7 +102,7 @@ views:
                 name: Chance of Rain
                 entity: sensor.dark_sky_precip_probability
                 line_color: '#3498db'
-                line_width: 8
+                line_width: 4
   - path: livingroom
     title: Living Room
     icon: 'mdi:sofa'
