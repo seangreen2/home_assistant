@@ -43,8 +43,8 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 #### Custom Components
 To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmarkcole/Hue-sensors-HASS
 
-## Dashboard
-![1](https://i.imgur.com/eQiPeQr.jpg)
+## Dashboard (Now with Lovelace!)
+![1](https://i.imgur.com/Ux97rVZ.jpg)
 ![2](https://i.imgur.com/ETI6aEs.jpg)
 ![3](https://i.imgur.com/i4bC3HA.jpg)
 ![4](https://i.imgur.com/ZuTkEBc.jpg)

@@ -13,7 +13,7 @@ views:
       - type: horizontal-stack
         cards:
           - type: picture-glance
-            title: Sean
+#            title: Sean
             entities:
               - sensor.sean_room_status
             state_image:
@@ -21,7 +21,7 @@ views:
               "not_home": /local/images/sean_16x9_gray.jpg
             entity: device_tracker.sean_phone
           - type: picture-glance
-            title: Emily
+#            title: Emily
             entities:
               - sensor.emily_room_status
             state_image:
@@ -31,7 +31,26 @@ views:
       - type: entities
         entities:
           - sensor.work_commute
-        show_header_toggle: false
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: switch.office_fan
+            name: Office Fan
+            icon: mdi:fan
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: switch.smart_plug_one
+            name: Air Freshener
+            icon: mdi:flower
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: switch.outside_lights
+            name: Outside Lights
+            icon: mdi:lightbulb
+            tap_action:
+              action: toggle
       - type: vertical-stack
         cards:
           - type: horizontal-stack
