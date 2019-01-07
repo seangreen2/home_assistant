@@ -13,7 +13,7 @@ views:
       - type: horizontal-stack
         cards:
           - type: picture-glance
-#            title: Sean
+            title: Room Location
             entities:
               - sensor.sean_room_status
             state_image:
@@ -21,7 +21,7 @@ views:
               "not_home": /local/images/sean_16x9_gray.jpg
             entity: device_tracker.sean_phone
           - type: picture-glance
-#            title: Emily
+            title: Room Location
             entities:
               - sensor.emily_room_status
             state_image:
