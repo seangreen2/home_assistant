@@ -53,6 +53,7 @@
       office_lux:
         friendly_name: 'Lux'
         value_template: '{{states.sensor.office_motion_motion_sensor.attributes.lx}}'
+        unit_of_measurement: lx
 
   - platform: template
     sensors:

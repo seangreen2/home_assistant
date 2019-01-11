@@ -63,19 +63,19 @@ light.brcl1:
 light.lr1:
   friendly_name: Living Room Light One
 sensor.bathroom_battery:
-  friendly_name: Bathroom Sensor Battery
+  friendly_name: Bathroom Battery
   device_class: battery
 sensor.bathroom_motion_sensor:
-  friendly_name: Bathroom Motion Sensor
+  friendly_name: Bathroom Motion
   device_class: motion_sensor
 sensor.plex:
   friendly_name: Plex Activity
   icon: mdi:plex
 sensor.office_battery:
-  friendly_name: Office Sensor Battery
+  friendly_name: Office Battery
   device_class: battery
 sensor.office_motion_motion_sensor:
-  friendly_name: Office Motion Sensor
+  friendly_name: Office Motion
   device_class: motion_sensor
 sensor.office_lux:
   friendly_name: Office Lux
@@ -91,12 +91,12 @@ vacuum.rosie:
 sensor.work_commute_time:
   icon: mdi:map-clock
 binary_sensor.motion_sensor_158d0002047afe:
-  friendly_name: Living Room Motion Sensor
+  friendly_name: Living Room Motion
   icon: mdi:run-fast
 sensor.illumination_158d0002047afe:
   friendly_name: Living Room Lux
 binary_sensor.motion_sensor_158d000237a64a:
-  friendly_name: Bedroom Motion Sensor
+  friendly_name: Bedroom Motion
   icon: mdi:run-fast
 sensor.illumination_158d000237a64a:
   friendly_name: Bedroom Lux
@@ -105,7 +105,7 @@ sensor.temperature_158d0002478a21:
 sensor.humidity_158d0002478a21:
   friendly_name: Bedroom Humidity
 binary_sensor.door_window_sensor_158d00023eb0bb:
-  friendly_name: Sliding Door Sensor
+  friendly_name: Sliding Door
 weather.dark_sky:
   friendly_name: Weather Forcast
 sensor.dark_sky_precip_intensity:
@@ -126,3 +126,5 @@ light.bathroom:
   friendly_name: Bathroom Lights
 sensor.sun_elevation:
   icon: mdi:weather-sunny
+sensor.laptop_socket:
+  icon: mdi:laptop-chromebook

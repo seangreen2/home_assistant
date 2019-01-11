@@ -71,6 +71,10 @@ history:
       - sensor.sun_elevation
       - sensor.dark_sky_nearest_storm_distance
       - sensor.dark_sky_precip_probability
+      - sensor.illumination_158d0002047afe
+      - sensor.illumination_158d000237a64a
+      - sensor.humidity_158d0002478a21
+      - sensor.office_lux
 
 recorder:
   purge_interval: 1
@@ -95,6 +99,10 @@ recorder:
       - sensor.sun_elevation
       - sensor.dark_sky_nearest_storm_distance
       - sensor.dark_sky_precip_probability
+      - sensor.illumination_158d0002047afe
+      - sensor.illumination_158d000237a64a
+      - sensor.humidity_158d0002478a21
+      - sensor.office_lux
 
 # View all events in a logbook
 logbook:

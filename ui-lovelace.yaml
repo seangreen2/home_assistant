@@ -3,6 +3,8 @@ title: Home
 resources:
   - url: /local/mini-graph-card-bundle.js
     type: module
+  - url: /local/mini-media-player.js
+    type: module
 
 views:
   - path: default_view
@@ -79,7 +81,6 @@ views:
                 entity: sensor.plex
                 name: Plex
                 image: /local/images/plex.png
-        show_header_toggle: false
       - type: vertical-stack
         cards:
           - type: thermostat
@@ -112,11 +113,6 @@ views:
                 entity: sensor.sun_elevation
                 line_color: '#f5cb43'
                 line_width: 4
-#              - type: custom:mini-graph-card
-#                name: Closest Storm
-#                entity: sensor.dark_sky_nearest_storm_distance
-#                line_color: '#e74c3c'
-#                line_width: 8
               - type: custom:mini-graph-card
                 name: Chance of Rain
                 entity: sensor.dark_sky_precip_probability
@@ -127,80 +123,152 @@ views:
     icon: 'mdi:sofa'
     badges: []
     cards:
-      - title: Living Room Lights
-        type: entities
-        entities:
-          - light.lr1
-          - light.lr2
-          - switch.outside_lights
-          - binary_sensor.door_window_sensor_158d00023eb0bb
-          - binary_sensor.motion_sensor_158d0002047afe
-          - sensor.illumination_158d0002047afe
-        show_header_toggle: false
-      - type: media-control
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entity: sensor.living_room_thermostat_temperature
+                name: Temperature
+                line_color: '#3498db'
+                line_width: 3
+          - type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.living_room
+              - type: custom:mini-graph-card
+                entity: sensor.illumination_158d0002047afe
+                name: Illumination
+                line_color: '#f5cb43'
+                line_width: 8
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: entity-button
+                entity: switch.outside_lights
+                name: Outside Lights
+                icon: mdi:lightbulb
+                tap_action:
+                  action: toggle
+              - type: glance
+                entities:
+                  - binary_sensor.door_window_sensor_158d00023eb0bb
+                  - binary_sensor.motion_sensor_158d0002047afe
+      - type: custom:mini-media-player
         entity: media_player.plex_living_room_tv
+        icon: mdi:television
+        artwork: cover
+      - type: custom:mini-media-player
+        entity: media_player.googlehome0160
+        icon: mdi:google-home
+        artwork: cover
+        show_tts: google
       - title: Neato Vacuum
-        type: entities
-        entities:
-          - vacuum.rosie
-          - camera.rosie_cleaning_map
-        show_header_toggle: false
+        type: picture-entity
+        entity: vacuum.rosie
+        image: /local/images/neato2.png
   - path: bedroom
     title: Bedroom
     icon: 'mdi:hotel'
     badges: []
     cards:
-      - title: Bedroom Lights
-        type: entities
-        entities:
-          - light.br1
-          - light.br2
-        show_header_toggle: false
-      - title: Bathroom Lights
-        type: entities
-        entities:
-          - light.ba1
-          - light.ba2
-          - light.ba3
-          - light.ba4
-        show_header_toggle: false
-      - title: Bedroom
-        type: entities
-        entities:
-          - binary_sensor.motion_sensor_158d000237a64a
-          - sensor.temperature_158d0002478a21
-          - sensor.humidity_158d0002478a21
-          - sensor.illumination_158d000237a64a
-          - sensor.bathroom_motion_sensor
-          - sensor.bathroom_temperature_f
-          - sensor.bathroom_battery
-        show_header_toggle: false
-      - type: media-control
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entity: sensor.temperature_158d0002478a21
+                name: Bedroom
+                line_color: '#3498db'
+                line_width: 6
+              - type: custom:mini-graph-card
+                entity: sensor.bathroom_temperature_f
+                name: Bathroom
+                line_color: '#e74c3c'
+                line_width: 6
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entity: sensor.humidity_158d0002478a21
+                name: Bedroom Humidity
+                line_color: '#f5cb43'
+                line_width: 3
+          - type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.bedroom
+              - type: light
+                entity: light.bathroom
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: glance
+                entities:
+                  - binary_sensor.motion_sensor_158d000237a64a
+                  - sensor.bathroom_motion_sensor
+                  - sensor.bathroom_battery
+      - type: custom:mini-media-player
         entity: media_player.bedroom_tv
-      - type: media-control
+        icon: mdi:television
+        artwork: cover
+      - type: custom:mini-media-player
         entity: media_player.bedroom_speaker
+        icon: mdi:google-home
+        artwork: cover
+        show_tts: google
   - path: office
     title: Office
     icon: 'mdi:keyboard'
     badges: []
     cards:
-      - title: Office Lights
-        type: entities
-        entities:
-          - light.of1
-          - light.of2
-        show_header_toggle: false
-      - title: Office
-        type: entities
-        entities:
-          - switch.office_fan
-          - switch.smart_plug_one
-          - sensor.office_temperature_f
-          - sensor.office_motion_motion_sensor
-          - sensor.office_battery
-          - sensor.office_lux
-          - sensor.laptop_socket
-        show_header_toggle: false
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entity: sensor.office_temperature_f
+                name: Office
+                line_color: '#3498db'
+                line_width: 3
+          - type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.office
+              - type: custom:mini-graph-card
+                entity: sensor.office_lux
+                name: Illumination
+                line_color: '#f5cb43'
+                line_width: 6
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: switch.office_fan
+            name: Office Fan
+            icon: mdi:fan
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: switch.smart_plug_one
+            name: Air Freshener
+            icon: mdi:flower
+            tap_action:
+              action: toggle
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: glance
+                entities:
+                  - sensor.office_motion_motion_sensor
+                  - sensor.office_battery
+                  - sensor.laptop_socket
+      - type: custom:mini-media-player
+        entity: media_player.googlehome0353
+        icon: mdi:google-home
+        artwork: cover
+        show_tts: google
   - path: settings
     title: Settings
     icon: 'mdi:settings'
