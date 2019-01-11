@@ -140,7 +140,8 @@ views:
                 entity: sensor.illumination_158d0002047afe
                 name: Illumination
                 line_color: '#f5cb43'
-                line_width: 8
+                line_width: 6
+                hours_to_show: 12
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -194,6 +195,7 @@ views:
                 name: Bedroom Humidity
                 line_color: '#f5cb43'
                 line_width: 3
+                hours_to_show: 12
           - type: horizontal-stack
             cards:
               - type: light
@@ -241,6 +243,7 @@ views:
                 name: Illumination
                 line_color: '#f5cb43'
                 line_width: 6
+                hours_to_show: 12
       - type: horizontal-stack
         cards:
           - type: entity-button

@@ -45,7 +45,7 @@ To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmar
 
 ## Dashboard (Now with Lovelace!)
 ![1](https://i.imgur.com/Lnmf8AP.jpg)
-![2](https://i.imgur.com/ETI6aEs.jpg)
-![3](https://i.imgur.com/i4bC3HA.jpg)
-![4](https://i.imgur.com/ZuTkEBc.jpg)
+![2](https://i.imgur.com/d6OOT0y.jpg)
+![3](https://i.imgur.com/6KHHM2V.jpg)
+![4](https://i.imgur.com/qbPxgZz.jpg)
 ![5](https://i.imgur.com/wvB9JgS.jpg)
