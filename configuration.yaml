@@ -30,6 +30,7 @@ lovelace:
 
 frontend:
   themes: !include themes.yaml
+  javascript_version: latest
 
 # BEGIN CONFIG
 config:
@@ -75,6 +76,7 @@ history:
       - sensor.illumination_158d000237a64a
       - sensor.humidity_158d0002478a21
       - sensor.office_lux
+      - sensor.living_room_thermostat_humidity
 
 recorder:
   purge_interval: 1
@@ -103,6 +105,7 @@ recorder:
       - sensor.illumination_158d000237a64a
       - sensor.humidity_158d0002478a21
       - sensor.office_lux
+      - sensor.living_room_thermostat_humidity
 
 # View all events in a logbook
 logbook:

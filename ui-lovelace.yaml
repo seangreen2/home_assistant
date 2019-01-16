@@ -3,7 +3,7 @@ title: Home
 resources:
   - url: /local/mini-graph-card-bundle.js
     type: module
-  - url: /local/mini-media-player.js
+  - url: /local/mini-media-player-bundle.js
     type: module
 
 views:
@@ -129,7 +129,7 @@ views:
             cards:
               - type: custom:mini-graph-card
                 entity: sensor.living_room_thermostat_temperature
-                name: Temperature
+                name: Living Room
                 line_color: '#3498db'
                 line_width: 3
           - type: horizontal-stack
@@ -137,8 +137,8 @@ views:
               - type: light
                 entity: light.living_room
               - type: custom:mini-graph-card
-                entity: sensor.illumination_158d0002047afe
-                name: Illumination
+                entity: sensor.living_room_thermostat_humidity
+                name: Humidity
                 line_color: '#f5cb43'
                 line_width: 6
                 hours_to_show: 12
