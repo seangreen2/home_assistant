@@ -18,6 +18,7 @@ views:
             title: Room Location
             entities:
               - sensor.sean_room_status
+              - sensor.sean_phone_battery
             state_image:
               "home": /local/images/sean_16x9.jpg
               "not_home": /local/images/sean_16x9_gray.jpg
@@ -26,6 +27,7 @@ views:
             title: Room Location
             entities:
               - sensor.emily_room_status
+              - sensor.emily_phone_battery
             state_image:
               "home": /local/images/emily_16x9.jpg
               "not_home": /local/images/emily_16x9_gray.jpg
@@ -288,17 +290,10 @@ views:
       - title: Pi-Hole
         type: entities
         entities:
-          - sensor.pihole_ads_blocked_today
-          - sensor.pihole_ads_percentage_blocked_today
-          - sensor.pihole_dns_queries_today
-          - sensor.pihole_domains_blocked
-        show_header_toggle: false
-      - title: qBittorrent
-        type: entities
-        entities:
-          - sensor.qbittorrent_status
-          - sensor.qbittorrent_down_speed
-          - sensor.qbittorrent_up_speed
+          - sensor.pi_hole_ads_blocked_today
+          - sensor.pi_hole_ads_percentage_blocked_today
+          - sensor.pi_hole_dns_queries_today
+          - sensor.pi_hole_domains_blocked
         show_header_toggle: false
       - title: Internet Speed
         type: entities

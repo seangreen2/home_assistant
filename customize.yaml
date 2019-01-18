@@ -128,3 +128,7 @@ sensor.sun_elevation:
   icon: mdi:weather-sunny
 sensor.laptop_socket:
   icon: mdi:laptop-chromebook
+sensor.sean_phone_battery:
+  device_class: battery
+sensor.emily_phone_battery:
+  device_class: battery
