@@ -108,7 +108,7 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: group.sean
+    entity_id: device_tracker.sean_phone
     to: 'not_home'
   action:
     - service: input_select.select_option
@@ -130,7 +130,7 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: group.sean
+    entity_id: device_tracker.sean_phone
     to: 'home'
   action:
     - service: input_select.select_option

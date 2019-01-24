@@ -54,7 +54,7 @@
     initial_state: 'on'
     trigger:
       platform: time
-      minutes: '/5'
+      minutes: '/3'
       seconds: 00
     condition:
       - condition: state

@@ -146,7 +146,7 @@
     - service: switch.turn_on
       entity_id:  switch.smart_plug_one
     - delay:
-        minutes: '10'
+        minutes: '15'
     - service: switch.turn_off
       entity_id:  switch.smart_plug_one
 

@@ -171,14 +171,14 @@
     sensors:
       sean_phone_battery:
         friendly_name: 'Sean Phone Battery'
-        value_template: '{{states.device_tracker.google_maps_104320808194225996474.attributes.battery_level}}'
+        value_template: '{{states.device_tracker.google_maps_117703622599905742645.attributes.battery_level}}'
         unit_of_measurement: '%'
 
   - platform: template
     sensors:
       emily_phone_battery:
         friendly_name: 'Emily Phone Battery'
-        value_template: '{{states.device_tracker.google_maps_117703622599905742645.attributes.battery_level}}'
+        value_template: '{{states.device_tracker.google_maps_104320808194225996474.attributes.battery_level}}'
         unit_of_measurement: '%'
 
   - platform: darksky

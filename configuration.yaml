@@ -36,8 +36,6 @@ config:
 http:
   api_password: !secret api_password
   base_url: !secret base_url
-  ip_ban_enabled: true
-  cors_allowed_origins:
 
 updater:
 
