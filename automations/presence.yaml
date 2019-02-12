@@ -70,7 +70,7 @@
     trigger:
       platform: numeric_state
       entity_id: proximity.home
-      below: 10
+      below: 15
     condition:
       condition: and
       conditions:

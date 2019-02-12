@@ -60,7 +60,7 @@
 - alias: Bedroom Lights off no motion
   initial_state: 'on'
   trigger:
-    platform: time
+    platform: time_pattern
     minutes: '/3'
     seconds: 00
   condition:
@@ -71,7 +71,7 @@
       entity_id: input_boolean.emily_bedroom_presence
       state: 'off'
     - condition: state
-      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      entity_id: binary_sensor.motion_sensor_158d000237a64a
       state: 'off'
   action:
     - service: light.turn_off

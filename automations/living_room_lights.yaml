@@ -59,7 +59,7 @@
 - alias: Living Room Lights off no motion
   initial_state: 'on'
   trigger:
-    platform: time
+    platform: time_pattern
     minutes: '/3'
     seconds: 00
   condition:

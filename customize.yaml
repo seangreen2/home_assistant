@@ -44,9 +44,6 @@ sensor.dark_sky_cloud_coverage:
 sensor.dark_sky_nearest_storm_distance:
   icon: mdi:weather-windy-variant
   friendly_name: Closest Storm
-sensor.living_room_thermostat_humidity:
-  friendly_name: Inside Humidity
-  icon: mdi:cup-water
 sensor.living_room_thermostat_hvac_state:
   friendly_name: HVAC Status
   icon: mdi:air-conditioner

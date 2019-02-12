@@ -53,7 +53,7 @@
   - alias: Turn office lights without motion one min
     initial_state: 'on'
     trigger:
-      platform: time
+      platform: time_pattern
       minutes: '/3'
       seconds: 00
     condition:
@@ -62,6 +62,9 @@
         state: 'off'
       - condition: state
         entity_id: input_boolean.emily_office_presence
+        state: 'off'
+      - condition: state
+        entity_id: sensor.office_motion_motion_sensor
         state: 'off'
       - condition: and
         conditions:
