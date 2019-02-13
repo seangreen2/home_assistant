@@ -193,7 +193,7 @@ views:
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
-                entity: sensor.humidity_158d0002478a21
+                entity: sensor.bedroom_humidity
                 name: Bedroom Humidity
                 line_color: '#f5cb43'
                 line_width: 3

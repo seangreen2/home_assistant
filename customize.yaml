@@ -129,3 +129,5 @@ sensor.sean_phone_battery:
   device_class: battery
 sensor.emily_phone_battery:
   device_class: battery
+sensor.bedroom_humidity:
+  device_class: humidity

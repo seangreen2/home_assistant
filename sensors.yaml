@@ -28,6 +28,16 @@
 
   - platform: template
     sensors:
+      bedroom_humidity:
+        friendly_name: 'Bedroom Humidity'
+        entity_id:
+          - sensor.humidity_158d0002478a21
+        unit_of_measurement: '%'
+        value_template: >
+          {{ ((float(states('sensor.humidity_158d0002478a21'))) - 12) | round(1) }}
+
+  - platform: template
+    sensors:
       office_temperature:
         value_template: '{{states.sensor.office_motion_motion_sensor.attributes.temperature}}'
 

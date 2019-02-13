@@ -76,7 +76,7 @@ history:
       - sensor.dark_sky_precip_probability
       - sensor.illumination_158d0002047afe
       - sensor.illumination_158d000237a64a
-      - sensor.humidity_158d0002478a21
+      - sensor.bedroom_humidity
       - sensor.office_lux
       - sensor.living_room_thermostat_humidity
 
@@ -105,7 +105,7 @@ recorder:
       - sensor.dark_sky_precip_probability
       - sensor.illumination_158d0002047afe
       - sensor.illumination_158d000237a64a
-      - sensor.humidity_158d0002478a21
+      - sensor.bedroom_humidity
       - sensor.office_lux
       - sensor.living_room_thermostat_humidity
 
