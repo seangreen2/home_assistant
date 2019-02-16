@@ -68,7 +68,7 @@ history:
       - sensor.living_room_thermostat_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
-      - sensor.temperature_158d0002478a21
+      - sensor.bedroom_temp
       - sensor.bathroom_temperature_f
       - sensor.dark_sky_temperature
       - sensor.sun_elevation
@@ -97,7 +97,7 @@ recorder:
       - sensor.living_room_thermostat_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
-      - sensor.temperature_158d0002478a21
+      - sensor.bedroom_temp
       - sensor.bathroom_temperature_f
       - sensor.dark_sky_temperature
       - sensor.sun_elevation

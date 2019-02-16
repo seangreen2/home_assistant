@@ -38,6 +38,16 @@
 
   - platform: template
     sensors:
+      bedroom_temp:
+        friendly_name: 'Bedroom Temperature'
+        entity_id:
+          - sensor.temperature_158d0002478a21
+        unit_of_measurement: °F
+        value_template: >
+          {{ ((float(states('sensor.temperature_158d0002478a21'))) - 4) | round(1) }}
+
+  - platform: template
+    sensors:
       office_temperature:
         value_template: '{{states.sensor.office_motion_motion_sensor.attributes.temperature}}'
 

@@ -90,7 +90,7 @@ views:
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
-                entity: sensor.temperature_158d0002478a21
+                entity: sensor.bedroom_temp
                 name: Bedroom
                 line_color: '#3498db'
                 line_width: 8
@@ -181,7 +181,7 @@ views:
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
-                entity: sensor.temperature_158d0002478a21
+                entity: sensor.bedroom_temp
                 name: Bedroom
                 line_color: '#3498db'
                 line_width: 6

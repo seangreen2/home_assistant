@@ -1,9 +1,9 @@
   slate:
     # Main colors
     primary-color: '#2980b9'
-    accent-color: '#2980b9'
-    dark-primary-color: 'var(--accent-color)'
-    light-primary-color: 'var(--accent-color)'
+    accent-color: '#b58e31'
+    dark-primary-color: '#2980b9'
+    light-primary-color: '#2980b9'
     # Text colors
     primary-text-color: '#FFFFFF'
     text-primary-color: 'var(--primary-text-color)'
@@ -24,7 +24,7 @@
     paper-grey-50: 'var(--primary-text-color)'
     paper-grey-200: '#222222'
     # Paper card
-    paper-card-header-color: 'var(--accent-color)'
+    paper-card-header-color: '#2980b9'
     paper-card-background-color: '#292929'
     paper-dialog-background-color: '#292929'
     paper-item-icon-color: 'var(--primary-text-color)'
@@ -37,17 +37,17 @@
     label-badge-text-color: 'var(--primary-text-color)'
     label-badge-background-color: '#222222'
     # Switches
-    paper-toggle-button-checked-button-color: 'var(--accent-color)'
-    paper-toggle-button-checked-bar-color: 'var(--accent-color)'
-    paper-toggle-button-checked-ink-color: 'var(--accent-color)'
+    paper-toggle-button-checked-button-color: '#2980b9'
+    paper-toggle-button-checked-bar-color: '#2980b9'
+    paper-toggle-button-checked-ink-color: '#2980b9'
     paper-toggle-button-unchecked-button-color: 'var(--disabled-text-color)'
     paper-toggle-button-unchecked-bar-color: 'var(--disabled-text-color)'
     paper-toggle-button-unchecked-ink-color: 'var(--disabled-text-color)'
     # Sliders
-    paper-slider-knob-color: 'var(--accent-color)'
-    paper-slider-knob-start-color: 'var(--accent-color)'
-    paper-slider-pin-color: 'var(--accent-color)'
-    paper-slider-active-color: 'var(--accent-color)'
+    paper-slider-knob-color: '#2980b9'
+    paper-slider-knob-start-color: '#2980b9'
+    paper-slider-pin-color: '#2980b9'
+    paper-slider-active-color: '#2980b9'
     paper-slider-container-color: 'linear-gradient(var(--primary-background-color), var(--secondary-background-color)) no-repeat'
     paper-slider-secondary-color: 'var(--secondary-background-color)'
     paper-slider-disabled-active-color: 'var(--disabled-text-color)'
