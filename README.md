@@ -18,7 +18,7 @@ This is kind of like the Holy Grail for me. With accurate room presence, a lot o
 
 So far this has been incredibly accurate with the automations taking roughly ten seconds or less to determine where we are located and displays it on my frontend. I have successfully been using the results of the room presence to affect my lighting automations without any problems.
 
-### [Sleep Detection with Tasker](https://github.com/seangreen2/home_assistant/blob/master/scripts.yaml)
+### [Sleep Detection with Tasker](https://github.com/seangreen2/home_assistant/wiki/Turning-off-your-lights-with-Tasker)
 Using a fantastic Android app called [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en_US), whenever we plug in our phones to charge at night, a script is triggered to turn off all the lights and disable the automation that turns on the bedroom motion sensor. When unplugging our phones in the morning, another script is triggered to turn the automations back on. Before Tasker we used to use voice commands to accomplish this, but this is far more elegant and was surprisingly simple to accomplish.
 
 ## Equipment

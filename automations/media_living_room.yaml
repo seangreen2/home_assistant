@@ -2,8 +2,6 @@
   - alias: 'Media player stopped'
     initial_state: 'on'
     trigger:
-#      - platform: webhook
-#        webhook_id: plex-idle
       - platform: state
         entity_id: media_player.plex_living_room_tv
         from: 'playing'
@@ -23,23 +21,24 @@
   - alias: 'Media player playing'
     initial_state: 'on'
     trigger:
-#      - platform: webhook
-#        webhook_id: plex-playing
       - platform: state
         entity_id: media_player.plex_living_room_tv
         to: 'playing'
         from: 'idle'
     action:
-      service: light.turn_off
-      data:
-        entity_id: light.living_room
+      - service: light.turn_off
+        data:
+          entity_id: light.living_room
+      - delay:
+          seconds: '1'
+      - service: light.turn_off
+        data:
+          entity_id: light.living_room
 
 # Lights dim when media is paused
   - alias: 'Media player paused'
     initial_state: 'on'
     trigger:
-  #    - platform: webhook
-  #      webhook_id: plex-paused
       - platform: state
         entity_id: media_player.plex_living_room_tv
         from: 'playing'
@@ -59,8 +58,6 @@
   - alias: 'Media player unpaused'
     initial_state: 'on'
     trigger:
-#      - platform: webhook
-#        webhook_id: plex-unpaused
       - platform: state
         entity_id: media_player.plex_living_room_tv
         from: 'paused'
@@ -74,8 +71,6 @@
   - alias: 'Media player pause to idle'
     initial_state: 'on'
     trigger:
-  #    - platform: webhook
-  #      webhook_id: plex-pause-idle
       - platform: state
         entity_id: media_player.plex_living_room_tv
         from: 'paused'
