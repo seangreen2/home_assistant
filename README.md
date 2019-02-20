@@ -41,9 +41,9 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 - Plex Server
 
 #### Custom Components
-To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmarkcole/Hue-sensors-HASS
-For the Mini Graph Cards: https://github.com/kalkih/mini-graph-card
-For the Mini Media Player Cards: https://github.com/kalkih/mini-media-player
+- To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmarkcole/Hue-sensors-HASS
+- For the Mini Graph Cards: https://github.com/kalkih/mini-graph-card
+- For the Mini Media Player Cards: https://github.com/kalkih/mini-media-player
 
 ## Dashboard (Now with Lovelace!)
 ![1](https://i.imgur.com/FcDzXFw.jpg)
