@@ -1,7 +1,7 @@
 title: Home
 
 resources:
-  - url: /local/mini-graph-card-bundle.js
+  - url: /local/mini-graph-card-bundle.js?v=0.3.0
     type: module
   - url: /local/mini-media-player-bundle.js
     type: module
@@ -90,20 +90,29 @@ views:
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
-                entity: sensor.bedroom_temp
+                entities:
+                  - sensor.bedroom_temp
                 name: Bedroom
                 line_color: '#3498db'
                 line_width: 8
+                show:
+                  fill: fade
               - type: custom:mini-graph-card
-                entity: sensor.bathroom_temperature_f
+                entities:
+                  - sensor.bathroom_temperature_f
                 name: Bathroom
                 line_color: '#f5cb43'
                 line_width: 8
+                show:
+                  fill: fade
               - type: custom:mini-graph-card
-                entity: sensor.office_temperature_f
+                entities:
+                  - sensor.office_temperature_f
                 name: Office
                 line_color: '#e74c3c'
                 line_width: 8
+                show:
+                  fill: fade
       - type: vertical-stack
         cards:
           - type: weather-forecast
@@ -112,12 +121,14 @@ views:
             cards:
               - type: custom:mini-graph-card
                 name: Sun Elevation
-                entity: sensor.sun_elevation
+                entities:
+                  - sensor.sun_elevation
                 line_color: '#f5cb43'
                 line_width: 4
               - type: custom:mini-graph-card
                 name: Chance of Rain
-                entity: sensor.dark_sky_precip_probability
+                entities:
+                  - sensor.dark_sky_precip_probability
                 line_color: '#3498db'
                 line_width: 4
   - path: livingroom
@@ -130,7 +141,8 @@ views:
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
-                entity: sensor.living_room_thermostat_temperature
+                entities:
+                  - sensor.living_room_thermostat_temperature
                 name: Living Room
                 line_color: '#3498db'
                 line_width: 3
@@ -139,7 +151,8 @@ views:
               - type: light
                 entity: light.living_room
               - type: custom:mini-graph-card
-                entity: sensor.living_room_thermostat_humidity
+                entities:
+                  - sensor.living_room_thermostat_humidity
                 name: Humidity
                 line_color: '#f5cb43'
                 line_width: 6
@@ -181,19 +194,22 @@ views:
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
-                entity: sensor.bedroom_temp
+                entities:
+                  - sensor.bedroom_temp
                 name: Bedroom
                 line_color: '#3498db'
                 line_width: 6
               - type: custom:mini-graph-card
-                entity: sensor.bathroom_temperature_f
+                entities:
+                  - sensor.bathroom_temperature_f
                 name: Bathroom
                 line_color: '#e74c3c'
                 line_width: 6
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
-                entity: sensor.bedroom_humidity
+                entities:
+                  - sensor.bedroom_humidity
                 name: Bedroom Humidity
                 line_color: '#f5cb43'
                 line_width: 3
@@ -232,7 +248,8 @@ views:
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
-                entity: sensor.office_temperature_f
+                entities:
+                  - sensor.office_temperature_f
                 name: Office
                 line_color: '#3498db'
                 line_width: 3
@@ -241,7 +258,8 @@ views:
               - type: light
                 entity: light.office
               - type: custom:mini-graph-card
-                entity: sensor.office_lux
+                entities:
+                  - sensor.office_lux
                 name: Illumination
                 line_color: '#f5cb43'
                 line_width: 6
