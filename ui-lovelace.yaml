@@ -198,13 +198,13 @@ views:
                   - sensor.bedroom_temp
                 name: Bedroom
                 line_color: '#2980b9'
-                line_width: 6
+                line_width: 4
               - type: custom:mini-graph-card
                 entities:
                   - sensor.bathroom_temperature_f
                 name: Bathroom
                 line_color: '#b93829'
-                line_width: 6
+                line_width: 4
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
@@ -212,7 +212,7 @@ views:
                   - sensor.bedroom_humidity
                 name: Bedroom Humidity
                 line_color: '#b58e31'
-                line_width: 3
+                line_width: 2
                 hours_to_show: 12
           - type: horizontal-stack
             cards:
@@ -252,7 +252,7 @@ views:
                   - sensor.office_temperature_f
                 name: Office
                 line_color: '#2980b9'
-                line_width: 3
+                line_width: 2
           - type: horizontal-stack
             cards:
               - type: light
@@ -262,7 +262,7 @@ views:
                   - sensor.office_lux
                 name: Illumination
                 line_color: '#b58e31'
-                line_width: 5
+                line_width: 4
                 hours_to_show: 24
       - type: horizontal-stack
         cards:
