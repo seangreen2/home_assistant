@@ -33,7 +33,7 @@
     paper-item-selected_-_background-color: '#292929'
     paper-tabs-selection-bar-color: 'green'
     # Labels
-    label-badge-red: 'var(--accent-color)'
+    label-badge-red: 'var(--primary-color)'
     label-badge-text-color: 'var(--primary-text-color)'
     label-badge-background-color: '#222222'
     # Switches
