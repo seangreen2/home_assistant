@@ -93,24 +93,24 @@ views:
                 entities:
                   - sensor.bedroom_temp
                 name: Bedroom
-                line_color: '#3498db'
-                line_width: 8
+                line_color: '#2980b9'
+                line_width: 6
                 show:
                   fill: fade
               - type: custom:mini-graph-card
                 entities:
                   - sensor.bathroom_temperature_f
                 name: Bathroom
-                line_color: '#f5cb43'
-                line_width: 8
+                line_color: '#b58e31'
+                line_width: 6
                 show:
                   fill: fade
               - type: custom:mini-graph-card
                 entities:
                   - sensor.office_temperature_f
                 name: Office
-                line_color: '#e74c3c'
-                line_width: 8
+                line_color: '#b93829'
+                line_width: 6
                 show:
                   fill: fade
       - type: vertical-stack
@@ -123,13 +123,13 @@ views:
                 name: Sun Elevation
                 entities:
                   - sensor.sun_elevation
-                line_color: '#f5cb43'
+                line_color: '#b58e31'
                 line_width: 4
               - type: custom:mini-graph-card
                 name: Chance of Rain
                 entities:
                   - sensor.dark_sky_precip_probability
-                line_color: '#3498db'
+                line_color: '#2980b9'
                 line_width: 4
   - path: livingroom
     title: Living Room
@@ -144,8 +144,8 @@ views:
                 entities:
                   - sensor.living_room_thermostat_temperature
                 name: Living Room
-                line_color: '#3498db'
-                line_width: 3
+                line_color: '#2980b9'
+                line_width: 2
           - type: horizontal-stack
             cards:
               - type: light
@@ -154,9 +154,9 @@ views:
                 entities:
                   - sensor.living_room_thermostat_humidity
                 name: Humidity
-                line_color: '#f5cb43'
-                line_width: 6
-                hours_to_show: 12
+                line_color: '#b58e31'
+                line_width: 4
+                hours_to_show: 24
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -197,13 +197,13 @@ views:
                 entities:
                   - sensor.bedroom_temp
                 name: Bedroom
-                line_color: '#3498db'
+                line_color: '#2980b9'
                 line_width: 6
               - type: custom:mini-graph-card
                 entities:
                   - sensor.bathroom_temperature_f
                 name: Bathroom
-                line_color: '#e74c3c'
+                line_color: '#b93829'
                 line_width: 6
           - type: horizontal-stack
             cards:
@@ -211,7 +211,7 @@ views:
                 entities:
                   - sensor.bedroom_humidity
                 name: Bedroom Humidity
-                line_color: '#f5cb43'
+                line_color: '#b58e31'
                 line_width: 3
                 hours_to_show: 12
           - type: horizontal-stack
@@ -251,7 +251,7 @@ views:
                 entities:
                   - sensor.office_temperature_f
                 name: Office
-                line_color: '#3498db'
+                line_color: '#2980b9'
                 line_width: 3
           - type: horizontal-stack
             cards:
@@ -261,9 +261,9 @@ views:
                 entities:
                   - sensor.office_lux
                 name: Illumination
-                line_color: '#f5cb43'
-                line_width: 6
-                hours_to_show: 12
+                line_color: '#b58e31'
+                line_width: 5
+                hours_to_show: 24
       - type: horizontal-stack
         cards:
           - type: entity-button
