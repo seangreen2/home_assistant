@@ -64,7 +64,7 @@ sensor.bathroom_battery:
   device_class: battery
 sensor.bathroom_motion_sensor:
   friendly_name: Bathroom Motion
-  device_class: motion_sensor
+  device_class: motion
 sensor.plex:
   friendly_name: Plex Activity
   icon: mdi:plex
@@ -73,7 +73,7 @@ sensor.office_battery:
   device_class: battery
 sensor.office_motion_motion_sensor:
   friendly_name: Office Motion
-  device_class: motion_sensor
+  device_class: motion
 sensor.office_lux:
   friendly_name: Office Lux
   icon: mdi:brightness-5
@@ -94,6 +94,10 @@ sensor.illumination_158d0002047afe:
   friendly_name: Living Room Lux
 binary_sensor.motion_sensor_158d000237a64a:
   friendly_name: Bedroom Motion
+  icon: mdi:run-fast
+binary_sensor.office_motion:
+  icon: mdi:run-fast
+binary_sensor.bathroom_motion:
   icon: mdi:run-fast
 sensor.illumination_158d000237a64a:
   friendly_name: Bedroom Lux

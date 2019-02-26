@@ -182,6 +182,7 @@ group: !include groups.yaml
 automation: !include_dir_merge_list automations
 script: !include scripts.yaml
 input_boolean: !include input_booleans.yaml
+binary_sensor: !include binary_sensors.yaml
 sensor: !include sensors.yaml
 input_select: !include input_select.yaml
 device_tracker: !include device_tracker.yaml

@@ -213,7 +213,7 @@ views:
                 name: Bedroom Humidity
                 line_color: '#b58e31'
                 line_width: 2
-                hours_to_show: 12
+                hours_to_show: 24
           - type: horizontal-stack
             cards:
               - type: light
@@ -227,7 +227,7 @@ views:
               - type: glance
                 entities:
                   - binary_sensor.motion_sensor_158d000237a64a
-                  - sensor.bathroom_motion_sensor
+                  - binary_sensor.bathroom_motion
                   - sensor.bathroom_battery
       - type: custom:mini-media-player
         entity: media_player.bedroom_tv
@@ -284,7 +284,7 @@ views:
             cards:
               - type: glance
                 entities:
-                  - sensor.office_motion_motion_sensor
+                  - binary_sensor.office_motion
                   - sensor.office_battery
                   - sensor.laptop_socket
       - type: custom:mini-media-player
