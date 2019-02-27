@@ -95,24 +95,18 @@ views:
                 name: Bedroom
                 line_color: '#2980b9'
                 line_width: 6
-                show:
-                  fill: fade
               - type: custom:mini-graph-card
                 entities:
                   - sensor.bathroom_temperature_f
                 name: Bathroom
                 line_color: '#b58e31'
                 line_width: 6
-                show:
-                  fill: fade
               - type: custom:mini-graph-card
                 entities:
                   - sensor.office_temperature_f
                 name: Office
                 line_color: '#b93829'
                 line_width: 6
-                show:
-                  fill: fade
       - type: vertical-stack
         cards:
           - type: weather-forecast

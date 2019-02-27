@@ -46,7 +46,7 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 - For the Mini Media Player Cards: https://github.com/kalkih/mini-media-player
 
 ## Dashboard (Now with Lovelace!)
-![1](https://i.imgur.com/uLKOtBL.jpg)
+![1](https://i.imgur.com/5rnBwJU.jpg)
 ![2](https://i.imgur.com/36i4Unq.jpg)
 ![3](https://i.imgur.com/CZrFPsz.jpg)
 ![4](https://i.imgur.com/KzXU1cL.jpg)
