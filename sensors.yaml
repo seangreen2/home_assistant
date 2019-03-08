@@ -92,8 +92,8 @@
     sensors:
       bedroom_sean_gh_rssi:
         value_template: >-
-          {% if is_state("device_tracker.sean_bt_bedroom", "home") %}
-            {{ states.device_tracker.sean_bt_bedroom.attributes.rssi }}
+          {% if is_state("device_tracker.192_168_1_131_3c_28_6d_29_fe_2c", "home") %}
+            {{state_attr('device_tracker.192_168_1_131_3c_28_6d_29_fe_2c', 'rssi')}}
           {% else %}
             -99
           {% endif %}
@@ -102,8 +102,8 @@
     sensors:
       livingroom_sean_gh_rssi:
         value_template: >-
-          {% if is_state("device_tracker.sean_bt_living_room", "home") %}
-            {{ states.device_tracker.sean_bt_living_room.attributes.rssi }}
+          {% if is_state("device_tracker.192_168_1_130_3c_28_6d_29_fe_2c", "home") %}
+            {{state_attr('device_tracker.192_168_1_130_3c_28_6d_29_fe_2c', 'rssi')}}
           {% else %}
             -99
           {% endif %}
@@ -112,8 +112,8 @@
     sensors:
       office_sean_gh_rssi:
         value_template: >-
-          {% if is_state("device_tracker.sean_bt_office", "home") %}
-            {{ states.device_tracker.sean_bt_office.attributes.rssi }}
+          {% if is_state("device_tracker.192_168_1_146_3c_28_6d_29_fe_2c", "home") %}
+            {{state_attr('device_tracker.192_168_1_146_3c_28_6d_29_fe_2c', 'rssi')}}
           {% else %}
             -99
           {% endif %}
@@ -133,16 +133,17 @@
           {% elif is_state('input_select.sean_room_location', 'Away') %}
             mdi:exit-run
           {% elif is_state('input_select.sean_room_location', 'Home') %}
-            mdi:exit-run
+            mdi:home-account
           {% else %}
             mdi:exit-run
           {% endif %}
+
   - platform: template
     sensors:
       bedroom_emily_gh_rssi:
         value_template: >-
-          {% if is_state("device_tracker.emily_bt_bedroom", "home") %}
-            {{ states.device_tracker.emily_bt_bedroom.attributes.rssi }}
+          {% if is_state("device_tracker.192_168_1_131_3c_28_6d_23_86_17", "home") %}
+            {{state_attr('device_tracker.192_168_1_131_3c_28_6d_23_86_17', 'rssi')}}
           {% else %}
             -99
           {% endif %}
@@ -151,8 +152,8 @@
     sensors:
       livingroom_emily_gh_rssi:
         value_template: >-
-          {% if is_state("device_tracker.emily_bt_living_room", "home") %}
-            {{ states.device_tracker.emily_bt_living_room.attributes.rssi }}
+          {% if is_state("device_tracker.192_168_1_130_3c_28_6d_23_86_17", "home") %}
+            {{state_attr('device_tracker.192_168_1_130_3c_28_6d_23_86_17', 'rssi')}}
           {% else %}
             -99
           {% endif %}
@@ -161,8 +162,8 @@
     sensors:
       office_emily_gh_rssi:
         value_template: >-
-          {% if is_state("device_tracker.emily_bt_office", "home") %}
-            {{ states.device_tracker.emily_bt_office.attributes.rssi }}
+          {% if is_state("device_tracker.192_168_1_146_3c_28_6d_23_86_17", "home") %}
+            {{state_attr('device_tracker.192_168_1_146_3c_28_6d_23_86_17', 'rssi')}}
           {% else %}
             -99
           {% endif %}
@@ -182,7 +183,7 @@
           {% elif is_state('input_select.emily_room_location', 'Away') %}
             mdi:exit-run
           {% elif is_state('input_select.emily_room_location', 'Home') %}
-            mdi:exit-run
+            mdi:home-account
           {% else %}
             mdi:exit-run
           {% endif %}
@@ -245,18 +246,11 @@
     accounts:
       - !secret steam_account
 
-  - platform: speedtest
-    hour:
-      - 0
-      - 6
-      - 12
-      - 18
-    monitored_conditions:
-      - ping
-      - download
-      - upload
+#  - platform: hue
+#    ip_address: !secret hue_ip
+#    token: !secret hue_token
 
-  - platform: hue
+  - platform: huesensor
     ip_address: !secret hue_ip
     token: !secret hue_token
 

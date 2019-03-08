@@ -5,6 +5,10 @@ resources:
     type: module
   - url: /local/mini-media-player-bundle.js
     type: module
+  - url: /local/simple-weather-card.bundle.js
+    type: module
+  - url: /local/simple-thermostat.js
+    type: module
 
 views:
   - path: default_view
@@ -85,6 +89,19 @@ views:
                 image: /local/images/plex.png
       - type: vertical-stack
         cards:
+#          - type: custom:simple-thermostat
+#            entity: climate.living_room
+#            step_size: 0.5
+#            icon:
+  #            heat: mdi:fire
+  #            cool: mdi:snowflake
+  #            eco: mdi:leaf
+  #            off: mdi:power
+  #            auto: mdi:autorenew
+  #            idle: mdi:power
+  #            away: mdi:leaf
+  #          sensors:
+  #            - entity: sensor.living_room_thermostat_hvac_state
           - type: thermostat
             entity: climate.living_room
           - type: horizontal-stack
@@ -109,8 +126,15 @@ views:
                 line_width: 6
       - type: vertical-stack
         cards:
-          - type: weather-forecast
+          - type: custom:simple-weather-card
             entity: weather.dark_sky
+            name: " "
+            secondary_info: humidity
+            backdrop:
+              day: "#2980b9"
+              night: "#022F4C"
+#          - type: weather-forecast
+#            entity: weather.dark_sky
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card

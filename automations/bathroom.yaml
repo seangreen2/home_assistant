@@ -100,6 +100,9 @@
     - condition: time
       after: '21:00:01'
       before: '04:20:00'
+    - condition: state
+      entity_id: sensor.bathroom_motion_sensor
+      state: 'off'
   action:
     service: light.turn_off
     data:
@@ -119,6 +122,9 @@
     - condition: time
       after: '04:20:01'
       before: '21:00:00'
+    - condition: state
+      entity_id: sensor.bathroom_motion_sensor
+      state: 'off'
   action:
     service: light.turn_off
     data:
@@ -155,10 +161,7 @@
   initial_state: 'on'
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d000237a64a
-      to: 'on'
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      entity_id: binary_sensor.motion_sensor_158d0002047afe #LR Sensor
       to: 'on'
   condition:
     condition: and

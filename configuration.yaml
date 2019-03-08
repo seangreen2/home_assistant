@@ -139,14 +139,47 @@ xiaomi_aqara:
   gateways:
     - key: !secret xiaomi_key
 
+# Google Home
+googlehome:
+  devices:
+    # Office
+    - host: 192.168.1.146
+      rssi_threshold: -100
+      device_types: 2
+      track_devices: true
+    # Bedroom
+    - host: 192.168.1.131
+      rssi_threshold: -100
+      device_types: 2
+      track_devices: true
+    # Living Room
+    - host: 192.168.1.130
+      rssi_threshold: -100
+      device_types: 2
+      track_devices: true
+
+speedtestdotnet:
+  scan_interval:
+    hours: 6
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
 # Switches
 switch:
- - platform: tplink
-   host: !secret tplink_switch_one_ip
- - platform: tplink
-   host: !secret tplink_switch_two_ip
- - platform: tplink
-   host: !secret tplink_switch_three_ip
+# - platform: tplink
+#   host: !secret tplink_switch_one_ip
+# - platform: tplink
+#   host: !secret tplink_switch_two_ip
+# - platform: tplink
+#   host: !secret tplink_switch_three_ip
+
+tplink:
+  switch:
+    - host: !secret tplink_switch_one_ip
+    - host: !secret tplink_switch_two_ip
+    - host: !secret tplink_switch_three_ip
 
 wemo:
   static:
