@@ -28,7 +28,7 @@
         entity_id: light.living_room
         brightness_pct: '{% if states.sun.sun.attributes.elevation <= -60 %}10{% elif states.sun.sun.attributes.elevation <= -30 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
 
-# Turn off lights when everyone leaves house
+# Turn off lights, Nest, and Media when everyone leaves house
   - alias: 'Away Mode'
     initial_state: 'on'
     trigger:
@@ -46,6 +46,14 @@
         data:
           entity_id: climate.living_room
           away_mode: 'on'
+      - service: homeassistant.turn_off
+        entity_id: media_player.whole_house
+      - service: homeassistant.turn_off
+        entity_id: media_player.bedroom_speaker
+      - service: homeassistant.turn_off
+        entity_id: media_player.living_room_speaker
+      - service: homeassistant.turn_off
+        entity_id: media_player.office_speaker
 
 # Turn off Eco Mode Nest
   - alias: 'Nest Normal Mode'

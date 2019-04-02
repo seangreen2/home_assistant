@@ -9,6 +9,8 @@ resources:
     type: module
   - url: /local/simple-thermostat.js
     type: module
+  - url: /local/custom_header/compact-custom-header.js
+    type: module
 
 views:
   - path: default_view
@@ -16,29 +18,52 @@ views:
     icon: 'mdi:home'
     badges: []
     cards:
-      - type: horizontal-stack
+#      - type: 'custom:compact-custom-header'
+  #      main_config: true
+#        disable: true
+#        exceptions:
+#          - conditions:
+#              user_agent: Mobile
+#            config:
+#              disable: false
+#              menu: show
+#              options: show
+#              notifications: show
+#              clock_format: 12
+      - type: vertical-stack
         cards:
-          - type: picture-glance
-            title: Room Location
+          - type: horizontal-stack
+            cards:
+              - type: picture-glance
+                title: Room Location
+                entities:
+                  - sensor.sean_room_status
+                  - sensor.sean_phone_battery
+                state_image:
+                  "home": /local/images/sean_16x9.jpg
+                  "not_home": /local/images/sean_16x9_gray.jpg
+                entity: device_tracker.sean_phone
+              - type: picture-glance
+                title: Room Location
+                entities:
+                  - sensor.emily_room_status
+                  - sensor.emily_phone_battery
+                state_image:
+                  "home": /local/images/emily_16x9.jpg
+                  "not_home": /local/images/emily_16x9_gray.jpg
+                entity: device_tracker.emily_phone
+          - type: entities
             entities:
-              - sensor.sean_room_status
-              - sensor.sean_phone_battery
-            state_image:
-              "home": /local/images/sean_16x9.jpg
-              "not_home": /local/images/sean_16x9_gray.jpg
-            entity: device_tracker.sean_phone
-          - type: picture-glance
-            title: Room Location
-            entities:
-              - sensor.emily_room_status
-              - sensor.emily_phone_battery
-            state_image:
-              "home": /local/images/emily_16x9.jpg
-              "not_home": /local/images/emily_16x9_gray.jpg
-            entity: device_tracker.emily_phone
-      - type: entities
-        entities:
-          - sensor.work_commute
+              - sensor.work_commute
+          - type: conditional
+            conditions:
+              - entity: media_player.whole_house
+                state_not: "off"
+            card:
+              type: custom:mini-media-player
+              entity: media_player.whole_house
+              icon: mdi:speaker-multiple
+              artwork: cover
       - type: horizontal-stack
         cards:
           - type: entity-button
@@ -154,6 +179,7 @@ views:
     icon: 'mdi:sofa'
     badges: []
     cards:
+      - type: 'custom:compact-custom-header'
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -194,7 +220,7 @@ views:
         icon: mdi:television
         artwork: cover
       - type: custom:mini-media-player
-        entity: media_player.googlehome0160
+        entity: media_player.living_room_speaker
         icon: mdi:google-home
         artwork: cover
         show_tts: google
@@ -207,6 +233,7 @@ views:
     icon: 'mdi:hotel'
     badges: []
     cards:
+      - type: 'custom:compact-custom-header'
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -261,6 +288,7 @@ views:
     icon: 'mdi:keyboard'
     badges: []
     cards:
+      - type: 'custom:compact-custom-header'
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -306,7 +334,7 @@ views:
                   - sensor.office_battery
                   - sensor.laptop_socket
       - type: custom:mini-media-player
-        entity: media_player.googlehome0353
+        entity: media_player.office_speaker
         icon: mdi:google-home
         artwork: cover
         show_tts: google
@@ -315,6 +343,7 @@ views:
     icon: 'mdi:settings'
     badges: []
     cards:
+      - type: 'custom:compact-custom-header'
       - title: System
         type: entities
         entities:
@@ -365,6 +394,7 @@ views:
     icon: 'mdi:creation'
     badges: []
     cards:
+      - type: 'custom:compact-custom-header'
       - title: Home Automations
         type: entities
         entities:

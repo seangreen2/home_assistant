@@ -12,7 +12,7 @@
     - condition: template
       value_template: "{{ ( states.sensor.bedroom_emily_gh_rssi.state ) > ( states.sensor.livingroom_emily_gh_rssi.state )  }}"
   action:
-    - delay: '00:00:05'
+    - delay: '00:00:15'
     - condition: and
       conditions:
       - condition: template
@@ -47,7 +47,7 @@
     - condition: template
       value_template: "{{ ( states.sensor.bedroom_emily_gh_rssi.state ) > ( states.sensor.office_emily_gh_rssi.state )  }}"
   action:
-    - delay: '00:00:05'
+    - delay: '00:00:15'
     - condition: and
       conditions:
       - condition: template
@@ -82,7 +82,7 @@
     - condition: template
       value_template: "{{ ( states.sensor.office_emily_gh_rssi.state ) > ( states.sensor.bedroom_emily_gh_rssi.state )  }}"
   action:
-    - delay: '00:00:05'
+    - delay: '00:00:15'
     - condition: and
       conditions:
       - condition: template

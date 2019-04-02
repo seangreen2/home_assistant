@@ -57,30 +57,45 @@
         transition: 60
 
 # Bedroom Lights off without Motion
+#- alias: Bedroom Lights off no motion
+#  initial_state: 'on'
+#  trigger:
+#    platform: time_pattern
+#    minutes: '/3'
+#    seconds: 00
+#  condition:
+#    - condition: state
+#      entity_id: input_boolean.sean_bedroom_presence
+#      state: 'off'
+#    - condition: state
+#      entity_id: input_boolean.emily_bedroom_presence
+#      state: 'off'
+#    - condition: state
+#      entity_id: binary_sensor.motion_sensor_158d000237a64a
+#      state: 'off'
+#  action:
+#    - service: light.turn_off
+#      data:
+#        entity_id: light.bedroom
+#        transition: 2
+#    - delay:
+#        seconds: '1'
+#    - service: light.turn_off
+#      data:
+#        entity_id: light.bedroom
+#        transition: 2
+
+# Bedroom Lights off without Motion
 - alias: Bedroom Lights off no motion
   initial_state: 'on'
   trigger:
-    platform: time_pattern
-    minutes: '/3'
-    seconds: 00
-  condition:
-    - condition: state
-      entity_id: input_boolean.sean_bedroom_presence
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.emily_bedroom_presence
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.motion_sensor_158d000237a64a
-      state: 'off'
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d000237a64a
+    to: 'off'
+    for:
+      minutes: 3
   action:
-    - service: light.turn_off
-      data:
-        entity_id: light.bedroom
-        transition: 2
-    - delay:
-        seconds: '1'
-    - service: light.turn_off
-      data:
-        entity_id: light.bedroom
-        transition: 2
+    service: light.turn_off
+    data:
+      entity_id: light.bedroom
+      transition: 2

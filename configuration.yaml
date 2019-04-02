@@ -6,6 +6,9 @@ homeassistant:
   unit_system: imperial
   time_zone: America/New_York
   customize: !include customize.yaml
+  auth_providers:
+    - type: legacy_api_password
+      api_password: !secret api_password
 
 map:
 
@@ -36,7 +39,6 @@ frontend:
 # BEGIN CONFIG
 config:
 http:
-  api_password: !secret api_password
   base_url: !secret base_url
   trusted_networks:
     - 192.168.1.0/24

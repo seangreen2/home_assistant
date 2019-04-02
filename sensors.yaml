@@ -95,7 +95,7 @@
           {% if is_state("device_tracker.192_168_1_131_3c_28_6d_29_fe_2c", "home") %}
             {{state_attr('device_tracker.192_168_1_131_3c_28_6d_29_fe_2c', 'rssi')}}
           {% else %}
-            -99
+            -100
           {% endif %}
 
   - platform: template
@@ -105,7 +105,7 @@
           {% if is_state("device_tracker.192_168_1_130_3c_28_6d_29_fe_2c", "home") %}
             {{state_attr('device_tracker.192_168_1_130_3c_28_6d_29_fe_2c', 'rssi')}}
           {% else %}
-            -99
+            -100
           {% endif %}
 
   - platform: template
@@ -115,7 +115,7 @@
           {% if is_state("device_tracker.192_168_1_146_3c_28_6d_29_fe_2c", "home") %}
             {{state_attr('device_tracker.192_168_1_146_3c_28_6d_29_fe_2c', 'rssi')}}
           {% else %}
-            -99
+            -100
           {% endif %}
 
   - platform: template
@@ -145,7 +145,7 @@
           {% if is_state("device_tracker.192_168_1_131_3c_28_6d_23_86_17", "home") %}
             {{state_attr('device_tracker.192_168_1_131_3c_28_6d_23_86_17', 'rssi')}}
           {% else %}
-            -99
+            -100
           {% endif %}
 
   - platform: template
@@ -155,7 +155,7 @@
           {% if is_state("device_tracker.192_168_1_130_3c_28_6d_23_86_17", "home") %}
             {{state_attr('device_tracker.192_168_1_130_3c_28_6d_23_86_17', 'rssi')}}
           {% else %}
-            -99
+            -100
           {% endif %}
 
   - platform: template
@@ -165,7 +165,7 @@
           {% if is_state("device_tracker.192_168_1_146_3c_28_6d_23_86_17", "home") %}
             {{state_attr('device_tracker.192_168_1_146_3c_28_6d_23_86_17', 'rssi')}}
           {% else %}
-            -99
+            -100
           {% endif %}
 
   - platform: template
