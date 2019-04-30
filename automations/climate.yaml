@@ -24,10 +24,70 @@
        seconds: '10'
    action:
      - service: climate.set_operation_mode
-       data:
+       data_template:
          entity_id: climate.living_room
-         operation_mode: 'auto'
+         operation_mode: >
+           {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
+             cool
+           {% elif states('sensor.season') == 'fall' %}
+             auto
+           {% else %}
+             heat
+           {% endif %}
 
+# Turn on ceiling fan under certain conditions
+ - alias: Turn on Ceiling Fan
+   initial_state: 'on'
+   trigger:
+     platform: time_pattern
+     minutes: '10'
+     seconds: '00'
+   condition:
+     condition: and
+     conditions:
+       - condition: state
+         entity_id: group.family
+         state: 'home'
+       - condition: time
+         after: '08:00:00'
+         before: '22:00:00'
+       - condition: numeric_state
+         entity_id: sensor.living_room_thermostat_temperature
+         above: '73'
+       - condition: numeric_state
+         entity_id: sensor.living_room_thermostat_humidity
+         above: '55'
+   action:
+     - service: switch.turn_on
+       entity_id:  switch.living_room_fan
+
+# Change Nest to Seaonal Mode
+ - alias: Nest Seasonal Mode
+   initial_state: 'on'
+   trigger:
+     platform: time_pattern
+     hours: '/1'
+   condition:
+     condition: and
+     conditions:
+       - condition: state
+         entity_id: group.family
+         state: 'home'
+       - condition: time
+         after: '07:00:00'
+         before: '22:00:00'
+   action:
+     - service: climate.set_operation_mode
+       data_template:
+         entity_id: climate.living_room
+         operation_mode: >
+           {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
+             cool
+           {% elif states('sensor.season') == 'fall' %}
+             auto
+           {% else %}
+             heat
+           {% endif %}
 
 # Temp goes down by 2 when Sean only at home (winter)
 #  - alias: 'Sean Home Preferences'

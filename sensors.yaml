@@ -19,7 +19,7 @@
   - platform: template
     sensors:
       bathroom_temperature_f:
-        friendly_name: 'Bathroom Temperature'
+        friendly_name: 'Bathroom'
         entity_id:
           - sensor.bathroom_temperature
         unit_of_measurement: °F
@@ -204,7 +204,7 @@
 
   - platform: darksky
     api_key: !secret dark_sky_api_key
-    update_interval: '00:05:00'
+    scan_interval: '00:05:00'
     monitored_conditions:
       - temperature
       - precip_probability

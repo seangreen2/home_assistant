@@ -117,7 +117,7 @@
     entity_id: sensor.bathroom_motion_sensor
     to: 'off'
     for:
-      minutes: 3
+      minutes: 6
   condition:
     - condition: time
       after: '04:20:01'

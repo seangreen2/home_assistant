@@ -42,7 +42,7 @@ views:
                 state_image:
                   "home": /local/images/sean_16x9.jpg
                   "not_home": /local/images/sean_16x9_gray.jpg
-                entity: device_tracker.sean_phone
+                entity: group.sean
               - type: picture-glance
                 title: Room Location
                 entities:
@@ -51,37 +51,50 @@ views:
                 state_image:
                   "home": /local/images/emily_16x9.jpg
                   "not_home": /local/images/emily_16x9_gray.jpg
-                entity: device_tracker.emily_phone
+                entity: group.emily
           - type: entities
             entities:
               - sensor.work_commute
           - type: conditional
             conditions:
-              - entity: media_player.whole_house
+              - entity: media_player.plex_living_room_tv
                 state_not: "off"
+                state_not: "unavailable"
             card:
               type: custom:mini-media-player
-              entity: media_player.whole_house
-              icon: mdi:speaker-multiple
+              entity: media_player.plex_living_room_tv
+              icon: mdi:television
               artwork: cover
       - type: horizontal-stack
         cards:
           - type: entity-button
-            entity: switch.office_fan
-            name: Office Fan
+            entity: switch.living_room_fan
+            name: Ceiling
             icon: mdi:fan
             tap_action:
               action: toggle
           - type: entity-button
             entity: switch.smart_plug_one
-            name: Air Freshener
+            name: Freshener
             icon: mdi:flower
             tap_action:
               action: toggle
           - type: entity-button
+            entity: switch.office_fan
+            name: Office
+            icon: mdi:fan
+            tap_action:
+              action: toggle
+          - type: entity-button
             entity: switch.outside_lights
-            name: Outside Lights
+            name: Patio
             icon: mdi:lightbulb
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: switch.bedroom_fan
+            name: Bedroom
+            icon: mdi:fan
             tap_action:
               action: toggle
       - type: vertical-stack
@@ -114,21 +127,23 @@ views:
                 image: /local/images/plex.png
       - type: vertical-stack
         cards:
-#          - type: custom:simple-thermostat
-#            entity: climate.living_room
-#            step_size: 0.5
-#            icon:
-  #            heat: mdi:fire
-  #            cool: mdi:snowflake
-  #            eco: mdi:leaf
-  #            off: mdi:power
-  #            auto: mdi:autorenew
-  #            idle: mdi:power
-  #            away: mdi:leaf
-  #          sensors:
-  #            - entity: sensor.living_room_thermostat_hvac_state
-          - type: thermostat
+          - type: custom:simple-thermostat
             entity: climate.living_room
+            step_size: 1
+            icon:
+              heat: mdi:fire
+              cool: mdi:snowflake
+              eco: mdi:leaf
+              off: mdi:power
+              auto: mdi:autorenew
+              idle: mdi:power
+              away: mdi:leaf
+            sensors:
+              - entity: sensor.living_room_thermostat_hvac_state
+              - entity: sensor.living_room_thermostat_humidity
+                name: Humidity
+#          - type: thermostat
+#            entity: climate.living_room
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
@@ -206,24 +221,32 @@ views:
           - type: horizontal-stack
             cards:
               - type: entity-button
+                entity: switch.living_room_fan
+                name: Ceiling Fan
+                icon: mdi:fan
+                tap_action:
+                  action: toggle
+              - type: entity-button
                 entity: switch.outside_lights
-                name: Outside Lights
+                name: Patio Lights
                 icon: mdi:lightbulb
                 tap_action:
                   action: toggle
-              - type: glance
-                entities:
-                  - binary_sensor.door_window_sensor_158d00023eb0bb
-                  - binary_sensor.motion_sensor_158d0002047afe
-      - type: custom:mini-media-player
-        entity: media_player.plex_living_room_tv
-        icon: mdi:television
-        artwork: cover
-      - type: custom:mini-media-player
-        entity: media_player.living_room_speaker
-        icon: mdi:google-home
-        artwork: cover
-        show_tts: google
+      - type: vertical-stack
+        cards:
+          - type: glance
+            entities:
+              - binary_sensor.door_window_sensor_158d00023eb0bb
+              - binary_sensor.motion_sensor_158d0002047afe
+          - type: custom:mini-media-player
+            entity: media_player.plex_living_room_tv
+            icon: mdi:television
+            artwork: cover
+          - type: custom:mini-media-player
+            entity: media_player.living_room_speaker
+            icon: mdi:google-home
+            artwork: cover
+            show_tts: google
       - title: Neato Vacuum
         type: picture-entity
         entity: vacuum.rosie
@@ -240,25 +263,19 @@ views:
             cards:
               - type: custom:mini-graph-card
                 entities:
-                  - sensor.bedroom_temp
+                  - entity: sensor.bedroom_temp
+                    name: Bedroom
+                  - sensor.bathroom_temperature_f
                 name: Bedroom
+                legend: false
                 line_color: '#2980b9'
                 line_width: 4
               - type: custom:mini-graph-card
                 entities:
-                  - sensor.bathroom_temperature_f
-                name: Bathroom
+                  - sensor.bedroom_humidity
+                name: Humidity
                 line_color: '#b93829'
                 line_width: 4
-          - type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.bedroom_humidity
-                name: Bedroom Humidity
-                line_color: '#b58e31'
-                line_width: 2
-                hours_to_show: 24
           - type: horizontal-stack
             cards:
               - type: light
@@ -269,6 +286,12 @@ views:
         cards:
           - type: horizontal-stack
             cards:
+              - type: entity-button
+                entity: switch.bedroom_fan
+                name: Bedroom Fan
+                icon: mdi:fan
+                tap_action:
+                  action: toggle
               - type: glance
                 entities:
                   - binary_sensor.motion_sensor_158d000237a64a
@@ -332,6 +355,7 @@ views:
                 entities:
                   - binary_sensor.office_motion
                   - sensor.office_battery
+                  - sensor.steam_76561197976250572
                   - sensor.laptop_socket
       - type: custom:mini-media-player
         entity: media_player.office_speaker
@@ -400,10 +424,6 @@ views:
         entities:
           - automation.away_mode
           - automation.lights_on_in_the_evening
-          - automation.nest_normal_mode
-          - automation.nest_normal_mode_google_tracker
-          - automation.voice_sean_is_home
-          - automation.voice_emily_is_home
           - automation.morning_alarm_lights
           - automation.turn_on_air_fresh
           - automation.outside_lights_on_at_sunset
@@ -420,6 +440,13 @@ views:
           - automation.emily_in_living_room
           - automation.emily_in_office
           - automation.emily_is_away
+        show_header_toggle: true
+      - title: Climate
+        type: entities
+        entities:
+          - automation.nest_home_mode
+          - automation.nest_seasonal_mode
+          - automation.nest_normal_mode_google_tracker
         show_header_toggle: true
       - title: Living Room Automations
         type: entities

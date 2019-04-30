@@ -13,7 +13,7 @@
           state: 'home'
         - condition: numeric_state
           entity_id: sensor.office_temperature_f
-          above: '71'
+          above: '70'
         - condition: state
           entity_id: sensor.living_room_thermostat_hvac_state
           state: 'off'
@@ -35,28 +35,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.office_temperature_f
-      below: '71'
+      below: '69'
     action:
       service: switch.turn_off
       entity_id: switch.office_fan
-
-# Turn off Office Fan after no activity
-  - alias: Turn off office fan without motion
-    initial_state: 'on'
-    trigger:
-      platform: state
-      entity_id: sensor.office_motion_motion_sensor
-      to: 'off'
-      for:
-        minutes: 5
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.laptop_socket
-          below: '3'
-        - condition: template
-          value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
-    action:
-      - service: switch.turn_off
-        entity_id: switch.office_fan
