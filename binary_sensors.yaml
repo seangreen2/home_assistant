@@ -3,11 +3,11 @@
       bathroom_motion:
         friendly_name: 'Bathroom Motion'
         device_class: motion
-        value_template: "{{ is_state('sensor.bathroom_motion_sensor', 'on') }}"
+        value_template: "{{ is_state('binary_sensor.bathroom_sensor_motion', 'on') }}"
 
   - platform: template
     sensors:
       office_motion:
         friendly_name: 'Office Motion'
         device_class: motion
-        value_template: "{{ is_state('sensor.office_motion_motion_sensor', 'on') }}"
+        value_template: "{{ is_state('binary_sensor.office_motion_sensor_motion', 'on') }}"

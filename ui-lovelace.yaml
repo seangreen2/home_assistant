@@ -11,6 +11,9 @@ resources:
     type: module
   - url: /local/custom_header/compact-custom-header.js
     type: module
+  - url: /local/bar-card.js
+    type: module
+
 
 views:
   - path: default_view
@@ -362,35 +365,116 @@ views:
         icon: mdi:google-home
         artwork: cover
         show_tts: google
+
   - path: settings
     title: Settings
     icon: 'mdi:settings'
     badges: []
     cards:
-      - type: 'custom:compact-custom-header'
-      - title: System
-        type: entities
-        entities:
-          - sensor.processor_use
-          - sensor.disk_use_percent_home
-          - sensor.memory_use_percent
-          - sensor.last_boot
-        show_header_toggle: false
-      - title: Pi-Hole
-        type: entities
-        entities:
-          - sensor.pi_hole_ads_blocked_today
-          - sensor.pi_hole_ads_percentage_blocked_today
-          - sensor.pi_hole_dns_queries_today
-          - sensor.pi_hole_domains_blocked
-        show_header_toggle: false
-      - title: Internet Speed
-        type: entities
-        entities:
-          - sensor.speedtest_ping
-          - sensor.speedtest_download
-          - sensor.speedtest_upload
-        show_header_toggle: false
+      - type: vertical-stack
+        title: System
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - sensor.processor_use
+                name: CPU
+                line_color: '#2980b9'
+                line_width: 2
+                hours_to_show: 24
+          - type: vertical-stack
+            cards:
+              - type: custom:bar-card
+                entity: sensor.disk_use_percent_home
+                title: HDD
+                title_position: inside
+                align: split
+                show_icon: true
+                color: '#00ba6a'
+              - type: custom:bar-card
+                entity: sensor.memory_use_percent
+                title: RAM
+                title_position: inside
+                align: split
+                show_icon: true
+              - type: entities
+                entities:
+                  - sensor.last_boot
+
+      - type: vertical-stack
+        title: Network
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - sensor.speedtest_download
+                name: Download
+                line_color: '#2980b9'
+                line_width: 6
+                hours_to_show: 24
+                icon: mdi:download-network
+              - type: custom:mini-graph-card
+                entities:
+                  - sensor.speedtest_upload
+                name: Upload
+                line_color: '#2980b9'
+                line_width: 6
+                hours_to_show: 24
+                icon: mdi:upload-network
+              - type: custom:mini-graph-card
+                entities:
+                  - sensor.speedtest_ping
+                name: Ping
+                line_color: '#dbdfe2'
+                line_width: 6
+                hours_to_show: 24
+                icon: mdi:server-network
+
+      - type: vertical-stack
+        title: Pi-Hole
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - sensor.pi_hole_ads_blocked_today
+                name: Ads Blocked Today
+                line_color: '#2980b9'
+                line_width: 4
+                hours_to_show: 24
+              - type: custom:mini-graph-card
+                entities:
+                  - sensor.pi_hole_ads_percentage_blocked_today
+                name: Percentage Blocked
+                line_color: '#2980b9'
+                line_width: 4
+                hours_to_show: 24
+          - type: vertical-stack
+            cards:
+              - type: custom:bar-card
+                entity: sensor.pi_hole_dns_queries_today
+                title: DNS Queries Today
+                title_position: inside
+                align: split
+                show_icon: true
+                color: '#00ba6a'
+                max: '30000'
+              - type: custom:bar-card
+                entity: sensor.pi_hole_domains_blocked
+                title: Domains Blocked
+                title_position: inside
+                align: split
+                show_icon: true
+                max: '1000000'
+                icon: mdi:cancel
+
+  - path: room
+    title: Room Location
+    icon: 'mdi:home-account'
+    badges: []
+    cards:
       - title: BT RSSI
         type: entities
         entities:
@@ -413,6 +497,7 @@ views:
           - input_boolean.emily_living_room_presence
           - input_boolean.emily_office_presence
         show_header_toggle: false
+
   - path: auto
     title: Automations
     icon: 'mdi:creation'
@@ -424,7 +509,7 @@ views:
         entities:
           - automation.away_mode
           - automation.lights_on_in_the_evening
-          - automation.morning_alarm_lights
+#          - automation.morning_alarm_lights
           - automation.turn_on_air_fresh
           - automation.outside_lights_on_at_sunset
           - automation.outside_lights_off_at_ten
@@ -445,8 +530,10 @@ views:
         type: entities
         entities:
           - automation.nest_home_mode
-          - automation.nest_seasonal_mode
+#          - automation.nest_seasonal_tracker
           - automation.nest_normal_mode_google_tracker
+          - automation.sean_winter_preferences
+          - automation.family_winter_preferences
         show_header_toggle: true
       - title: Living Room Automations
         type: entities
@@ -477,7 +564,6 @@ views:
           - automation.office_auto_brightness_transition
           - automation.turn_on_fan_above_certain_temp
           - automation.turn_off_fan_below_certain_temp
-          - automation.turn_off_office_fan_without_motion
           - automation.turn_off_office_lights_above_lux
           - automation.turn_office_lights_without_motion_one_min
         show_header_toggle: true

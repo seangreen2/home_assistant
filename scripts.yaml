@@ -58,6 +58,10 @@
         data:
           entity_id: light.bedroom
           transition: 2
+      - service: light.turn_off
+        data:
+          entity_id: light.bathroom
+          transition: 2
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.bedtime_emily

@@ -1,7 +1,7 @@
   - platform: linksys_smart
     host: !secret router_ip
     new_device_defaults:
-      track_new_devices: false
+      track_new_devices: true
 
 #  - platform: hue
 #    new_device_defaults:

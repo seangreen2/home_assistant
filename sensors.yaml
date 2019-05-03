@@ -13,7 +13,7 @@
     sensors:
       bathroom_battery:
         friendly_name: 'Battery'
-        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.battery}}'
+        value_template: '{{states.binary_sensor.bathroom_sensor_motion.attributes.battery_level}}'
         unit_of_measurement: '%'
 
   - platform: template
@@ -24,7 +24,7 @@
           - sensor.bathroom_temperature
         unit_of_measurement: °F
         value_template: >
-          {{ ((float(states('sensor.bathroom_temperature')) * 1.8) + 32) | round(1) }}
+          {{ (float(states('sensor.bathroom_sensor_temperature'))) | round(1) }}
 
   - platform: template
     sensors:
@@ -55,7 +55,7 @@
     sensors:
       office_battery:
         friendly_name: 'Battery'
-        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.battery}}'
+        value_template: '{{states.binary_sensor.office_motion_sensor_motion.attributes.battery_level}}'
         unit_of_measurement: '%'
 
   - platform: template
@@ -66,13 +66,14 @@
           - sensor.office_temperature
         unit_of_measurement: °F
         value_template: >
-          {{ ((float(states('sensor.office_temperature')) * 9 / 5) + 32) | round(1) }}
+          {{ (float(states('sensor.office_motion_sensor_temperature'))) | round(1) }}
 
   - platform: template
     sensors:
       office_lux:
         friendly_name: 'Lux'
-        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.lx}}'
+        value_template: >
+          {{ (float(states('sensor.office_motion_sensor_light_level'))) | round(1) }}
         unit_of_measurement: lx
 
   - platform: template
@@ -250,9 +251,9 @@
 #    ip_address: !secret hue_ip
 #    token: !secret hue_token
 
-  - platform: huesensor
-    ip_address: !secret hue_ip
-    token: !secret hue_token
+#  - platform: huesensor
+#    ip_address: !secret hue_ip
+#    token: !secret hue_token
 
   - platform: waze_travel_time
     origin: !secret travel_origin
