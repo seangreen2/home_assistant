@@ -24,10 +24,10 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 ## Equipment
 - Home Assistant using Lubuntu on a VM
 - Hue Bridge
-  - 10 A19 soft white bulbs
+  - 11 A19 soft white bulbs
   - 2 Hue Motion Sensors
 - Xiaomi Gateway
-  - 2 Xiaomi Motion Sensors
+  - 3 Xiaomi Motion Sensors
   - Window/Door Sensor
   - Temperature and Humidity Sensor
 - Nest Thermostat (Gen 2)
@@ -35,19 +35,23 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 - 2 Chromecasts (Gen 1 and Gen 2)
 - 3 Google Home Minis
 - 3 TP Link Smart Plugs (HS 100)
+- 2 TP Link Smart Switches (HS 200)
 - Wemo Mini Smart Plug
 - Neato Botvac D3 Connected
 - PiHole (Raspberry Pi Gen 1B)
 - Plex Server
 
 #### Custom Components
-- To use the Hue Motion Sensors in Home Assistant I used https://github.com/robmarkcole/Hue-sensors-HASS
-- For the Mini Graph Cards: https://github.com/kalkih/mini-graph-card
-- For the Mini Media Player Cards: https://github.com/kalkih/mini-media-player
+- Mini Graph Cards: https://github.com/kalkih/mini-graph-card
+- Mini Media Player Cards: https://github.com/kalkih/mini-media-player
+- Simple Weather Card: https://github.com/kalkih/simple-weather-card
+- Simple Thermostat Card: https://github.com/nervetattoo/simple-thermostat
+- Bar Cards: https://github.com/custom-cards/bar-card
+
 
 ## Dashboard (Now with Lovelace!)
-![1](https://i.imgur.com/5rnBwJU.jpg)
+![1](https://i.imgur.com/ulYJdq1.jpg)
 ![2](https://i.imgur.com/36i4Unq.jpg)
-![3](https://i.imgur.com/CZrFPsz.jpg)
+![3](https://i.imgur.com/QCODzIW.jpg)
 ![4](https://i.imgur.com/KzXU1cL.jpg)
-![5](https://i.imgur.com/wvB9JgS.jpg)
+![5](https://i.imgur.com/8dpqaTG.jpg)
