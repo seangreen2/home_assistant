@@ -51,7 +51,7 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 
 ## Dashboard (Now with Lovelace!)
 ![1](https://i.imgur.com/ulYJdq1.jpg)
-![2](https://i.imgur.com/36i4Unq.jpg)
+![2](https://i.imgur.com/WZpvUJY.jpg)
 ![3](https://i.imgur.com/QCODzIW.jpg)
 ![4](https://i.imgur.com/KzXU1cL.jpg)
 ![5](https://i.imgur.com/8dpqaTG.jpg)
