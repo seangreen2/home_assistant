@@ -26,6 +26,7 @@ sean:
     - device_tracker.192_168_1_131_3c_28_6d_29_fe_2c
     - device_tracker.192_168_1_146_3c_28_6d_29_fe_2c
     - device_tracker.google_maps_117703622599905742645
+    - device_tracker.sean_pixel3 #owntracks
 
 emily:
   name: Emily
@@ -36,6 +37,7 @@ emily:
     - device_tracker.192_168_1_131_3c_28_6d_23_86_17
     - device_tracker.192_168_1_146_3c_28_6d_23_86_17
     - device_tracker.google_maps_104320808194225996474
+    - device_tracker.emily_pixel3 #owntracks
 
 gtracker:
   name: Google Tracker

@@ -4,3 +4,4 @@ known_devices.yaml
 custom_components
 www
 groups.yaml
+plex.conf

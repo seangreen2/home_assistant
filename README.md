@@ -22,7 +22,7 @@ So far this has been incredibly accurate with the automations taking roughly ten
 Using a fantastic Android app called [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en_US), whenever we plug in our phones to charge at night, a script is triggered to turn off all the lights and disable the automation that turns on the bedroom motion sensor. When unplugging our phones in the morning, another script is triggered to turn the automations back on. Before Tasker we used to use voice commands to accomplish this, but this is far more elegant and was surprisingly simple to accomplish.
 
 ## Equipment
-- Home Assistant using Lubuntu on a VM
+- Home Assistant on a DietPi VM
 - Hue Bridge
   - 11 A19 soft white bulbs
   - 2 Hue Motion Sensors

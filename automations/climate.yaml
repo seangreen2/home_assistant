@@ -53,7 +53,7 @@
          before: '22:00:00'
        - condition: numeric_state
          entity_id: sensor.living_room_thermostat_temperature
-         above: '73'
+         above: '72'
        - condition: numeric_state
          entity_id: sensor.living_room_thermostat_humidity
          above: '55'

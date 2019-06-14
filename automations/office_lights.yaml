@@ -101,8 +101,6 @@
         data:
           entity_id: light.office
           transition: 2
-      - service: switch.turn_off
-        entity_id: switch.office_fan
 
 # Turn off Office lights above lux
   - alias: Turn off office lights above lux

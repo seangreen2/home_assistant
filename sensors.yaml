@@ -21,7 +21,7 @@
       bathroom_temperature_f:
         friendly_name: 'Bathroom'
         entity_id:
-          - sensor.bathroom_temperature
+          - sensor.bathroom_sensor_temperature
         unit_of_measurement: °F
         value_template: >
           {{ (float(states('sensor.bathroom_sensor_temperature'))) | round(1) }}
@@ -63,7 +63,7 @@
       office_temperature_f:
         friendly_name: 'Office Temperature'
         entity_id:
-          - sensor.office_temperature
+          - sensor.office_motion_sensor_temperature
         unit_of_measurement: °F
         value_template: >
           {{ (float(states('sensor.office_motion_sensor_temperature'))) | round(1) }}

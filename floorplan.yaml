@@ -1,0 +1,136 @@
+      name: Floor Plan
+      image: /local/custom_ui/floorplan/floorplan.svg
+      stylesheet: /local/custom_ui/floorplan/floorplan.css
+
+      # These options are optional
+      warnings:                  # enable warnings (to find out why things might ot be working correctly)
+      #pan_zoom:                  # enable experimental panning / zooming
+      #hide_app_toolbar:          # hide the application toolbar (when used as a custom panel)
+      date_format: MMM-DD-YYYY   # Date format to use in hover-over text
+
+      last_motion_entity: sensor.template_last_motion
+      last_motion_class: last-motion
+
+      groups:
+
+        - name: Sensors
+          entities:
+             - sensor.living_room_thermostat_temperature
+             - sensor.office_temperature_f
+             - sensor.bedroom_temperature_f
+          text_template: '${entity.state ? Math.ceil(entity.state) + "°"  : "unknown"}'
+          class_template: '
+            var temp  = parseFloat(entity.state);
+            if (temp < 70)
+              return "temp-low";
+            else if (temp < 80)
+              return "temp-medium";
+            else
+              return "temp-high";
+            '
+
+        - name: Family
+          entities:
+            - group.sean
+            - group.emily
+          states:
+            - state: 'home'
+              class: 'home-on'
+            - state: 'away'
+              class: 'home-off'
+
+        - name: Motion
+          entities:
+            - sensor.bathroom_motion_sensor
+            - sensor.office_motion_motion_sensor
+          states:
+            - state: 'on'
+              class: 'motion-on'
+            - state: 'off'
+              class: 'motion-off'
+
+        - name: Lights
+          entities:
+            - light.of1
+            - light.of2
+            - light.lr1
+            - light.br1
+            - light.br2
+            - light.brcl1
+          states:
+            - state: 'on'
+              class: 'light-on'
+            - state: 'off'
+              class: 'light-off'
+          action:
+            domain: homeassistant
+            service: toggle
+
+        - name: Vacuum
+          entities:
+            - vacuum.rosie
+          states:
+            - state: 'on'
+              class: 'vacuum-on'
+            - state: 'off'
+              class: 'vacuum-off'
+          action:
+            domain: homeassistant
+            service: toggle
+
+        - name: Fans
+          entities:
+            - switch.office_fan
+          states:
+            - state: 'on'
+              class: 'fan-on'
+            - state: 'off'
+              class: 'fan-off'
+          action:
+            domain: homeassistant
+            service: toggle
+
+        - name: Media
+          entities:
+            - media_player.bedroom_speaker
+            - media_player.living_room_speaker
+            - media_player.office_speaker
+          states:
+            - state: 'playing'
+              class: 'media-on'
+            - state: 'off'
+              class: 'media-off'
+
+        - name: Humidity
+          entities:
+            - sensor.living_room_thermostat_humidity
+          text_template: '${entity.state ? (entity.state) : "unknown"}'
+
+        - name: Thermostat
+          entities:
+            - sensor.living_room_thermostat_hvac_state
+            - climate.living_room
+#          text_template: '${entity.state ? (entity.state) : "unknown"}'
+          text_template: '${entity.attributes.current_temperature ? entity.attributes.current_temperature : "undefined"}'
+
+          states:
+            - state: 'cooling'
+              class: 'temp-cooling'
+            - state: 'heating'
+              class: 'temp-heating'
+            - state: 'off'
+              class: 'temp-off'
+#          action:
+#            domain: homeassistant
+#            service: toggle
+
+# The above text_template uses extended attributes from the climate.* objects to get current temperature.
+
+#        - name: text_states
+#          entities:
+#            - sensor.downstairs_thermostat_humidity
+#            - sensor.dark_sky_temperature
+#            - sensor.last_message
+#          text_template: '${entity.state ? entity.state.replace(/\s{2,}/g,"") : "undefined"}'
+#
+# The above text_template uses jQuery syntax to search and replace any instance of 2 consecutive (or more) spaces in a string of text.

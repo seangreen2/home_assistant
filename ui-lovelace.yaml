@@ -467,7 +467,7 @@ views:
                 title_position: inside
                 align: split
                 show_icon: true
-                max: '1000000'
+                max: '2000000'
                 icon: mdi:cancel
 
   - path: room
