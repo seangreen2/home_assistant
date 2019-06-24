@@ -99,6 +99,8 @@ binary_sensor.office_motion:
   icon: mdi:run-fast
 binary_sensor.bathroom_motion:
   icon: mdi:run-fast
+binary_sensor.motion_sensor_158d00031b4c8a:
+  icon: mdi:run-fast
 sensor.illumination_158d000237a64a:
   friendly_name: Bedroom Lux
 sensor.temperature_158d0002478a21:

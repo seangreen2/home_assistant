@@ -117,13 +117,16 @@
     entity_id: binary_sensor.bathroom_sensor_motion
     to: 'off'
     for:
-      minutes: 6
+      minutes: 3
   condition:
     - condition: time
       after: '04:20:01'
       before: '21:00:00'
     - condition: state
       entity_id: binary_sensor.bathroom_sensor_motion
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.motion_sensor_158d00031b4c8a
       state: 'off'
   action:
     service: light.turn_off

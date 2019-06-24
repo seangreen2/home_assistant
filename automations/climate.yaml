@@ -6,7 +6,7 @@
      entity_id: binary_sensor.door_window_sensor_158d00023eb0bb
      to: 'on'
      for:
-       seconds: '30'
+       seconds: '120'
    action:
      - service: climate.set_operation_mode
        data:
@@ -56,39 +56,70 @@
          above: '72'
        - condition: numeric_state
          entity_id: sensor.living_room_thermostat_humidity
-         above: '55'
+         above: '54'
    action:
      - service: switch.turn_on
        entity_id:  switch.living_room_fan
 
-# Change Nest to Seaonal Mode
-# - alias: Nest Seasonal Tracker
-#   initial_state: 'on'
-#   trigger:
-#     platform: time_pattern
-#     hours: '/1'
-#     minutes: '05'
-#   condition:
-#     condition: and
-#     conditions:
-#       - condition: state
-#         entity_id: group.family
-#         state: 'home'
-#       - condition: time
-#         after: '07:00:00'
-#         before: '22:00:00'
-#   action:
-#     - service: climate.set_operation_mode
-#       data_template:
-#         entity_id: climate.living_room
-#         operation_mode: >
-#           {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
-#             cool
-#           {% elif states('sensor.season') == 'fall' %}
-#             auto
-#           {% else %}
-#             heat
-#           {% endif %}
+# Turn off bedroom fan under certain conditions
+ - alias: Turn off Bedroom Fan
+   initial_state: 'on'
+   trigger:
+     platform: time_pattern
+     minutes: '10'
+     seconds: '00'
+   condition:
+     condition: and
+     conditions:
+       - condition: state
+         entity_id: group.family
+         state: 'home'
+       - condition: time
+         after: '09:00:00'
+         before: '19:00:00'
+       - condition: state
+         entity_id: binary_sensor.motion_sensor_158d000237a64a
+         state: 'off'
+       - condition: template
+         value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+       - condition: template
+         value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+       - condition: template
+         value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
+   action:
+     - service: switch.turn_off
+       entity_id:  switch.bedroom_fan
+
+
+# Turn off living room fan under certain conditions
+ - alias: Turn off Living Room Fan
+   initial_state: 'on'
+   trigger:
+     platform: time_pattern
+     minutes: '10'
+     seconds: '00'
+   condition:
+     condition: and
+     conditions:
+       - condition: state
+         entity_id: group.family
+         state: 'home'
+       - condition: state
+         entity_id: binary_sensor.motion_sensor_158d0002047afe
+         state: 'off'
+       - condition: template
+         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+       - condition: template
+         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+       - condition: numeric_state
+         entity_id: sensor.living_room_thermostat_temperature
+         below: '74'
+       - condition: numeric_state
+         entity_id: sensor.living_room_thermostat_humidity
+         below: '54'
+   action:
+     - service: switch.turn_off
+       entity_id:  switch.living_room_fan
 
 # Temp goes down to 66 when Sean only at home (winter)
  - alias: 'Sean Winter Preferences'

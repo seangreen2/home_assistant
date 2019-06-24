@@ -5,12 +5,7 @@
       - platform: state
         entity_id: binary_sensor.office_motion_sensor_motion
         to: 'on'
-#      - platform: state
-#        entity_id: sun.sun
     condition:
-      - condition: numeric_state
-        entity_id: sensor.office_lux
-        below: '9'
       - condition: state
         entity_id: group.family
         state: 'home'
@@ -103,18 +98,18 @@
           transition: 2
 
 # Turn off Office lights above lux
-  - alias: Turn off office lights above lux
-    initial_state: 'on'
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.office_lux
-      above: 31
-    condition:
-      - condition: time
-        after: '06:00:00'
-        before: '20:00:00'
-    action:
-      service: light.turn_off
-      data:
-        entity_id: light.office
-        transition: 2
+#  - alias: Turn off office lights above lux
+#    initial_state: 'on'
+#    trigger:
+#      platform: numeric_state
+#      entity_id: sensor.office_lux
+#      above: 31
+#    condition:
+#      - condition: time
+#        after: '06:00:00'
+#        before: '20:00:00'
+#    action:
+#      service: light.turn_off
+#      data:
+#        entity_id: light.office
+#        transition: 2

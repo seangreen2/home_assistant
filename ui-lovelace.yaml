@@ -21,18 +21,6 @@ views:
     icon: 'mdi:home'
     badges: []
     cards:
-#      - type: 'custom:compact-custom-header'
-  #      main_config: true
-#        disable: true
-#        exceptions:
-#          - conditions:
-#              user_agent: Mobile
-#            config:
-#              disable: false
-#              menu: show
-#              options: show
-#              notifications: show
-#              clock_format: 12
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -197,7 +185,6 @@ views:
     icon: 'mdi:sofa'
     badges: []
     cards:
-      - type: 'custom:compact-custom-header'
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -259,7 +246,6 @@ views:
     icon: 'mdi:hotel'
     badges: []
     cards:
-      - type: 'custom:compact-custom-header'
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -297,24 +283,31 @@ views:
                   action: toggle
               - type: glance
                 entities:
+                  - sensor.bathroom_battery
+          - type: horizontal-stack
+            cards:
+              - type: glance
+                entities:
                   - binary_sensor.motion_sensor_158d000237a64a
                   - binary_sensor.bathroom_motion
-                  - sensor.bathroom_battery
-      - type: custom:mini-media-player
-        entity: media_player.bedroom_tv
-        icon: mdi:television
-        artwork: cover
-      - type: custom:mini-media-player
-        entity: media_player.bedroom_speaker
-        icon: mdi:google-home
-        artwork: cover
-        show_tts: google
+                  - binary_sensor.motion_sensor_158d00031b4c8a
+      - type: vertical-stack
+        cards:
+          - type: custom:mini-media-player
+            entity: media_player.bedroom_tv
+            icon: mdi:television
+            artwork: cover
+          - type: custom:mini-media-player
+            entity: media_player.bedroom_speaker
+            icon: mdi:google-home
+            artwork: cover
+            show_tts: google
+
   - path: office
     title: Office
     icon: 'mdi:keyboard'
     badges: []
     cards:
-      - type: 'custom:compact-custom-header'
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -503,7 +496,6 @@ views:
     icon: 'mdi:creation'
     badges: []
     cards:
-      - type: 'custom:compact-custom-header'
       - title: Home Automations
         type: entities
         entities:
@@ -513,6 +505,7 @@ views:
           - automation.turn_on_air_fresh
           - automation.outside_lights_on_at_sunset
           - automation.outside_lights_off_at_ten
+          - automation.reset_volume_on_speakers
         show_header_toggle: true
       - title: Room Presence
         type: entities
@@ -544,6 +537,7 @@ views:
           - automation.turn_off_living_room_lights_above_lux
           - automation.door_closed_turn_on_nest
           - automation.door_open_turn_off_nest
+          - automation.turn_off_living_room_fan
         show_header_toggle: true
       - title: Bedroom Automations
         type: entities
@@ -556,6 +550,7 @@ views:
           - automation.bathroom_lights_on_motion_early_morning
           - automation.bathroom_lights_off_no_motion
           - automation.bathroom_lights_off_no_motion_night
+          - automation.turn_off_bedroom_fan
         show_header_toggle: true
       - title: Office Automations
         type: entities

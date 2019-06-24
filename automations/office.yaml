@@ -35,7 +35,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.office_temperature_f
-      below: '69'
+      below: '68'
     action:
       service: switch.turn_off
       entity_id: switch.office_fan
