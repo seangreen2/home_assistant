@@ -137,3 +137,15 @@ sensor.emily_phone_battery:
   device_class: battery
 sensor.bedroom_humidity:
   device_class: humidity
+sensor.count_automations:
+  icon: mdi:robot
+sensor.count_binary_sensors:
+  icon: mdi:contrast-circle
+sensor.count_lights:
+  icon: mdi:lightbulb-on
+sensor.count_scripts:
+  icon: mdi:script-text
+sensor.count_sensors:
+  icon: mdi:developer-board
+sensor.count_switches:
+  icon: mdi:light-switch

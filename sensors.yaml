@@ -96,7 +96,7 @@
           {% if is_state("device_tracker.192_168_1_131_3c_28_6d_29_fe_2c", "home") %}
             {{state_attr('device_tracker.192_168_1_131_3c_28_6d_29_fe_2c', 'rssi')}}
           {% else %}
-            -100
+            -99
           {% endif %}
 
   - platform: template
@@ -106,7 +106,7 @@
           {% if is_state("device_tracker.192_168_1_130_3c_28_6d_29_fe_2c", "home") %}
             {{state_attr('device_tracker.192_168_1_130_3c_28_6d_29_fe_2c', 'rssi')}}
           {% else %}
-            -100
+            -99
           {% endif %}
 
   - platform: template
@@ -116,7 +116,7 @@
           {% if is_state("device_tracker.192_168_1_146_3c_28_6d_29_fe_2c", "home") %}
             {{state_attr('device_tracker.192_168_1_146_3c_28_6d_29_fe_2c', 'rssi')}}
           {% else %}
-            -100
+            -99
           {% endif %}
 
   - platform: template
@@ -146,7 +146,7 @@
           {% if is_state("device_tracker.192_168_1_131_3c_28_6d_23_86_17", "home") %}
             {{state_attr('device_tracker.192_168_1_131_3c_28_6d_23_86_17', 'rssi')}}
           {% else %}
-            -100
+            -99
           {% endif %}
 
   - platform: template
@@ -156,7 +156,7 @@
           {% if is_state("device_tracker.192_168_1_130_3c_28_6d_23_86_17", "home") %}
             {{state_attr('device_tracker.192_168_1_130_3c_28_6d_23_86_17', 'rssi')}}
           {% else %}
-            -100
+            -99
           {% endif %}
 
   - platform: template
@@ -166,7 +166,7 @@
           {% if is_state("device_tracker.192_168_1_146_3c_28_6d_23_86_17", "home") %}
             {{state_attr('device_tracker.192_168_1_146_3c_28_6d_23_86_17', 'rssi')}}
           {% else %}
-            -100
+            -99
           {% endif %}
 
   - platform: template
@@ -202,6 +202,93 @@
         friendly_name: 'Emily Phone Battery'
         value_template: '{{states.device_tracker.emily_pixel3.attributes.battery_level}}'
         unit_of_measurement: '%'
+
+  - platform: template
+    sensors:
+
+    #----- Count Automations
+      count_automations:
+        entity_id: sensor.date
+        friendly_name: Automations
+        value_template: >
+          {%- set domains = ['automation'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count Scripts
+      count_scripts:
+        entity_id: sensor.date
+        friendly_name: Scripts
+        value_template: >
+          {%- set domains = ['script'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count Binary Sensors
+      count_binary_sensors:
+        entity_id: sensor.date
+        friendly_name: Binary Sensors
+        value_template: >
+          {%- set domains = ['binary_sensor'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count Sensors
+      count_sensors:
+        entity_id: sensor.date
+        friendly_name: Sensors
+        value_template: >
+          {%- set domains = ['sensor'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count Switches
+      count_switches:
+        entity_id: sensor.date
+        friendly_name: Switches
+        value_template: >
+          {%- set domains = ['switch'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
+
+    #----- Count Lights
+      count_lights:
+        entity_id: sensor.date
+        friendly_name: Lights
+        value_template: >
+          {%- set domains = ['light'] -%}
+          {%- for domain in domains -%}
+            {%- for item in states[domain] -%}
+              {% if loop.first %}
+                {{loop.length}}
+              {% endif %}
+            {%- endfor -%}
+          {%- endfor -%}
 
   - platform: darksky
     api_key: !secret dark_sky_api_key

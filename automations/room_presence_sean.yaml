@@ -2,23 +2,16 @@
 - alias: Sean in Living Room
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: sensor.livingroom_sean_gh_rssi
+    - platform: state
+      entity_id: sensor.livingroom_sean_gh_rssi
   condition:
-    condition: and
-    conditions:
-    - condition: template
-      value_template: "{{ ( states.sensor.office_sean_gh_rssi.state ) > ( states.sensor.livingroom_sean_gh_rssi.state )  }}"
-    - condition: template
-      value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.livingroom_sean_gh_rssi.state )  }}"
-  action:
-    - delay: '00:00:05'
     - condition: and
       conditions:
-      - condition: template
-        value_template: "{{ ( states.sensor.office_sean_gh_rssi.state ) > ( states.sensor.livingroom_sean_gh_rssi.state )  }}"
-      - condition: template
-        value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.livingroom_sean_gh_rssi.state )  }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.office_sean_gh_rssi.state ) > ( states.sensor.livingroom_sean_gh_rssi.state ) }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.livingroom_sean_gh_rssi.state ) }}"
+  action:
     - service: input_boolean.turn_on
       data:
         entity_id: input_boolean.sean_living_room_presence
@@ -37,23 +30,16 @@
 - alias: Sean in Office
   initial_state: 'on'
   trigger:
-  - platform: state
-    entity_id: sensor.office_sean_gh_rssi
+    - platform: state
+      entity_id: sensor.office_sean_gh_rssi
   condition:
-    condition: and
-    conditions:
-    - condition: template
-      value_template: "{{ ( states.sensor.livingroom_sean_gh_rssi.state ) > ( states.sensor.office_sean_gh_rssi.state  )  }}"
-    - condition: template
-      value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.office_sean_gh_rssi.state )  }}"
-  action:
-    - delay: '00:00:05'
     - condition: and
       conditions:
-      - condition: template
-        value_template: "{{ ( states.sensor.livingroom_sean_gh_rssi.state ) > ( states.sensor.office_sean_gh_rssi.state  )  }}"
-      - condition: template
-        value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.office_sean_gh_rssi.state )  }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.livingroom_sean_gh_rssi.state ) > ( states.sensor.office_sean_gh_rssi.state  ) }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.bedroom_sean_gh_rssi.state ) > ( states.sensor.office_sean_gh_rssi.state ) }}"
+  action:
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.sean_living_room_presence
@@ -72,23 +58,16 @@
 - alias: Sean in Bedroom
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: sensor.bedroom_sean_gh_rssi
+    - platform: state
+      entity_id: sensor.bedroom_sean_gh_rssi
   condition:
-    condition: and
-    conditions:
-    - condition: template
-      value_template: "{{ ( states.sensor.livingroom_sean_gh_rssi.state ) > ( states.sensor.bedroom_sean_gh_rssi.state )  }}"
-    - condition: template
-      value_template: "{{ ( states.sensor.office_sean_gh_rssi.state ) > ( states.sensor.bedroom_sean_gh_rssi.state )  }}"
-  action:
-    - delay: '00:00:05'
     - condition: and
       conditions:
-      - condition: template
-        value_template: "{{ ( states.sensor.livingroom_sean_gh_rssi.state ) > ( states.sensor.bedroom_sean_gh_rssi.state )  }}"
-      - condition: template
-        value_template: "{{ ( states.sensor.office_sean_gh_rssi.state ) > ( states.sensor.bedroom_sean_gh_rssi.state )  }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.livingroom_sean_gh_rssi.state ) > ( states.sensor.bedroom_sean_gh_rssi.state ) }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.office_sean_gh_rssi.state ) > ( states.sensor.bedroom_sean_gh_rssi.state ) }}"
+  action:
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.sean_living_room_presence
@@ -107,9 +86,9 @@
 - alias: 'Sean is Away'
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: device_tracker.sean_phone
-    to: 'not_home'
+    - platform: state
+      entity_id: device_tracker.sean_phone
+      to: 'not_home'
   action:
     - service: input_select.select_option
       data:
@@ -129,9 +108,9 @@
 - alias: 'Sean is Home'
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: device_tracker.sean_phone
-    to: 'home'
+    - platform: state
+      entity_id: device_tracker.sean_phone
+      to: 'home'
   action:
     - service: input_select.select_option
       data:

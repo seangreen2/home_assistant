@@ -391,6 +391,13 @@ views:
                 title_position: inside
                 align: split
                 show_icon: true
+              - type: glance
+                entities:
+                  - sensor.count_automations
+                  - sensor.count_lights
+                  - sensor.count_scripts
+                  - sensor.count_sensors
+                  - sensor.count_switches
               - type: entities
                 entities:
                   - sensor.last_boot
@@ -493,7 +500,7 @@ views:
 
   - path: auto
     title: Automations
-    icon: 'mdi:creation'
+    icon: 'mdi:robot'
     badges: []
     cards:
       - title: Home Automations
@@ -534,7 +541,7 @@ views:
           - automation.living_room_auto_brightness
           - automation.living_room_auto_brightness_transition
           - automation.living_room_lights_off_no_motion
-          - automation.turn_off_living_room_lights_above_lux
+          - automation.living_room_lights_off_no_motion_night
           - automation.door_closed_turn_on_nest
           - automation.door_open_turn_off_nest
           - automation.turn_off_living_room_fan
@@ -559,7 +566,6 @@ views:
           - automation.office_auto_brightness_transition
           - automation.turn_on_fan_above_certain_temp
           - automation.turn_off_fan_below_certain_temp
-          - automation.turn_off_office_lights_above_lux
           - automation.turn_office_lights_without_motion_one_min
         show_header_toggle: true
       - title: Media Automations

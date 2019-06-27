@@ -2,11 +2,8 @@
   - alias: Outside lights on at sunset
     initial_state: 'on'
     trigger:
-      platform: numeric_state
-      entity_id: sun.sun
-      value_template: "{{ state.attributes.elevation }}"
-      # Can be a positive or negative number
-      below: 7.0
+      platform: sun
+      event: sunset
     action:
       service: homeassistant.turn_on
       entity_id: switch.outside_lights

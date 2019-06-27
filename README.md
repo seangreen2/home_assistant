@@ -50,7 +50,7 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 
 
 ## Dashboard
-![1](https://i.imgur.com/ulYJdq1.jpg)
+![1](https://i.imgur.com/e1VCcdB.jpg)
 ![2](https://i.imgur.com/WZpvUJY.jpg)
 ![3](https://i.imgur.com/QCODzIW.jpg)
 ![4](https://i.imgur.com/KzXU1cL.jpg)

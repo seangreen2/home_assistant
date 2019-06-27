@@ -1,24 +1,17 @@
-# Emily is in the living Room using Google Home BT tracking
-- alias: Emily in Living Room
+# emily is in the living Room using Google Home BT tracking
+- alias: emily in Living Room
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: sensor.livingroom_emily_gh_rssi
+    - platform: state
+      entity_id: sensor.livingroom_emily_gh_rssi
   condition:
-    condition: and
-    conditions:
-    - condition: template
-      value_template: "{{ ( states.sensor.office_emily_gh_rssi.state ) > ( states.sensor.livingroom_emily_gh_rssi.state )  }}"
-    - condition: template
-      value_template: "{{ ( states.sensor.bedroom_emily_gh_rssi.state ) > ( states.sensor.livingroom_emily_gh_rssi.state )  }}"
-  action:
-    - delay: '00:00:15'
     - condition: and
       conditions:
-      - condition: template
-        value_template: "{{ ( states.sensor.office_emily_gh_rssi.state ) > ( states.sensor.livingroom_emily_gh_rssi.state )  }}"
-      - condition: template
-        value_template: "{{ ( states.sensor.bedroom_emily_gh_rssi.state ) > ( states.sensor.livingroom_emily_gh_rssi.state )  }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.office_emily_gh_rssi.state ) > ( states.sensor.livingroom_emily_gh_rssi.state ) }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.bedroom_emily_gh_rssi.state ) > ( states.sensor.livingroom_emily_gh_rssi.state ) }}"
+  action:
     - service: input_boolean.turn_on
       data:
         entity_id: input_boolean.emily_living_room_presence
@@ -33,27 +26,20 @@
         entity_id: input_select.emily_room_location
         option: Living Room
 
-# Emily is in the Office using Google Home BT tracking
-- alias: Emily in Office
+# emily is in the Office using Google Home BT tracking
+- alias: emily in Office
   initial_state: 'on'
   trigger:
-  - platform: state
-    entity_id: sensor.office_emily_gh_rssi
+    - platform: state
+      entity_id: sensor.office_emily_gh_rssi
   condition:
-    condition: and
-    conditions:
-    - condition: template
-      value_template: "{{ ( states.sensor.livingroom_emily_gh_rssi.state ) > ( states.sensor.office_emily_gh_rssi.state  )  }}"
-    - condition: template
-      value_template: "{{ ( states.sensor.bedroom_emily_gh_rssi.state ) > ( states.sensor.office_emily_gh_rssi.state )  }}"
-  action:
-    - delay: '00:00:15'
     - condition: and
       conditions:
-      - condition: template
-        value_template: "{{ ( states.sensor.livingroom_emily_gh_rssi.state ) > ( states.sensor.office_emily_gh_rssi.state  )  }}"
-      - condition: template
-        value_template: "{{ ( states.sensor.bedroom_emily_gh_rssi.state ) > ( states.sensor.office_emily_gh_rssi.state )  }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.livingroom_emily_gh_rssi.state ) > ( states.sensor.office_emily_gh_rssi.state  ) }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.bedroom_emily_gh_rssi.state ) > ( states.sensor.office_emily_gh_rssi.state ) }}"
+  action:
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.emily_living_room_presence
@@ -68,27 +54,20 @@
         entity_id: input_select.emily_room_location
         option: Office
 
-# Emily is in the bedroom using Google Home BT tracking
-- alias: Emily in Bedroom
+# emily is in the bedroom using Google Home BT tracking
+- alias: emily in Bedroom
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: sensor.bedroom_emily_gh_rssi
+    - platform: state
+      entity_id: sensor.bedroom_emily_gh_rssi
   condition:
-    condition: and
-    conditions:
-    - condition: template
-      value_template: "{{ ( states.sensor.livingroom_emily_gh_rssi.state ) > ( states.sensor.bedroom_emily_gh_rssi.state )  }}"
-    - condition: template
-      value_template: "{{ ( states.sensor.office_emily_gh_rssi.state ) > ( states.sensor.bedroom_emily_gh_rssi.state )  }}"
-  action:
-    - delay: '00:00:15'
     - condition: and
       conditions:
-      - condition: template
-        value_template: "{{ ( states.sensor.livingroom_emily_gh_rssi.state ) > ( states.sensor.bedroom_emily_gh_rssi.state )  }}"
-      - condition: template
-        value_template: "{{ ( states.sensor.office_emily_gh_rssi.state ) > ( states.sensor.bedroom_emily_gh_rssi.state )  }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.livingroom_emily_gh_rssi.state ) > ( states.sensor.bedroom_emily_gh_rssi.state ) }}"
+        - condition: template
+          value_template: "{{ ( states.sensor.office_emily_gh_rssi.state ) > ( states.sensor.bedroom_emily_gh_rssi.state ) }}"
+  action:
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.emily_living_room_presence
@@ -103,13 +82,13 @@
         entity_id: input_select.emily_room_location
         option: Bedroom
 
-# Emily is away from the house
-- alias: 'Emily is Away'
+# emily is away from the house
+- alias: 'emily is Away'
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: device_tracker.emily_phone
-    to: 'not_home'
+    - platform: state
+      entity_id: device_tracker.emily_phone
+      to: 'not_home'
   action:
     - service: input_select.select_option
       data:
@@ -125,13 +104,13 @@
       data:
         entity_id: input_boolean.emily_office_presence
 
-# Emily is now home and BT is unknown
-- alias: 'Emily is Home'
+# emily is now home and BT is unknown
+- alias: 'emily is Home'
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: device_tracker.emily_phone
-    to: 'home'
+    - platform: state
+      entity_id: device_tracker.emily_phone
+      to: 'home'
   action:
     - service: input_select.select_option
       data:
