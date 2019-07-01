@@ -4,7 +4,7 @@ You shouldn't have to work the room, the room should work you. True home automat
 
 Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
 
-<a href="https://www.buymeacoffee.com/gi2L3VGSo" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+[<img src="https://i.imgur.com/j7pTcmh.png">](https://www.buymeacoffee.com/gi2L3VGSo)
 
 ## Notable Automations [(Wiki)](https://github.com/seangreen2/home_assistant/wiki)
 ### [Media](https://github.com/seangreen2/home_assistant/blob/master/automations/media_living_room.yaml)
