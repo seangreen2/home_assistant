@@ -96,7 +96,7 @@
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '10'
+     minutes: '20'
      seconds: '00'
    condition:
      condition: and

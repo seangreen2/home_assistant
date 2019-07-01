@@ -4,6 +4,8 @@ You shouldn't have to work the room, the room should work you. True home automat
 
 Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
 
+[<img src="https://i.imgur.com/j7pTcmh.png">](https://www.buymeacoffee.com/gi2L3VGSo)
+
 ## Notable Automations [(Wiki)](https://github.com/seangreen2/home_assistant/wiki)
 ### [Media](https://github.com/seangreen2/home_assistant/blob/master/automations/media_living_room.yaml)
 While these are simple automations, they do have some “wow” factor to them. Whenever watching any media on Plex after 5:00 p.m., the lights will automatically turn off until either paused or stopped. When paused, the lights will slowly brighten to 25% brightness. When media is stopped, the lights will slowly brighten to either 100% or to another brightness depending on the time of day. The later in the evening, the dimmer the lights will brighten to.

@@ -60,8 +60,7 @@
   initial_state: 'on'
   trigger:
     platform: time_pattern
-    minutes: '/3'
-    seconds: 00
+    minutes: '/20'
   condition:
     - condition: state
       entity_id: input_boolean.sean_living_room_presence

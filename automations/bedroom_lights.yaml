@@ -62,7 +62,6 @@
   trigger:
     platform: time_pattern
     minutes: '/3'
-    seconds: 00
   condition:
     - condition: state
       entity_id: input_boolean.sean_bedroom_presence

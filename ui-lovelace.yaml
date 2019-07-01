@@ -513,6 +513,7 @@ views:
           - automation.outside_lights_on_at_sunset
           - automation.outside_lights_off_at_ten
           - automation.reset_volume_on_speakers
+          - automation.repeat_rain_audio
         show_header_toggle: true
       - title: Room Presence
         type: entities
@@ -566,6 +567,7 @@ views:
           - automation.office_auto_brightness_transition
           - automation.turn_on_fan_above_certain_temp
           - automation.turn_off_fan_below_certain_temp
+          - automation.turn_off_office_fan
           - automation.turn_office_lights_without_motion_one_min
         show_header_toggle: true
       - title: Media Automations

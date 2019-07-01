@@ -1,0 +1,37 @@
+# Set theme on HA start
+  - alias: Set theme at startup
+    initial_state: 'on'
+    trigger:
+     - platform: homeassistant
+       event: start
+    action:
+      service: frontend.set_theme
+      data:
+        name: slate
+
+# Reset volume on all Speakers
+  - alias: Reset volume on Speakers
+    trigger:
+      - platform: time
+        at: '10:00:00'
+    action:
+      - service: media_player.volume_set
+        data:
+          entity_id: media_player.living_room_speaker
+          volume_level: .65
+      - service: media_player.volume_set
+        data:
+          entity_id: media_player.office_speaker
+          volume_level: .45
+      - service: media_player.volume_set
+        data:
+          entity_id: media_player.bedroom_speaker
+          volume_level: .65
+
+# Restart HA at 4am
+#  - alias: "Restart HA at 4am"
+#    trigger:
+#      platform: time
+#      at: '04:00:00'
+#    action:
+#      service: homeassistant.restart

@@ -50,7 +50,6 @@
     trigger:
       platform: time_pattern
       minutes: '/3'
-      seconds: 00
     condition:
       - condition: state
         entity_id: input_boolean.sean_office_presence
@@ -59,7 +58,7 @@
         entity_id: input_boolean.emily_office_presence
         state: 'off'
       - condition: state
-        entity_id: sensor.office_motion_motion_sensor
+        entity_id: binary_sensor.office_motion_sensor_motion
         state: 'off'
       - condition: and
         conditions:
@@ -69,10 +68,16 @@
           - condition: template
             value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
     action:
-      service: light.turn_off
-      data:
-        entity_id: light.office
-        transition: 2
+      - service: light.turn_off
+        data:
+          entity_id: light.office
+          transition: 2
+      - delay:
+          seconds: '1'
+      - service: light.turn_off
+        data:
+          entity_id: light.office
+          transition: 2
 
 # Turn off Office Lights after one minute of no activity
 #  - alias: Turn office lights without motion one min
