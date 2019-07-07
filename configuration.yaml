@@ -30,6 +30,9 @@ proximity:
 
 cloud:
 
+hacs:
+  token: !secret hacs_token
+
 system_health:
 
 lovelace:
@@ -166,23 +169,23 @@ owntracks:
     work: work
 
 # Google Home
-#googlehome:
-#  devices:
+googlehome:
+  devices:
     # Office
-#    - host: 192.168.1.146
-#      rssi_threshold: -100
-#      track_devices: true
-#      device_types: 2
+    - host: 192.168.1.146
+      rssi_threshold: -100
+      track_devices: true
+      device_types: 2
     # Bedroom
-#    - host: 192.168.1.131
-#      rssi_threshold: -100
-#      track_devices: true
-#      device_types: 2
+    - host: 192.168.1.131
+      rssi_threshold: -100
+      track_devices: true
+      device_types: 2
     # Living Room
-#    - host: 192.168.1.130
-#      rssi_threshold: -100
-#      track_devices: true
-#      device_types: 2
+    - host: 192.168.1.130
+      rssi_threshold: -100
+      track_devices: true
+      device_types: 2
 
 speedtestdotnet:
   scan_interval:

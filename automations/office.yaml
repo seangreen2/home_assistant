@@ -57,12 +57,11 @@
           state: 'home'
         - condition: or
           conditions:
-            - condition: state
-              entity_id: 'sensor.steam_76561197976250572'
-              state: 'online'
             - condition: numeric_state
               entity_id: sensor.laptop_socket
-              above: 5
+              below: '3'
+            - condition: template
+              value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
     action:
       service: switch.turn_off
       entity_id: switch.office_fan
