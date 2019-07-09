@@ -7,6 +7,10 @@ homeassistant:
   time_zone: America/New_York
   customize: !include customize.yaml
   auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.1.0/24
+        - 127.0.0.1
     - type: legacy_api_password
       api_password: !secret api_password
 
@@ -41,13 +45,9 @@ lovelace:
 frontend:
   themes: !include themes.yaml
 
-# BEGIN CONFIG
 config:
 http:
   base_url: !secret base_url
-  trusted_networks:
-    - 192.168.1.0/24
-    - 127.0.0.1
 
 updater:
 

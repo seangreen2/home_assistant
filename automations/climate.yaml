@@ -72,8 +72,11 @@
      condition: and
      conditions:
        - condition: state
-         entity_id: group.family
-         state: 'home'
+         entity_id: input_boolean.sean_bedroom_presence
+         state: 'off'
+       - condition: state
+         entity_id: input_boolean.emily_bedroom_presence
+         state: 'off'
        - condition: time
          after: '09:00:00'
          before: '19:00:00'
@@ -90,20 +93,22 @@
      - service: switch.turn_off
        entity_id:  switch.bedroom_fan
 
-
 # Turn off living room fan under certain conditions
  - alias: Turn off Living Room Fan
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '20'
+     minutes: '10'
      seconds: '00'
    condition:
      condition: and
      conditions:
        - condition: state
-         entity_id: group.family
-         state: 'home'
+         entity_id: input_boolean.sean_living_room_presence
+         state: 'off'
+       - condition: state
+         entity_id: input_boolean.emily_living_room_presence
+         state: 'off'
        - condition: state
          entity_id: binary_sensor.motion_sensor_158d0002047afe
          state: 'off'
