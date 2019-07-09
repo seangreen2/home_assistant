@@ -28,7 +28,7 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 - [Hue Bridge](https://amzn.to/30v9YND)
   - [11 A19 soft white bulbs](https://amzn.to/2LIFW4F)
   - [2 Hue Motion Sensors](https://amzn.to/2JmF1FE)
-- [Xiaomi Gateway](https://amzn.to/2YDcAZb)
+- [Xiaomi Gateway](https://amzn.to/2LLrhG7)
   - [3 Xiaomi Motion Sensors](https://amzn.to/30ssu95)
   - [Window/Door Sensor](https://amzn.to/2Xyx0Go)
   - [Temperature and Humidity Sensor](https://amzn.to/2G4z3qI)
