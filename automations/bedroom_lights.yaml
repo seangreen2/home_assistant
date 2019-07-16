@@ -16,8 +16,9 @@
       value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
     - condition: template
       value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
-    - condition: template
-      value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
+    - condition: state
+      entity_id: input_boolean.bedtime_emily
+      state: 'off'
   action:
     - service: light.turn_on
       data_template:
