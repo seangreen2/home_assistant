@@ -8,7 +8,7 @@ Using voice commands are nice and all, but that ends up being just another switc
 
 ## Notable Automations [(Wiki)](https://github.com/seangreen2/home_assistant/wiki)
 ### [Room Presence with Google Homes](https://github.com/seangreen2/home_assistant/wiki/Room-Presence-with-Google-Homes)
-This is kind of like the Holy Grail for me. With accurate room presence, a lot of possibilities open up for more exciting automations. My system works via the Bluetooth on our Google Home Minis and they look for where our Android phones are in our home using RSSI values. This works out rather nicely for detection purposes as we typically take our phones with us to each room. Of course, you can use any BLE devices to accomplish this as well such as a smart watch.
+This is kind of like the [Holy Grail](https://www.youtube.com/watch?v=Bj4ax1BRPqo) for me. With accurate room presence, a lot of possibilities open up for more exciting automations. My system works via the Bluetooth on our Google Home Minis and they look for where our Android phones are in our home using RSSI values. This works out rather nicely for detection purposes as we typically take our phones with us to each room. Of course, you can use any BLE devices to accomplish this as well such as a smart watch.
 
 So far this has been incredibly accurate with the automations taking roughly ten seconds or less to determine where we are located and displays it on my frontend. I have successfully been using the results of the room presence to affect my lighting automations without any problems.
 
