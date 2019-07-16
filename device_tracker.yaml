@@ -3,36 +3,9 @@
     new_device_defaults:
       track_new_devices: true
 
-#  - platform: hue
-#    new_device_defaults:
-#      track_new_devices: false
-
-# Office Speaker
-#  - platform: googlehome
-#    host: 192.168.1.146
-#    rssi_threshold: -100
-#    interval_seconds: 5
-#    consider_home: 10
-#    new_device_defaults:
-#      track_new_devices: false
-
-# Bedroom Speaker
-#  - platform: googlehome
-#    host: 192.168.1.131
-#    rssi_threshold: -100
-#    interval_seconds: 5
-#    consider_home: 10
-#    new_device_defaults:
-#      track_new_devices: false
-
-# Living Room Speaker
-#  - platform: googlehome
-#    host: 192.168.1.130
-#    rssi_threshold: -100
-#    interval_seconds: 5
-#    consider_home: 10
-#    new_device_defaults:
-#      track_new_devices: false
+  - platform: huesensor
+    new_device_defaults:
+      track_new_devices: false
 
   - platform: google_maps
     username: !secret googlemaps_user

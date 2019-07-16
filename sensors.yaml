@@ -338,9 +338,7 @@
 #    ip_address: !secret hue_ip
 #    token: !secret hue_token
 
-#  - platform: huesensor
-#    ip_address: !secret hue_ip
-#    token: !secret hue_token
+  - platform: huesensor
 
   - platform: waze_travel_time
     origin: !secret travel_origin
@@ -354,14 +352,3 @@
   - platform: time_date
     display_options:
       - 'time'
-
-# USPS Informed Delivery
-#usps:
-#  username: !secret usps_user
-#  password: !secret usps_password
-#  name: USPS
-#  driver: 'chrome'
-
-# Cameras
-#camera:
-#  - platform: usps

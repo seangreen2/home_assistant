@@ -4,6 +4,10 @@
   trigger:
     - platform: state
       entity_id: sensor.livingroom_sean_gh_rssi
+    - platform: state
+      entity_id: sensor.office_sean_gh_rssi
+    - platform: state
+      entity_id: sensor.bedroom_sean_gh_rssi
   condition:
     - condition: and
       conditions:
@@ -31,7 +35,11 @@
   initial_state: 'on'
   trigger:
     - platform: state
+      entity_id: sensor.livingroom_sean_gh_rssi
+    - platform: state
       entity_id: sensor.office_sean_gh_rssi
+    - platform: state
+      entity_id: sensor.bedroom_sean_gh_rssi
   condition:
     - condition: and
       conditions:
@@ -58,6 +66,10 @@
 - alias: Sean in Bedroom
   initial_state: 'on'
   trigger:
+    - platform: state
+      entity_id: sensor.livingroom_sean_gh_rssi
+    - platform: state
+      entity_id: sensor.office_sean_gh_rssi
     - platform: state
       entity_id: sensor.bedroom_sean_gh_rssi
   condition:

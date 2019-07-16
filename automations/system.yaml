@@ -27,6 +27,10 @@
         data:
           entity_id: media_player.bedroom_speaker
           volume_level: .65
+      - service: media_player.volume_set
+        data:
+          entity_id: media_player.bathroom_speaker
+          volume_level: .55
 
 # Restart HA at 4am
 #  - alias: "Restart HA at 4am"

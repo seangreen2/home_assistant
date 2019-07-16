@@ -3,7 +3,7 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: binary_sensor.office_motion_sensor_motion
+        entity_id: binary_sensor.office_motion_motion_sensor
         to: 'on'
     condition:
       - condition: state
@@ -18,7 +18,7 @@
           entity_id: light.office
           brightness_pct: '{% if states.sun.sun.attributes.elevation <= -18 %}60{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
       - delay:
-          seconds: '.5'
+          seconds: '1'
       - service: light.turn_on
         data_template:
           entity_id: light.office
@@ -49,7 +49,7 @@
     initial_state: 'on'
     trigger:
       platform: time_pattern
-      minutes: '/3'
+      minutes: '/5'
     condition:
       - condition: state
         entity_id: input_boolean.sean_office_presence
@@ -73,7 +73,7 @@
           entity_id: light.office
           transition: 2
       - delay:
-          seconds: '.5'
+          seconds: '1'
       - service: light.turn_off
         data:
           entity_id: light.office

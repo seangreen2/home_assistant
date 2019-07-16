@@ -3,9 +3,9 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: media_player.plex_living_room_tv
-        from: 'playing'
-        to: 'idle'
+        entity_id: sensor.plex_sensor
+        from: 'Playing'
+        to: 'Stopped'
     condition:
       - condition: time
         after: '17:00:00'
@@ -22,15 +22,9 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: media_player.plex_living_room_tv
-        to: 'playing'
-        from: 'idle'
+        entity_id: sensor.plex_sensor
+        to: 'Playing'
     action:
-      - service: light.turn_off
-        data:
-          entity_id: light.living_room
-      - delay:
-          seconds: '1'
       - service: light.turn_off
         data:
           entity_id: light.living_room
@@ -40,9 +34,9 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: media_player.plex_living_room_tv
-        from: 'playing'
-        to: 'paused'
+        entity_id: sensor.plex_sensor
+        from: 'Playing'
+        to: 'Paused'
     condition:
       - condition: time
         after: '17:00:00'
@@ -59,9 +53,9 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: media_player.plex_living_room_tv
-        from: 'paused'
-        to: 'playing'
+        entity_id: sensor.plex_sensor
+        from: 'Paused'
+        to: 'Playing'
     action:
       service: light.turn_off
       data:
@@ -72,9 +66,9 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: media_player.plex_living_room_tv
-        from: 'paused'
-        to: 'idle'
+        entity_id: sensor.plex_sensor
+        from: 'Paused'
+        to: 'Stopped'
     condition:
       - condition: time
         after: '17:00:00'

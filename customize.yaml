@@ -62,18 +62,18 @@ light.lr1:
 sensor.bathroom_battery:
   friendly_name: Bathroom Battery
   device_class: battery
-sensor.bathroom_motion_sensor:
+binary_sensor.bathroom_motion_sensor:
   friendly_name: Bathroom Motion
-  device_class: motion
+  icon: mdi:run-fast
 sensor.plex:
   friendly_name: Plex Activity
   icon: mdi:plex
 sensor.office_battery:
   friendly_name: Office Battery
   device_class: battery
-sensor.office_motion_motion_sensor:
+binary_sensor.office_motion_motion_sensor:
   friendly_name: Office Motion
-  device_class: motion
+  icon: mdi:run-fast
 sensor.office_lux:
   friendly_name: Office Lux
   icon: mdi:brightness-5

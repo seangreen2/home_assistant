@@ -289,7 +289,7 @@ views:
               - type: glance
                 entities:
                   - binary_sensor.motion_sensor_158d000237a64a
-                  - binary_sensor.bathroom_motion
+                  - binary_sensor.bathroom_motion_sensor
                   - binary_sensor.motion_sensor_158d00031b4c8a
       - type: vertical-stack
         cards:
@@ -299,6 +299,11 @@ views:
             artwork: cover
           - type: custom:mini-media-player
             entity: media_player.bedroom_speaker
+            icon: mdi:google-home
+            artwork: cover
+            show_tts: google
+          - type: custom:mini-media-player
+            entity: media_player.bathroom_speaker
             icon: mdi:google-home
             artwork: cover
             show_tts: google
@@ -349,7 +354,7 @@ views:
             cards:
               - type: glance
                 entities:
-                  - binary_sensor.office_motion
+                  - binary_sensor.office_motion_motion_sensor
                   - sensor.office_battery
                   - sensor.steam_76561197976250572
                   - sensor.laptop_socket

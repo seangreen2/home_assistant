@@ -3,7 +3,7 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: binary_sensor.bathroom_sensor_motion
+    entity_id: binary_sensor.bathroom_motion_sensor
     to: 'on'
   condition:
     condition: and
@@ -31,7 +31,7 @@
   initial_state: on
   trigger:
     platform: state
-    entity_id: binary_sensor.bathroom_sensor_motion
+    entity_id: binary_sensor.bathroom_motion_sensor
     to: 'on'
   condition:
     condition: and
@@ -59,7 +59,7 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: binary_sensor.bathroom_sensor_motion
+    entity_id: binary_sensor.bathroom_motion_sensor
     to: 'on'
   condition:
     condition: and
@@ -92,7 +92,7 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: binary_sensor.bathroom_sensor_motion
+    entity_id: binary_sensor.bathroom_motion_sensor
     to: 'off'
     for:
       seconds: 90
@@ -114,16 +114,16 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: binary_sensor.bathroom_sensor_motion
+    entity_id: binary_sensor.bathroom_motion_sensor
     to: 'off'
     for:
-      minutes: 3
+      minutes: 5
   condition:
     - condition: time
       after: '04:20:01'
       before: '21:00:00'
     - condition: state
-      entity_id: binary_sensor.bathroom_sensor_motion
+      entity_id: binary_sensor.bathroom_motion_sensor
       state: 'off'
     - condition: state
       entity_id: binary_sensor.motion_sensor_158d00031b4c8a
