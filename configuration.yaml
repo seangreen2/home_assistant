@@ -32,10 +32,17 @@ proximity:
     tolerance: 100
     unit_of_measurement: mi
 
+mqtt:
+  password: !secret mqtt_password
+
 cloud:
+
+circadian_lighting:
 
 hacs:
   token: !secret hacs_token
+  theme: true
+  python_script: true
 
 system_health:
 
@@ -54,7 +61,7 @@ updater:
 # Discover some devices automatically
 discovery:
   ignore:
-    - roku
+#    - roku
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 #conversation:
@@ -169,23 +176,23 @@ owntracks:
     work: work
 
 # Google Home
-googlehome:
-  devices:
+#googlehome:
+#  devices:
     # Office
-    - host: 192.168.1.146
-      rssi_threshold: -100
-      track_devices: true
-      device_types: 2
+#    - host: 192.168.1.146
+#      rssi_threshold: -100
+#      track_devices: true
+#      device_types: 2
     # Bedroom
-    - host: 192.168.1.131
-      rssi_threshold: -100
-      track_devices: true
-      device_types: 2
+#    - host: 192.168.1.131
+#      rssi_threshold: -100
+#      track_devices: true
+#      device_types: 2
     # Living Room
-    - host: 192.168.1.130
-      rssi_threshold: -100
-      track_devices: true
-      device_types: 2
+#    - host: 192.168.1.130
+#      rssi_threshold: -100
+#      track_devices: true
+#      device_types: 2
 
 speedtestdotnet:
   scan_interval:
@@ -197,6 +204,22 @@ speedtestdotnet:
 
 # Switches
 switch:
+  - platform: circadian_lighting
+    name: Living Room
+    lights_brightness:
+      - light.living_room
+
+  - platform: circadian_lighting
+    name: Bedroom
+    lights_brightness:
+      - light.bedroom
+    min_brightness: 33
+
+  - platform: circadian_lighting
+    name: Office
+    lights_brightness:
+      - light.office
+#    min_brightness: 60
 
 tplink:
   switch:
@@ -218,10 +241,13 @@ tts:
 # Media
 media_player:
   - platform: plex
-    scan_interval: 1
+    scan_interval: '1'
     show_all_controls: false
     use_episode_art: false
     remove_unavailable_clients: false
+
+roku:
+  - host: 192.168.1.124
 
 # Neato Vacuum
 neato:

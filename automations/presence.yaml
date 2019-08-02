@@ -17,16 +17,18 @@
         - condition: template
           value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
         - condition: template
+          value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+        - condition: template
           value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
     action:
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -60 %}10{% elif states.sun.sun.attributes.elevation <= -30 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -60 %}10{% elif states.sun.sun.attributes.elevation <= -30 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
 
 # Turn off lights, Nest, and Media when everyone leaves house
   - alias: 'Away Mode'

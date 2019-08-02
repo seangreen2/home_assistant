@@ -128,6 +128,8 @@
     - condition: state
       entity_id: binary_sensor.motion_sensor_158d00031b4c8a
       state: 'off'
+    - condition: template
+      value_template: "{{ not is_state('media_player.bathroom_speaker', 'playing') }}" # NOT condition
   action:
     service: light.turn_off
     data:

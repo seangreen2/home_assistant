@@ -14,7 +14,6 @@ resources:
   - url: /local/bar-card.js
     type: module
 
-
 views:
   - path: default_view
     title: Home
@@ -180,6 +179,7 @@ views:
                   - sensor.dark_sky_precip_probability
                 line_color: '#2980b9'
                 line_width: 4
+
   - path: livingroom
     title: Living Room
     icon: 'mdi:sofa'
@@ -432,7 +432,7 @@ views:
                 entities:
                   - sensor.speedtest_ping
                 name: Ping
-                line_color: '#dbdfe2'
+                line_color: '#2980b9'
                 line_width: 6
                 hours_to_show: 24
                 icon: mdi:server-network

@@ -8,7 +8,7 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.illumination_158d0002047afe
-      below: '8'
+      below: '12'
     - condition: state
       entity_id: group.family
       state: 'home'
@@ -19,17 +19,19 @@
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
     - condition: template
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
   action:
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -60 %}10{% elif states.sun.sun.attributes.elevation <= -30 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
     - delay:
         seconds: 1
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -60 %}10{% elif states.sun.sun.attributes.elevation <= -30 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
 
 # Auto Living Room Brightness Transition
 - alias: Living Room Auto Brightness Transition
@@ -48,19 +50,26 @@
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
     - condition: template
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
   action:
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
-        brightness_pct: '{% if states.sun.sun.attributes.elevation <= -60 %}10{% elif states.sun.sun.attributes.elevation <= -30 %}25{% elif states.sun.sun.attributes.elevation <= -15 %}50{% elif states.sun.sun.attributes.elevation <= -6 %}75{% elif states.sun.sun.attributes.elevation > -6 %}100{% else %}0{% endif %}'
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 90
 
 # Living Room Lights off without Motion
 - alias: Living Room Lights off no motion
   initial_state: 'on'
   trigger:
-    platform: time_pattern
-    minutes: '/10'
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0002047afe
+    to: 'off'
+    for:
+      minutes: 18
+#    platform: time_pattern
+#    minutes: '/20'
   condition:
     - condition: state
       entity_id: input_boolean.sean_living_room_presence
@@ -110,7 +119,7 @@
     entity_id: binary_sensor.motion_sensor_158d0002047afe
     to: 'off'
     for:
-      minutes: 3
+      minutes: 1
   condition:
     - condition: state
       entity_id: input_boolean.bedtime_emily

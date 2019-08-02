@@ -352,3 +352,8 @@
   - platform: time_date
     display_options:
       - 'time'
+
+  - platform: mqtt
+    name: plex_status
+    state_topic: tautulli/tv/lights
+    value_template: '{{ value_json.body }}'

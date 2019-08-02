@@ -66,7 +66,7 @@
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '10'
+     minutes: '30'
      seconds: '00'
    condition:
      condition: and
@@ -98,7 +98,7 @@
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '10'
+     minutes: '60'
      seconds: '00'
    condition:
      condition: and
@@ -116,6 +116,8 @@
          value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
        - condition: template
          value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+       - condition: template
+         value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
        - condition: numeric_state
          entity_id: sensor.living_room_thermostat_temperature
          below: '74'
