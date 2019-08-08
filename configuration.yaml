@@ -246,9 +246,6 @@ media_player:
     use_episode_art: false
     remove_unavailable_clients: false
 
-roku:
-  - host: 192.168.1.124
-
 # Neato Vacuum
 neato:
   username: !secret neato_user

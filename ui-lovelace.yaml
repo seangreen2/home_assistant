@@ -1,18 +1,16 @@
 title: Home
 
 resources:
-  - url: /local/mini-graph-card-bundle.js?v=0.3.0
+  - url: /local/community/mini-graph-card/mini-graph-card.js
     type: module
-  - url: /local/mini-media-player-bundle.js
+  - url: /local/community/mini-media-player/mini-media-player.js
     type: module
-  - url: /local/simple-weather-card.bundle.js
+  - url: /local/community/simple-weather-card/simple-weather-card.js
     type: module
-  - url: /local/simple-thermostat.js
+  - url: /local/community/simple-thermostat/simple-thermostat.js
     type: module
-  - url: /local/custom_header/compact-custom-header.js
-    type: module
-  - url: /local/bar-card.js
-    type: module
+  - url: /local/community/bar-card/bar-card.js
+    type: js
 
 views:
   - path: default_view
@@ -495,6 +493,9 @@ views:
         entities:
           - input_boolean.bedtime_sean
           - input_boolean.bedtime_emily
+          - input_boolean.bedroom_occupied
+          - input_boolean.living_room_occupied
+          - input_boolean.office_occupied
           - input_boolean.sean_bedroom_presence
           - input_boolean.sean_living_room_presence
           - input_boolean.sean_office_presence

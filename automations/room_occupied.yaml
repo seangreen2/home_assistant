@@ -1,0 +1,165 @@
+  - alias: Office occupied
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.office_motion_motion_sensor
+        to: 'on'
+      - platform: numeric_state
+        entity_id: sensor.laptop_socket
+        above: '0'
+      - platform: state
+        entity_id: sensor.steam_76561197976250572
+        to: 'online'
+    condition:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.office_occupied
+
+  - alias: Office unoccupied
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.office_motion_motion_sensor
+        to: 'off'
+        for:
+          minutes: 4
+      - platform: numeric_state
+        entity_id: sensor.laptop_socket
+        below: '3'
+      - platform: template
+        value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
+    condition:
+      - condition: state
+        entity_id: input_boolean.office_occupied
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.office_motion_motion_sensor
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.laptop_socket
+        below: '3'
+      - condition: template
+        value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.office_occupied
+
+
+  - alias: Living Room occupied
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.motion_sensor_158d0002047afe
+        to: 'on'
+      - platform: template
+        value_template: "{{ not is_state('media_player.living_room_tv', 'unavailable') }}" # NOT condition
+      - platform: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'unavailable') }}" # NOT condition
+    condition:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.living_room_occupied
+
+  - alias: Living Room unoccupied
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: input_boolean.office_occupied
+        to: 'on'
+        for:
+          minutes: 8
+      - platform: state
+        entity_id: input_boolean.bedroom_occupied
+        to: 'on'
+        for:
+          minutes: 6
+    condition:
+      - condition: state
+        entity_id: input_boolean.living_room_occupied
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.motion_sensor_158d0002047afe
+        state: 'off'
+        for:
+          minutes: 8
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_boolean.office_occupied
+            state: 'on'
+          - condition: state
+            entity_id: input_boolean.bedroom_occupied
+            state: 'on'
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.living_room_occupied
+
+
+  - alias: Bedroom occupied
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.motion_sensor_158d000237a64a
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.sean_bedtime
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.emily_bedtime
+        to: 'on'
+    condition:
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.bedroom_occupied
+
+  - alias: Bedroom unoccupied
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.motion_sensor_158d000237a64a
+        to: 'off'
+        for:
+          minutes: 2
+    condition:
+      - condition: state
+        entity_id: input_boolean.bedroom_occupied
+        state: 'on'
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
+      - condition: state
+        entity_id: input_boolean.bedtime_emily
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.bedtime_sean
+        state: 'off'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.bedroom_occupied

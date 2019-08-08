@@ -114,15 +114,13 @@
 
   emily_car:
     sequence:
-      - condition: and
-        conditions:
-          - condition: time
-            after: '04:00:00'
-            before: '09:00:00'
-          - condition: state
-            entity_id: input_boolean.bedtime_sean
-            state: 'on'
+      - condition: time
+        after: '04:00:00'
+        before: '09:00:00'
+      - condition: state
+        entity_id: input_boolean.bedtime_sean
+        state: 'on'
       - service: light.turn_off
         data:
-          entity_id: group.all_lights
+          entity_id: light.living_room
           transition: 2

@@ -54,6 +54,10 @@
         entity_id: switch.office_fan
       - service: homeassistant.turn_off
         entity_id: switch.bedroom_fan
+      - service: homeassistant.turn_off
+        entity_id: input_boolean.living_room_occupied
+
+
 
 # Turn off Eco Mode Nest
   - alias: 'Nest Home Mode'

@@ -29,3 +29,15 @@
   emily_bedroom_presence:
     name: Emily Bedroom Presence
     initial: false
+
+  office_occupied:
+    name: Office Occupied
+    initial: false
+
+  living_room_occupied:
+    name: Living Room Occupied
+    initial: false
+
+  bedroom_occupied:
+    name: Bedroom Occupied
+    initial: false

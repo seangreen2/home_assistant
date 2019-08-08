@@ -63,19 +63,22 @@
 - alias: Living Room Lights off no motion
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: binary_sensor.motion_sensor_158d0002047afe
-    to: 'off'
-    for:
-      minutes: 18
-#    platform: time_pattern
-#    minutes: '/20'
+#    platform: state
+#    entity_id: binary_sensor.motion_sensor_158d0002047afe
+#    to: 'off'
+#    for:
+#      minutes: 8
+    platform: time_pattern
+    minutes: '/5'
   condition:
     - condition: state
       entity_id: input_boolean.sean_living_room_presence
       state: 'off'
     - condition: state
       entity_id: input_boolean.emily_living_room_presence
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.living_room_occupied
       state: 'off'
     - condition: state
       entity_id: binary_sensor.motion_sensor_158d0002047afe

@@ -57,7 +57,6 @@
       - platform: state
         entity_id: media_player.plex_living_room_tv
         to: 'playing'
-        from: 'unavailable'
     action:
       - service: light.turn_off
         data:
@@ -159,6 +158,10 @@
         value_template: >
           {% set src = state_attr('media_player.living_room_tv', 'source') %}
           {{ src in ['Roku','Home'] }}
+    condition:
+      - condition: time
+        after: '17:00:00'
+        before: '03:00:00'
     action:
       - service: light.turn_on
         data_template:

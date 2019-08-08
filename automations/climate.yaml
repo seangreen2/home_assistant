@@ -66,7 +66,7 @@
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '30'
+     minutes: '15'
      seconds: '00'
    condition:
      condition: and
@@ -76,6 +76,9 @@
          state: 'off'
        - condition: state
          entity_id: input_boolean.emily_bedroom_presence
+         state: 'off'
+       - condition: state
+         entity_id: input_boolean.bedroom_occupied
          state: 'off'
        - condition: time
          after: '09:00:00'
@@ -98,7 +101,7 @@
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '60'
+     minutes: '15'
      seconds: '00'
    condition:
      condition: and
@@ -108,6 +111,9 @@
          state: 'off'
        - condition: state
          entity_id: input_boolean.emily_living_room_presence
+         state: 'off'
+       - condition: state
+         entity_id: input_boolean.living_room_occupied
          state: 'off'
        - condition: state
          entity_id: binary_sensor.motion_sensor_158d0002047afe
