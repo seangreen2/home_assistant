@@ -76,12 +76,14 @@
         entity_id: input_boolean.office_occupied
         to: 'on'
         for:
-          minutes: 8
+          minutes: 9
       - platform: state
         entity_id: input_boolean.bedroom_occupied
         to: 'on'
         for:
-          minutes: 6
+          minutes: 7
+      - platform: time_pattern
+        minutes: '/10'
     condition:
       - condition: state
         entity_id: input_boolean.living_room_occupied
