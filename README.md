@@ -7,10 +7,8 @@ Using voice commands are nice and all, but that ends up being just another switc
 [<img src="https://i.imgur.com/j7pTcmh.png">](https://www.buymeacoffee.com/gi2L3VGSo)
 
 ## Notable Automations [(Wiki)](https://github.com/seangreen2/home_assistant/wiki)
-### [Room Presence with Google Homes](https://github.com/seangreen2/home_assistant/wiki/Room-Presence-with-Google-Homes)
-This is kind of like the [Holy Grail](https://www.youtube.com/watch?v=momI9XSV3kM) for me. With accurate room presence, a lot of possibilities open up for more exciting automations. My system works via the Bluetooth on our Google Home Minis and they look for where our Android phones are in our home using RSSI values. This works out rather nicely for detection purposes as we typically take our phones with us to each room. Of course, you can use any BLE devices to accomplish this as well such as a smart watch.
-
-So far this has been incredibly accurate with the automations taking roughly ten seconds or less to determine where we are located and displays it on my frontend. I have successfully been using the results of the room presence to affect my lighting automations without any problems.
+### [Room Presence with Google Homes](https://github.com/seangreen2/home_assistant/wiki/Room-Presence-with-Google-Homes) DEPRECATED
+The Google Home integration will soon be removed from Home Assistant and as such I will be removing the tutorial from my wiki. In its place I have created a Room Presence Logic automation which I will write up when I get the time.
 
 ### [Cool or Heat your Home Before you Arrive](https://github.com/seangreen2/home_assistant/wiki/Beat-the-Heat-and-Begin-Cooling-your-Home-before-you-Arrive)
 It's never fun to come home to a hot and humid home just to have your AC kick on as soon as it detects you on your WiFi, or however else you have your local presence set up. Like you, I used to also come home and be miserable until the HVAC finally caught up to my comfortable temperatures. Depending on your preferences this could take TENS OF MINUTES! That simply will not do. This automation uses the Proximity Sensor to intelligently detect if you're on your way home and will begin making it comfortable before you arrive.
