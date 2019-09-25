@@ -55,6 +55,3 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 ![4](https://i.imgur.com/oToTiB2.png)
 ![5](https://i.imgur.com/hlKHTAa.png)
 ![6](https://i.imgur.com/SYsRTYW.png)
-
----
-I use affiliate links to help continue my hobby. When used, I get a small commission if the product is purchased. Prices are exactly the same for you if your purchase is through an affiliate link or a non-affiliate link. You will not pay more by using an affiliate link.
