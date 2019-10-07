@@ -113,11 +113,8 @@
 - alias: Bathroom Lights off no motion
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: binary_sensor.bathroom_motion_sensor
-    to: 'off'
-    for:
-      minutes: 5
+    platform: time_pattern
+    minutes: '/5'
   condition:
     - condition: time
       after: '04:20:01'
@@ -125,9 +122,13 @@
     - condition: state
       entity_id: binary_sensor.bathroom_motion_sensor
       state: 'off'
+      for:
+        minutes: 3
     - condition: state
       entity_id: binary_sensor.motion_sensor_158d00031b4c8a
       state: 'off'
+      for:
+        minutes: 8
     - condition: template
       value_template: "{{ not is_state('media_player.bathroom_speaker', 'playing') }}" # NOT condition
   action:
@@ -155,11 +156,11 @@
         before: '22:15:00'
   action:
     - service: switch.turn_on
-      entity_id:  switch.smart_plug_one
+      entity_id:  switch.outside_lights
     - delay:
         minutes: '15'
     - service: switch.turn_off
-      entity_id:  switch.smart_plug_one
+      entity_id:  switch.outside_lights
 
 # Bathroom Lights off early morning with bedroom motion
 - alias: Bathroom Lights off Bedroom Motion

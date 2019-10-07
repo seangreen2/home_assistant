@@ -153,6 +153,15 @@ sun:
 nest:
   client_id: !secret nest_id
   client_secret: !secret nest_secret
+  binary_sensors:
+    monitored_conditions:
+    - 'fan'
+    - 'target'
+    - 'has_leaf'
+    - 'online'
+    - 'is_using_emergency_heat'
+    - 'eta'
+
 
 # Hue
 light:
@@ -208,22 +217,23 @@ switch:
     name: Living Room
     lights_brightness:
       - light.living_room
+    min_brightness: 25
 
   - platform: circadian_lighting
     name: Bedroom
     lights_brightness:
       - light.bedroom
-    min_brightness: 33
+#    min_brightness: 33
 
   - platform: circadian_lighting
     name: Office
     lights_brightness:
       - light.office
-#    min_brightness: 60
+    min_brightness: 35
 
 tplink:
   switch:
-    - host: !secret tplink_switch_one_ip
+  #  - host: !secret tplink_switch_one_ip
     - host: !secret tplink_switch_two_ip
     - host: !secret tplink_switch_three_ip
     - host: !secret tplink_switch_four_ip
@@ -239,12 +249,16 @@ tts:
     service_name: google_say
 
 # Media
-media_player:
-  - platform: plex
-    scan_interval: '1'
+plex:
+  host: !secret plex_ip
+  token: !secret plex_token
+  media_player:
+    use_episode_art: true
     show_all_controls: false
-    use_episode_art: false
-    remove_unavailable_clients: false
+
+# Pi-Hole
+pi_hole:
+  host: !secret pihole_ip
 
 # Neato Vacuum
 neato:

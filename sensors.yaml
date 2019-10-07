@@ -317,14 +317,14 @@
         arg: eth0
       - type: last_boot
 
-  - platform: pi_hole
-    host: !secret pihole_ip
-    monitored_conditions:
-      - ads_blocked_today
-      - ads_percentage_today
-      - dns_queries_today
-      - domains_being_blocked
-      - unique_clients
+#  - platform: pi_hole
+#    host: !secret pihole_ip
+#    monitored_conditions:
+#      - ads_blocked_today
+#      - ads_percentage_today
+#      - dns_queries_today
+#      - domains_being_blocked
+#      - unique_clients
 
   - platform: plex
     host: !secret plex_ip

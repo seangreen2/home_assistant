@@ -127,6 +127,8 @@
     - condition: state
       entity_id: input_boolean.bedtime_emily
       state: 'on'
+    - condition: template
+      value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
     - condition: state
       entity_id: group.emily
       state: 'home'

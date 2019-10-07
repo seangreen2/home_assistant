@@ -46,13 +46,15 @@ views:
           - type: conditional
             conditions:
               - entity: media_player.plex_living_room_tv
-                state_not: "off"
                 state_not: "unavailable"
             card:
               type: custom:mini-media-player
               entity: media_player.plex_living_room_tv
               icon: mdi:television
               artwork: cover
+              hide:
+                volume: true
+
       - type: horizontal-stack
         cards:
           - type: entity-button
@@ -61,12 +63,12 @@ views:
             icon: mdi:fan
             tap_action:
               action: toggle
-          - type: entity-button
-            entity: switch.smart_plug_one
-            name: Freshener
-            icon: mdi:flower
-            tap_action:
-              action: toggle
+#          - type: entity-button
+#            entity: switch.smart_plug_one
+#            name: Freshener
+#            icon: mdi:flower
+#            tap_action:
+#              action: toggle
           - type: entity-button
             entity: switch.office_fan
             name: Office
@@ -91,7 +93,7 @@ views:
             cards:
               - type: light
                 entity: light.living_room
-                name: Living Room Lights
+                name: Living Room
               - type: light
                 entity: light.bedroom
                 name: Bedroom Lights
@@ -99,7 +101,7 @@ views:
             cards:
               - type: light
                 entity: light.bathroom
-                name: Bathroom Lights
+                name: Bathroom
               - type: light
                 entity: light.office
                 name: Office Lights
@@ -161,8 +163,6 @@ views:
             backdrop:
               day: "#2980b9"
               night: "#022F4C"
-#          - type: weather-forecast
-#            entity: weather.dark_sky
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card

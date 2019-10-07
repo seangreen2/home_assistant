@@ -8,10 +8,10 @@
      for:
        seconds: '120'
    action:
-     - service: climate.set_operation_mode
+     - service: climate.set_hvac_mode
        data:
          entity_id: climate.living_room
-         operation_mode: 'off'
+         hvac_mode: 'off'
 
 # When porch door is closed turn Nest back on
  - alias: Door closed turn on nest
@@ -23,13 +23,13 @@
      for:
        seconds: '10'
    action:
-     - service: climate.set_operation_mode
+     - service: climate.set_hvac_mode
        data_template:
          entity_id: climate.living_room
-         operation_mode: >
+         hvac_mode: >
            {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
              cool
-           {% elif states('sensor.season') == 'fall' %}
+           {% elif states('sensor.season') == 'autumn' %}
              auto
            {% else %}
              heat
@@ -61,6 +61,26 @@
      - service: switch.turn_on
        entity_id:  switch.living_room_fan
 
+# Turn on bedroom fan under certain conditions
+ - alias: Turn on Bedroom Fan
+   initial_state: 'on'
+   trigger:
+     platform: time_pattern
+     minutes: '5'
+     seconds: '00'
+   condition:
+     condition: and
+     conditions:
+       - condition: state
+         entity_id: group.family
+         state: 'home'
+       - condition: numeric_state
+         entity_id: sensor.bedroom_humidity
+         above: '51'
+   action:
+     - service: switch.turn_on
+       entity_id:  switch.bedroom_fan
+
 # Turn off bedroom fan under certain conditions
  - alias: Turn off Bedroom Fan
    initial_state: 'on'
@@ -86,6 +106,9 @@
        - condition: state
          entity_id: binary_sensor.motion_sensor_158d000237a64a
          state: 'off'
+       - condition: numeric_state
+         entity_id: sensor.bedroom_humidity
+         below: '51'
        - condition: template
          value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
        - condition: template

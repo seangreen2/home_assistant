@@ -144,7 +144,7 @@
       - platform: template
         value_template: >
           {% set src = state_attr('media_player.living_room_tv', 'source') %}
-          {{ src in ['Netflix','Prime Video','YouTube'] }}
+          {{ src in ["Netflix","Prime Video","YouTube","Pluto TV - It's Free TV"] }}
     action:
       - service: light.turn_off
         data:
@@ -168,3 +168,29 @@
           entity_id: light.living_room
           brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
           transition: 10
+
+# Lights dim while steamlink is playing
+  - alias: 'Steamlink playing'
+    initial_state: 'on'
+    trigger:
+      - platform: template
+        value_template: >
+          {% set app = state_attr('media_player.living_room_tv', 'app_id') %}
+          {{ app in ['tvinput.hdmi1'] }}
+    condition:
+      - condition: state
+        entity_id: light.living_room
+        state: 'on'
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: '50'
+          transition: 2
+      - delay:
+          seconds: 1
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: '50'
+          transition: 2

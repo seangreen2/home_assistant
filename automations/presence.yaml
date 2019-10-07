@@ -40,14 +40,10 @@
     action:
       - service: homeassistant.turn_off
         entity_id: group.all_lights
-      - service: climate.set_operation_mode
+      - service: climate.set_preset_mode
         data:
           entity_id: climate.living_room
-          operation_mode: 'eco'
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.living_room
-          away_mode: 'on'
+          preset_mode: 'Away and Eco'
       - service: homeassistant.turn_off
         entity_id: switch.living_room_fan
       - service: homeassistant.turn_off
@@ -57,8 +53,6 @@
       - service: homeassistant.turn_off
         entity_id: input_boolean.living_room_occupied
 
-
-
 # Turn off Eco Mode Nest
   - alias: 'Nest Home Mode'
     initial_state: 'on'
@@ -67,21 +61,21 @@
       entity_id: group.family
       to: 'home'
     action:
-      - service: climate.set_operation_mode
+      - service: climate.set_preset_mode
+        data:
+          entity_id: climate.living_room
+          preset_mode: 'none'
+      - service: climate.set_hvac_mode
         data_template:
           entity_id: climate.living_room
-          operation_mode: >
+          hvac_mode: >
             {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
               cool
-            {% elif states('sensor.season') == 'fall' %}
+            {% elif states('sensor.season') == 'autumn' %}
               auto
             {% else %}
               heat
             {% endif %}
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.living_room
-          away_mode: 'off'
 
 # Turn off Eco Mode Nest Google Tracker
   - alias: 'Nest Normal Mode Google Tracker'
@@ -99,18 +93,18 @@
         - condition: template
           value_template: '{{ states.proximity.home.attributes.dir_of_travel == "towards" }}'
     action:
-      - service: climate.set_operation_mode
+      - service: climate.set_preset_mode
+        data:
+          entity_id: climate.living_room
+          preset_mode: 'none'
+      - service: climate.set_hvac_mode
         data_template:
           entity_id: climate.living_room
-          operation_mode: >
+          hvac_mode: >
             {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
               cool
-            {% elif states('sensor.season') == 'fall' %}
+            {% elif states('sensor.season') == 'autumn' %}
               auto
             {% else %}
               heat
             {% endif %}
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.living_room
-          away_mode: 'off'

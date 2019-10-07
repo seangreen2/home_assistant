@@ -9,5 +9,4 @@
 
   - platform: google_maps
     username: !secret googlemaps_user
-    password: !secret googlemaps_password
     max_gps_accuracy: 200
