@@ -1,5 +1,5 @@
 <div>
-  <img class="marginauto" src="https://www.home-assistant.io/images/home-assistant-logo.svg alt="logo" width="175"/>
+  <img class="marginauto" src="https://www.home-assistant.io/images/home-assistant-logo.svg" alt="logo" width="175"/>
 </div>
 
 ## Home Automation Philosophy
