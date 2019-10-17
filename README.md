@@ -1,6 +1,6 @@
-<h1 align="center">
+<a align="center">
   <a name="logo" href=""><img src="https://www.home-assistant.io/images/home-assistant-logo.svg" alt="Home Assistant Logo" width="192"></a>
-</h1>
+</a>
 
 ## Home Automation Philosophy
 You shouldn't have to work the room, the room should work you. True home automation is having your home anticipate what you want without needing any input from you. Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
@@ -27,10 +27,10 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - [Hue Bridge](https://amzn.to/30v9YND)
   - [11 A19 soft white bulbs](https://amzn.to/2LIFW4F)
   - [2 Hue Motion Sensors](https://amzn.to/2JmF1FE)
-- [Xiaomi Gateway]
-  - [3 Xiaomi Motion Sensors]
-  - [Window/Door Sensor]
-  - [Temperature and Humidity Sensor]
+- Xiaomi Gateway
+  - 3 Xiaomi Motion Sensors
+  - Window/Door Sensor
+  - Temperature and Humidity Sensor
 - [Nest Thermostat](https://amzn.to/2YELTn2)
 - [55" TCL Roku TV](https://amzn.to/2XAYIlK)
 - [2 Chromecasts](https://store.google.com/us/product/chromecast?hl=en-US)
