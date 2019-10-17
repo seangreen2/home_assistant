@@ -40,8 +40,7 @@
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '10'
-     seconds: '00'
+     minutes: '/10'
    condition:
      condition: and
      conditions:
@@ -66,8 +65,7 @@
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '5'
-     seconds: '00'
+     minutes: '/5'
    condition:
      condition: and
      conditions:
@@ -77,6 +75,9 @@
        - condition: numeric_state
          entity_id: sensor.bedroom_humidity
          above: '51'
+       - condition: numeric_state
+         entity_id: sensor.bedroom_temp
+         above: '68'
    action:
      - service: switch.turn_on
        entity_id:  switch.bedroom_fan
@@ -86,8 +87,7 @@
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '15'
-     seconds: '00'
+     minutes: '/15'
    condition:
      condition: and
      conditions:
@@ -108,7 +108,7 @@
          state: 'off'
        - condition: numeric_state
          entity_id: sensor.bedroom_humidity
-         below: '51'
+         below: '53'
        - condition: template
          value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
        - condition: template
@@ -124,8 +124,7 @@
    initial_state: 'on'
    trigger:
      platform: time_pattern
-     minutes: '15'
-     seconds: '00'
+     minutes: '/15'
    condition:
      condition: and
      conditions:
