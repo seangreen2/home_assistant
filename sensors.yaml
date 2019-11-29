@@ -34,7 +34,7 @@
           - sensor.humidity_158d0002478a21
         unit_of_measurement: '%'
         value_template: >
-          {{ ((float(states('sensor.humidity_158d0002478a21'))) - 12) | round(1) }}
+          {{ ((float(states('sensor.humidity_158d0002478a21'))) - 0) | round(1) }}
 
   - platform: template
     sensors:
@@ -44,7 +44,7 @@
           - sensor.temperature_158d0002478a21
         unit_of_measurement: °F
         value_template: >
-          {{ ((float(states('sensor.temperature_158d0002478a21'))) - 4) | round(1) }}
+          {{ ((float(states('sensor.temperature_158d0002478a21'))) - 0) | round(1) }}
 
   - platform: template
     sensors:
@@ -352,8 +352,3 @@
   - platform: time_date
     display_options:
       - 'time'
-
-  - platform: mqtt
-    name: plex_status
-    state_topic: tautulli/tv/lights
-    value_template: '{{ value_json.body }}'

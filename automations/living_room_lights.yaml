@@ -8,7 +8,7 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.illumination_158d0002047afe
-      below: '12'
+      below: '10'
     - condition: state
       entity_id: group.family
       state: 'home'

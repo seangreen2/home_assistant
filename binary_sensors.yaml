@@ -13,3 +13,6 @@
         value_template: "{{ is_state('binary_sensor.office_motion_sensor_motion', 'on') }}"
 
   - platform: huesensor
+
+  - platform: wyzesense
+    device: "/dev/hidraw0"

@@ -25,12 +25,15 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.living_room_occupied
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
 
-# Turn off lights, Nest, and Media when everyone leaves house
+# Turn off light and Media when everyone leaves house
   - alias: 'Away Mode'
     initial_state: 'on'
     trigger:
@@ -40,10 +43,6 @@
     action:
       - service: homeassistant.turn_off
         entity_id: group.all_lights
-      - service: climate.set_preset_mode
-        data:
-          entity_id: climate.living_room
-          preset_mode: 'Away and Eco'
       - service: homeassistant.turn_off
         entity_id: switch.living_room_fan
       - service: homeassistant.turn_off
@@ -53,6 +52,24 @@
       - service: homeassistant.turn_off
         entity_id: input_boolean.living_room_occupied
 
+# Set Nest to Away Mode
+  - alias: 'Nest Away Mode'
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: group.family
+      to: 'not_home'
+    condition:
+      - condition: state
+        entity_id: binary_sensor.wyzesense_778bb852
+        state: 'off'
+    action:
+      - service: climate.set_preset_mode
+        data:
+          entity_id: climate.living_room
+          preset_mode: 'Away and Eco'
+
+
 # Turn off Eco Mode Nest
   - alias: 'Nest Home Mode'
     initial_state: 'on'
@@ -60,6 +77,10 @@
       platform: state
       entity_id: group.family
       to: 'home'
+    condition:
+      - condition: state
+        entity_id: binary_sensor.wyzesense_778bb852
+        state: 'off'
     action:
       - service: climate.set_preset_mode
         data:
@@ -83,7 +104,7 @@
     trigger:
       platform: numeric_state
       entity_id: proximity.home
-      below: 15
+      below: 5
     condition:
       condition: and
       conditions:
@@ -92,6 +113,9 @@
           state: 'not_home'
         - condition: template
           value_template: '{{ states.proximity.home.attributes.dir_of_travel == "towards" }}'
+        - condition: state
+          entity_id: binary_sensor.wyzesense_778bb852
+          state: 'off'
     action:
       - service: climate.set_preset_mode
         data:

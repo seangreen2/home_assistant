@@ -63,7 +63,7 @@ sensor.bathroom_battery:
   friendly_name: Bathroom Battery
   device_class: battery
 binary_sensor.bathroom_motion_sensor:
-  friendly_name: Bathroom Motion
+  friendly_name: Bathroom
   icon: mdi:run-fast
 sensor.plex:
   friendly_name: Plex Activity
@@ -93,7 +93,7 @@ binary_sensor.motion_sensor_158d0002047afe:
 sensor.illumination_158d0002047afe:
   friendly_name: Living Room Lux
 binary_sensor.motion_sensor_158d000237a64a:
-  friendly_name: Bedroom Motion
+  friendly_name: Bedroom
   icon: mdi:run-fast
 binary_sensor.office_motion:
   icon: mdi:run-fast
@@ -149,3 +149,5 @@ sensor.count_sensors:
   icon: mdi:developer-board
 sensor.count_switches:
   icon: mdi:light-switch
+binary_sensor.wyzesense_778c2557:
+  icon: mdi:run-fast

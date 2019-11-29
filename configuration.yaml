@@ -2,7 +2,7 @@ homeassistant:
   name: Home
   latitude: !secret latitude
   longitude: !secret longitude
-  elevation: 5
+  elevation: 338
   unit_system: imperial
   time_zone: America/New_York
   customize: !include customize.yaml
@@ -20,7 +20,7 @@ zone:
   - name: home
     latitude: !secret latitude
     longitude: !secret longitude
-    radius: 200
+    radius: 175
 
 proximity:
   home:
@@ -32,8 +32,8 @@ proximity:
     tolerance: 100
     unit_of_measurement: mi
 
-mqtt:
-  password: !secret mqtt_password
+#mqtt:
+#  password: !secret mqtt_password
 
 cloud:
 
@@ -50,7 +50,7 @@ lovelace:
   mode: yaml
 
 frontend:
-  themes: !include themes.yaml
+  themes: !include_dir_merge_named themes
 
 config:
 http:
@@ -184,25 +184,6 @@ owntracks:
     home: home
     work: work
 
-# Google Home
-#googlehome:
-#  devices:
-    # Office
-#    - host: 192.168.1.146
-#      rssi_threshold: -100
-#      track_devices: true
-#      device_types: 2
-    # Bedroom
-#    - host: 192.168.1.131
-#      rssi_threshold: -100
-#      track_devices: true
-#      device_types: 2
-    # Living Room
-#    - host: 192.168.1.130
-#      rssi_threshold: -100
-#      track_devices: true
-#      device_types: 2
-
 speedtestdotnet:
   scan_interval:
     hours: 6
@@ -233,7 +214,7 @@ switch:
 
 tplink:
   switch:
-  #  - host: !secret tplink_switch_one_ip
+    - host: !secret tplink_switch_one_ip
     - host: !secret tplink_switch_two_ip
     - host: !secret tplink_switch_three_ip
     - host: !secret tplink_switch_four_ip
@@ -264,10 +245,6 @@ pi_hole:
 neato:
   username: !secret neato_user
   password: !secret neato_password
-
-# IFTTT
-ifttt:
-  key: !secret ifttt_key
 
 ##########################
 scene: !include scenes.yaml

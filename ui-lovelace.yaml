@@ -63,24 +63,24 @@ views:
             icon: mdi:fan
             tap_action:
               action: toggle
-#          - type: entity-button
-#            entity: switch.smart_plug_one
-#            name: Freshener
-#            icon: mdi:flower
-#            tap_action:
-#              action: toggle
+          - type: entity-button
+            entity: switch.outside_lights
+            name: Freshener
+            icon: mdi:flower
+            tap_action:
+              action: toggle
           - type: entity-button
             entity: switch.office_fan
             name: Office
             icon: mdi:fan
             tap_action:
               action: toggle
-          - type: entity-button
-            entity: switch.outside_lights
-            name: Patio
-            icon: mdi:lightbulb
-            tap_action:
-              action: toggle
+#          - type: entity-button
+#            entity: switch.outside_lights
+#            name: Patio
+#            icon: mdi:lightbulb
+#            tap_action:
+#              action: toggle
           - type: entity-button
             entity: switch.bedroom_fan
             name: Bedroom
@@ -112,7 +112,7 @@ views:
                 name: Rosie
                 image: /local/images/neato.png
               - type: picture-entity
-                entity: sensor.plex
+                entity: sensor.plex_21st_century_plex
                 name: Plex
                 image: /local/images/plex.png
       - type: vertical-stack
@@ -120,6 +120,12 @@ views:
           - type: custom:simple-thermostat
             entity: climate.living_room
             step_size: 1
+            control:
+              hvac:
+                auto: true
+                heat: true
+                cool: true
+                off: true
             icon:
               heat: mdi:fire
               cool: mdi:snowflake
@@ -224,7 +230,7 @@ views:
         cards:
           - type: glance
             entities:
-              - binary_sensor.door_window_sensor_158d00023eb0bb
+              - binary_sensor.wyzesense_778bb852
               - binary_sensor.motion_sensor_158d0002047afe
           - type: custom:mini-media-player
             entity: media_player.plex_living_room_tv
@@ -287,6 +293,7 @@ views:
               - type: glance
                 entities:
                   - binary_sensor.motion_sensor_158d000237a64a
+                  - binary_sensor.wyzesense_778c2557
                   - binary_sensor.bathroom_motion_sensor
                   - binary_sensor.motion_sensor_158d00031b4c8a
       - type: vertical-stack
@@ -355,7 +362,6 @@ views:
                   - binary_sensor.office_motion_motion_sensor
                   - sensor.office_battery
                   - sensor.steam_76561197976250572
-                  - sensor.laptop_socket
       - type: custom:mini-media-player
         entity: media_player.office_speaker
         icon: mdi:google-home
