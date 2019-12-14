@@ -1,3 +1,31 @@
+# Playing on Steam
+  - alias: "Steam Game Active"
+    initial_state: 'on'
+    trigger:
+      - platform: template
+        value_template: "{{ not is_state('sensor.steam_game', 'unavailable') }}" # NOT condition
+      - platform: time_pattern
+        minutes: '/5'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: 'group.emily'
+          state: 'not_home'
+        - condition: state
+          entity_id: 'group.sean'
+          state: 'home'
+        - condition: template
+          value_template: "{{ not is_state('sensor.steam_game', 'unavailable') }}" # NOT condition
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: light.living_room
+          transition: 2
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.living_room_occupied
+
 # Turn on Office fan above temp
   - alias: "Turn on Fan above certain temp"
     initial_state: 'on'

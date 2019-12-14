@@ -11,11 +11,19 @@
         after: '17:00:00'
         before: '03:00:00'
     action:
-    - service: light.turn_on
-      data_template:
-        entity_id: light.living_room
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-        transition: 10
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 10
+      - delay:
+          seconds: 1
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 10
+
 
 # Lights back to full over 7 seconds after media stops
   - alias: 'Media player stopped unavailable'
@@ -30,11 +38,18 @@
         after: '17:00:00'
         before: '03:00:00'
     action:
-    - service: light.turn_on
-      data_template:
-        entity_id: light.living_room
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-        transition: 10
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 10
+      - delay:
+          seconds: 1
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 10
 
 # Bias Lighting on
   - alias: 'Bias Lights on'
@@ -146,6 +161,13 @@
           entity_id: light.living_room
           brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
           transition: 10
+      - delay:
+          seconds: 1
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 10
 
 # Lights dim to full going from paused to idle
   - alias: 'Media player pause to unavailable'
@@ -160,6 +182,13 @@
         after: '17:00:00'
         before: '03:00:00'
     action:
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 10
+      - delay:
+          seconds: 1
       - service: light.turn_on
         data_template:
           entity_id: light.living_room
@@ -196,6 +225,13 @@
         after: '17:00:00'
         before: '03:00:00'
     action:
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 10
+      - delay:
+          seconds: 1
       - service: light.turn_on
         data_template:
           entity_id: light.living_room

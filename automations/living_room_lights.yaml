@@ -3,18 +3,15 @@
   initial_state: 'on'
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0002047afe
+      entity_id: group.living_room_motion
       to: 'on'
   condition:
-    - condition: numeric_state
-      entity_id: sensor.illumination_158d0002047afe
-      below: '10'
+#    - condition: numeric_state
+#      entity_id: sensor.illumination_158d0002047afe
+#      below: '10'
     - condition: state
       entity_id: group.family
       state: 'home'
-    - condition: state
-      entity_id: light.living_room
-      state: 'off'
     - condition: template
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
     - condition: template
@@ -71,18 +68,22 @@
     platform: time_pattern
     minutes: '/5'
   condition:
-    - condition: state
-      entity_id: input_boolean.sean_living_room_presence
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.emily_living_room_presence
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.living_room_occupied
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.motion_sensor_158d0002047afe
-      state: 'off'
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.sean_living_room_presence
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.emily_living_room_presence
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.living_room_occupied
+        state: 'off'
+      - condition: state
+        entity_id: group.living_room_motion
+        state: 'off'
+        for:
+          minutes: 4
   action:
     - service: light.turn_off
       data:
@@ -119,7 +120,7 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d0002047afe
+    entity_id: group.living_room_motion
     to: 'off'
     for:
       minutes: 1

@@ -93,7 +93,7 @@
             {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
               cool
             {% elif states('sensor.season') == 'autumn' %}
-              auto
+              heat
             {% else %}
               heat
             {% endif %}
@@ -128,7 +128,7 @@
             {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
               cool
             {% elif states('sensor.season') == 'autumn' %}
-              auto
+              heat
             {% else %}
               heat
             {% endif %}

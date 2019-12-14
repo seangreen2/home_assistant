@@ -151,3 +151,15 @@ sensor.count_switches:
   icon: mdi:light-switch
 binary_sensor.wyzesense_778c2557:
   icon: mdi:run-fast
+group.bedroom_motion:
+  icon: mdi:run-fast
+  device_class: motion
+  friendly_name: Bedroom Motion
+group.living_room_motion:
+  icon: mdi:run-fast
+  device_class: motion
+  friendly_name: Living Room Motion
+group.office_motion:
+  icon: mdi:run-fast
+  device_class: motion
+  friendly_name: Office Motion

@@ -2,11 +2,8 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: binary_sensor.office_motion_motion_sensor
+        entity_id: group.office_motion
         to: 'on'
-      - platform: numeric_state
-        entity_id: sensor.laptop_socket
-        above: '0'
       - platform: state
         entity_id: sensor.steam_76561197976250572
         to: 'online'
@@ -23,13 +20,10 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: binary_sensor.office_motion_motion_sensor
+        entity_id: group.office_motion
         to: 'off'
         for:
           minutes: 4
-      - platform: numeric_state
-        entity_id: sensor.laptop_socket
-        below: '3'
       - platform: template
         value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
     condition:
@@ -37,11 +31,8 @@
         entity_id: input_boolean.office_occupied
         state: 'on'
       - condition: state
-        entity_id: binary_sensor.office_motion_motion_sensor
+        entity_id: group.office_motion
         state: 'off'
-      - condition: numeric_state
-        entity_id: sensor.laptop_socket
-        below: '3'
       - condition: template
         value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
     action:
@@ -54,7 +45,7 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: binary_sensor.motion_sensor_158d0002047afe
+        entity_id: group.living_room_motion
         to: 'on'
       - platform: template
         value_template: "{{ not is_state('media_player.living_room_tv', 'unavailable') }}" # NOT condition
@@ -83,13 +74,13 @@
         for:
           minutes: 7
       - platform: time_pattern
-        minutes: '/10'
+        minutes: '/11'
     condition:
       - condition: state
         entity_id: input_boolean.living_room_occupied
         state: 'on'
       - condition: state
-        entity_id: binary_sensor.motion_sensor_158d0002047afe
+        entity_id: group.living_room_motion
         state: 'off'
         for:
           minutes: 8
@@ -120,7 +111,7 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: binary_sensor.motion_sensor_158d000237a64a
+        entity_id: group.bedroom_motion
         to: 'on'
       - platform: state
         entity_id: input_boolean.sean_bedtime
@@ -141,7 +132,7 @@
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: binary_sensor.motion_sensor_158d000237a64a
+        entity_id: group.bedroom_motion
         to: 'off'
         for:
           minutes: 2

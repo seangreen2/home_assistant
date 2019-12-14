@@ -27,6 +27,9 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - [Hue Bridge](https://amzn.to/30v9YND)
   - [11 A19 soft white bulbs](https://amzn.to/2LIFW4F)
   - [2 Hue Motion Sensors](https://amzn.to/2JmF1FE)
+- [Wyze Sense](https://wyze.com/wyze-sense.html) - Want to get away from Xiaomi eventually. Requires a [custom component](https://github.com/kevinvincent/ha-wyzesense) to function.
+  - Motion Sensor
+  - 2 Door/Window Sensors
 - Xiaomi Gateway
   - 3 Xiaomi Motion Sensors
   - Window/Door Sensor

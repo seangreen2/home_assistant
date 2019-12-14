@@ -27,8 +27,8 @@ proximity:
     devices:
       - !secret gtracker_one
       - !secret gtracker_two
-      - device_tracker.sean_pixel3
-      - device_tracker.emily_pixel3
+      - device_tracker.pixel_3
+      - device_tracker.pixel_3_2
     tolerance: 100
     unit_of_measurement: mi
 
@@ -36,6 +36,8 @@ proximity:
 #  password: !secret mqtt_password
 
 cloud:
+
+mobile_app:
 
 circadian_lighting:
 
@@ -198,13 +200,13 @@ switch:
     name: Living Room
     lights_brightness:
       - light.living_room
-    min_brightness: 25
+    min_brightness: 35
 
   - platform: circadian_lighting
     name: Bedroom
     lights_brightness:
       - light.bedroom
-#    min_brightness: 33
+    min_brightness: 35
 
   - platform: circadian_lighting
     name: Office

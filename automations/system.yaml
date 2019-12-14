@@ -22,7 +22,7 @@
       - service: media_player.volume_set
         data:
           entity_id: media_player.office_speaker
-          volume_level: .45
+          volume_level: .55
       - service: media_player.volume_set
         data:
           entity_id: media_player.bedroom_speaker

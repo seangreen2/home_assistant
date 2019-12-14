@@ -30,7 +30,7 @@
            {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
              cool
            {% elif states('sensor.season') == 'autumn' %}
-             auto
+             heat
            {% else %}
              heat
            {% endif %}
@@ -74,7 +74,7 @@
          state: 'home'
        - condition: numeric_state
          entity_id: sensor.bedroom_humidity
-         above: '51'
+         above: '55'
        - condition: numeric_state
          entity_id: sensor.bedroom_temp
          above: '68'
@@ -172,8 +172,8 @@
          entity_id: group.sean
          state: 'home'
        - condition: state
-         entity_id: sensor.living_room_thermostat_operation_mode
-         state: 'heat'
+         entity_id: sensor.season
+         state: 'winter'
        - condition: time
          after: '08:00:00'
          before: '20:30:00'
@@ -193,8 +193,8 @@
      condition: and
      conditions:
        - condition: state
-         entity_id: sensor.living_room_thermostat_operation_mode
-         state: 'heat'
+         entity_id: sensor.season
+         state: 'winter'
        - condition: time
          after: '08:00:00'
          before: '20:30:00'
@@ -202,4 +202,4 @@
      - service: climate.set_temperature
        data:
          entity_id: climate.living_room
-         temperature: 68
+         temperature: 69

@@ -2,9 +2,9 @@
 - alias: Bedroom Auto Brightness
   initial_state: 'on'
   trigger:
-    - platform: state
-      entity_id: binary_sensor.wyzesense_778c2557
-      to: 'on'
+#    - platform: state
+#      entity_id: binary_sensor.wyzesense_778c2557
+#      to: 'on'
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d000237a64a
       to: 'on'
@@ -61,11 +61,6 @@
 - alias: Bedroom Lights off no motion
   initial_state: 'on'
   trigger:
-#    platform: state
-#    entity_id: binary_sensor.motion_sensor_158d000237a64a
-#    to: 'off'
-#    for:
-#      minutes: 3
     platform: time_pattern
     minutes: '/5'
   condition:
@@ -79,10 +74,7 @@
       entity_id: input_boolean.bedroom_occupied
       state: 'off'
     - condition: state
-      entity_id: binary_sensor.wyzesense_778c2557
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.motion_sensor_158d000237a64a
+      entity_id: group.bedroom_motion
       state: 'off'
   action:
     - service: light.turn_off

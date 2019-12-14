@@ -6,6 +6,11 @@
 
   - platform: template
     sensors:
+      steam_game:
+        value_template: '{{states.sensor.steam_76561197976250572.attributes.game}}'
+
+  - platform: template
+    sensors:
       bathroom_temperature:
         value_template: '{{states.sensor.bathroom_motion_sensor.attributes.temperature}}'
 
