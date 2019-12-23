@@ -136,10 +136,12 @@
             mdi:hotel
           {% elif is_state('input_select.sean_room_location', 'Living Room') %}
             mdi:sofa
+          {% elif is_state('input_select.sean_room_location', 'Sleep') %}
+            mdi:chat-sleep
           {% elif is_state('input_select.sean_room_location', 'Away') %}
             mdi:exit-run
           {% elif is_state('input_select.sean_room_location', 'Home') %}
-            mdi:home-account
+            mdi:home
           {% else %}
             mdi:exit-run
           {% endif %}
@@ -188,8 +190,10 @@
             mdi:sofa
           {% elif is_state('input_select.emily_room_location', 'Away') %}
             mdi:exit-run
+          {% elif is_state('input_select.emily_room_location', 'Sleep') %}
+            mdi:chat-sleep
           {% elif is_state('input_select.emily_room_location', 'Home') %}
-            mdi:home-account
+            mdi:home
           {% else %}
             mdi:exit-run
           {% endif %}
@@ -198,14 +202,14 @@
     sensors:
       sean_phone_battery:
         friendly_name: 'Sean Phone Battery'
-        value_template: '{{states.device_tracker.sean_pixel3.attributes.battery_level}}'
+        value_template: '{{states.device_tracker.pixel_3.attributes.battery_level}}'
         unit_of_measurement: '%'
 
   - platform: template
     sensors:
       emily_phone_battery:
         friendly_name: 'Emily Phone Battery'
-        value_template: '{{states.device_tracker.emily_pixel3.attributes.battery_level}}'
+        value_template: '{{states.device_tracker.pixel_3_2.attributes.battery_level}}'
         unit_of_measurement: '%'
 
   - platform: template

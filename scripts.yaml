@@ -26,6 +26,10 @@
         data:
           entity_id: group.bedtime_lights
           transition: 2
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.sean_room_location
+          option: Sleep
       - service: switch.turn_off
         entity_id: switch.outside_lights
       - service: switch.turn_off
@@ -37,6 +41,31 @@
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.bedtime_sean
+
+  morning:
+    sequence:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.bedtime_sean
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.sean_room_location
+          option: Home
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: group.sean
+            state: 'home'
+          - condition: state
+            entity_id: input_boolean.bedtime_emily
+            state: 'off'
+      - service: automation.turn_off
+        entity_id: automation.repeat_rain_audio
+      - service: automation.turn_on
+        entity_id: automation.bedroom_auto_brightness
+      - service: media_player.media_stop
+        data:
+          entity_id: media_player.bedroom_speaker
 
   bedtime_emily:
     sequence:
@@ -62,6 +91,10 @@
         data:
           entity_id: light.bedroom
           transition: 2
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.emily_room_location
+          option: Sleep
       - service: light.turn_off
         data:
           entity_id: light.bathroom
@@ -70,32 +103,15 @@
         data:
           entity_id: input_boolean.bedtime_emily
 
-  morning:
-    sequence:
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.bedtime_sean
-      - condition: and
-        conditions:
-          - condition: state
-            entity_id: group.sean
-            state: 'home'
-          - condition: state
-            entity_id: input_boolean.bedtime_emily
-            state: 'off'
-      - service: automation.turn_off
-        entity_id: automation.repeat_rain_audio
-      - service: automation.turn_on
-        entity_id: automation.bedroom_auto_brightness
-      - service: media_player.media_stop
-        data:
-          entity_id: media_player.bedroom_speaker
-
   morning_emily:
     sequence:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.bedtime_emily
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.emily_room_location
+          option: Home
       - condition: and
         conditions:
           - condition: state

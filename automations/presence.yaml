@@ -25,9 +25,8 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-    - service: input_boolean.turn_on
-      data:
-        entity_id: input_boolean.living_room_occupied
+    - delay: 
+        seconds: '1'
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
@@ -49,8 +48,6 @@
         entity_id: switch.office_fan
       - service: homeassistant.turn_off
         entity_id: switch.bedroom_fan
-      - service: homeassistant.turn_off
-        entity_id: input_boolean.living_room_occupied
 
 # Set Nest to Away Mode
   - alias: 'Nest Away Mode'

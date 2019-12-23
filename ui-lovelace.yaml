@@ -11,6 +11,10 @@ resources:
     type: module
   - url: /local/community/bar-card/bar-card.js
     type: js
+  - url: /community_plugin/banner-card/banner-card.js
+    type: module
+  - url: /local/community/lovelace-slider-entity-row/slider-entity-row.js
+    type: module
 
 views:
   - path: default_view
@@ -23,7 +27,7 @@ views:
           - type: horizontal-stack
             cards:
               - type: picture-glance
-                title: Room Location
+                title: Status
                 entities:
                   - sensor.sean_room_status
                   - sensor.sean_phone_battery
@@ -32,7 +36,7 @@ views:
                   "not_home": /local/images/sean_16x9_gray.jpg
                 entity: group.sean
               - type: picture-glance
-                title: Room Location
+                title: Status
                 entities:
                   - sensor.emily_room_status
                   - sensor.emily_phone_battery

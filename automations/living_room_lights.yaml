@@ -6,9 +6,6 @@
       entity_id: group.living_room_motion
       to: 'on'
   condition:
-#    - condition: numeric_state
-#      entity_id: sensor.illumination_158d0002047afe
-#      below: '10'
     - condition: state
       entity_id: group.family
       state: 'home'
@@ -60,11 +57,6 @@
 - alias: Living Room Lights off no motion
   initial_state: 'on'
   trigger:
-#    platform: state
-#    entity_id: binary_sensor.motion_sensor_158d0002047afe
-#    to: 'off'
-#    for:
-#      minutes: 8
     platform: time_pattern
     minutes: '/5'
   condition:
@@ -79,11 +71,8 @@
       - condition: state
         entity_id: input_boolean.living_room_occupied
         state: 'off'
-      - condition: state
-        entity_id: group.living_room_motion
-        state: 'off'
-        for:
-          minutes: 4
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
   action:
     - service: light.turn_off
       data:

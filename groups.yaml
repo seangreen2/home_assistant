@@ -22,14 +22,16 @@ sean:
   view: no
   entities:
     - device_tracker.sean_phone #Phone
-    - device_tracker.sean_pixel3 #owntracks
+#    - device_tracker.sean_pixel3 #owntracks
+    - device_tracker.pixel_3 # Mobile App
 
 emily:
   name: Emily
   view: no
   entities:
     - device_tracker.emily_phone #Phone
-    - device_tracker.emily_pixel3 #owntracks
+    - device_tracker.pixel_3_2 # Mobile App
+#    - device_tracker.emily_pixel3 #owntracks
 
 # MOTION SENSORS
 bedroom_motion:
