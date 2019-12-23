@@ -11,7 +11,7 @@ I also made the popular dark theme [Slate](https://github.com/seangreen2/slate_t
 
 ## Notable Automations [(Wiki)](https://github.com/seangreen2/home_assistant/wiki)
 
-### [Determining Room Occupation](https://github.com/seangreen2/home_assistant/wiki/Detecting-Room-Occupation)
+### [Determining Room Occupancy](https://github.com/seangreen2/home_assistant/wiki/Detecting-Room-Occupation)
 Awhile back I wrote up a tutorial on getting your Google Home Minis to detect your phones for Room Presence Detection. Once Google removed that ability, I had to come up with a method of determining when a room was occupied or not. I developed a kind of "Room Occupation Logic" which has worked incredibly well so far and it's easy to implement and adapt to you needs.
 
 ### [Cool or Heat your Home Before you Arrive](https://github.com/seangreen2/home_assistant/wiki/Beat-the-Heat-and-Begin-Cooling-your-Home-before-you-Arrive)
