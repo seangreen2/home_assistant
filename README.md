@@ -11,6 +11,9 @@ I also made the popular dark theme [Slate](https://github.com/seangreen2/slate_t
 
 ## Notable Automations [(Wiki)](https://github.com/seangreen2/home_assistant/wiki)
 
+### [Determining Room Occupancy](https://github.com/seangreen2/home_assistant/wiki/Detecting-Room-Occupation)
+Awhile back I wrote up a tutorial on getting your Google Home Minis to detect your phones for Room Presence Detection. Once Google removed that ability, I had to come up with a method of determining when a room was occupied or not. I developed a kind of "Room Occupation Logic" which has worked incredibly well so far and it's easy to implement and adapt to you needs.
+
 ### [Cool or Heat your Home Before you Arrive](https://github.com/seangreen2/home_assistant/wiki/Beat-the-Heat-and-Begin-Cooling-your-Home-before-you-Arrive)
 It's never fun to come home to a hot and humid home just to have your AC kick on as soon as it detects you on your WiFi, or however else you have your local presence set up. Like you, I used to also come home and be miserable until the HVAC finally caught up to my comfortable temperatures. Depending on your preferences this could take TENS OF MINUTES! That simply will not do. This automation uses the Proximity Sensor to intelligently detect if you're on your way home and will begin making it comfortable before you arrive.
 
