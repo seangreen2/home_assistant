@@ -43,6 +43,7 @@ living_room_motion:
   entities:
     - binary_sensor.motion_sensor_158d0002047afe
     - binary_sensor.motion_sensor_158d00031b4c8a
+    - binary_sensor.wyzesense_779b29d3
 
 office_motion:
   entities:
@@ -57,6 +58,15 @@ gtracker:
     - !secret gtracker_two
 
 ### LIGHTS ###
+all_lights:
+  name: All Lights
+  view: no
+  entities:
+    - light.bedroom
+    - light.bathroom
+    - light.office
+    - light.living_room
+
 bedtime_lights:
   name: Bedtime Lights
   view: no
@@ -65,3 +75,4 @@ bedtime_lights:
     - light.office
     - light.living_room
     - light.bathroom
+    

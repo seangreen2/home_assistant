@@ -5,16 +5,12 @@ resources:
     type: module
   - url: /local/community/mini-media-player/mini-media-player.js
     type: module
-  - url: /local/community/simple-weather-card/simple-weather-card.js
+  - url: /local/community/simple-weather-card/simple-weather-card.js?v=0.7.2
     type: module
   - url: /local/community/simple-thermostat/simple-thermostat.js
     type: module
   - url: /local/community/bar-card/bar-card.js
     type: js
-  - url: /community_plugin/banner-card/banner-card.js
-    type: module
-  - url: /local/community/lovelace-slider-entity-row/slider-entity-row.js
-    type: module
 
 views:
   - path: default_view
@@ -44,9 +40,9 @@ views:
                   "home": /local/images/emily_16x9.jpg
                   "not_home": /local/images/emily_16x9_gray.jpg
                 entity: group.emily
-          - type: entities
-            entities:
-              - sensor.work_commute
+ #         - type: entities
+ #           entities:
+ #             - sensor.work_commute
           - type: conditional
             conditions:
               - entity: media_player.plex_living_room_tv
@@ -57,7 +53,44 @@ views:
               icon: mdi:television
               artwork: cover
               hide:
-                volume: true
+                volume: true           
+          - type: conditional
+            conditions:
+              - entity: media_player.whole_house
+                state_not: "off"
+            card:
+              type: custom:mini-media-player
+              entity: media_player.whole_house
+              icon: mdi:speaker
+              artwork: cover
+              hide:
+                volume: false
+          - type: custom:simple-weather-card
+            entity: weather.dark_sky
+            name: " "
+            primary_info:
+              - extrema
+            secondary_info: 
+              - humidity
+ #             - precipitation_probability
+ #             - wind_speed
+            backdrop:
+              day: "#2980b9"
+              night: "#022F4C"
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Sun Elevation
+                entities:
+                  - sensor.sun_elevation
+                line_color: '#b58e31'
+                line_width: 4
+              - type: custom:mini-graph-card
+                name: Chance of Rain
+                entities:
+                  - sensor.dark_sky_precip_probability
+                line_color: '#2980b9'
+                line_width: 4 
 
       - type: horizontal-stack
         cards:
@@ -70,7 +103,7 @@ views:
           - type: entity-button
             entity: switch.outside_lights
             name: Freshener
-            icon: mdi:flower
+            icon: mdi:cat
             tap_action:
               action: toggle
           - type: entity-button
@@ -164,29 +197,7 @@ views:
                 name: Office
                 line_color: '#b93829'
                 line_width: 6
-      - type: vertical-stack
-        cards:
-          - type: custom:simple-weather-card
-            entity: weather.dark_sky
-            name: " "
-            secondary_info: humidity
-            backdrop:
-              day: "#2980b9"
-              night: "#022F4C"
-          - type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                name: Sun Elevation
-                entities:
-                  - sensor.sun_elevation
-                line_color: '#b58e31'
-                line_width: 4
-              - type: custom:mini-graph-card
-                name: Chance of Rain
-                entities:
-                  - sensor.dark_sky_precip_probability
-                line_color: '#2980b9'
-                line_width: 4
+
 
   - path: livingroom
     title: Living Room
@@ -225,9 +236,15 @@ views:
                 tap_action:
                   action: toggle
               - type: entity-button
+                entity: switch.bias_lighting
+                name: Bias Lights
+                icon: mdi:television
+                tap_action:
+                  action: toggle
+              - type: entity-button
                 entity: switch.outside_lights
                 name: Air Freshener
-                icon: mdi:flower
+                icon: mdi:cat
                 tap_action:
                   action: toggle
       - type: vertical-stack
@@ -350,9 +367,9 @@ views:
             tap_action:
               action: toggle
           - type: entity-button
-            entity: switch.smart_plug_one
-            name: Air Freshener
-            icon: mdi:flower
+            entity: switch.laptop_socket
+            name: Smart Plug
+            icon: mdi:power-socket-jp
             tap_action:
               action: toggle
       - type: vertical-stack

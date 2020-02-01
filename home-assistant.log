@@ -1,0 +1,27 @@
+2020-01-29 19:22:04 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2020-01-29 19:22:04 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for circadian_lighting which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2020-01-29 19:22:05 WARNING (Recorder) [homeassistant.components.recorder] Ended unfinished session (id=263 from 2020-01-30 00:17:25.006718)
+2020-01-29 19:22:09 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for huesensor which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2020-01-29 19:22:09 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for wyzesense which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2020-01-29 19:22:10 ERROR (MainThread) [homeassistant.config] Invalid config for [frontend]: string value is None for dictionary value @ data['frontend']['themes']['slate']['material-body-text-color']. Got None
+string value is None for dictionary value @ data['frontend']['themes']['slate']['material-secondary-background-color']. Got None. (See /mnt/dietpi_userdata/homeassistant/configuration.yaml, line 57). Please check the docs at https://home-assistant.io/integrations/frontend/
+2020-01-29 19:22:10 ERROR (MainThread) [homeassistant.setup] Setup failed for frontend: Invalid config.
+2020-01-29 19:22:10 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of hacs. Setup failed for dependencies: frontend
+2020-01-29 19:22:10 ERROR (MainThread) [homeassistant.setup] Setup failed for hacs: Could not set up all dependencies.
+2020-01-29 19:22:10 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of map. Setup failed for dependencies: frontend
+2020-01-29 19:22:10 ERROR (MainThread) [homeassistant.setup] Setup failed for map: Could not set up all dependencies.
+2020-01-29 19:22:10 ERROR (SyncWorker_3) [homeassistant.components.google_maps.device_tracker] The cookie file provided does not provide a valid session. Please create another one and try again.
+2020-01-29 19:22:10 ERROR (MainThread) [homeassistant.components.device_tracker] Error setting up platform legacy
+2020-01-29 19:22:12 ERROR (MainThread) [homeassistant.components.plex] Plex server could not be reached: http://192.168.1.144:32400
+2020-01-29 19:22:19 WARNING (MainThread) [homeassistant.components.upnp] Wanted UPnP/IGD device with UDN "uuid:ebf5a0a0-1dd1-11b2-a90f-30230313a61e" not found, aborting
+2020-01-29 19:22:19 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of logbook. Setup failed for dependencies: frontend
+2020-01-29 19:22:19 ERROR (MainThread) [homeassistant.setup] Setup failed for logbook: Could not set up all dependencies.
+2020-01-29 19:22:19 WARNING (MainThread) [homeassistant.components.template.sensor] Could not render template bathroom_temperature, the state is unknown.
+2020-01-29 19:22:19 WARNING (MainThread) [homeassistant.components.template.sensor] Could not render template office_temperature, the state is unknown.
+2020-01-29 19:22:19 ERROR (MainThread) [homeassistant.components.automation] Error while executing automation automation.set_theme_at_startup. Service not found for call_service at pos 1: Unable to find service frontend/set_theme
+2020-01-29 19:22:20 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection.139828003153904] Received invalid command: get_panels
+2020-01-29 19:22:20 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection.139828003153904] Received invalid command: frontend/get_themes
+2020-01-29 19:22:20 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection.139828003153904] Received invalid command: frontend/get_translations
+2020-01-29 19:22:20 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection.139828003153904] Received invalid command: frontend/get_user_data
+2020-01-29 19:22:20 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection.139828003153904] Received invalid command: frontend/get_user_data
+2020-01-29 19:24:32 ERROR (MainThread) [homeassistant.components.websocket_api.http.connection.139828003153904] Received invalid command: frontend/get_user_data

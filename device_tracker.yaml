@@ -1,7 +1,13 @@
-  - platform: linksys_smart
-    host: !secret router_ip
-    new_device_defaults:
-      track_new_devices: true
+#  - platform: linksys_smart
+#    host: !secret router_ip
+ #   new_device_defaults:
+ #     track_new_devices: true
+      
+  - platform: nmap_tracker
+    hosts:
+      - 192.168.1.204
+      - 192.168.1.136
+    home_interval: 5
 
   - platform: huesensor
     new_device_defaults:

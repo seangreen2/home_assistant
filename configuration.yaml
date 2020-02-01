@@ -1,4 +1,13 @@
 homeassistant:
+  auth_providers:
+    - type: homeassistant
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.1.0/24
+        - 127.0.0.1
+      allow_bypass_login: true
+    - type: legacy_api_password
+      api_password: !secret api_password
   name: Home
   latitude: !secret latitude
   longitude: !secret longitude
@@ -6,13 +15,7 @@ homeassistant:
   unit_system: imperial
   time_zone: America/New_York
   customize: !include customize.yaml
-  auth_providers:
-    - type: trusted_networks
-      trusted_networks:
-        - 192.168.1.0/24
-        - 127.0.0.1
-    - type: legacy_api_password
-      api_password: !secret api_password
+
 
 map:
 
@@ -179,13 +182,7 @@ xiaomi_aqara:
   discovery_retry: 10
   gateways:
     - key: !secret xiaomi_key
-
-owntracks:
-  max_gps_accuracy: 200
-  region_mapping:
-    home: home
-    work: work
-
+    
 speedtestdotnet:
   scan_interval:
     hours: 6
