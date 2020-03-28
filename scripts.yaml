@@ -20,6 +20,8 @@
             value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT conditio
       - service: automation.turn_off
         entity_id: automation.bedroom_auto_brightness
+      - service: automation.turn_off
+        entity_id: automation.living_room_auto_brightness
       - service: automation.turn_on
         entity_id: automation.repeat_rain_audio
       - service: light.turn_off
@@ -51,6 +53,8 @@
         data:
           entity_id: input_select.sean_room_location
           option: Home
+      - service: automation.turn_on
+        entity_id: automation.living_room_auto_brightness
       - condition: and
         conditions:
           - condition: state
@@ -108,6 +112,8 @@
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.bedtime_emily
+      - service: automation.turn_on
+        entity_id: automation.living_room_auto_brightness
       - service: input_select.select_option
         data:
           entity_id: input_select.emily_room_location

@@ -1,6 +1,5 @@
 default_view:
   name: Home
-  view: yes
   icon: mdi:home
   entities:
     - group.family
@@ -12,26 +11,21 @@ default_view:
 ### FAMILY ###
 family:
   name: Family
-  view: no
   entities:
     - group.sean
     - group.emily
 
 sean:
   name: Sean
-  view: no
   entities:
     - device_tracker.sean_phone #Phone
-#    - device_tracker.sean_pixel3 #owntracks
     - device_tracker.pixel_3 # Mobile App
 
 emily:
   name: Emily
-  view: no
   entities:
     - device_tracker.emily_phone #Phone
     - device_tracker.pixel_3_2 # Mobile App
-#    - device_tracker.emily_pixel3 #owntracks
 
 # MOTION SENSORS
 bedroom_motion:
@@ -48,11 +42,11 @@ living_room_motion:
 office_motion:
   entities:
     - binary_sensor.office_motion_motion_sensor
+    - binary_sensor.wyzesense_779b1988
 
 
 gtracker:
   name: Google Tracker
-  view: no
   entities:
     - !secret gtracker_one
     - !secret gtracker_two
@@ -60,7 +54,6 @@ gtracker:
 ### LIGHTS ###
 all_lights:
   name: All Lights
-  view: no
   entities:
     - light.bedroom
     - light.bathroom
@@ -69,7 +62,6 @@ all_lights:
 
 bedtime_lights:
   name: Bedtime Lights
-  view: no
   entities:
     - light.bedroom
     - light.office

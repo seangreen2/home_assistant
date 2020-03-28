@@ -56,6 +56,7 @@ lovelace:
 
 frontend:
   themes: !include_dir_merge_named themes
+  javascript_version: latest
 
 config:
 http:
@@ -234,7 +235,6 @@ plex:
   token: !secret plex_token
   media_player:
     use_episode_art: true
-    show_all_controls: false
 
 # Pi-Hole
 pi_hole:

@@ -3,7 +3,7 @@
    initial_state: 'on'
    trigger:
      platform: state
-     entity_id: binary_sensor.wyzesense_778bb852
+     entity_id: binary_sensor.wyzesense_778bb85a
      to: 'on'
      for:
        seconds: '120'
@@ -18,7 +18,7 @@
    initial_state: 'on'
    trigger:
      platform: state
-     entity_id: binary_sensor.wyzesense_778bb852
+     entity_id: binary_sensor.wyzesense_778bb85a
      to: 'off'
      for:
        seconds: '10'
@@ -108,7 +108,7 @@
          state: 'off'
        - condition: numeric_state
          entity_id: sensor.bedroom_humidity
-         below: '53'
+         below: '54.9'
        - condition: template
          value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
        - condition: template

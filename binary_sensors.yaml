@@ -15,4 +15,4 @@
   - platform: huesensor
 
   - platform: wyzesense
-    device: "/dev/hidraw0"
+    device: auto

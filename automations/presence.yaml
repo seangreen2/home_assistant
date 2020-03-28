@@ -58,7 +58,7 @@
       to: 'not_home'
     condition:
       - condition: state
-        entity_id: binary_sensor.wyzesense_778bb852
+        entity_id: binary_sensor.wyzesense_778bb85a
         state: 'off'
     action:
       - service: climate.set_preset_mode
@@ -76,7 +76,7 @@
       to: 'home'
     condition:
       - condition: state
-        entity_id: binary_sensor.wyzesense_778bb852
+        entity_id: binary_sensor.wyzesense_778bb85a
         state: 'off'
     action:
       - service: climate.set_preset_mode

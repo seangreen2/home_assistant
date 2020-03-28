@@ -8,7 +8,7 @@
         to: 'idle'
     condition:
       - condition: time
-        after: '17:00:00'
+        after: '16:00:00'
         before: '03:00:00'
     action:
       - service: light.turn_on
@@ -35,7 +35,7 @@
         to: 'unavailable'
     condition:
       - condition: time
-        after: '17:00:00'
+        after: '16:00:00'
         before: '03:00:00'
     action:
       - service: light.turn_on
@@ -121,7 +121,7 @@
         to: 'paused'
     condition:
       - condition: time
-        after: '17:00:00'
+        after: '16:00:00'
         before: '03:00:00'
     action:
       service: light.turn_on
@@ -153,7 +153,7 @@
         to: 'idle'
     condition:
       - condition: time
-        after: '17:00:00'
+        after: '16:00:00'
         before: '03:00:00'
     action:
       - service: light.turn_on
@@ -179,7 +179,7 @@
         to: 'unavailable'
     condition:
       - condition: time
-        after: '17:00:00'
+        after: '16:00:00'
         before: '03:00:00'
     action:
       - service: light.turn_on
@@ -222,7 +222,7 @@
           {{ src in ['Roku','Home'] }}
     condition:
       - condition: time
-        after: '17:00:00'
+        after: '16:00:00'
         before: '03:00:00'
     action:
       - service: light.turn_on

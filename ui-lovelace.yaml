@@ -1,11 +1,11 @@
 title: Home
 
 resources:
-  - url: /local/community/mini-graph-card/mini-graph-card.js
+  - url: /local/community/mini-graph-card/mini-graph-card-bundle.js?v=0.9.3
     type: module
-  - url: /local/community/mini-media-player/mini-media-player.js
+  - url: /local/community/mini-media-player/mini-media-player-bundle.js
     type: module
-  - url: /local/community/simple-weather-card/simple-weather-card.js?v=0.7.2
+  - url: /local/community/simple-weather-card/simple-weather-card-bundle.js
     type: module
   - url: /local/community/simple-thermostat/simple-thermostat.js
     type: module
@@ -45,6 +45,17 @@ views:
  #             - sensor.work_commute
           - type: conditional
             conditions:
+              - entity: media_player.bedroom_tv
+                state_not: "unavailable"
+            card:
+              type: custom:mini-media-player
+              entity: media_player.bedroom_tv
+              icon: mdi:television
+              artwork: cover
+              hide:
+                volume: true      
+          - type: conditional
+            conditions:
               - entity: media_player.plex_living_room_tv
                 state_not: "unavailable"
             card:
@@ -53,7 +64,7 @@ views:
               icon: mdi:television
               artwork: cover
               hide:
-                volume: true           
+                volume: true                 
           - type: conditional
             conditions:
               - entity: media_player.whole_house
@@ -71,59 +82,52 @@ views:
             primary_info:
               - extrema
             secondary_info: 
+              - wind_speed
+              - precipitation_probability
               - humidity
- #             - precipitation_probability
- #             - wind_speed
             backdrop:
               day: "#2980b9"
               night: "#022F4C"
+#          - type: horizontal-stack
+ #           cards:
+ #             - type: custom:mini-graph-card
+ #               name: Sun Elevation
+ #               entities:
+ #                 - sensor.sun_elevation
+ #               line_color: '#b58e31'
+ #               line_width: 4
+ #             - type: custom:mini-graph-card
+ #               name: Chance of Rain
+ #               entities:
+ #                 - sensor.dark_sky_precip_probability
+  #              line_color: '#2980b9'
+  #              line_width: 4 
           - type: horizontal-stack
             cards:
-              - type: custom:mini-graph-card
-                name: Sun Elevation
-                entities:
-                  - sensor.sun_elevation
-                line_color: '#b58e31'
-                line_width: 4
-              - type: custom:mini-graph-card
-                name: Chance of Rain
-                entities:
-                  - sensor.dark_sky_precip_probability
-                line_color: '#2980b9'
-                line_width: 4 
-
-      - type: horizontal-stack
-        cards:
-          - type: entity-button
-            entity: switch.living_room_fan
-            name: Ceiling
-            icon: mdi:fan
-            tap_action:
-              action: toggle
-          - type: entity-button
-            entity: switch.outside_lights
-            name: Freshener
-            icon: mdi:cat
-            tap_action:
-              action: toggle
-          - type: entity-button
-            entity: switch.office_fan
-            name: Office
-            icon: mdi:fan
-            tap_action:
-              action: toggle
-#          - type: entity-button
-#            entity: switch.outside_lights
-#            name: Patio
-#            icon: mdi:lightbulb
-#            tap_action:
-#              action: toggle
-          - type: entity-button
-            entity: switch.bedroom_fan
-            name: Bedroom
-            icon: mdi:fan
-            tap_action:
-              action: toggle
+              - type: entity-button
+                entity: switch.living_room_fan
+                name: Ceiling
+                icon: mdi:fan
+                tap_action:
+                  action: toggle
+              - type: entity-button
+                entity: switch.outside_lights
+                name: Freshener
+                icon: mdi:cat
+                tap_action:
+                  action: toggle
+              - type: entity-button
+                entity: switch.office_fan
+                name: Office
+                icon: mdi:fan
+                tap_action:
+                  action: toggle
+              - type: entity-button
+                entity: switch.bedroom_fan
+                name: Bedroom
+                icon: mdi:fan
+                tap_action:
+                  action: toggle
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -172,7 +176,7 @@ views:
               idle: mdi:power
               away: mdi:leaf
             sensors:
-              - entity: sensor.living_room_thermostat_hvac_state
+          #    - entity: sensor.living_room_thermostat_hvac_state
               - entity: sensor.living_room_thermostat_humidity
                 name: Humidity
 #          - type: thermostat
@@ -251,7 +255,7 @@ views:
         cards:
           - type: glance
             entities:
-              - binary_sensor.wyzesense_778bb852
+              - binary_sensor.wyzesense_778bb85a
               - group.living_room_motion
           - type: custom:mini-media-player
             entity: media_player.plex_living_room_tv
@@ -503,16 +507,6 @@ views:
     icon: 'mdi:home-account'
     badges: []
     cards:
-      - title: BT RSSI
-        type: entities
-        entities:
-          - sensor.bedroom_sean_gh_rssi
-          - sensor.livingroom_sean_gh_rssi
-          - sensor.office_sean_gh_rssi
-          - sensor.bedroom_emily_gh_rssi
-          - sensor.livingroom_emily_gh_rssi
-          - sensor.office_emily_gh_rssi
-        show_header_toggle: false
       - title: Input Booleans
         type: entities
         entities:
@@ -521,12 +515,6 @@ views:
           - input_boolean.bedroom_occupied
           - input_boolean.living_room_occupied
           - input_boolean.office_occupied
-          - input_boolean.sean_bedroom_presence
-          - input_boolean.sean_living_room_presence
-          - input_boolean.sean_office_presence
-          - input_boolean.emily_bedroom_presence
-          - input_boolean.emily_living_room_presence
-          - input_boolean.emily_office_presence
         show_header_toggle: false
 
   - path: auto
