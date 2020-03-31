@@ -88,6 +88,29 @@ views:
             backdrop:
               day: "#2980b9"
               night: "#022F4C"
+          - type: custom:bar-card
+            entity: sensor.allergy_index_today
+            title: Allergen Severity
+            title_position: inside
+            align: split
+            show_icon: true
+            severity:
+             - value: 2.4
+               color: '#a4d86c'
+             - value: 4.8
+               color: '#bafc75'
+             - value: 7.2
+               color: '#fbfc5c'
+             - value: 9.6
+               color: '#b58e31'
+             - value: 12
+               color: '#fb625c'
+            max: '12'
+          - type: glance
+            entities:
+              - sensor.us_coronavirus_confirmed
+              - sensor.us_coronavirus_deaths
+              - sensor.us_coronavirus_recovered
 #          - type: horizontal-stack
  #           cards:
  #             - type: custom:mini-graph-card

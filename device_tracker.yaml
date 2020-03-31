@@ -9,10 +9,6 @@
       - 192.168.1.136
     home_interval: 5
 
-  - platform: huesensor
-    new_device_defaults:
-      track_new_devices: false
-
-  - platform: google_maps
-    username: !secret googlemaps_user
-    max_gps_accuracy: 200
+#  - platform: huesensor
+ #   new_device_defaults:
+ #     track_new_devices: false

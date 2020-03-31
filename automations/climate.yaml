@@ -30,10 +30,34 @@
            {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
              cool
            {% elif states('sensor.season') == 'autumn' %}
-             heat
+             auto
            {% else %}
              heat
            {% endif %}
+           
+# When porch door is open enable allergy warning
+ - alias: Allergy Warning
+   initial_state: 'on'
+   trigger:
+     platform: state
+     entity_id: binary_sensor.wyzesense_778bb85a
+     to: 'on'
+     for:
+       seconds: '45'
+   condition:
+     condition: and
+     conditions:
+       - condition: state
+         entity_id: group.family
+         state: 'home'
+       - condition: numeric_state
+         entity_id: sensor.allergy_index_today
+         above: '4.8'
+   action:
+     - service: tts.google_say
+       entity_id: media_player.living_room_speaker
+       data:
+         message: "Warning, allergy levels are high today and you should keep doors and windows shut."
 
 # Turn on ceiling fan under certain conditions
  - alias: Turn on Ceiling Fan

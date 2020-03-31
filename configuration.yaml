@@ -155,6 +155,9 @@ weather:
 
 sun:
 
+iqvia:
+  zip_code: !secret zipcode
+
 # Nest Temperature
 nest:
   client_id: !secret nest_id
