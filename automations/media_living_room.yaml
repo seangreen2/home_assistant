@@ -6,10 +6,10 @@
         entity_id: media_player.plex_living_room_tv
         from: 'playing'
         to: 'idle'
-    condition:
-      - condition: time
-        after: '16:00:00'
-        before: '03:00:00'
+ #   condition:
+  #    - condition: time
+ #       after: '16:00:00'
+ #       before: '03:00:00'
     action:
       - service: light.turn_on
         data_template:
@@ -33,10 +33,10 @@
         entity_id: media_player.plex_living_room_tv
         from: 'playing'
         to: 'unavailable'
-    condition:
-      - condition: time
-        after: '16:00:00'
-        before: '03:00:00'
+ #   condition:
+ #     - condition: time
+ #       after: '16:00:00'
+ #       before: '03:00:00'
     action:
       - service: light.turn_on
         data_template:
@@ -119,10 +119,10 @@
         entity_id: media_player.plex_living_room_tv
         from: 'playing'
         to: 'paused'
-    condition:
-      - condition: time
-        after: '16:00:00'
-        before: '03:00:00'
+#    condition:
+#      - condition: time
+#        after: '16:00:00'
+#        before: '03:00:00'
     action:
       service: light.turn_on
       data:
@@ -151,10 +151,10 @@
         entity_id: media_player.plex_living_room_tv
         from: 'paused'
         to: 'idle'
-    condition:
-      - condition: time
-        after: '16:00:00'
-        before: '03:00:00'
+#    condition:
+#      - condition: time
+ #       after: '16:00:00'
+#        before: '03:00:00'
     action:
       - service: light.turn_on
         data_template:
@@ -177,10 +177,10 @@
         entity_id: media_player.plex_living_room_tv
         from: 'paused'
         to: 'unavailable'
-    condition:
-      - condition: time
-        after: '16:00:00'
-        before: '03:00:00'
+ #   condition:
+#      - condition: time
+ #       after: '16:00:00'
+ #       before: '03:00:00'
     action:
       - service: light.turn_on
         data_template:
@@ -206,7 +206,7 @@
       - platform: template
         value_template: >
           {% set src = state_attr('media_player.living_room_tv', 'source') %}
-          {{ src in ["Netflix","Prime Video","YouTube","Pluto TV - It's Free TV"] }}
+          {{ src in ["Netflix","HDMI 1 (ARC)","Prime Video","YouTube","Pluto TV - It's Free TV"] }}
     action:
       - service: light.turn_off
         data:
@@ -220,10 +220,13 @@
         value_template: >
           {% set src = state_attr('media_player.living_room_tv', 'source') %}
           {{ src in ['Roku','Home'] }}
-    condition:
-      - condition: time
-        after: '16:00:00'
-        before: '03:00:00'
+      - platform: state
+        entity_id: media_player.living_room_tv
+        to: 'standby'
+ #   condition:
+ #     - condition: time
+ #       after: '16:00:00'
+ #       before: '03:00:00'
     action:
       - service: light.turn_on
         data_template:
@@ -246,6 +249,9 @@
         value_template: >
           {% set src = state_attr('media_player.living_room_tv', 'source') %}
           {{ src in ['Roku','Home'] }}
+      - platform: state
+        entity_id: media_player.living_room_tv
+        to: 'standby'
     action:
       - service: switch.turn_off
         entity_id: switch.bias_lighting

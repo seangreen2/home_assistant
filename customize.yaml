@@ -163,3 +163,7 @@ group.office_motion:
   icon: mdi:run-fast
   device_class: motion
   friendly_name: Office Motion
+group.bathroom_motion:
+  icon: mdi:run-fast
+  device_class: motion
+  friendly_name: Bathroom Motion

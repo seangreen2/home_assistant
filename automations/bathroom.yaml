@@ -3,7 +3,7 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: binary_sensor.bathroom_motion_sensor
+    entity_id: group.bathroom_motion
     to: 'on'
   condition:
     condition: and
@@ -31,7 +31,7 @@
     minutes: '/5'
   condition:
     - condition: state
-      entity_id: binary_sensor.bathroom_motion_sensor
+      entity_id: group.bathroom_motion
       state: 'off'
       for:
         minutes: 3

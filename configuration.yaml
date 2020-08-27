@@ -46,8 +46,6 @@ circadian_lighting:
 
 hacs:
   token: !secret hacs_token
-  theme: true
-  python_script: true
 
 system_health:
 
@@ -107,6 +105,7 @@ history:
       - sensor.pi_hole_ads_percentage_blocked_today
       - sensor.office_motion_sensor_temperature
       - sensor.bathroom_sensor_temperature
+      - sensor.living_room_temperature_f
 
 recorder:
   purge_interval: 1
@@ -144,6 +143,7 @@ recorder:
       - sensor.pi_hole_ads_percentage_blocked_today
       - sensor.office_motion_sensor_temperature
       - sensor.bathroom_sensor_temperature
+      - sensor.living_room_temperature_f
 
 # View all events in a logbook
 logbook:
@@ -233,11 +233,14 @@ tts:
     service_name: google_say
 
 # Media
-plex:
-  host: !secret plex_ip
-  token: !secret plex_token
-  media_player:
-    use_episode_art: true
+#plex:
+#  host: !secret plex_ip
+#  token: !secret plex_token
+#  media_player:
+#    use_episode_art: true
+    
+#roku:
+#  - host: 192.168.1.115
 
 # Pi-Hole
 pi_hole:

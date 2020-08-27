@@ -5,3 +5,5 @@ custom_components
 www
 groups.yaml
 plex.conf
+home-assistant.log
+home-assistant_v2.db

@@ -22,6 +22,8 @@
         entity_id: automation.bedroom_auto_brightness
       - service: automation.turn_off
         entity_id: automation.living_room_auto_brightness
+      - service: automation.turn_off
+        entity_id: automation.office_auto_brightness
       - service: automation.turn_on
         entity_id: automation.repeat_rain_audio
       - service: light.turn_off
@@ -55,6 +57,8 @@
           option: Home
       - service: automation.turn_on
         entity_id: automation.living_room_auto_brightness
+      - service: automation.turn_on
+        entity_id: automation.office_auto_brightness
       - condition: and
         conditions:
           - condition: state
@@ -87,6 +91,8 @@
             value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
       - service: automation.turn_off
         entity_id: automation.bedroom_auto_brightness
+      - service: automation.turn_off
+        entity_id: automation.living_room_auto_brightness
       - service: automation.turn_on
         entity_id: automation.repeat_rain_audio
       - service: homeassistant.turn_on
@@ -130,19 +136,8 @@
         entity_id: automation.repeat_rain_audio
       - service: automation.turn_on
         entity_id: automation.bedroom_auto_brightness
+      - service: automation.turn_on
+        entity_id: automation.office_auto_brightness
       - service: media_player.media_stop
         data:
           entity_id: media_player.bedroom_speaker
-
-  emily_car:
-    sequence:
-      - condition: time
-        after: '04:00:00'
-        before: '09:00:00'
-      - condition: state
-        entity_id: input_boolean.bedtime_sean
-        state: 'on'
-      - service: light.turn_off
-        data:
-          entity_id: light.living_room
-          transition: 2

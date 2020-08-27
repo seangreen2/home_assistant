@@ -85,3 +85,11 @@ slate:
   lumo-tint-5pct: '#222222'
   # fix for device configuration screen
   card-background-color: "var(--paper-card-background-color)"
+  # Fix for Person Device Chooser - thanks to vajonam!
+  material-background-color: "var(--paper-listbox-background-color)"
+  material-secondary-background-color: '#222222'
+  material-body-text-color: '#FFFFFF'
+  # simple-thermostat buttons
+  st-mode-background: 'var(--primary-background-color)'
+  # fix white on white markdown code sections (eg. the addons infos)
+  markdown-code-background-color: 'var(--secondary-background-color)'

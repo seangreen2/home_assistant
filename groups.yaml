@@ -38,11 +38,17 @@ living_room_motion:
     - binary_sensor.motion_sensor_158d0002047afe
     - binary_sensor.motion_sensor_158d00031b4c8a
     - binary_sensor.wyzesense_779b29d3
+#    - binary_sensor.living_room_motion_sensor
 
 office_motion:
   entities:
     - binary_sensor.office_motion_motion_sensor
     - binary_sensor.wyzesense_779b1988
+    
+bathroom_motion:
+  name: Bathroom Motion
+  entities:
+    - binary_sensor.wyzesense_779b149b
 
 
 gtracker:

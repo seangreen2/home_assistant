@@ -11,25 +11,25 @@
 
   - platform: template
     sensors:
-      bathroom_temperature:
-        value_template: '{{states.sensor.bathroom_motion_sensor.attributes.temperature}}'
+      living_room_temperature:
+        value_template: '{{states.binary_sensor.living_room_motion_sensor.attributes.temperature}}'
 
   - platform: template
     sensors:
-      bathroom_battery:
-        friendly_name: 'Battery'
-        value_template: '{{states.binary_sensor.bathroom_sensor_motion.attributes.battery_level}}'
+      living_room_battery:
+        friendly_name: 'Living Room Battery'
+        value_template: '{{states.binary_sensor.living_room_motion_sensor.attributes.battery}}'
         unit_of_measurement: '%'
 
   - platform: template
     sensors:
-      bathroom_temperature_f:
-        friendly_name: 'Bathroom'
+      living_room_temperature_f:
+        friendly_name: 'Living Room'
         entity_id:
-          - sensor.bathroom_sensor_temperature
+          - sensor.living_room_sensor_temperature
         unit_of_measurement: °F
         value_template: >
-          {{ (float(states('sensor.bathroom_sensor_temperature'))) | round(1) }}
+          {{ ((float(states('sensor.living_room_sensor_temperature'))) + 7) | round(1) }}
 
   - platform: template
     sensors:
@@ -39,7 +39,7 @@
           - sensor.humidity_158d0002478a21
         unit_of_measurement: '%'
         value_template: >
-          {{ ((float(states('sensor.humidity_158d0002478a21'))) - 0) | round(1) }}
+          {{ ((float(states('sensor.humidity_158d0002478a21'))) - 0) | round(0) }}
 
   - platform: template
     sensors:
@@ -49,7 +49,7 @@
           - sensor.temperature_158d0002478a21
         unit_of_measurement: °F
         value_template: >
-          {{ ((float(states('sensor.temperature_158d0002478a21'))) - 0) | round(1) }}
+          {{ ((float(states('sensor.temperature_158d0002478a21'))) + 2) | round(1) }}
 
   - platform: template
     sensors:
@@ -71,14 +71,14 @@
           - sensor.office_motion_sensor_temperature
         unit_of_measurement: °F
         value_template: >
-          {{ (float(states('sensor.office_motion_sensor_temperature'))) | round(1) }}
+          {{ ((float(states('sensor.office_motion_sensor_temperature'))) + 4) | round(1) }}
 
   - platform: template
     sensors:
       office_lux:
         friendly_name: 'Lux'
         value_template: >
-          {{ (float(states('sensor.office_motion_sensor_light_level'))) | round(1) }}
+          {{ (float(states('sensor.office_motion_sensor_light_level'))) | round(0) }}
         unit_of_measurement: lx
 
   - platform: template
@@ -93,36 +93,6 @@
         friendly_name: Sun Elevation
         value_template: '{{states.sun.sun.attributes.elevation}}'
         unit_of_measurement: '°'
-
-  - platform: template
-    sensors:
-      bedroom_sean_gh_rssi:
-        value_template: >-
-          {% if is_state("device_tracker.192_168_1_131_3c_28_6d_29_fe_2c", "home") %}
-            {{state_attr('device_tracker.192_168_1_131_3c_28_6d_29_fe_2c', 'rssi')}}
-          {% else %}
-            -99
-          {% endif %}
-
-  - platform: template
-    sensors:
-      livingroom_sean_gh_rssi:
-        value_template: >-
-          {% if is_state("device_tracker.192_168_1_130_3c_28_6d_29_fe_2c", "home") %}
-            {{state_attr('device_tracker.192_168_1_130_3c_28_6d_29_fe_2c', 'rssi')}}
-          {% else %}
-            -99
-          {% endif %}
-
-  - platform: template
-    sensors:
-      office_sean_gh_rssi:
-        value_template: >-
-          {% if is_state("device_tracker.192_168_1_146_3c_28_6d_29_fe_2c", "home") %}
-            {{state_attr('device_tracker.192_168_1_146_3c_28_6d_29_fe_2c', 'rssi')}}
-          {% else %}
-            -99
-          {% endif %}
 
   - platform: template
     sensors:
@@ -144,36 +114,6 @@
             mdi:home
           {% else %}
             mdi:exit-run
-          {% endif %}
-
-  - platform: template
-    sensors:
-      bedroom_emily_gh_rssi:
-        value_template: >-
-          {% if is_state("device_tracker.192_168_1_131_3c_28_6d_23_86_17", "home") %}
-            {{state_attr('device_tracker.192_168_1_131_3c_28_6d_23_86_17', 'rssi')}}
-          {% else %}
-            -99
-          {% endif %}
-
-  - platform: template
-    sensors:
-      livingroom_emily_gh_rssi:
-        value_template: >-
-          {% if is_state("device_tracker.192_168_1_130_3c_28_6d_23_86_17", "home") %}
-            {{state_attr('device_tracker.192_168_1_130_3c_28_6d_23_86_17', 'rssi')}}
-          {% else %}
-            -99
-          {% endif %}
-
-  - platform: template
-    sensors:
-      office_emily_gh_rssi:
-        value_template: >-
-          {% if is_state("device_tracker.192_168_1_146_3c_28_6d_23_86_17", "home") %}
-            {{state_attr('device_tracker.192_168_1_146_3c_28_6d_23_86_17', 'rssi')}}
-          {% else %}
-            -99
           {% endif %}
 
   - platform: template
@@ -347,7 +287,7 @@
 #    ip_address: !secret hue_ip
 #    token: !secret hue_token
 
-  - platform: huesensor
+#  - platform: huesensor
 
   - platform: waze_travel_time
     origin: !secret travel_origin

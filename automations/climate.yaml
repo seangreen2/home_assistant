@@ -37,7 +37,7 @@
            
 # When porch door is open enable allergy warning
  - alias: Allergy Warning
-   initial_state: 'on'
+   initial_state: 'off'
    trigger:
      platform: state
      entity_id: binary_sensor.wyzesense_778bb85a

@@ -1,7 +1,7 @@
 title: Home
 
 resources:
-  - url: /local/community/mini-graph-card/mini-graph-card-bundle.js?v=0.9.3
+  - url: /local/community/mini-graph-card/mini-graph-card-bundle.js
     type: module
   - url: /local/community/mini-media-player/mini-media-player-bundle.js
     type: module
@@ -10,7 +10,9 @@ resources:
   - url: /local/community/simple-thermostat/simple-thermostat.js
     type: module
   - url: /local/community/bar-card/bar-card.js
-    type: js
+    type: module
+  - url: /local/community/vacuum-card/vacuum-card.js
+    type: module
 
 views:
   - path: default_view
@@ -26,7 +28,7 @@ views:
                 title: Status
                 entities:
                   - sensor.sean_room_status
-                  - sensor.sean_phone_battery
+                  - sensor.battery_level
                 state_image:
                   "home": /local/images/sean_16x9.jpg
                   "not_home": /local/images/sean_16x9_gray.jpg
@@ -35,7 +37,7 @@ views:
                 title: Status
                 entities:
                   - sensor.emily_room_status
-                  - sensor.emily_phone_battery
+                  - sensor.battery_level_2
                 state_image:
                   "home": /local/images/emily_16x9.jpg
                   "not_home": /local/images/emily_16x9_gray.jpg
@@ -88,24 +90,34 @@ views:
             backdrop:
               day: "#2980b9"
               night: "#022F4C"
-          - type: custom:bar-card
+          - type: 'custom:bar-card'
             entity: sensor.allergy_index_today
-            title: Allergen Severity
-            title_position: inside
-            align: split
-            show_icon: true
+            name: Allergen Severity
+            entity_row: true
+            positions:
+              icon: inside
+              indicator: inside
+              name: inside
+              value: inside
+            width: 100%
+            max: 12
             severity:
-             - value: 2.4
-               color: '#a4d86c'
-             - value: 4.8
-               color: '#bafc75'
-             - value: 7.2
-               color: '#fbfc5c'
-             - value: 9.6
-               color: '#b58e31'
-             - value: 12
-               color: '#fb625c'
-            max: '12'
+             - color: '#70a03c'
+               from: 0
+               to: 2.4
+             - color: '#70a03c'
+               from: 2.5
+               to: 4.8
+             - color: '#b58e31'
+               from: 4.9
+               to: 7.2
+             - color: '#b58e31'
+               from: 7.3
+               to: 9.6
+             - color: '#fb625c'
+               from: 9.7
+               to: 12
+
           - type: glance
             entities:
               - sensor.us_coronavirus_confirmed
@@ -157,7 +169,7 @@ views:
             cards:
               - type: light
                 entity: light.living_room
-                name: Living Room
+                name: Living Room Lights
               - type: light
                 entity: light.bedroom
                 name: Bedroom Lights
@@ -165,7 +177,7 @@ views:
             cards:
               - type: light
                 entity: light.bathroom
-                name: Bathroom
+                name: Bathroom Lights
               - type: light
                 entity: light.office
                 name: Office Lights
@@ -200,6 +212,8 @@ views:
               away: mdi:leaf
             sensors:
           #    - entity: sensor.living_room_thermostat_hvac_state
+              - entity: binary_sensor.living_room_thermostat_fan
+                name: Fan Status
               - entity: sensor.living_room_thermostat_humidity
                 name: Humidity
 #          - type: thermostat
@@ -208,14 +222,14 @@ views:
             cards:
               - type: custom:mini-graph-card
                 entities:
-                  - sensor.bedroom_temp
-                name: Bedroom
+                  - sensor.living_room_temperature_f
+                name: Living Room
                 line_color: '#2980b9'
                 line_width: 6
               - type: custom:mini-graph-card
                 entities:
-                  - sensor.bathroom_temperature_f
-                name: Bathroom
+                  - sensor.bedroom_temp
+                name: Bedroom
                 line_color: '#b58e31'
                 line_width: 6
               - type: custom:mini-graph-card
@@ -237,14 +251,12 @@ views:
             cards:
               - type: custom:mini-graph-card
                 entities:
-                  - sensor.living_room_thermostat_temperature
+                  - sensor.living_room_temperature_f
                 name: Living Room
                 line_color: '#2980b9'
                 line_width: 2
           - type: horizontal-stack
             cards:
-              - type: light
-                entity: light.living_room
               - type: custom:mini-graph-card
                 entities:
                   - sensor.living_room_thermostat_humidity
@@ -252,6 +264,8 @@ views:
                 line_color: '#b58e31'
                 line_width: 4
                 hours_to_show: 24
+              - type: light
+                entity: light.living_room
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -280,6 +294,7 @@ views:
             entities:
               - binary_sensor.wyzesense_778bb85a
               - group.living_room_motion
+              - sensor.living_room_battery
           - type: custom:mini-media-player
             entity: media_player.plex_living_room_tv
             icon: mdi:television
@@ -289,10 +304,21 @@ views:
             icon: mdi:google-home
             artwork: cover
             show_tts: google
-      - title: Neato Vacuum
-        type: picture-entity
+      - type: 'custom:vacuum-card'
         entity: vacuum.rosie
-        image: /local/images/neato2.png
+        image: /local/images/neato_outline_black.png
+        stats: true
+        cleaning:
+          - attribute: cleaned_area
+            unit: m2
+            subtitle: Cleaned Area
+          - attribute: cleaning_time
+            unit: minutes
+            subtitle: Cleaning Time
+#      - title: Neato Vacuum
+#        type: picture-entity
+ #       entity: vacuum.rosie
+#        image: /local/images/neato2.png
   - path: bedroom
     title: Bedroom
     icon: 'mdi:hotel'
@@ -306,7 +332,6 @@ views:
                 entities:
                   - entity: sensor.bedroom_temp
                     name: Bedroom
-                  - sensor.bathroom_temperature_f
                 name: Bedroom
                 legend: false
                 line_color: '#2980b9'
@@ -335,13 +360,8 @@ views:
                   action: toggle
               - type: glance
                 entities:
-                  - sensor.bathroom_battery
-          - type: horizontal-stack
-            cards:
-              - type: glance
-                entities:
                   - group.bedroom_motion
-                  - binary_sensor.bathroom_motion_sensor
+                  - group.bathroom_motion
       - type: vertical-stack
         cards:
           - type: custom:mini-media-player
@@ -435,17 +455,25 @@ views:
             cards:
               - type: custom:bar-card
                 entity: sensor.disk_use_percent_home
-                title: HDD
-                title_position: inside
+                entity_row: true
+                width: 100%
+                positions:
+                  icon: inside
+                  indicator: inside
+                  name: inside
+                  value: inside
                 align: split
-                show_icon: true
-                color: '#00ba6a'
+                color: '#70a03c'
               - type: custom:bar-card
                 entity: sensor.memory_use_percent
-                title: RAM
-                title_position: inside
+                entity_row: true
+                width: 100%
+                positions:
+                  icon: inside
+                  indicator: inside
+                  name: inside
+                  value: inside
                 align: split
-                show_icon: true
               - type: glance
                 entities:
                   - sensor.count_automations
@@ -510,18 +538,26 @@ views:
             cards:
               - type: custom:bar-card
                 entity: sensor.pi_hole_dns_queries_today
-                title: DNS Queries Today
-                title_position: inside
+                entity_row: true
+                width: 100%
+                positions:
+                  icon: inside
+                  indicator: inside
+                  name: inside
+                  value: inside
                 align: split
-                show_icon: true
-                color: '#00ba6a'
+                color: '#70a03c'
                 max: '30000'
               - type: custom:bar-card
                 entity: sensor.pi_hole_domains_blocked
-                title: Domains Blocked
-                title_position: inside
+                entity_row: true
+                width: 100%
+                positions:
+                  icon: inside
+                  indicator: inside
+                  name: inside
+                  value: inside
                 align: split
-                show_icon: true
                 max: '2000000'
                 icon: mdi:cancel
 

@@ -6,6 +6,7 @@
       - Office
       - Away
       - Home
+      - Sleep
 
   emily_room_location:
     name: Emily's Room Location
@@ -15,3 +16,4 @@
       - Office
       - Away
       - Home
+      - Sleep
