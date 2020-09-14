@@ -222,13 +222,13 @@ views:
             cards:
               - type: custom:mini-graph-card
                 entities:
-                  - sensor.living_room_temperature_f
+                  - sensor.living_room_thermostat_temperature
                 name: Living Room
                 line_color: '#2980b9'
                 line_width: 6
               - type: custom:mini-graph-card
                 entities:
-                  - sensor.bedroom_temp
+                  - sensor.bedroom_temperature_f
                 name: Bedroom
                 line_color: '#b58e31'
                 line_width: 6
@@ -251,7 +251,7 @@ views:
             cards:
               - type: custom:mini-graph-card
                 entities:
-                  - sensor.living_room_temperature_f
+                  - sensor.living_room_thermostat_temperature
                 name: Living Room
                 line_color: '#2980b9'
                 line_width: 2
@@ -294,7 +294,6 @@ views:
             entities:
               - binary_sensor.wyzesense_778bb85a
               - group.living_room_motion
-              - sensor.living_room_battery
           - type: custom:mini-media-player
             entity: media_player.plex_living_room_tv
             icon: mdi:television
@@ -330,18 +329,19 @@ views:
             cards:
               - type: custom:mini-graph-card
                 entities:
-                  - entity: sensor.bedroom_temp
+                  - entity: sensor.bedroom_temperature_f
                     name: Bedroom
                 name: Bedroom
                 legend: false
                 line_color: '#2980b9'
-                line_width: 4
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.bedroom_humidity
-                name: Humidity
-                line_color: '#b93829'
-                line_width: 4
+                line_width: 2
+                hours_to_show: 24
+          #    - type: custom:mini-graph-card
+          #      entities:
+          #        - sensor.bedroom_humidity
+          #      name: Humidity
+          #      line_color: '#b93829'
+          #      line_width: 4
           - type: horizontal-stack
             cards:
               - type: light
@@ -428,11 +428,12 @@ views:
                   - group.office_motion
                   - sensor.office_battery
                   - sensor.steam_76561197976250572
-      - type: custom:mini-media-player
-        entity: media_player.office_speaker
-        icon: mdi:google-home
-        artwork: cover
-        show_tts: google
+                  - sensor.steam_76561198154412871
+          - type: custom:mini-media-player
+            entity: media_player.office_speaker
+            icon: mdi:google-home
+            artwork: cover
+            show_tts: google
 
   - path: settings
     title: Settings
@@ -566,6 +567,12 @@ views:
     icon: 'mdi:home-account'
     badges: []
     cards:
+      - title: Binary Sensors
+        type: entities
+        entities:
+          - binary_sensor.bedroom_unoccupied
+          - binary_sensor.living_room_unoccupied
+          - binary_sensor.office_unoccupied
       - title: Input Booleans
         type: entities
         entities:

@@ -1,35 +1,29 @@
   - platform: template
     sensors:
-      hue:
-        value_template: '{% if is_state("device_tracker.philipshue", "home") %}Online{% else %}Offline{% endif %}'
-        friendly_name: 'Hue Bridge'
-
-  - platform: template
-    sensors:
       steam_game:
         value_template: '{{states.sensor.steam_76561197976250572.attributes.game}}'
 
   - platform: template
     sensors:
-      living_room_temperature:
-        value_template: '{{states.binary_sensor.living_room_motion_sensor.attributes.temperature}}'
+      bedroom_sensor_temp:
+        value_template: '{{states.binary_sensor.bedroom_sensor.attributes.temperature}}'
 
   - platform: template
     sensors:
-      living_room_battery:
-        friendly_name: 'Living Room Battery'
-        value_template: '{{states.binary_sensor.living_room_motion_sensor.attributes.battery}}'
+      bedroom_battery:
+        friendly_name: 'Bedroom Battery'
+        value_template: '{{states.binary_sensor.bedroom_sensor.attributes.battery}}'
         unit_of_measurement: '%'
 
   - platform: template
     sensors:
-      living_room_temperature_f:
-        friendly_name: 'Living Room'
+      bedroom_temperature_f:
+        friendly_name: 'Bedroom'
         entity_id:
-          - sensor.living_room_sensor_temperature
+          - sensor.bedroom_sensor_temperature
         unit_of_measurement: °F
         value_template: >
-          {{ ((float(states('sensor.living_room_sensor_temperature'))) + 7) | round(1) }}
+          {{ ((float(states('sensor.bedroom_sensor_temperature'))) + 5) | round(1) }}
 
   - platform: template
     sensors:
@@ -71,7 +65,7 @@
           - sensor.office_motion_sensor_temperature
         unit_of_measurement: °F
         value_template: >
-          {{ ((float(states('sensor.office_motion_sensor_temperature'))) + 4) | round(1) }}
+          {{ ((float(states('sensor.office_motion_sensor_temperature'))) + 3) | round(1) }}
 
   - platform: template
     sensors:
@@ -266,28 +260,11 @@
         arg: eth0
       - type: last_boot
 
-#  - platform: pi_hole
-#    host: !secret pihole_ip
-#    monitored_conditions:
-#      - ads_blocked_today
-#      - ads_percentage_today
-#      - dns_queries_today
-#      - domains_being_blocked
-#      - unique_clients
-
-  - platform: plex
-    host: !secret plex_ip
-
   - platform: steam_online
     api_key: !secret steam_api
     accounts:
       - !secret steam_account
-
-#  - platform: hue
-#    ip_address: !secret hue_ip
-#    token: !secret hue_token
-
-#  - platform: huesensor
+      - !secret steam_account_2
 
   - platform: waze_travel_time
     origin: !secret travel_origin

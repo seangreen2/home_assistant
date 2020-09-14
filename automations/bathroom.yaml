@@ -1,6 +1,7 @@
 # Bathroom Lights on with Motion
 - alias: Bathroom Lights on motion
   initial_state: 'on'
+  mode: restart
   trigger:
     platform: state
     entity_id: group.bathroom_motion

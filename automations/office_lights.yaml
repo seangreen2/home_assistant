@@ -48,11 +48,6 @@
   - alias: Turn office lights without motion one min
     initial_state: 'on'
     trigger:
-#      platform: state
-#      entity_id: binary_sensor.office_motion_sensor_motion
-#      to: 'off'
-#      for:
-#        minutes: 6
       platform: time_pattern
       minutes: '/5'
     condition:
@@ -70,6 +65,8 @@
         state: 'off'
       - condition: template
         value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('sensor.steam_76561198154412871', 'online') }}" # NOT condition
     action:
       - service: light.turn_off
         data:
@@ -81,43 +78,3 @@
         data:
           entity_id: light.office
           transition: 2
-
-# Turn off Office Lights after one minute of no activity
-#  - alias: Turn office lights without motion one min
-#    initial_state: 'on'
-#    trigger:
-#      platform: state
-#      entity_id: binary_sensor.office_motion_sensor_motion
-#      to: 'off'
-#      for:
-#        minutes: '6'
-#    condition:
-#      condition: and
-#      conditions:
-#        - condition: numeric_state
-#          entity_id: sensor.laptop_socket
-#          below: '3'
-#        - condition: template
-#          value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
-#    action:
-#      - service: light.turn_off
-#        data:
-#          entity_id: light.office
-#          transition: 2
-
-# Turn off Office lights above lux
-#  - alias: Turn off office lights above lux
-#    initial_state: 'on'
-#    trigger:
-#      platform: numeric_state
-#      entity_id: sensor.office_lux
-#      above: 31
-#    condition:
-#      - condition: time
-#        after: '06:00:00'
-#        before: '20:00:00'
-#    action:
-#      service: light.turn_off
-#      data:
-#        entity_id: light.office
-#        transition: 2

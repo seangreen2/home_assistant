@@ -66,7 +66,6 @@
           entity_id: climate.living_room
           preset_mode: 'Away and Eco'
 
-
 # Turn off Eco Mode Nest
   - alias: 'Nest Home Mode'
     initial_state: 'on'

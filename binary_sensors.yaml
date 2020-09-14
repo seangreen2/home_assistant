@@ -16,3 +16,38 @@
 
   - platform: wyzesense
     device: auto
+
+  - platform: template
+    sensors:
+      office_unoccupied:
+        friendly_name: "Office Unoccupied"
+        value_template: >-
+          {{ is_state('binary_sensor.wyzesense_779b1988', 'off')
+             and is_state('binary_sensor.office_motion_motion_sensor', 'off')
+             and not is_state('sensor.steam_76561197976250572', 'online')
+             and not is_state('sensor.steam_76561198154412871', 'online') }}
+
+  - platform: template
+    sensors:
+      living_room_unoccupied:
+        friendly_name: "Living Room Unoccupied"
+        value_template: >-
+          {{ is_state('binary_sensor.wyzesense_779b29d3', 'off')
+             and is_state('binary_sensor.motion_sensor_158d00031b4c8a', 'off')
+             and is_state('binary_sensor.motion_sensor_158d0002047afe', 'off')
+             and not is_state('media_player.plex_living_room_tv', 'paused')
+             and not is_state('media_player.plex_living_room_tv', 'playing')
+             and not is_state('media_player.living_room_tv', 'playing') }}
+
+  - platform: template
+    sensors:
+      bedroom_unoccupied:
+        friendly_name: "Bedroom Unoccupied"
+        value_template: >-
+          {{ is_state('binary_sensor.wyzesense_778c2557', 'off')
+             and is_state('binary_sensor.motion_sensor_158d000237a64a', 'off')
+             and not is_state('media_player.bedroom_tv', 'paused')
+             and not is_state('media_player.bedroom_tv', 'playing')
+             and not is_state('media_player.bedroom_speaker', 'playing')
+             and is_state('input_boolean.bedtime_emily', 'off')
+             and is_state('input_boolean.bedtime_sean', 'off') }}

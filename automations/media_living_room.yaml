@@ -1,4 +1,4 @@
-# Lights back to full over 7 seconds after media stops
+# Lights back to full after media stops
   - alias: 'Media player stopped'
     initial_state: 'on'
     trigger:
@@ -6,10 +6,106 @@
         entity_id: media_player.plex_living_room_tv
         from: 'playing'
         to: 'idle'
- #   condition:
-  #    - condition: time
- #       after: '16:00:00'
- #       before: '03:00:00'
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 15
+      - delay:
+          seconds: 1
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 15
+
+
+# Lights back to full after media stops
+  - alias: 'Media player stopped unavailable'
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: media_player.plex_living_room_tv
+        from: 'playing'
+        to: 'unavailable'
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 15
+      - delay:
+          seconds: 1
+      - service: light.turn_on
+        data_template:
+          entity_id: light.living_room
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+          transition: 15
+
+# Lights turn off while media is playing
+  - alias: 'Media player playing'
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: media_player.plex_living_room_tv
+        to: 'playing'
+        from: 'idle'
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: light.living_room
+          transition: 4
+
+# Lights turn off while media is playing
+  - alias: 'Media player playing unavailable'
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: media_player.plex_living_room_tv
+        to: 'playing'
+    action:
+      - service: light.turn_off
+        data:
+          entity_id: light.living_room
+          transition: 4
+
+# Lights dim when media is paused
+  - alias: 'Media player paused'
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: media_player.plex_living_room_tv
+        from: 'playing'
+        to: 'paused'
+    action:
+      service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: '40'
+        transition: '3'
+
+# Lights turn off when media is unpaused
+  - alias: 'Media player unpaused'
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: media_player.plex_living_room_tv
+        from: 'paused'
+        to: 'playing'
+    action:
+      service: light.turn_off
+      data:
+        entity_id: light.living_room
+
+# Lights dim to full going from paused to idle
+  - alias: 'Media player pause to idle'
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: media_player.plex_living_room_tv
+        from: 'paused'
+        to: 'idle'
     action:
       - service: light.turn_on
         data_template:
@@ -24,19 +120,14 @@
           brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
           transition: 10
 
-
-# Lights back to full over 7 seconds after media stops
-  - alias: 'Media player stopped unavailable'
+# Lights dim to full going from paused to idle
+  - alias: 'Media player pause to unavailable'
     initial_state: 'on'
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
-        from: 'playing'
+        from: 'paused'
         to: 'unavailable'
- #   condition:
- #     - condition: time
- #       after: '16:00:00'
- #       before: '03:00:00'
     action:
       - service: light.turn_on
         data_template:
@@ -84,117 +175,6 @@
     - service: switch.turn_off
       entity_id: switch.bias_lighting
 
-# Lights turn off while media is playing
-  - alias: 'Media player playing'
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: media_player.plex_living_room_tv
-        to: 'playing'
-        from: 'idle'
-    action:
-      - service: light.turn_off
-        data:
-          entity_id: light.living_room
-          transition: 2
-
-# Lights turn off while media is playing
-  - alias: 'Media player playing unavailable'
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: media_player.plex_living_room_tv
-        to: 'playing'
-    action:
-      - service: light.turn_off
-        data:
-          entity_id: light.living_room
-          transition: 2
-
-# Lights dim when media is paused
-  - alias: 'Media player paused'
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: media_player.plex_living_room_tv
-        from: 'playing'
-        to: 'paused'
-#    condition:
-#      - condition: time
-#        after: '16:00:00'
-#        before: '03:00:00'
-    action:
-      service: light.turn_on
-      data:
-        entity_id: light.living_room
-        brightness_pct: '33'
-        transition: '3'
-
-# Lights turn off when media is unpaused
-  - alias: 'Media player unpaused'
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: media_player.plex_living_room_tv
-        from: 'paused'
-        to: 'playing'
-    action:
-      service: light.turn_off
-      data:
-        entity_id: light.living_room
-
-# Lights dim to full going from paused to idle
-  - alias: 'Media player pause to idle'
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: media_player.plex_living_room_tv
-        from: 'paused'
-        to: 'idle'
-#    condition:
-#      - condition: time
- #       after: '16:00:00'
-#        before: '03:00:00'
-    action:
-      - service: light.turn_on
-        data_template:
-          entity_id: light.living_room
-          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-          transition: 10
-      - delay:
-          seconds: 1
-      - service: light.turn_on
-        data_template:
-          entity_id: light.living_room
-          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-          transition: 10
-
-# Lights dim to full going from paused to idle
-  - alias: 'Media player pause to unavailable'
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: media_player.plex_living_room_tv
-        from: 'paused'
-        to: 'unavailable'
- #   condition:
-#      - condition: time
- #       after: '16:00:00'
- #       before: '03:00:00'
-    action:
-      - service: light.turn_on
-        data_template:
-          entity_id: light.living_room
-          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-          transition: 10
-      - delay:
-          seconds: 1
-      - service: light.turn_on
-        data_template:
-          entity_id: light.living_room
-          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-          transition: 10
-
 ################
 ##### ROKU #####
 ################
@@ -223,10 +203,6 @@
       - platform: state
         entity_id: media_player.living_room_tv
         to: 'standby'
- #   condition:
- #     - condition: time
- #       after: '16:00:00'
- #       before: '03:00:00'
     action:
       - service: light.turn_on
         data_template:

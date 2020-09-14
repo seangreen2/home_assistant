@@ -8,15 +8,15 @@
         from: 'playing'
         to: 'idle'
     condition:
-      - condition: time
-        after: '17:00:00'
-        before: '03:00:00'
+      - condition: state
+        entity_id: input_boolean.bedtime_emily
+        state: 'off'
     action:
     - service: light.turn_on
       data_template:
         entity_id: light.bedroom
         brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
-        transition: '10'
+        transition: '15'
 
 # Lights turn off while media is playing
   - alias: 'Bedroom player playing'
@@ -25,15 +25,11 @@
       - platform: state
         entity_id: media_player.bedroom_tv
         to: 'playing'
-    condition:
-      - condition: time
-        after: '17:00:00'
-        before: '03:00:00'
     action:
       - service: light.turn_off
         data:
           entity_id: light.bedroom
-          transition: '2'
+          transition: '4'
 
 # Lights dim when media is paused
   - alias: 'Bedroom player paused'
@@ -44,15 +40,15 @@
         from: 'playing'
         to: 'paused'
     condition:
-      - condition: time
-        after: '17:00:00'
-        before: '03:00:00'
+      - condition: state
+        entity_id: input_boolean.bedtime_emily
+        state: 'off'
     action:
       service: light.turn_on
       data:
         entity_id: light.bedroom
         brightness_pct: '33'
-        transition: '5'
+        transition: '7'
 
 # Lights turn off when media is unpaused
   - alias: 'Bedroom player unpaused'
@@ -62,10 +58,6 @@
         entity_id: media_player.bedroom_tv
         from: 'paused'
         to: 'playing'
-    condition:
-      - condition: time
-        after: '17:00:00'
-        before: '03:00:00'
     action:
       service: light.turn_off
       data:
@@ -80,9 +72,9 @@
         from: 'paused'
         to: 'idle'
     condition:
-      - condition: time
-        after: '17:00:00'
-        before: '03:00:00'
+      - condition: state
+        entity_id: input_boolean.bedtime_emily
+        state: 'off'
     action:
     - service: light.turn_on
       data_template:

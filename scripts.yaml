@@ -120,6 +120,8 @@
           entity_id: input_boolean.bedtime_emily
       - service: automation.turn_on
         entity_id: automation.living_room_auto_brightness
+      - service: automation.turn_on
+        entity_id: automation.office_auto_brightness
       - service: input_select.select_option
         data:
           entity_id: input_select.emily_room_location

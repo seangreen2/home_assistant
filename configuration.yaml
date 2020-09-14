@@ -16,7 +16,6 @@ homeassistant:
   time_zone: America/New_York
   customize: !include customize.yaml
 
-
 map:
 
 zone:
@@ -27,9 +26,9 @@ zone:
 
 proximity:
   home:
+    ignored_zones:
+      - work
     devices:
-      - !secret gtracker_one
-      - !secret gtracker_two
       - device_tracker.pixel_3
       - device_tracker.pixel_3_2
     tolerance: 100
@@ -108,8 +107,6 @@ history:
       - sensor.living_room_temperature_f
 
 recorder:
-  purge_interval: 1
-  purge_keep_days: 3
   include:
     domains:
       - switch
@@ -233,14 +230,6 @@ tts:
     service_name: google_say
 
 # Media
-#plex:
-#  host: !secret plex_ip
-#  token: !secret plex_token
-#  media_player:
-#    use_episode_art: true
-    
-#roku:
-#  - host: 192.168.1.115
 
 # Pi-Hole
 pi_hole:
