@@ -106,6 +106,9 @@
        - condition: numeric_state
          entity_id: sensor.bedroom_temperature_f
          above: '73'
+       - condition: state
+         entity_id: input_boolean.bedroom_occupied
+         state: 'on'
    action:
      - service: switch.turn_on
        entity_id:  switch.bedroom_fan

@@ -22,8 +22,8 @@ Using a fantastic Android app called [Tasker](https://play.google.com/store/apps
 
 ## Presence Detection
 To ensure detection in our home, we use the following integrations with 100% success:
-- [Linksys Smart WiFi Router](https://www.home-assistant.io/integrations/linksys_smart/)
-- [Owntracks](https://www.home-assistant.io/integrations/owntracks/)
+- [NMap](https://www.home-assistant.io/integrations/nmap_tracker/)
+- [Home Assistant Mobile App](https://www.home-assistant.io/integrations/mobile_app/)
 
 ## Equipment
 - [Home Assistant](https://www.home-assistant.io/) on a [DietPi VM](https://dietpi.com/)
@@ -31,16 +31,15 @@ To ensure detection in our home, we use the following integrations with 100% suc
   - [11 A19 soft white bulbs](https://amzn.to/2LIFW4F)
   - [2 Hue Motion Sensors](https://amzn.to/2JmF1FE)
 - [Wyze Sense](https://wyze.com/wyze-sense.html) - Want to get away from Xiaomi eventually. Requires a [custom component](https://github.com/kevinvincent/ha-wyzesense) to function.
-  - Motion Sensor
-  - 2 Door/Window Sensors
+  - Motion Sensors
+  - Door/Window Sensors
 - Xiaomi Gateway
-  - 3 Xiaomi Motion Sensors
-  - Window/Door Sensor
-  - Temperature and Humidity Sensor
+  - Xiaomi Motion Sensors
 - [Nest Thermostat](https://amzn.to/2YELTn2)
 - [55" TCL Roku TV](https://amzn.to/2XAYIlK)
+- [Nvidia Shield TV](https://amazon.com/gp/product/B07YP94PBJ/ref=ppx_yo_dt_b_asin_title_o06_s00?ie=UTF8&psc=1)
 - [2 Chromecasts](https://store.google.com/us/product/chromecast?hl=en-US)
-- [3 Google Home Minis](https://store.google.com/product/google_home_mini)
+- [5 Google Home Minis](https://store.google.com/product/google_home_mini)
 - [3 TP Link Smart Plugs (HS 100)](https://amzn.to/2XAKm4J)
 - [2 TP Link Smart Switches (HS 200)](https://amzn.to/2Xyo8vy)
 - [Wemo Mini Smart Plug](https://amzn.to/2JmSkpw)
@@ -56,9 +55,9 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - Bar Cards: https://github.com/custom-cards/bar-card
 
 ## Dashboard
-![1](https://i.imgur.com/7Xepoa5.jpg)
+![1](https://i.imgur.com/KkvRDnq.png)
 ![2](https://i.imgur.com/wEsk3A3.jpg)
 ![3](https://i.imgur.com/BQvqYws.jpg)
 ![4](https://i.imgur.com/QBElzUy.jpg)
-![5](https://i.imgur.com/7I3REgE.jpg)
-![6](https://i.imgur.com/SYsRTYW.png)
+![5](https://i.imgur.com/IvoGo6C.png)
+![6](https://i.imgur.com/v49UR9O.png)
