@@ -79,11 +79,18 @@
         from: 'playing'
         to: 'paused'
     action:
-      service: light.turn_on
-      data:
-        entity_id: light.living_room
-        brightness_pct: '40'
-        transition: '3'
+      - service: light.turn_on
+        data:
+          entity_id: light.living_room
+          brightness_pct: 33
+          transition: 4
+      - delay:
+          seconds: 1
+      - service: light.turn_on
+        data:
+          entity_id: light.living_room
+          brightness_pct: 33
+          transition: 4
 
 # Lights turn off when media is unpaused
   - alias: 'Media player unpaused'
