@@ -1,6 +1,6 @@
 # Lights back to full after media stops
   - alias: 'Media player stopped'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
@@ -23,7 +23,7 @@
 
 # Lights back to full after media stops
   - alias: 'Media player stopped unavailable'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
@@ -45,7 +45,7 @@
 
 # Lights turn off while media is playing
   - alias: 'Media player playing'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
@@ -59,7 +59,7 @@
 
 # Lights turn off while media is playing
   - alias: 'Media player playing unavailable'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
@@ -72,7 +72,7 @@
 
 # Lights dim when media is paused
   - alias: 'Media player paused'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
@@ -94,7 +94,7 @@
 
 # Lights turn off when media is unpaused
   - alias: 'Media player unpaused'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
@@ -107,7 +107,7 @@
 
 # Lights dim to full going from paused to idle
   - alias: 'Media player pause to idle'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
@@ -129,7 +129,7 @@
 
 # Lights dim to full going from paused to idle
   - alias: 'Media player pause to unavailable'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
@@ -151,7 +151,7 @@
 
 # Bias Lighting on
   - alias: 'Bias Lights on'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.living_room_tv
@@ -162,7 +162,7 @@
 
 # Bias Lighting Off
   - alias: 'Bias Lights stopped unavailable'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.living_room_tv
@@ -173,7 +173,7 @@
 
 # Bias Lighting Off
   - alias: 'Bias Lights stopped off'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: media_player.living_room_tv
@@ -188,7 +188,7 @@
 
 # Lights turn off while roku media is playing
   - alias: 'Roku player playing'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: template
         value_template: >
@@ -201,7 +201,7 @@
           transition: 2
 
   - alias: 'Roku player stopped'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: template
         value_template: >
@@ -226,7 +226,7 @@
 
 # Bias Lighting Off
   - alias: 'Bias Lights stopped unavailable'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: template
         value_template: >
@@ -241,7 +241,7 @@
 
 # Lights dim while steamlink is playing
   - alias: 'Steamlink playing'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: template
         value_template: >

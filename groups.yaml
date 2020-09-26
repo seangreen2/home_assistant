@@ -19,19 +19,19 @@ sean:
   name: Sean
   entities:
     - device_tracker.sean_phone #Phone
-    - device_tracker.pixel_3 # Mobile App
+    - device_tracker.sean_pixel_3 # Mobile App
 
 emily:
   name: Emily
   entities:
     - device_tracker.emily_phone #Phone
-    - device_tracker.pixel_3_2 # Mobile App
+    - device_tracker.emily_pixel_3 # Mobile App
 
 # MOTION SENSORS
 bedroom_motion:
   entities:
     - binary_sensor.wyzesense_778c2557
-    - binary_sensor.motion_sensor_158d000237a64a
+    - binary_sensor.wyzesense_779b1944
 
 living_room_motion:
   entities:

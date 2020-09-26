@@ -1,6 +1,6 @@
 # Set rain audio on repeat every hour
   - alias: Repeat Rain Audio
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: input_boolean.bedtime_emily
@@ -9,7 +9,7 @@
         entity_id: input_boolean.bedtime_sean
         to: 'on'
       - platform: time_pattern
-        minutes: '/60'
+        hours: '/1'
     condition:
       condition: or
       conditions:

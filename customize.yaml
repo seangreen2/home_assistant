@@ -119,7 +119,7 @@ light.living_room:
   icon: mdi:sofa
   friendly_name: Living Room Lights
 light.bedroom:
-  icon: mdi:hotel
+  icon: mdi:bed
   friendly_name: Bedroom Lights
 light.office:
   icon: mdi:keyboard

@@ -7,6 +7,7 @@
     hosts:
       - 192.168.1.204
       - 192.168.1.136
+      - 192.168.1.110
     home_interval: 5
 
 #  - platform: huesensor

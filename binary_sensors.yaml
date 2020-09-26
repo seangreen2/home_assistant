@@ -21,9 +21,13 @@
     sensors:
       office_unoccupied:
         friendly_name: "Office Unoccupied"
+        delay_off:
+          minutes: 2
         value_template: >-
           {{ is_state('binary_sensor.wyzesense_779b1988', 'off')
              and is_state('binary_sensor.office_motion_motion_sensor', 'off')
+             and not is_state('sensor.sean_room_location', 'office')
+             and not is_state('sensor.emily_room_location', 'office')
              and not is_state('sensor.steam_76561197976250572', 'online')
              and not is_state('sensor.steam_76561198154412871', 'online') }}
 
@@ -31,10 +35,14 @@
     sensors:
       living_room_unoccupied:
         friendly_name: "Living Room Unoccupied"
+        delay_off:
+          minutes: 2
         value_template: >-
           {{ is_state('binary_sensor.wyzesense_779b29d3', 'off')
              and is_state('binary_sensor.motion_sensor_158d00031b4c8a', 'off')
              and is_state('binary_sensor.motion_sensor_158d0002047afe', 'off')
+             and not is_state('sensor.sean_room_location', 'living_room')
+             and not is_state('sensor.emily_room_location', 'living_room')
              and not is_state('media_player.plex_living_room_tv', 'paused')
              and not is_state('media_player.plex_living_room_tv', 'playing')
              and not is_state('media_player.living_room_tv', 'playing') }}
@@ -43,9 +51,13 @@
     sensors:
       bedroom_unoccupied:
         friendly_name: "Bedroom Unoccupied"
+        delay_off:
+          minutes: 2
         value_template: >-
           {{ is_state('binary_sensor.wyzesense_778c2557', 'off')
-             and is_state('binary_sensor.motion_sensor_158d000237a64a', 'off')
+             and is_state('binary_sensor.wyzesense_779b1944', 'off')
+             and not is_state('sensor.sean_room_location', 'bedrooom')
+             and not is_state('sensor.emily_room_location', 'bedroom')
              and not is_state('media_player.bedroom_tv', 'paused')
              and not is_state('media_player.bedroom_tv', 'playing')
              and not is_state('media_player.bedroom_speaker', 'playing')

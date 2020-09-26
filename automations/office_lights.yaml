@@ -1,6 +1,6 @@
 # Auto Office Brightness
   - alias: Office Auto Brightness
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: group.office_motion
@@ -18,7 +18,7 @@
           entity_id: light.office
           brightness_pct: "{{ state_attr('switch.circadian_lighting_office', 'brightness') | int }}"
       - delay:
-          seconds: '1'
+          milliseconds: 250
       - service: light.turn_on
         data_template:
           entity_id: light.office
@@ -26,7 +26,7 @@
 
 # Auto Office Brightness Transition
   - alias: Office Auto Brightness Transition
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: sun.sun
@@ -46,10 +46,10 @@
 
 # Turn off Office Lights after one minute of no activity
   - alias: Turn office lights without motion one min
-    initial_state: 'on'
+    initial_state: on
     trigger:
       platform: time_pattern
-      minutes: '/5'
+      minutes: '/3'
     condition:
       - condition: state
         entity_id: input_boolean.sean_office_presence
@@ -73,7 +73,7 @@
           entity_id: light.office
           transition: 2
       - delay:
-          seconds: '1'
+          milliseconds: 250
       - service: light.turn_off
         data:
           entity_id: light.office

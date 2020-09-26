@@ -7,3 +7,9 @@ groups.yaml
 plex.conf
 home-assistant.log
 home-assistant_v2.db
+.storage
+.git
+.cloud
+esphome
+image
+tts

@@ -29,13 +29,10 @@ proximity:
     ignored_zones:
       - work
     devices:
-      - device_tracker.pixel_3
-      - device_tracker.pixel_3_2
+      - device_tracker.sean_pixel_3
+      - device_tracker.emily_pixel_3
     tolerance: 100
     unit_of_measurement: mi
-
-#mqtt:
-#  password: !secret mqtt_password
 
 cloud:
 
@@ -53,7 +50,6 @@ lovelace:
 
 frontend:
   themes: !include_dir_merge_named themes
-  javascript_version: latest
 
 config:
 http:
@@ -97,14 +93,13 @@ history:
       - sensor.office_lux
       - sensor.living_room_thermostat_humidity
       - sensor.processor_use
-      - sensor.speedtest_ping
-      - sensor.speedtest_download
-      - sensor.speedtest_upload
       - sensor.pi_hole_ads_blocked_today
       - sensor.pi_hole_ads_percentage_blocked_today
       - sensor.office_motion_sensor_temperature
       - sensor.bathroom_sensor_temperature
       - sensor.living_room_temperature_f
+      - sensor.sean_room_location
+      - sensor.emily_room_location
 
 recorder:
   include:
@@ -133,9 +128,6 @@ recorder:
       - sensor.office_lux
       - sensor.living_room_thermostat_humidity
       - sensor.processor_use
-      - sensor.speedtest_ping
-      - sensor.speedtest_download
-      - sensor.speedtest_upload
       - sensor.pi_hole_ads_blocked_today
       - sensor.pi_hole_ads_percentage_blocked_today
       - sensor.office_motion_sensor_temperature
@@ -149,6 +141,9 @@ weather:
   - platform: darksky
     api_key: !secret dark_sky_api_key
     mode: daily
+  - platform: openweathermap
+    api_key: !secret openweather_api_key
+    mode: freedaily
 
 sun:
 
@@ -183,14 +178,6 @@ xiaomi_aqara:
   discovery_retry: 10
   gateways:
     - key: !secret xiaomi_key
-    
-speedtestdotnet:
-  scan_interval:
-    hours: 6
-  monitored_conditions:
-    - ping
-    - download
-    - upload
 
 # Switches
 switch:
@@ -227,7 +214,7 @@ wemo:
 # Text to speech
 tts:
   - platform: google_translate
-    service_name: google_say
+#    service_name: google_say
 
 # Media
 

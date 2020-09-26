@@ -1,6 +1,6 @@
 # Bathroom Lights on with Motion
 - alias: Bathroom Lights on motion
-  initial_state: 'on'
+  initial_state: on
   mode: restart
   trigger:
     platform: state
@@ -18,7 +18,7 @@
         entity_id: light.bathroom
         brightness_pct: '100'
     - delay:
-        seconds: '1'
+        milliseconds: 250
     - service: light.turn_on
       data:
         entity_id: light.bathroom
@@ -26,7 +26,7 @@
 
 # Bathroom Lights off without Motion
 - alias: Bathroom Lights off no motion
-  initial_state: 'on'
+  initial_state: on
   trigger:
     platform: time_pattern
     minutes: '/5'
@@ -46,7 +46,7 @@
 
 # Turn on air fresh for ten minutes each hour when home
 - alias: Turn on air fresh
-  initial_state: 'on'
+  initial_state: on
   trigger:
     platform: time_pattern
     hours: '/1'

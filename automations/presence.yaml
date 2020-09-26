@@ -1,6 +1,6 @@
 # Turns on lights before sunset if people are home and if people get home when dark
   - alias: 'Lights on in the evening'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: group.family
@@ -34,7 +34,7 @@
 
 # Turn off light and Media when everyone leaves house
   - alias: 'Away Mode'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       platform: state
       entity_id: group.family
@@ -51,7 +51,7 @@
 
 # Set Nest to Away Mode
   - alias: 'Nest Away Mode'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       platform: state
       entity_id: group.family
@@ -68,7 +68,7 @@
 
 # Turn off Eco Mode Nest
   - alias: 'Nest Home Mode'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       platform: state
       entity_id: group.family
@@ -96,7 +96,7 @@
 
 # Turn off Eco Mode Nest Google Tracker
   - alias: 'Nest Normal Mode Google Tracker'
-    initial_state: 'on'
+    initial_state: on
     trigger:
       platform: numeric_state
       entity_id: proximity.home

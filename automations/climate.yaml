@@ -1,6 +1,6 @@
 # When porch door is open turn off nest
  - alias: Door open turn off nest
-   initial_state: 'on'
+   initial_state: on
    trigger:
      platform: state
      entity_id: binary_sensor.wyzesense_778bb85a
@@ -15,7 +15,7 @@
 
 # When porch door is closed turn Nest back on
  - alias: Door closed turn on nest
-   initial_state: 'on'
+   initial_state: on
    trigger:
      platform: state
      entity_id: binary_sensor.wyzesense_778bb85a
@@ -37,7 +37,7 @@
            
 # Turn on ceiling fan under certain conditions
  - alias: Turn on Ceiling Fan
-   initial_state: 'on'
+   initial_state: on
    trigger:
      platform: time_pattern
      minutes: '/5'
@@ -59,7 +59,7 @@
 
 # Turn off living room fan under certain conditions
  - alias: Turn off Living Room Fan
-   initial_state: 'on'
+   initial_state: on
    trigger:
      platform: time_pattern
      minutes: '/15'
@@ -90,7 +90,7 @@
 
 # Turn off Ceiling fan while AC has been running for awhile
  - alias: Turn off Ceiling Fan AC
-   initial_state: 'on'
+   initial_state: on
    trigger:
      platform: state
      entity_id: sensor.living_room_thermostat_hvac_state
@@ -100,14 +100,14 @@
    condition:
      condition: and
      conditions:
-       - condition: or
-         conditions:
-           - condition: state
-             entity_id: sensor.living_room_thermostat_operation_mode
-             state: 'auto'
-           - condition: state
-             entity_id: sensor.living_room_thermostat_operation_mode
-             state: 'cool'
+#       - condition: or
+#         conditions:
+#           - condition: state
+#             entity_id: sensor.living_room_thermostat_operation_mode
+#             state: 'auto'
+#           - condition: state
+#             entity_id: sensor.living_room_thermostat_operation_mode
+#             state: 'cool'
        - condition: numeric_state
          entity_id: sensor.dark_sky_temperature
          below: '78'
@@ -117,7 +117,7 @@
 
 # Turn on bedroom fan under certain conditions
  - alias: Turn on Bedroom Fan
-   initial_state: 'on'
+   initial_state: on
    trigger:
      platform: time_pattern
      minutes: '/5'
@@ -139,7 +139,7 @@
 
 # Turn off bedroom fan under certain conditions
  - alias: Turn off Bedroom Fan
-   initial_state: 'on'
+   initial_state: on
    trigger:
      platform: time_pattern
      minutes: '/15'

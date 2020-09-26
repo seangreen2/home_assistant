@@ -1,6 +1,6 @@
 # Outside lights turn on at sunset
   - alias: Outside lights on at sunset
-    initial_state: 'off'
+    initial_state: off
     trigger:
       platform: sun
       event: sunset
@@ -10,7 +10,7 @@
 
 # Outside lights off at 10pm
   - alias: Outside lights off at ten
-    initial_state: 'off'
+    initial_state: off
     trigger:
       platform: time
       at: '22:00:00'

@@ -1,12 +1,9 @@
 # Auto Bedroom Brightness
 - alias: Bedroom Auto Brightness
-  initial_state: 'on'
+  initial_state: on
   trigger:
-#    - platform: state
-#      entity_id: binary_sensor.wyzesense_778c2557
-#      to: 'on'
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d000237a64a
+      entity_id: group.bedroom_motion
       to: 'on'
   condition:
     - condition: state
@@ -27,7 +24,7 @@
         entity_id: light.bedroom
         brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
     - delay:
-        seconds: '1'
+        milliseconds: 250
     - service: light.turn_on
       data_template:
         entity_id: light.bedroom
@@ -35,7 +32,7 @@
 
 # Auto Bedroom Brightness Transition
 - alias: Bedroom Auto Brightness Transition
-  initial_state: 'on'
+  initial_state: on
   trigger:
     - platform: state
       entity_id: sun.sun
@@ -59,7 +56,7 @@
 
 # Bedroom Lights off without Motion
 - alias: Bedroom Lights off no motion
-  initial_state: 'on'
+  initial_state: on
   trigger:
     platform: time_pattern
     minutes: '/3'
@@ -82,7 +79,7 @@
         entity_id: light.bedroom
         transition: 2
     - delay:
-        seconds: '1'
+        milliseconds: 250
     - service: light.turn_off
       data:
         entity_id: light.bedroom
@@ -90,7 +87,7 @@
 
 # Bedroom Lights off without Motion
 #- alias: Bedroom Lights off no motion
-#  initial_state: 'on'
+#  initial_state: on
 #  trigger:
 #    platform: state
 #    entity_id: binary_sensor.motion_sensor_158d000237a64a

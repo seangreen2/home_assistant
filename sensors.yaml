@@ -48,7 +48,7 @@
   - platform: template
     sensors:
       office_temperature:
-        value_template: '{{states.sensor.office_motion_motion_sensor.attributes.temperature}}'
+        value_template: '{{states.office_motion_motion_sensor.attributes.temperature}}'
 
   - platform: template
     sensors:
@@ -97,7 +97,7 @@
           {% if is_state('input_select.sean_room_location', 'Office') %}
             mdi:keyboard
           {% elif is_state('input_select.sean_room_location', 'Bedroom') %}
-            mdi:hotel
+            mdi:bed
           {% elif is_state('input_select.sean_room_location', 'Living Room') %}
             mdi:sofa
           {% elif is_state('input_select.sean_room_location', 'Sleep') %}
@@ -119,7 +119,7 @@
           {% if is_state('input_select.emily_room_location', 'Office') %}
             mdi:keyboard
           {% elif is_state('input_select.emily_room_location', 'Bedroom') %}
-            mdi:hotel
+            mdi:bed
           {% elif is_state('input_select.emily_room_location', 'Living Room') %}
             mdi:sofa
           {% elif is_state('input_select.emily_room_location', 'Away') %}
@@ -278,3 +278,17 @@
   - platform: time_date
     display_options:
       - 'time'
+
+  - platform: mqtt_room
+    device_id: "9ad13236f8064c4caa1d1be47d75e12e-1-0"
+    name: 'Sean Room Location'
+    state_topic: 'room_presence'
+    timeout: 10
+    away_timeout: 15
+
+  - platform: mqtt_room
+    device_id: "3900f72eab4f4d7fa0ec4827c530fa36-1-0"
+    name: 'Emily Room Location'
+    state_topic: 'room_presence'
+    timeout: 10
+    away_timeout: 15

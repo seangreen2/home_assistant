@@ -25,19 +25,19 @@ views:
           - type: horizontal-stack
             cards:
               - type: picture-glance
-                title: Status
+                title: Room Location
                 entities:
                   - sensor.sean_room_status
-                  - sensor.battery_level
+                  - sensor.sean_pixel_3_battery_level
                 state_image:
                   "home": /local/images/sean_16x9.jpg
                   "not_home": /local/images/sean_16x9_gray.jpg
                 entity: group.sean
               - type: picture-glance
-                title: Status
+                title: Room Location
                 entities:
                   - sensor.emily_room_status
-                  - sensor.battery_level_2
+                  - sensor.emily_pixel_3_battery_level
                 state_image:
                   "home": /local/images/emily_16x9.jpg
                   "not_home": /local/images/emily_16x9_gray.jpg
@@ -55,7 +55,7 @@ views:
               icon: mdi:television
               artwork: cover
               hide:
-                volume: true      
+                volume: true
           - type: conditional
             conditions:
               - entity: media_player.plex_living_room_tv
@@ -66,7 +66,7 @@ views:
               icon: mdi:television
               artwork: cover
               hide:
-                volume: true                 
+                volume: true
           - type: conditional
             conditions:
               - entity: media_player.whole_house
@@ -83,6 +83,7 @@ views:
             name: " "
             primary_info:
               - extrema
+#              - precipitation
             secondary_info: 
               - wind_speed
               - precipitation_probability
@@ -123,20 +124,6 @@ views:
               - sensor.us_coronavirus_confirmed
               - sensor.us_coronavirus_deaths
               - sensor.us_coronavirus_recovered
-#          - type: horizontal-stack
- #           cards:
- #             - type: custom:mini-graph-card
- #               name: Sun Elevation
- #               entities:
- #                 - sensor.sun_elevation
- #               line_color: '#b58e31'
- #               line_width: 4
- #             - type: custom:mini-graph-card
- #               name: Chance of Rain
- #               entities:
- #                 - sensor.dark_sky_precip_probability
-  #              line_color: '#2980b9'
-  #              line_width: 4 
           - type: horizontal-stack
             cards:
               - type: entity-button
@@ -236,7 +223,7 @@ views:
                 entities:
                   - sensor.office_temperature_f
                 name: Office
-                line_color: '#b93829'
+                line_color: '#70a03c'
                 line_width: 6
 
 
@@ -261,7 +248,7 @@ views:
                 entities:
                   - sensor.living_room_thermostat_humidity
                 name: Humidity
-                line_color: '#b58e31'
+                line_color: '#70a03c'
                 line_width: 4
                 hours_to_show: 24
               - type: light
@@ -320,7 +307,7 @@ views:
 #        image: /local/images/neato2.png
   - path: bedroom
     title: Bedroom
-    icon: 'mdi:hotel'
+    icon: 'mdi:bed'
     badges: []
     cards:
       - type: vertical-stack
@@ -396,15 +383,15 @@ views:
                 line_width: 2
           - type: horizontal-stack
             cards:
-              - type: light
-                entity: light.office
               - type: custom:mini-graph-card
                 entities:
                   - sensor.office_lux
                 name: Illumination
-                line_color: '#b58e31'
+                line_color: '#70a03c'
                 line_width: 4
                 hours_to_show: 24
+              - type: light
+                entity: light.office
       - type: horizontal-stack
         cards:
           - type: entity-button
@@ -437,7 +424,7 @@ views:
 
   - path: settings
     title: Settings
-    icon: 'mdi:settings'
+    icon: 'mdi:cog'
     badges: []
     cards:
       - type: vertical-stack
@@ -485,37 +472,7 @@ views:
               - type: entities
                 entities:
                   - sensor.last_boot
-
-      - type: vertical-stack
-        title: Network
-        cards:
-          - type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.speedtest_download
-                name: Download
-                line_color: '#2980b9'
-                line_width: 6
-                hours_to_show: 24
-                icon: mdi:download-network
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.speedtest_upload
-                name: Upload
-                line_color: '#2980b9'
-                line_width: 6
-                hours_to_show: 24
-                icon: mdi:upload-network
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.speedtest_ping
-                name: Ping
-                line_color: '#2980b9'
-                line_width: 6
-                hours_to_show: 24
-                icon: mdi:server-network
-
+                  
       - type: vertical-stack
         title: Pi-Hole
         cards:
@@ -525,15 +482,17 @@ views:
                 entities:
                   - sensor.pi_hole_ads_blocked_today
                 name: Ads Blocked Today
-                line_color: '#2980b9'
-                line_width: 4
+                line_color: '#70a03c'
+                line_width: 2
                 hours_to_show: 24
+          - type: horizontal-stack
+            cards:
               - type: custom:mini-graph-card
                 entities:
                   - sensor.pi_hole_ads_percentage_blocked_today
                 name: Percentage Blocked
                 line_color: '#2980b9'
-                line_width: 4
+                line_width: 2
                 hours_to_show: 24
           - type: vertical-stack
             cards:
@@ -548,7 +507,7 @@ views:
                   value: inside
                 align: split
                 color: '#70a03c'
-                max: '30000'
+                max: '100000'
               - type: custom:bar-card
                 entity: sensor.pi_hole_domains_blocked
                 entity_row: true
@@ -559,7 +518,7 @@ views:
                   name: inside
                   value: inside
                 align: split
-                max: '2000000'
+                max: '1500000'
                 icon: mdi:cancel
 
   - path: room
@@ -567,6 +526,11 @@ views:
     icon: 'mdi:home-account'
     badges: []
     cards:
+      - title: MQTT Room Locations
+        type: entities
+        entities:
+          - sensor.sean_room_location
+          - sensor.emily_room_location
       - title: Binary Sensors
         type: entities
         entities:

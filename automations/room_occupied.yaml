@@ -1,10 +1,20 @@
 ## OFFICE ##  
   - alias: Office occupied
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: group.office_motion
         to: 'on'
+      - platform: state
+        entity_id: sensor.sean_room_location
+        to: 'office'
+        for:
+          seconds: 20
+      - platform: state
+        entity_id: sensor.emily_room_location
+        to: 'office'
+        for:
+          seconds: 20
       - platform: state
         entity_id: sensor.steam_76561197976250572
         to: 'online'
@@ -21,25 +31,73 @@
           entity_id: input_boolean.office_occupied
 
   - alias: Office unoccupied
-    initial_state: 'on'
+    initial_state: on
     trigger:
-      - platform: state
-        entity_id: binary_sensor.office_unoccupied
-        to: 'on'
-        for:
-          minutes: 3
+      platform: time_pattern
+      minutes: '/2'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.office_unoccupied
+          state: 'on'
+        - condition: state
+          entity_id: group.office_motion
+          state: 'off'
+        - condition: template
+          value_template: "{{ not is_state('sensor.sean_room_location', 'office') }}" # NOT condition
+        - condition: template
+          value_template: "{{ not is_state('sensor.emily_room_location', 'office') }}" # NOT condition
     action:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.office_occupied
 
+  - alias: Sean Office Location
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: sensor.sean_room_location
+        to: 'office'
+        for:
+          seconds: 10
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.sean_room_location
+          option: Office
+
+  - alias: Emily Office Location
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: sensor.emily_room_location
+        to: 'office'
+        for:
+          seconds: 10
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.emily_room_location
+          option: Office
+
 ## LIVING ROOM ##
   - alias: Living Room occupied
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: group.living_room_motion
         to: 'on'
+      - platform: state
+        entity_id: sensor.sean_room_location
+        to: 'living_room'
+        for:
+          seconds: 20
+      - platform: state
+        entity_id: sensor.emily_room_location
+        to: 'living_room'
+        for:
+          seconds: 20
       - platform: template
         value_template: "{{ not is_state('media_player.living_room_tv', 'unavailable') }}" # NOT condition
       - platform: template
@@ -53,44 +111,75 @@
         data:
           entity_id: input_boolean.living_room_occupied
 
-  - alias: Living Room unoccupied
-    initial_state: 'on'
+# Only when one person is home.
+  - alias: Living Room unoccupied one home
+    initial_state: on
     trigger:
-      - platform: state
-        entity_id: binary_sensor.living_room_unoccupied
-        to: 'on'
-        for:
-          minutes: 3
+      platform: time_pattern
+      minutes: '/2'
     condition:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_boolean.living_room_occupied
+          entity_id: binary_sensor.living_room_unoccupied
           state: 'on'
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: input_boolean.office_occupied
-              state: 'on'
-              for:
-                minutes: '5'
-            - condition: state
-              entity_id: input_boolean.bedroom_occupied
-              state: 'on'
-              for:
-                minutes: '5'
+        - condition: state
+          entity_id: group.living_room_motion
+          state: 'off'
+        - condition: template
+          value_template: "{{ not is_state('sensor.sean_room_location', 'living_room') }}" # NOT condition
+        - condition: template
+          value_template: "{{ not is_state('sensor.emily_room_location', 'living_room') }}" # NOT condition
     action:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.living_room_occupied
 
+  - alias: Sean Living Room Location
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: sensor.sean_room_location
+        to: 'living_room'
+        for:
+          seconds: 10
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.sean_room_location
+          option: Living Room
+
+  - alias: Emily Living Room Location
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: sensor.emily_room_location
+        to: 'living_room'
+        for:
+          seconds: 10
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.emily_room_location
+          option: Living Room
+
 ## BEDROOM ##
   - alias: Bedroom occupied
-    initial_state: 'on'
+    initial_state: on
     trigger:
       - platform: state
         entity_id: group.bedroom_motion
         to: 'on'
+      - platform: state
+        entity_id: sensor.sean_room_location
+        to: 'bedroom'
+        for:
+          seconds: 20
+      - platform: state
+        entity_id: sensor.emily_room_location
+        to: 'bedroom'
+        for:
+          seconds: 20
       - platform: state
         entity_id: input_boolean.sean_bedtime
         to: 'on'
@@ -98,7 +187,9 @@
         entity_id: input_boolean.emily_bedtime
         to: 'on'
       - platform: template
-        value_template: "{{ not is_state('media_player.bedroom_tv', 'unavailable','idle') }}" # NOT condition
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'unavailable') }}" # NOT condition
+      - platform: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'idle') }}" # NOT condition
     condition:
       - condition: state
         entity_id: group.family
@@ -109,14 +200,104 @@
           entity_id: input_boolean.bedroom_occupied
 
   - alias: Bedroom unoccupied
-    initial_state: 'on'
+    initial_state: on
     trigger:
-      - platform: state
-        entity_id: binary_sensor.bedroom_unoccupied
-        to: 'on'
-        for:
-          minutes: 3
+      platform: time_pattern
+      minutes: '/2'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.bedroom_unoccupied
+          state: 'on'
+        - condition: state
+          entity_id: group.bedroom_motion
+          state: 'off'
+        - condition: template
+          value_template: "{{ not is_state('sensor.sean_room_location', 'bedroom') }}" # NOT condition
+        - condition: template
+          value_template: "{{ not is_state('sensor.emily_room_location', 'bedroom') }}" # NOT condition
     action:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.bedroom_occupied
+
+  - alias: Sean Bedroom Location
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: sensor.sean_room_location
+        to: 'bedroom'
+        for:
+          seconds: 10
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.sean_room_location
+          option: Bedroom
+
+  - alias: Emily Bedroom Location
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: sensor.emily_room_location
+        to: 'bedroom'
+        for:
+          seconds: 10
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.emily_room_location
+          option: Bedroom
+
+# Emily is now home and location is unknown
+  - alias: 'Emily is Home'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: group.emily
+        to: 'home'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.emily_room_location
+          option: Home
+
+# Emily is away from the house
+  - alias: 'Emily is Away'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: group.emily
+        to: 'not_home'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.emily_room_location
+          option: Away
+
+# Sean is now home and location is unknown
+  - alias: 'Sean is Home'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: group.sean
+        to: 'home'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.sean_room_location
+          option: Home
+
+# Sean is away from the house
+  - alias: 'Sean is Away'
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: group.sean
+        to: 'not_home'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.sean_room_location
+          option: Away
