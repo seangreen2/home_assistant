@@ -27,10 +27,14 @@ emily:
     - device_tracker.emily_phone #Phone
     - device_tracker.emily_pixel_3 # Mobile App
 
+# DOOR SENSORS
+patio_door:
+  entities: binary_sensor.wyzesense_778bb85a
+
 # MOTION SENSORS
 bedroom_motion:
   entities:
-    - binary_sensor.wyzesense_778c2557
+#    - binary_sensor.wyzesense_778c2557
     - binary_sensor.wyzesense_779b1944
 
 living_room_motion:

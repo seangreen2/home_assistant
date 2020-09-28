@@ -54,8 +54,7 @@
         delay_off:
           minutes: 2
         value_template: >-
-          {{ is_state('binary_sensor.wyzesense_778c2557', 'off')
-             and is_state('binary_sensor.wyzesense_779b1944', 'off')
+          {{ is_state('binary_sensor.wyzesense_779b1944', 'off')
              and not is_state('sensor.sean_room_location', 'bedrooom')
              and not is_state('sensor.emily_room_location', 'bedroom')
              and not is_state('media_player.bedroom_tv', 'paused')
@@ -63,3 +62,4 @@
              and not is_state('media_player.bedroom_speaker', 'playing')
              and is_state('input_boolean.bedtime_emily', 'off')
              and is_state('input_boolean.bedtime_sean', 'off') }}
+#             and is_state('binary_sensor.wyzesense_778c2557', 'off')

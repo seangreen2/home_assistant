@@ -3,7 +3,7 @@
    initial_state: on
    trigger:
      platform: state
-     entity_id: binary_sensor.wyzesense_778bb85a
+     entity_id: group.patio_door
      to: 'on'
      for:
        seconds: '120'
@@ -18,7 +18,7 @@
    initial_state: on
    trigger:
      platform: state
-     entity_id: binary_sensor.wyzesense_778bb85a
+     entity_id: group.patio_door
      to: 'off'
      for:
        seconds: '10'

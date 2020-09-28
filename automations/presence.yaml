@@ -58,7 +58,7 @@
       to: 'not_home'
     condition:
       - condition: state
-        entity_id: binary_sensor.wyzesense_778bb85a
+        entity_id: group.patio_door
         state: 'off'
     action:
       - service: climate.set_preset_mode
@@ -75,7 +75,7 @@
       to: 'home'
     condition:
       - condition: state
-        entity_id: binary_sensor.wyzesense_778bb85a
+        entity_id: group.patio_door
         state: 'off'
     action:
       - service: climate.set_preset_mode
@@ -89,7 +89,7 @@
             {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
               cool
             {% elif states('sensor.season') == 'autumn' %}
-              heat
+              auto
             {% else %}
               heat
             {% endif %}
@@ -110,7 +110,7 @@
         - condition: template
           value_template: '{{ states.proximity.home.attributes.dir_of_travel == "towards" }}'
         - condition: state
-          entity_id: binary_sensor.wyzesense_778bb852
+          entity_id: group.patio_door
           state: 'off'
     action:
       - service: climate.set_preset_mode
@@ -124,7 +124,7 @@
             {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
               cool
             {% elif states('sensor.season') == 'autumn' %}
-              heat
+              auto
             {% else %}
               heat
             {% endif %}
