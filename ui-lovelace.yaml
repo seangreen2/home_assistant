@@ -60,6 +60,7 @@ views:
             conditions:
               - entity: media_player.plex_living_room_tv
                 state_not: "unavailable"
+                state_not: "idle"
             card:
               type: custom:mini-media-player
               entity: media_player.plex_living_room_tv
@@ -74,7 +75,7 @@ views:
             card:
               type: custom:mini-media-player
               entity: media_player.whole_house
-              icon: mdi:speaker
+              icon: mdi:speaker-multiple
               artwork: cover
               hide:
                 volume: false
@@ -286,8 +287,8 @@ views:
             icon: mdi:television
             artwork: cover
           - type: custom:mini-media-player
-            entity: media_player.living_room_speaker
-            icon: mdi:google-home
+            entity: media_player.living_room
+            icon: mdi:speaker-multiple
             artwork: cover
             show_tts: google
       - type: 'custom:vacuum-card'
@@ -357,12 +358,12 @@ views:
             artwork: cover
           - type: custom:mini-media-player
             entity: media_player.bedroom_speaker
-            icon: mdi:google-home
+            icon: mdi:speaker
             artwork: cover
             show_tts: google
           - type: custom:mini-media-player
             entity: media_player.bathroom_speaker
-            icon: mdi:google-home
+            icon: mdi:speaker
             artwork: cover
             show_tts: google
 
@@ -418,7 +419,7 @@ views:
                   - sensor.steam_76561198154412871
           - type: custom:mini-media-player
             entity: media_player.office_speaker
-            icon: mdi:google-home
+            icon: mdi:speaker
             artwork: cover
             show_tts: google
 

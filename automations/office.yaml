@@ -13,7 +13,7 @@
           state: 'home'
         - condition: numeric_state
           entity_id: sensor.office_temperature_f
-          above: '72'
+          above: 71
         - condition: or
           conditions:
             - condition: state
@@ -49,15 +49,10 @@
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: 'group.family'
-          state: 'home'
-        - condition: or
-          conditions:
-            - condition: template
-              value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
-            - condition: template
-              value_template: "{{ not is_state('sensor.steam_76561198154412871', 'online') }}" # NOT condition
+        - condition: template
+          value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
+        - condition: template
+          value_template: "{{ not is_state('sensor.steam_76561198154412871', 'online') }}" # NOT condition
     action:
       service: switch.turn_off
       entity_id: switch.office_fan
