@@ -48,7 +48,7 @@
          entity_id: group.family
          state: 'home'
        - condition: time
-         after: '08:00:00'
+         after: '07:00:00'
          before: '22:00:00'
        - condition: numeric_state
          entity_id: sensor.living_room_thermostat_temperature
@@ -88,33 +88,6 @@
      - service: switch.turn_off
        entity_id:  switch.living_room_fan
 
-# Turn off Ceiling fan while AC has been running for awhile
- - alias: Turn off Ceiling Fan AC
-   initial_state: on
-   trigger:
-     platform: state
-     entity_id: sensor.living_room_thermostat_hvac_state
-     to: 'on'
-     for:
-       minutes: '20'
-   condition:
-     condition: and
-     conditions:
-#       - condition: or
-#         conditions:
-#           - condition: state
-#             entity_id: sensor.living_room_thermostat_operation_mode
-#             state: 'auto'
-#           - condition: state
-#             entity_id: sensor.living_room_thermostat_operation_mode
-#             state: 'cool'
-       - condition: numeric_state
-         entity_id: sensor.dark_sky_temperature
-         below: '78'
-   action:
-     - service: switch.turn_off
-       entity_id:  switch.living_room_fan
-
 # Turn on bedroom fan under certain conditions
  - alias: Turn on Bedroom Fan
    initial_state: on
@@ -129,7 +102,7 @@
          state: 'home'
        - condition: numeric_state
          entity_id: sensor.bedroom_temperature_f
-         above: '73'
+         above: '72'
        - condition: state
          entity_id: input_boolean.bedroom_occupied
          state: 'on'
@@ -161,6 +134,9 @@
        - condition: state
          entity_id: group.bedroom_motion
          state: 'off'
+       - condition: numeric_state
+         entity_id: sensor.bedroom_temperature_f
+         below: '72'
        - condition: template
          value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
        - condition: template

@@ -39,8 +39,8 @@ bedroom_motion:
 
 living_room_motion:
   entities:
-    - binary_sensor.motion_sensor_158d0002047afe
-    - binary_sensor.motion_sensor_158d00031b4c8a
+    - binary_sensor.wyzesense_77a68ce7
+    - binary_sensor.wyzesense_77a68665
     - binary_sensor.wyzesense_779b29d3
 #    - binary_sensor.living_room_motion_sensor
 

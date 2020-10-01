@@ -25,7 +25,7 @@ views:
           - type: horizontal-stack
             cards:
               - type: picture-glance
-                title: Room Location
+                title: Location
                 entities:
                   - sensor.sean_room_status
                   - sensor.sean_pixel_3_battery_level
@@ -34,7 +34,7 @@ views:
                   "not_home": /local/images/sean_16x9_gray.jpg
                 entity: group.sean
               - type: picture-glance
-                title: Room Location
+                title: Location
                 entities:
                   - sensor.emily_room_status
                   - sensor.emily_pixel_3_battery_level
