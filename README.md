@@ -55,9 +55,9 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - Vacuum Card: https://github.com/denysdovhan/vacuum-card
 
 ## Dashboard
-![1](https://i.imgur.com/KkvRDnq.png)
-![2](https://i.imgur.com/wEsk3A3.jpg)
-![3](https://i.imgur.com/BQvqYws.jpg)
-![4](https://i.imgur.com/QBElzUy.jpg)
-![5](https://i.imgur.com/IvoGo6C.png)
-![6](https://i.imgur.com/v49UR9O.png)
+![1](https://i.imgur.com/HmoTjg5.png)
+![2](https://i.imgur.com/45RVpnr.png)
+![3](https://i.imgur.com/3lttR9R.png)
+![4](https://i.imgur.com/pJFWITl.png)
+![5](https://i.imgur.com/leFmoYo.png)
+![6](https://i.imgur.com/k4GEwLE.png)
