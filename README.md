@@ -3,7 +3,7 @@
 </p>
 
 ## Home Automation Philosophy
-You shouldn't have to work the room, the room should work you. True home automation is having your home anticipate what you want without needing any input from you. Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
+***You shouldn't have to work the room, the room should work you.*** True home automation is having your home anticipate what you want without needing any input from you. Using voice commands are nice and all, but that ends up being just another switch you have to use and is ultimately just a remote control, not automation.
 
 My frontend may not be as fancy as some others, but this is because I'm trying to be as hands off as possible when it comes to my automations. Everything should run without me even thinking or interacting with Home Assistant and this is reflected in my display.
 
