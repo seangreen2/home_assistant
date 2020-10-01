@@ -33,7 +33,7 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - [Wyze Sense](https://wyze.com/wyze-sense.html) - Requires a [custom component](https://github.com/kevinvincent/ha-wyzesense) to function.
   - Motion Sensors
   - Door/Window Sensors
-  [4 ESP32 Development Boards](https://amazon.com/gp/product/B086MLNH7N/ref=ppx_yo_dt_b_asin_title_o04_s01?ie=UTF8&psc=1) - Used to determine Room Presence using BTLE. [Docs and setup information](https://jptrsn.github.io/ESP32-mqtt-room/)
+- [4 ESP32 Development Boards](https://amazon.com/gp/product/B086MLNH7N/ref=ppx_yo_dt_b_asin_title_o04_s01?ie=UTF8&psc=1) - Used to determine Room Presence using BTLE. [Docs and setup information](https://jptrsn.github.io/ESP32-mqtt-room/)
 - [Nest Thermostat](https://amzn.to/2YELTn2)
 - [55" TCL Roku TV](https://amzn.to/2XAYIlK)
 - [Nvidia Shield TV](https://amazon.com/gp/product/B07YP94PBJ/ref=ppx_yo_dt_b_asin_title_o06_s00?ie=UTF8&psc=1)
