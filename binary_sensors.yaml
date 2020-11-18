@@ -38,14 +38,14 @@
         delay_off:
           minutes: 2
         value_template: >-
-          {{ is_state('binary_sensor.wyzesense_779b29d3', 'off')
+          {{ is_state('binary_sensor.wyzesense_77a68665', 'off')
              and is_state('binary_sensor.wyzesense_77a68ce7', 'off')
-             and is_state('binary_sensor.wyzesense_77a68665', 'off')
              and not is_state('sensor.sean_room_location', 'living_room')
              and not is_state('sensor.emily_room_location', 'living_room')
              and not is_state('media_player.plex_living_room_tv', 'paused')
              and not is_state('media_player.plex_living_room_tv', 'playing')
              and not is_state('media_player.living_room_tv', 'playing') }}
+             and is_state('binary_sensor.wyzesense_77a68665', 'off')
 
   - platform: template
     sensors:

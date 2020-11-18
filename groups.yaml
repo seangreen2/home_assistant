@@ -31,6 +31,12 @@ emily:
 patio_door:
   entities: binary_sensor.wyzesense_778bb85a
 
+# MEDIA PLAYERS
+living_room_media:
+  entities: 
+    - media_player.plex_plex_for_android_tv_bravia_vh1
+    - media_player.plex_living_room_tv
+
 # MOTION SENSORS
 bedroom_motion:
   entities:

@@ -60,7 +60,7 @@ views:
             conditions:
               - entity: media_player.plex_living_room_tv
                 state_not: "unavailable"
-                state_not: "idle"
+              #  state_not: "idle"
             card:
               type: custom:mini-media-player
               entity: media_player.plex_living_room_tv
@@ -276,8 +276,6 @@ views:
                 icon: mdi:cat
                 tap_action:
                   action: toggle
-      - type: vertical-stack
-        cards:
           - type: glance
             entities:
               - binary_sensor.wyzesense_778bb85a
@@ -350,8 +348,6 @@ views:
                 entities:
                   - group.bedroom_motion
                   - group.bathroom_motion
-      - type: vertical-stack
-        cards:
           - type: custom:mini-media-player
             entity: media_player.bedroom_tv
             icon: mdi:television
@@ -393,22 +389,22 @@ views:
                 hours_to_show: 24
               - type: light
                 entity: light.office
-      - type: horizontal-stack
-        cards:
-          - type: entity-button
-            entity: switch.office_fan
-            name: Office Fan
-            icon: mdi:fan
-            tap_action:
-              action: toggle
-          - type: entity-button
-            entity: switch.laptop_socket
-            name: Smart Plug
-            icon: mdi:power-socket-jp
-            tap_action:
-              action: toggle
       - type: vertical-stack
         cards:
+          - type: horizontal-stack
+            cards:
+              - type: entity-button
+                entity: switch.office_fan
+                name: Office Fan
+                icon: mdi:fan
+                tap_action:
+                  action: toggle
+              - type: entity-button
+                entity: switch.laptop_socket
+                name: Smart Plug
+                icon: mdi:power-socket-jp
+                tap_action:
+                  action: toggle
           - type: horizontal-stack
             cards:
               - type: glance

@@ -4,7 +4,7 @@
     initial_state: on
     trigger:
       - platform: state
-        entity_id: media_player.bedroom_tv
+        entity_id: media_player.plex_bedroom_tv
         from: 'playing'
         to: 'idle'
     condition:
@@ -23,7 +23,7 @@
     initial_state: on
     trigger:
       - platform: state
-        entity_id: media_player.bedroom_tv
+        entity_id: media_player.plex_bedroom_tv
         to: 'playing'
     action:
       - service: light.turn_off
@@ -36,7 +36,7 @@
     initial_state: on
     trigger:
       - platform: state
-        entity_id: media_player.bedroom_tv
+        entity_id: media_player.plex_bedroom_tv
         from: 'playing'
         to: 'paused'
     condition:
@@ -55,7 +55,7 @@
     initial_state: on
     trigger:
       - platform: state
-        entity_id: media_player.bedroom_tv
+        entity_id: media_player.plex_bedroom_tv
         from: 'paused'
         to: 'playing'
     action:
@@ -68,7 +68,7 @@
     initial_state: on
     trigger:
       - platform: state
-        entity_id: media_player.bedroom_tv
+        entity_id: media_player.plex_bedroom_tv
         from: 'paused'
         to: 'idle'
     condition:

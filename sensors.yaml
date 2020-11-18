@@ -287,8 +287,22 @@
     away_timeout: 15
 
   - platform: mqtt_room
+    device_id: "16B16D2ABEF9"
+    name: 'Sean Fitbit Location'
+    state_topic: 'room_presence'
+    timeout: 30
+    away_timeout: 120
+
+  - platform: mqtt_room
     device_id: "3900f72eab4f4d7fa0ec4827c530fa36-1-0"
     name: 'Emily Room Location'
     state_topic: 'room_presence'
     timeout: 10
     away_timeout: 15
+
+  - platform: mqtt_room
+    device_id: "C6BF7F409AC0"
+    name: 'Emily Fitbit Location'
+    state_topic: 'room_presence'
+    timeout: 30
+    away_timeout: 120

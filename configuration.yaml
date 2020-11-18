@@ -102,6 +102,8 @@ history:
       - sensor.emily_room_location
 
 recorder:
+  purge_keep_days: 3
+  auto_purge: true
   include:
     domains:
       - switch

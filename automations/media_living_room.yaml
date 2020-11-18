@@ -6,6 +6,10 @@
         entity_id: media_player.plex_living_room_tv
         from: 'playing'
         to: 'idle'
+      - platform: state
+        entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
+        from: 'playing'
+        to: 'idle'
     action:
       - service: light.turn_on
         data_template:
@@ -27,6 +31,10 @@
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
+        from: 'playing'
+        to: 'unavailable'
+      - platform: state
+        entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
         from: 'playing'
         to: 'unavailable'
     action:
@@ -51,6 +59,10 @@
         entity_id: media_player.plex_living_room_tv
         to: 'playing'
         from: 'idle'
+      - platform: state
+        entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
+        to: 'playing'
+        from: 'idle'
     action:
       - service: light.turn_off
         data:
@@ -64,6 +76,9 @@
       - platform: state
         entity_id: media_player.plex_living_room_tv
         to: 'playing'
+      - platform: state
+        entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
+        to: 'playing'
     action:
       - service: light.turn_off
         data:
@@ -76,6 +91,10 @@
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
+        from: 'playing'
+        to: 'paused'
+      - platform: state
+        entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
         from: 'playing'
         to: 'paused'
     action:
@@ -100,6 +119,10 @@
         entity_id: media_player.plex_living_room_tv
         from: 'paused'
         to: 'playing'
+      - platform: state
+        entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
+        from: 'paused'
+        to: 'playing'
     action:
       service: light.turn_off
       data:
@@ -111,6 +134,10 @@
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
+        from: 'paused'
+        to: 'idle'
+      - platform: state
+        entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
         from: 'paused'
         to: 'idle'
     action:
@@ -133,6 +160,10 @@
     trigger:
       - platform: state
         entity_id: media_player.plex_living_room_tv
+        from: 'paused'
+        to: 'unavailable'
+      - platform: state
+        entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
         from: 'paused'
         to: 'unavailable'
     action:
