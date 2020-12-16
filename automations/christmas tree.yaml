@@ -1,0 +1,20 @@
+- alias: Christmas Tree On
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: group.living_room_motion
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: 'home'
+    - condition: state
+      entity_id: input_boolean.bedtime_emily
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.bedtime_sean
+      state: 'off'
+  action:
+    - service: switch.turn_on
+      data_template:
+        entity_id: switch.office_fan

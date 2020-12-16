@@ -59,8 +59,7 @@ views:
           - type: conditional
             conditions:
               - entity: media_player.plex_living_room_tv
-                state_not: "unavailable"
-              #  state_not: "idle"
+                state: "playing"
             card:
               type: custom:mini-media-player
               entity: media_player.plex_living_room_tv
@@ -70,15 +69,44 @@ views:
                 volume: true
           - type: conditional
             conditions:
-              - entity: media_player.whole_house
+              - entity: media_player.spotify_sean
                 state_not: "off"
             card:
               type: custom:mini-media-player
-              entity: media_player.whole_house
-              icon: mdi:speaker-multiple
+              entity: media_player.spotify_sean
+              source: icon
               artwork: cover
               hide:
                 volume: false
+                shuffle: false
+                source: true
+              shortcuts:
+                columns: 4
+                buttons:
+                  - icon: mdi:home
+                    type: service
+                    id: spotcast.start
+                    data:
+                      entity_id: media_player.whole_house
+                      shuffle: true
+                      force_playback: true
+                  - icon: mdi:keyboard
+                    type: source
+                    id: HASTUR
+                  - icon: mdi:sofa
+                    type: service
+                    id: spotcast.start
+                    data:
+                      entity_id: media_player.living_room
+                      shuffle: true
+                      force_playback: true
+                  - icon: mdi:television
+                    type: service
+                    id: spotcast.start
+                    data:
+                      device_name: SHIELD
+                      shuffle: true
+                      force_playback: true
           - type: custom:simple-weather-card
             entity: weather.dark_sky
             name: " "

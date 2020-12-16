@@ -1,6 +1,6 @@
 # Turn on Office fan above temp
   - alias: "Turn on Fan above certain temp"
-    initial_state: on
+    initial_state: off
     trigger:
       platform: state
       entity_id: group.office_motion
@@ -28,7 +28,7 @@
 
 # Turn off Office fan below temp
   - alias: "Turn off Fan below certain temp"
-    initial_state: on
+    initial_state: off
     trigger:
       platform: numeric_state
       entity_id: sensor.office_temperature_f
@@ -39,7 +39,7 @@
 
 # Turn off Office fan after 30 minutes
   - alias: "Turn off Office Fan"
-    initial_state: on
+    initial_state: off
     trigger:
       platform: state
       entity_id: group.office_motion

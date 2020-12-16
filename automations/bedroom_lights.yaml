@@ -13,9 +13,9 @@
       entity_id: light.bedroom
       state: 'off'
     - condition: template
-      value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+      value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'playing') }}" # NOT condition
     - condition: template
-      value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+      value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'paused') }}" # NOT condition
     - condition: template
       value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
   action:
@@ -44,9 +44,9 @@
       entity_id: light.bedroom
       state: 'on'
     - condition: template
-      value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+      value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'playing') }}" # NOT condition
     - condition: template
-      value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+      value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'paused') }}" # NOT condition
   action:
     - service: light.turn_on
       data_template:

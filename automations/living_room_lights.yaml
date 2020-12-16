@@ -1,7 +1,6 @@
 # Living Room Lights on with Motion
 - alias: Living Room Auto Brightness
   initial_state: on
-  mode: restart
   trigger:
     - platform: state
       entity_id: group.living_room_motion
@@ -12,6 +11,9 @@
       state: 'home'
     - condition: state
       entity_id: light.living_room
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.bedtime_emily
       state: 'off'
     - condition: template
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition

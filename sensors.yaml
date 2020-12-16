@@ -306,3 +306,5 @@
     state_topic: 'room_presence'
     timeout: 30
     away_timeout: 120
+
+  - platform: spotcast

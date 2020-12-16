@@ -98,10 +98,8 @@
         to: 'living_room'
         for:
           seconds: 20
-      - platform: template
-        value_template: "{{ not is_state('media_player.living_room_tv', 'unavailable') }}" # NOT condition
-      - platform: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'unavailable') }}" # NOT condition
+#      - platform: template
+#        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'unavailable') }}" # NOT condition
     condition:
       - condition: state
         entity_id: group.family
