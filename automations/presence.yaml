@@ -91,7 +91,7 @@
             {% elif states('sensor.season') == 'autumn' %}
               auto
             {% else %}
-              heat
+              auto
             {% endif %}
 
 # Turn off Eco Mode Nest Google Tracker
@@ -100,7 +100,7 @@
     trigger:
       platform: numeric_state
       entity_id: proximity.home
-      below: 5
+      below: 10
     condition:
       condition: and
       conditions:
@@ -126,5 +126,5 @@
             {% elif states('sensor.season') == 'autumn' %}
               auto
             {% else %}
-              heat
+              auto
             {% endif %}

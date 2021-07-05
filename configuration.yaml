@@ -18,6 +18,9 @@ homeassistant:
 
 map:
 
+mqtt:
+  discovery: true
+
 zone:
   - name: home
     latitude: !secret latitude
@@ -100,6 +103,7 @@ history:
       - sensor.living_room_temperature_f
       - sensor.sean_room_location
       - sensor.emily_room_location
+      - sensor.living_room_sensor_temperature
 
 recorder:
   purge_keep_days: 3
@@ -135,6 +139,7 @@ recorder:
       - sensor.office_motion_sensor_temperature
       - sensor.bathroom_sensor_temperature
       - sensor.living_room_temperature_f
+      - sensor.living_room_sensor_temperature
 
 # View all events in a logbook
 logbook:
@@ -143,10 +148,7 @@ weather:
   - platform: darksky
     api_key: !secret dark_sky_api_key
     mode: daily
-  - platform: openweathermap
-    api_key: !secret openweather_api_key
-    mode: freedaily
-
+    
 sun:
 
 iqvia:
@@ -197,31 +199,35 @@ switch:
     name: Living Room
     lights_brightness:
       - light.living_room
-    min_brightness: 35
+    min_brightness: 50
 
   - platform: circadian_lighting
     name: Bedroom
     lights_brightness:
       - light.bedroom
-    min_brightness: 35
+    min_brightness: 50
 
   - platform: circadian_lighting
     name: Office
     lights_brightness:
       - light.office
-    min_brightness: 35
+    min_brightness: 50
 
 tplink:
   switch:
-    - host: !secret tplink_switch_one_ip
-    - host: !secret tplink_switch_two_ip
-    - host: !secret tplink_switch_three_ip
-    - host: !secret tplink_switch_four_ip
-    - host: !secret tplink_switch_five_ip
+    - host: 192.168.20.51 #Bias Light Switch
+    - host: 192.168.20.202 #Bedroom Fan Switch
+    - host: 192.168.20.63 #Unused Switch
+    - host: 192.168.20.59 #Living Room Fan Switch
+    - host: 192.168.20.17 #Air fresehner switch
 
 wemo:
   static:
-    - !secret wemo_ip
+    - 192.168.20.70 #Office Fan Switch
+
+#wemo:
+#  static:
+#    - !secret wemo_ip
 
 # Text to speech
 tts:
@@ -230,14 +236,10 @@ tts:
 
 # Media
 
-# Pi-Hole
-pi_hole:
-  host: !secret pihole_ip
-
 # Neato Vacuum
-neato:
-  username: !secret neato_user
-  password: !secret neato_password
+#neato:
+#  username: !secret neato_user
+#  password: !secret neato_password
 
 ##########################
 scene: !include scenes.yaml

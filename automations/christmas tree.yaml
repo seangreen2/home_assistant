@@ -1,5 +1,5 @@
 - alias: Christmas Tree On
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: state
       entity_id: group.living_room_motion

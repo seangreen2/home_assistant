@@ -23,7 +23,7 @@
           - sensor.bedroom_sensor_temperature
         unit_of_measurement: °F
         value_template: >
-          {{ ((float(states('sensor.bedroom_sensor_temperature'))) + 5) | round(1) }}
+          {{ ((float(states('sensor.living_room_sensor_temperature'))) + 5) | round(1) }}
 
   - platform: template
     sensors:
@@ -145,6 +145,21 @@
         friendly_name: 'Emily Phone Battery'
         value_template: '{{states.device_tracker.pixel_3_2.attributes.battery_level}}'
         unit_of_measurement: '%'
+
+  - platform: template
+    sensors:
+      plex_bandwidth:
+        value_template: '{{states.sensor.tautulli.attributes.total_bandwidth}}'
+        unit_of_measurement: 'Mbps'
+
+  - platform: template
+    sensors:
+      plex_bandwidth_mbit:
+        entity_id:
+          - sensor.plex_bandwidth
+        unit_of_measurement: Mbps
+        value_template: >
+          {{ ((float(states('sensor.plex_bandwidth'))) / 1000) | round(1) }}
 
   - platform: template
     sensors:
@@ -287,11 +302,11 @@
     away_timeout: 15
 
   - platform: mqtt_room
-    device_id: "16B16D2ABEF9"
-    name: 'Sean Fitbit Location'
+    device_id: "605981912f1049a6ae68278952f33bbd-2-0"
+    name: 'Seans Room Location'
     state_topic: 'room_presence'
-    timeout: 30
-    away_timeout: 120
+    timeout: 10
+    away_timeout: 15
 
   - platform: mqtt_room
     device_id: "3900f72eab4f4d7fa0ec4827c530fa36-1-0"
@@ -300,11 +315,8 @@
     timeout: 10
     away_timeout: 15
 
-  - platform: mqtt_room
-    device_id: "C6BF7F409AC0"
-    name: 'Emily Fitbit Location'
-    state_topic: 'room_presence'
-    timeout: 30
-    away_timeout: 120
-
   - platform: spotcast
+
+  - platform: tautulli
+    api_key: !secret tautulli_api
+    host: 192.168.1.79

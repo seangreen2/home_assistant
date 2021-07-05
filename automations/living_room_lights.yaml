@@ -5,6 +5,15 @@
     - platform: state
       entity_id: group.living_room_motion
       to: 'on'
+    - platform: state
+      entity_id: binary_sensor.wyzesense_77a68ce7
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.wyzesense_77a68665
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.wyzesense_779b29d3
+      to: 'on'
   condition:
     - condition: state
       entity_id: group.family
@@ -76,6 +85,9 @@
         state: 'off'
       - condition: state
         entity_id: input_boolean.living_room_occupied
+        state: 'off'
+      - condition: state
+        entity_id: group.living_room_motion
         state: 'off'
       - condition: template
         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition

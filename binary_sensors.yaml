@@ -44,6 +44,7 @@
              and not is_state('sensor.emily_room_location', 'living_room')
              and not is_state('media_player.plex_living_room_tv', 'paused')
              and not is_state('media_player.plex_living_room_tv', 'playing')
+             and not is_state('media_player.sony_xbr_65x900h', 'playing')
              and is_state('binary_sensor.wyzesense_77a68665', 'off') }}
 
   - platform: template

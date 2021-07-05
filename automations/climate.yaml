@@ -32,7 +32,7 @@
            {% elif states('sensor.season') == 'autumn' %}
              auto
            {% else %}
-             heat
+             auto
            {% endif %}
            
 # Turn on ceiling fan under certain conditions
@@ -40,7 +40,7 @@
    initial_state: on
    trigger:
      platform: time_pattern
-     minutes: '/5'
+     minutes: '/3'
    condition:
      condition: and
      conditions:
@@ -53,6 +53,9 @@
        - condition: numeric_state
          entity_id: sensor.living_room_thermostat_temperature
          above: '73'
+       - condition: state
+         entity_id: input_boolean.living_room_occupied
+         state: 'on'
    action:
      - service: switch.turn_on
        entity_id:  switch.living_room_fan
@@ -62,7 +65,7 @@
    initial_state: on
    trigger:
      platform: time_pattern
-     minutes: '/15'
+     minutes: '/10'
    condition:
      condition: and
      conditions:
@@ -83,7 +86,7 @@
          value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
        - condition: numeric_state
          entity_id: sensor.living_room_thermostat_temperature
-         below: '73'
+         below: '74'
    action:
      - service: switch.turn_off
        entity_id:  switch.living_room_fan
@@ -93,7 +96,7 @@
    initial_state: on
    trigger:
      platform: time_pattern
-     minutes: '/5'
+     minutes: '/3'
    condition:
      condition: and
      conditions:
@@ -102,7 +105,7 @@
          state: 'home'
        - condition: numeric_state
          entity_id: sensor.bedroom_temperature_f
-         above: '72'
+         above: '74'
        - condition: state
          entity_id: input_boolean.bedroom_occupied
          state: 'on'
@@ -115,7 +118,7 @@
    initial_state: on
    trigger:
      platform: time_pattern
-     minutes: '/15'
+     minutes: '/10'
    condition:
      condition: and
      conditions:
@@ -136,7 +139,7 @@
          state: 'off'
        - condition: numeric_state
          entity_id: sensor.bedroom_temperature_f
-         below: '72'
+         below: '74'
        - condition: template
          value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
        - condition: template

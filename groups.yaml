@@ -40,7 +40,6 @@ living_room_media:
 # MOTION SENSORS
 bedroom_motion:
   entities:
-#    - binary_sensor.wyzesense_778c2557
     - binary_sensor.wyzesense_779b1944
 
 living_room_motion:
@@ -54,6 +53,7 @@ office_motion:
   entities:
     - binary_sensor.office_motion_motion_sensor
     - binary_sensor.wyzesense_779b1988
+    - binary_sensor.wyzesense_77A67A6C
     
 bathroom_motion:
   name: Bathroom Motion

@@ -59,7 +59,7 @@ views:
           - type: conditional
             conditions:
               - entity: media_player.plex_living_room_tv
-                state: "playing"
+                state_not: "idle"
             card:
               type: custom:mini-media-player
               entity: media_player.plex_living_room_tv
@@ -70,7 +70,7 @@ views:
           - type: conditional
             conditions:
               - entity: media_player.spotify_sean
-                state_not: "off"
+                state_not: "idle"
             card:
               type: custom:mini-media-player
               entity: media_player.spotify_sean
@@ -93,11 +93,7 @@ views:
                   - icon: mdi:keyboard
                     type: source
                     id: HASTUR
-                  - icon: mdi:sofa
-                    type: service
-                    id: spotcast.start
                     data:
-                      entity_id: media_player.living_room
                       shuffle: true
                       force_playback: true
                   - icon: mdi:television
@@ -148,32 +144,32 @@ views:
                from: 9.7
                to: 12
 
-          - type: glance
-            entities:
-              - sensor.us_coronavirus_confirmed
-              - sensor.us_coronavirus_deaths
-              - sensor.us_coronavirus_recovered
+#          - type: glance
+#            entities:
+#              - sensor.us_coronavirus_confirmed
+#              - sensor.us_coronavirus_deaths
+#              - sensor.us_coronavirus_recovered
           - type: horizontal-stack
             cards:
-              - type: entity-button
+              - type: button
                 entity: switch.living_room_fan
                 name: Ceiling
                 icon: mdi:fan
                 tap_action:
                   action: toggle
-              - type: entity-button
+              - type: button
                 entity: switch.outside_lights
                 name: Freshener
                 icon: mdi:cat
                 tap_action:
                   action: toggle
-              - type: entity-button
+              - type: button
                 entity: switch.office_fan
                 name: Office
                 icon: mdi:fan
                 tap_action:
                   action: toggle
-              - type: entity-button
+              - type: button
                 entity: switch.bedroom_fan
                 name: Bedroom
                 icon: mdi:fan
@@ -199,14 +195,12 @@ views:
                 name: Office Lights
           - type: horizontal-stack
             cards:
-              - type: picture-entity
-                entity: vacuum.rosie
-                name: Rosie
-                image: /local/images/neato.png
-              - type: picture-entity
-                entity: sensor.plex_21st_century_plex
-                name: Plex
-                image: /local/images/plex.png
+              - type: entity
+                entity: sensor.tautulli
+                name: Plex Status
+              - type: entity
+                entity: sensor.plex_bandwidth_mbit
+                name: Plex Bandwidth
       - type: vertical-stack
         cards:
           - type: custom:simple-thermostat
@@ -286,19 +280,19 @@ views:
         cards:
           - type: horizontal-stack
             cards:
-              - type: entity-button
+              - type: button
                 entity: switch.living_room_fan
                 name: Ceiling Fan
                 icon: mdi:fan
                 tap_action:
                   action: toggle
-              - type: entity-button
+              - type: button
                 entity: switch.bias_lighting
                 name: Bias Lights
                 icon: mdi:television
                 tap_action:
                   action: toggle
-              - type: entity-button
+              - type: button
                 entity: switch.outside_lights
                 name: Air Freshener
                 icon: mdi:cat
@@ -366,7 +360,7 @@ views:
         cards:
           - type: horizontal-stack
             cards:
-              - type: entity-button
+              - type: button
                 entity: switch.bedroom_fan
                 name: Bedroom Fan
                 icon: mdi:fan
@@ -377,7 +371,7 @@ views:
                   - group.bedroom_motion
                   - group.bathroom_motion
           - type: custom:mini-media-player
-            entity: media_player.bedroom_tv
+            entity: media_player.plex_bedroom_tv
             icon: mdi:television
             artwork: cover
           - type: custom:mini-media-player
@@ -421,13 +415,13 @@ views:
         cards:
           - type: horizontal-stack
             cards:
-              - type: entity-button
+              - type: button
                 entity: switch.office_fan
                 name: Office Fan
                 icon: mdi:fan
                 tap_action:
                   action: toggle
-              - type: entity-button
+              - type: button
                 entity: switch.laptop_socket
                 name: Smart Plug
                 icon: mdi:power-socket-jp
@@ -532,7 +526,7 @@ views:
                   value: inside
                 align: split
                 color: '#70a03c'
-                max: '100000'
+                max: '250000'
               - type: custom:bar-card
                 entity: sensor.pi_hole_domains_blocked
                 entity_row: true
