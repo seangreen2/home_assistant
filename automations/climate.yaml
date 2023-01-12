@@ -1,151 +1,180 @@
 # When porch door is open turn off nest
- - alias: Door open turn off nest
-   initial_state: on
-   trigger:
-     platform: state
-     entity_id: group.patio_door
-     to: 'on'
-     for:
-       seconds: '120'
-   action:
-     - service: climate.set_hvac_mode
-       data:
-         entity_id: climate.living_room
-         hvac_mode: 'off'
+- alias: Door open turn off nest
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.patio_door
+    to: "on"
+    for:
+      seconds: "120"
+  action:
+    - service: climate.set_hvac_mode
+      data:
+        entity_id: climate.downstairs
+        hvac_mode: "off"
 
 # When porch door is closed turn Nest back on
- - alias: Door closed turn on nest
-   initial_state: on
-   trigger:
-     platform: state
-     entity_id: group.patio_door
-     to: 'off'
-     for:
-       seconds: '10'
-   action:
-     - service: climate.set_hvac_mode
-       data_template:
-         entity_id: climate.living_room
-         hvac_mode: >
-           {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
-             cool
-           {% elif states('sensor.season') == 'autumn' %}
-             auto
-           {% else %}
-             auto
-           {% endif %}
-           
+- alias: Door closed turn on nest
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.patio_door
+    to: "off"
+    for:
+      seconds: "10"
+  action:
+    - service: climate.set_hvac_mode
+      data_template:
+        entity_id: climate.downstairs
+        hvac_mode: >
+          {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
+            cool
+          {% elif states('sensor.season') == 'autumn' %}
+            heat_cool
+          {% else %}
+            heat_cool
+          {% endif %}
+
 # Turn on ceiling fan under certain conditions
- - alias: Turn on Ceiling Fan
-   initial_state: on
-   trigger:
-     platform: time_pattern
-     minutes: '/3'
-   condition:
-     condition: and
-     conditions:
-       - condition: state
-         entity_id: group.family
-         state: 'home'
-       - condition: time
-         after: '07:00:00'
-         before: '22:00:00'
-       - condition: numeric_state
-         entity_id: sensor.living_room_thermostat_temperature
-         above: '73'
-       - condition: state
-         entity_id: input_boolean.living_room_occupied
-         state: 'on'
-   action:
-     - service: switch.turn_on
-       entity_id:  switch.living_room_fan
+- alias: Turn on Ceiling Fan
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: input_boolean.living_room_occupied
+    to: "on"
+    for:
+      minutes: "5"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: "home"
+      - condition: time
+        after: "07:00:00"
+        before: "22:00:00"
+      - condition: numeric_state
+        entity_id: sensor.downstairs_temperature
+        above: "72.5"
+      - condition: state
+        entity_id: group.family
+        state: "home"
+  action:
+    - service: switch.turn_on
+      entity_id: switch.living_room_fan
 
 # Turn off living room fan under certain conditions
- - alias: Turn off Living Room Fan
-   initial_state: on
-   trigger:
-     platform: time_pattern
-     minutes: '/10'
-   condition:
-     condition: and
-     conditions:
-       - condition: state
-         entity_id: input_boolean.sean_living_room_presence
-         state: 'off'
-       - condition: state
-         entity_id: input_boolean.emily_living_room_presence
-         state: 'off'
-       - condition: state
-         entity_id: input_boolean.living_room_occupied
-         state: 'off'
-       - condition: template
-         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
-       - condition: template
-         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
-       - condition: template
-         value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
-       - condition: numeric_state
-         entity_id: sensor.living_room_thermostat_temperature
-         below: '74'
-   action:
-     - service: switch.turn_off
-       entity_id:  switch.living_room_fan
+- alias: Turn off Living Room Fan
+  initial_state: on
+  trigger:
+    platform: time_pattern
+    minutes: "/10"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.sean_living_room_presence
+        state: "off"
+      - condition: state
+        entity_id: input_boolean.emily_living_room_presence
+        state: "off"
+      - condition: state
+        entity_id: input_boolean.living_room_occupied
+        state: "off"
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.shield', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.shield', 'paused') }}" # NOT condition
+      - condition: numeric_state
+        entity_id: sensor.downstairs_temperature
+        below: "72"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.living_room_fan
+
+# Turn off living room fan when no one is in room
+- alias: Turn off Living Room Fan no presence
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: input_boolean.living_room_occupied
+    to: "off"
+    for:
+      minutes: "2"
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.shield', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.shield', 'paused') }}"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.living_room_fan
 
 # Turn on bedroom fan under certain conditions
- - alias: Turn on Bedroom Fan
-   initial_state: on
-   trigger:
-     platform: time_pattern
-     minutes: '/3'
-   condition:
-     condition: and
-     conditions:
-       - condition: state
-         entity_id: group.family
-         state: 'home'
-       - condition: numeric_state
-         entity_id: sensor.bedroom_temperature_f
-         above: '74'
-       - condition: state
-         entity_id: input_boolean.bedroom_occupied
-         state: 'on'
-   action:
-     - service: switch.turn_on
-       entity_id:  switch.bedroom_fan
+- alias: Turn on Bedroom Fan
+  initial_state: on
+  trigger:
+    platform: time_pattern
+    minutes: "/3"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: "home"
+      - condition: numeric_state
+        entity_id: sensor.bedroom_temperature_f
+        above: "73.5"
+      - condition: state
+        entity_id: input_boolean.bedroom_occupied
+        state: "on"
+  action:
+    - service: switch.turn_on
+      entity_id: switch.bedroom_fan
 
 # Turn off bedroom fan under certain conditions
- - alias: Turn off Bedroom Fan
-   initial_state: on
-   trigger:
-     platform: time_pattern
-     minutes: '/10'
-   condition:
-     condition: and
-     conditions:
-       - condition: state
-         entity_id: input_boolean.sean_bedroom_presence
-         state: 'off'
-       - condition: state
-         entity_id: input_boolean.emily_bedroom_presence
-         state: 'off'
-       - condition: state
-         entity_id: input_boolean.bedroom_occupied
-         state: 'off'
-       - condition: time
-         after: '09:00:00'
-         before: '19:00:00'
-       - condition: state
-         entity_id: group.bedroom_motion
-         state: 'off'
-       - condition: numeric_state
-         entity_id: sensor.bedroom_temperature_f
-         below: '74'
-       - condition: template
-         value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
-       - condition: template
-         value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
-       - condition: template
-         value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
-   action:
-     - service: switch.turn_off
-       entity_id:  switch.bedroom_fan
+- alias: Turn off Bedroom Fan
+  initial_state: on
+  trigger:
+    platform: time_pattern
+    minutes: "/10"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.sean_bedroom_presence
+        state: "off"
+      - condition: state
+        entity_id: input_boolean.emily_bedroom_presence
+        state: "off"
+      - condition: state
+        entity_id: input_boolean.bedroom_occupied
+        state: "off"
+      - condition: time
+        after: "09:00:00"
+        before: "21:00:00"
+      - condition: state
+        entity_id: group.bedroom_motion
+        state: "off"
+      - condition: numeric_state
+        entity_id: sensor.bedroom_temperature_f
+        below: "73.5"
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
+  action:
+    - service: switch.turn_off
+      entity_id: switch.bedroom_fan

@@ -17,7 +17,7 @@ resources:
 views:
   - path: default_view
     title: Home
-    icon: 'mdi:home'
+    icon: "mdi:home"
     badges: []
     cards:
       - type: vertical-stack
@@ -25,52 +25,44 @@ views:
           - type: horizontal-stack
             cards:
               - type: picture-glance
-                title: Location
+                #title: Location
                 entities:
                   - sensor.sean_room_status
-                  - sensor.sean_pixel_3_battery_level
+                  - sensor.sean_pixel_battery_level
                 state_image:
                   "home": /local/images/sean_16x9.jpg
                   "not_home": /local/images/sean_16x9_gray.jpg
                 entity: group.sean
               - type: picture-glance
-                title: Location
+                #title: Location
                 entities:
                   - sensor.emily_room_status
-                  - sensor.emily_pixel_3_battery_level
+                  - sensor.emily_pixel_battery_level
+                  #- sensor.work_commute
                 state_image:
                   "home": /local/images/emily_16x9.jpg
                   "not_home": /local/images/emily_16x9_gray.jpg
                 entity: group.emily
- #         - type: entities
- #           entities:
- #             - sensor.work_commute
-          - type: conditional
-            conditions:
-              - entity: media_player.bedroom_tv
-                state_not: "unavailable"
-            card:
-              type: custom:mini-media-player
-              entity: media_player.bedroom_tv
-              icon: mdi:television
-              artwork: cover
-              hide:
-                volume: true
-          - type: conditional
-            conditions:
-              - entity: media_player.plex_living_room_tv
-                state_not: "idle"
-            card:
-              type: custom:mini-media-player
-              entity: media_player.plex_living_room_tv
-              icon: mdi:television
-              artwork: cover
-              hide:
-                volume: true
+          #          - type: entities
+          #            entities:
+          #              - sensor.work_commute
+          - type: custom:simple-weather-card
+            entity: weather.dark_sky
+            name: " "
+            primary_info:
+              - extrema
+            #              - precipitation
+            secondary_info:
+              - wind_speed
+              - precipitation_probability
+              - humidity
+            backdrop:
+              day: "#2980b9"
+              night: "#022F4C"
           - type: conditional
             conditions:
               - entity: media_player.spotify_sean
-                state_not: "idle"
+                state_not: "off"
             card:
               type: custom:mini-media-player
               entity: media_player.spotify_sean
@@ -81,19 +73,34 @@ views:
                 shuffle: false
                 source: true
               shortcuts:
-                columns: 4
+                columns: 5
                 buttons:
                   - icon: mdi:home
                     type: service
                     id: spotcast.start
                     data:
-                      entity_id: media_player.whole_house
+                      device_name: Whole House
+                      shuffle: true
+                      force_playback: true
+                  - icon: mdi:sofa
+                    type: service
+                    id: spotcast.start
+                    data:
+                      device_name: Living Room
+                      shuffle: true
+                      force_playback: true
+                  - icon: mdi:shower
+                    type: service
+                    id: spotcast.start
+                    data:
+                      device_name: Bathroom speaker
                       shuffle: true
                       force_playback: true
                   - icon: mdi:keyboard
-                    type: source
-                    id: HASTUR
+                    type: service
+                    id: spotcast.start
                     data:
+                      device_name: Office speaker
                       shuffle: true
                       force_playback: true
                   - icon: mdi:television
@@ -103,96 +110,6 @@ views:
                       device_name: SHIELD
                       shuffle: true
                       force_playback: true
-          - type: custom:simple-weather-card
-            entity: weather.dark_sky
-            name: " "
-            primary_info:
-              - extrema
-#              - precipitation
-            secondary_info: 
-              - wind_speed
-              - precipitation_probability
-              - humidity
-            backdrop:
-              day: "#2980b9"
-              night: "#022F4C"
-          - type: 'custom:bar-card'
-            entity: sensor.allergy_index_today
-            name: Allergen Severity
-            entity_row: true
-            positions:
-              icon: inside
-              indicator: inside
-              name: inside
-              value: inside
-            width: 100%
-            max: 12
-            severity:
-             - color: '#70a03c'
-               from: 0
-               to: 2.4
-             - color: '#70a03c'
-               from: 2.5
-               to: 4.8
-             - color: '#b58e31'
-               from: 4.9
-               to: 7.2
-             - color: '#b58e31'
-               from: 7.3
-               to: 9.6
-             - color: '#fb625c'
-               from: 9.7
-               to: 12
-
-#          - type: glance
-#            entities:
-#              - sensor.us_coronavirus_confirmed
-#              - sensor.us_coronavirus_deaths
-#              - sensor.us_coronavirus_recovered
-          - type: horizontal-stack
-            cards:
-              - type: button
-                entity: switch.living_room_fan
-                name: Ceiling
-                icon: mdi:fan
-                tap_action:
-                  action: toggle
-              - type: button
-                entity: switch.outside_lights
-                name: Freshener
-                icon: mdi:cat
-                tap_action:
-                  action: toggle
-              - type: button
-                entity: switch.office_fan
-                name: Office
-                icon: mdi:fan
-                tap_action:
-                  action: toggle
-              - type: button
-                entity: switch.bedroom_fan
-                name: Bedroom
-                icon: mdi:fan
-                tap_action:
-                  action: toggle
-      - type: vertical-stack
-        cards:
-          - type: horizontal-stack
-            cards:
-              - type: light
-                entity: light.living_room
-                name: Living Room Lights
-              - type: light
-                entity: light.bedroom
-                name: Bedroom Lights
-          - type: horizontal-stack
-            cards:
-              - type: light
-                entity: light.bathroom
-                name: Bathroom Lights
-              - type: light
-                entity: light.office
-                name: Office Lights
           - type: horizontal-stack
             cards:
               - type: entity
@@ -201,10 +118,20 @@ views:
               - type: entity
                 entity: sensor.plex_bandwidth_mbit
                 name: Plex Bandwidth
+
+      - type: vertical-stack
+        cards:
+          - type: area
+            area: 7def5c67fbfe11eaaaa147e24169a0cc
+          - type: area
+            area: office
+          - type: area
+            area: 7def6888fbfe11eaa6d40118084a466e
+
       - type: vertical-stack
         cards:
           - type: custom:simple-thermostat
-            entity: climate.living_room
+            entity: climate.downstairs
             step_size: 1
             control:
               hvac:
@@ -221,38 +148,38 @@ views:
               idle: mdi:power
               away: mdi:leaf
             sensors:
-          #    - entity: sensor.living_room_thermostat_hvac_state
-              - entity: binary_sensor.living_room_thermostat_fan
+              #    - entity: sensor.living_room_thermostat_hvac_state
+              - entity: binary_sensor.downstairs_fan
                 name: Fan Status
-              - entity: sensor.living_room_thermostat_humidity
+              - entity: sensor.downstairs_humidity
                 name: Humidity
-#          - type: thermostat
-#            entity: climate.living_room
-          - type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.living_room_thermostat_temperature
-                name: Living Room
-                line_color: '#2980b9'
-                line_width: 6
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.bedroom_temperature_f
-                name: Bedroom
-                line_color: '#b58e31'
-                line_width: 6
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.office_temperature_f
-                name: Office
-                line_color: '#70a03c'
-                line_width: 6
-
+          - type: custom:simple-thermostat
+            entity: climate.upstairs
+            step_size: 1
+            control:
+              hvac:
+                auto: true
+                heat: true
+                cool: true
+                off: true
+            icon:
+              heat: mdi:fire
+              cool: mdi:snowflake
+              eco: mdi:leaf
+              off: mdi:power
+              auto: mdi:autorenew
+              idle: mdi:power
+              away: mdi:leaf
+            sensors:
+              #    - entity: sensor.living_room_thermostat_hvac_state
+              - entity: binary_sensor.upstairs_fan
+                name: Fan Status
+              - entity: sensor.upstairs_humidity
+                name: Humidity
 
   - path: livingroom
     title: Living Room
-    icon: 'mdi:sofa'
+    icon: "mdi:sofa"
     badges: []
     cards:
       - type: vertical-stack
@@ -261,25 +188,26 @@ views:
             cards:
               - type: custom:mini-graph-card
                 entities:
-                  - sensor.living_room_thermostat_temperature
+                  - sensor.downstairs_temperature
                 name: Living Room
-                line_color: '#2980b9'
+                line_color: "#2980b9"
                 line_width: 2
           - type: horizontal-stack
             cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.living_room_thermostat_humidity
-                name: Humidity
-                line_color: '#70a03c'
-                line_width: 4
-                hours_to_show: 24
+              - type: light
+                entity: light.outside
               - type: light
                 entity: light.living_room
-      - type: vertical-stack
-        cards:
           - type: horizontal-stack
             cards:
+              - type: light
+                entity: light.cabinet_lights
+              - type: button
+                entity: switch.outside_lights_switch
+                name: Outside Front
+                icon: mdi:lightbulb-group
+                tap_action:
+                  action: toggle
               - type: button
                 entity: switch.living_room_fan
                 name: Ceiling Fan
@@ -287,21 +215,72 @@ views:
                 tap_action:
                   action: toggle
               - type: button
-                entity: switch.bias_lighting
-                name: Bias Lights
-                icon: mdi:television
-                tap_action:
-                  action: toggle
-              - type: button
-                entity: switch.outside_lights
+                entity: switch.air_freshener
                 name: Air Freshener
                 icon: mdi:cat
                 tap_action:
                   action: toggle
+      - type: vertical-stack
+        cards:
           - type: glance
             entities:
-              - binary_sensor.wyzesense_778bb85a
+              - binary_sensor.wyzesense_77a9603a
               - group.living_room_motion
+          - type: entities
+            entities:
+              - entity: sensor.kitty_throne_status_code
+              - entity: sensor.kitty_throne_waste_drawer
+              - entity: switch.litter_robot
+              - entity: button.kitty_throne_reset_waste_drawer
+
+          - type: custom:vacuum-card
+            entity: vacuum.roborock_vacuum_a08
+            #map: camera.xiaomi_cloud_map_extractor
+            stats:
+              default:
+                - entity_id: sensor.roborock_vacuum_a08_filter_left
+                  value_template: '{{ (value | float(0) / 3600) | round(0) }}'
+                  unit: hours
+                  subtitle: Filter
+                - entity_id: sensor.roborock_vacuum_a08_side_brush_left
+                  value_template: '{{ (value | float(0) / 3600) | round(0) }}'
+                  unit: hours
+                  subtitle: Side Brush
+                - entity_id: sensor.roborock_vacuum_a08_main_brush_left
+                  value_template: '{{ (value | float(0) / 3600) | round(0) }}'
+                  unit: hours
+                  subtitle: Main Brush
+                - entity_id: sensor.roborock_vacuum_a08_sensor_dirty_left
+                  value_template: '{{ (value | float(0) / 3600) | round(0) }}'
+                  unit: hours
+                  subtitle: Sensors
+            cleaning:
+              - attribute: cleaned_area
+                unit: m2
+                subtitle: Cleaned Area
+              - attribute: cleaning_time
+                unit: minutes
+                subtitle: Cleaning Time
+            shortcuts:
+              - name: Clean Foyer
+                service: script.vac_clean_foyer
+                icon: 'mdi:door'
+              - name: Clean Living Room
+                service: script.vac_clean_living_room
+                icon: 'mdi:sofa'
+              - name: Clean Hardwood Floors
+                service: script.vac_clean_multiroom
+                icon: 'mdi:floor-plan'
+              - name: Clean Dining Room
+                service: script.vac_clean_dining_room
+                icon: 'mdi:silverware-fork-knife'
+              - name: Clean Kitchen
+                service: script.vac_clean_kitchen
+                icon: 'mdi:fridge'
+              - name: Clean Sunroom
+                service: script.vac_clean_sunroom
+                icon: 'mdi:cat'
+
           - type: custom:mini-media-player
             entity: media_player.plex_living_room_tv
             icon: mdi:television
@@ -311,24 +290,10 @@ views:
             icon: mdi:speaker-multiple
             artwork: cover
             show_tts: google
-      - type: 'custom:vacuum-card'
-        entity: vacuum.rosie
-        image: /local/images/neato_outline_black.png
-        stats: true
-        cleaning:
-          - attribute: cleaned_area
-            unit: m2
-            subtitle: Cleaned Area
-          - attribute: cleaning_time
-            unit: minutes
-            subtitle: Cleaning Time
-#      - title: Neato Vacuum
-#        type: picture-entity
- #       entity: vacuum.rosie
-#        image: /local/images/neato2.png
+
   - path: bedroom
     title: Bedroom
-    icon: 'mdi:bed'
+    icon: "mdi:bed"
     badges: []
     cards:
       - type: vertical-stack
@@ -341,21 +306,15 @@ views:
                     name: Bedroom
                 name: Bedroom
                 legend: false
-                line_color: '#2980b9'
+                line_color: "#2980b9"
                 line_width: 2
                 hours_to_show: 24
-          #    - type: custom:mini-graph-card
-          #      entities:
-          #        - sensor.bedroom_humidity
-          #      name: Humidity
-          #      line_color: '#b93829'
-          #      line_width: 4
           - type: horizontal-stack
             cards:
               - type: light
                 entity: light.bedroom
-              - type: light
-                entity: light.bathroom
+              - type: button
+                entity: switch.closet_light
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -369,7 +328,6 @@ views:
               - type: glance
                 entities:
                   - group.bedroom_motion
-                  - group.bathroom_motion
           - type: custom:mini-media-player
             entity: media_player.plex_bedroom_tv
             icon: mdi:television
@@ -387,7 +345,7 @@ views:
 
   - path: office
     title: Office
-    icon: 'mdi:keyboard'
+    icon: "mdi:keyboard"
     badges: []
     cards:
       - type: vertical-stack
@@ -398,41 +356,26 @@ views:
                 entities:
                   - sensor.office_temperature_f
                 name: Office
-                line_color: '#2980b9'
+                line_color: "#2980b9"
                 line_width: 2
           - type: horizontal-stack
             cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.office_lux
-                name: Illumination
-                line_color: '#70a03c'
-                line_width: 4
-                hours_to_show: 24
               - type: light
                 entity: light.office
-      - type: vertical-stack
-        cards:
-          - type: horizontal-stack
-            cards:
               - type: button
                 entity: switch.office_fan
                 name: Office Fan
                 icon: mdi:fan
                 tap_action:
                   action: toggle
-              - type: button
-                entity: switch.laptop_socket
-                name: Smart Plug
-                icon: mdi:power-socket-jp
-                tap_action:
-                  action: toggle
+      - type: vertical-stack
+        cards:
           - type: horizontal-stack
             cards:
               - type: glance
                 entities:
                   - group.office_motion
-                  - sensor.office_battery
+                  - sensor.office_motion_sensor_battery
                   - sensor.steam_76561197976250572
                   - sensor.steam_76561198154412871
           - type: custom:mini-media-player
@@ -440,26 +383,75 @@ views:
             icon: mdi:speaker
             artwork: cover
             show_tts: google
+          - type: horizontal-stack
+            cards:
+              - type: custom:vacuum-card
+                entity: vacuum.rosie
+                #image: /local/images/neato_outline_black.png
+                stats: true
+                cleaning:
+                  - attribute: cleaned_area
+                    unit: m2
+                    subtitle: Cleaned Area
+                  - attribute: cleaning_time
+                    unit: minutes
+                    subtitle: Cleaning Time
+
+
+  - path: cameras
+    title: Cameras
+    icon: "mdi:cctv"
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: alarm-panel
+            entity: alarm_control_panel.blink_home
+      - type: vertical-stack
+        cards:
+          - type: picture-glance
+            entities:
+              - binary_sensor.blink_front_door_battery
+              - binary_sensor.blink_front_door_motion_detected
+              - binary_sensor.blink_front_door_camera_armed
+            camera_image: camera.blink_front_door
+            title: Front Door Camera
+          - type: picture-glance
+            entities:
+              - binary_sensor.blink_back_door_battery
+              - binary_sensor.blink_back_door_motion_detected
+              - binary_sensor.blink_back_door_camera_armed
+            camera_image: camera.blink_back_door
+            title: Back Door Camera
+      - type: vertical-stack
+        cards:
+          - type: picture-glance
+            entities:
+              - entity: binary_sensor.blink_inside_motion_detected
+            camera_image: camera.blink_garage
+            title: Garage Camera
+
 
   - path: settings
     title: Settings
-    icon: 'mdi:cog'
+    icon: "mdi:cog"
     badges: []
     cards:
       - type: vertical-stack
         title: System
         cards:
-          - type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.processor_use
-                name: CPU
-                line_color: '#2980b9'
-                line_width: 2
-                hours_to_show: 24
           - type: vertical-stack
             cards:
+              - type: custom:bar-card
+                entity: sensor.processor_use
+                entity_row: true
+                width: 100%
+                positions:
+                  icon: inside
+                  indicator: inside
+                  name: inside
+                  value: inside
+                align: split
+                #color: "#70a03c"
               - type: custom:bar-card
                 entity: sensor.disk_use_percent_home
                 entity_row: true
@@ -470,7 +462,7 @@ views:
                   name: inside
                   value: inside
                 align: split
-                color: '#70a03c'
+                color: "#70a03c"
               - type: custom:bar-card
                 entity: sensor.memory_use_percent
                 entity_row: true
@@ -491,32 +483,14 @@ views:
               - type: entities
                 entities:
                   - sensor.last_boot
-                  
+
       - type: vertical-stack
         title: Pi-Hole
         cards:
-          - type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.pi_hole_ads_blocked_today
-                name: Ads Blocked Today
-                line_color: '#70a03c'
-                line_width: 2
-                hours_to_show: 24
-          - type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - sensor.pi_hole_ads_percentage_blocked_today
-                name: Percentage Blocked
-                line_color: '#2980b9'
-                line_width: 2
-                hours_to_show: 24
           - type: vertical-stack
             cards:
               - type: custom:bar-card
-                entity: sensor.pi_hole_dns_queries_today
+                entity: sensor.pi_hole_ads_blocked_today
                 entity_row: true
                 width: 100%
                 positions:
@@ -525,8 +499,20 @@ views:
                   name: inside
                   value: inside
                 align: split
-                color: '#70a03c'
-                max: '250000'
+                color: "#70a03c"
+                max: "20000"
+              - type: custom:bar-card
+                entity: sensor.pi_hole_ads_percentage_blocked_today
+                entity_row: true
+                width: 100%
+                positions:
+                  icon: inside
+                  indicator: inside
+                  name: inside
+                  value: inside
+                align: split
+                #color: "#70a03c"
+                #max: "20000"
               - type: custom:bar-card
                 entity: sensor.pi_hole_domains_blocked
                 entity_row: true
@@ -537,12 +523,13 @@ views:
                   name: inside
                   value: inside
                 align: split
-                max: '1500000'
+                color: "#70a03c"
+                max: "1500000"
                 icon: mdi:cancel
 
   - path: room
     title: Room Location
-    icon: 'mdi:home-account'
+    icon: "mdi:home-account"
     badges: []
     cards:
       - title: MQTT Room Locations
@@ -568,7 +555,7 @@ views:
 
   - path: auto
     title: Automations
-    icon: 'mdi:robot'
+    icon: "mdi:robot"
     badges: []
     cards:
       - title: Home Automations
@@ -576,7 +563,7 @@ views:
         entities:
           - automation.away_mode
           - automation.lights_on_in_the_evening
-#          - automation.morning_alarm_lights
+          #          - automation.morning_alarm_lights
           - automation.turn_on_air_fresh
           - automation.outside_lights_on_at_sunset
           - automation.outside_lights_off_at_ten
@@ -599,7 +586,7 @@ views:
         type: entities
         entities:
           - automation.nest_home_mode
-#          - automation.nest_seasonal_tracker
+          #          - automation.nest_seasonal_tracker
           - automation.nest_normal_mode_google_tracker
           - automation.sean_winter_preferences
           - automation.family_winter_preferences

@@ -1,0 +1,18 @@
+- id: '3625155246718'
+  alias: Christmas Tree On
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: group.living_room_motion
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: group.family
+    state: home
+  - condition: state
+    entity_id: input_boolean.bedtime_emily
+    state: 'off'
+  action:
+  - service: switch.turn_on
+    data_template:
+      entity_id: switch.bias_lighting

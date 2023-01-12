@@ -1,0 +1,9 @@
+[
+  {
+    "id": "fdabe0ec.cc995",
+    "type": "server",
+    "z": "",
+    "name": "Home Assistant",
+    "addon": true
+  }
+]

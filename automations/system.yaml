@@ -1,10 +1,184 @@
 # Set theme on HA start
-  - alias: Set theme at startup
-    initial_state: on
-    trigger:
-     - platform: homeassistant
-       event: start
-    action:
-      service: frontend.set_theme
+- alias: Set theme at startup
+  initial_state: on
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    service: frontend.set_theme
+    data:
+      name: slate
+      mode: dark
+
+# Turn on air fresh after cats use box
+- alias: Turn on air fresh
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: vacuum.kitty_throne_litter_box
+      attribute: status
+      to: 'Cat Sensor Timing'
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: "home"
+  action:
+    - service: switch.turn_on
+      entity_id: switch.air_freshener
+    - delay:
+        minutes: "30"
+    - service: switch.turn_off
+      entity_id: switch.air_freshener
+
+- alias: Restart Litter Robot
+  description: If litter robot is in error for at least 30 minutes, the switch will toggle power to reset robot
+  trigger:
+    - platform: state
+      entity_id:
+        - vacuum.kitty_throne_litter_box
+      from: "Ready"
+      attribute: status
+      for:
+        hours: 0
+        minutes: 30
+        seconds: 0
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: vacuum.kitty_throne_litter_box
+          attribute: status
+          state: "Cat Sensor Timing"
+        - condition: state
+          entity_id: vacuum.kitty_throne_litter_box
+          attribute: status
+          state: "Drawer Full"
+        - condition: state
+          entity_id: vacuum.kitty_throne_litter_box
+          attribute: status
+          state: "Drawer Full At Startup"
+  action:
+    - service: switch.turn_off
+      data: {}
+      target:
+        entity_id: switch.litter_robot
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 5
+        milliseconds: 0
+    - service: switch.turn_on
+      data: {}
+      target:
+        entity_id: switch.litter_robot
+  mode: single
+
+# Turn on Vacuum three times a day to clean litter
+- alias: Vacuum Sunroom
+  initial_state: on
+  trigger:
+    - platform: time
+      at: "06:30:00"
+    - platform: time
+      at: "12:00:00"
+    - platform: time
+      at: "16:45:00"
+  condition: []
+  action:
+    - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}"
+    - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}"
+    - wait_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}"
+    - wait_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}"
+    - service: script.vac_clean_sunroom
+
+# Vacuum hardwood floors three times a week
+- alias: Vacuum Hardwood Floors
+  initial_state: on
+  trigger:
+    - platform: time
+      at: "14:00:00"
+  condition:
+    - condition: time
+      weekday:
+        - mon
+        - wed
+        - fri
+  action:
+    - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}"
+    - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}"
+    - wait_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}"
+    - wait_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}"
+    - service: script.vac_clean_multiroom
+
+
+# Garbage Day notifications
+- alias: Garbage Day
+  initial_state: on
+  trigger:
+    - platform: time
+      at: "18:30:00"
+  condition:
+    condition: time
+    weekday:
+      - sun
+  action:
+    - service: notify.notify
       data:
-        name: slate
+        message: ""
+        data:
+          image: "http://192.168.1.185:8123/local/images/garbage-day.jpg"
+        title: ""
+#    - service: notify.shield
+#      data:
+#        message: ""
+#        title: ""
+#        data:
+#          duration: 7
+#          fontsize: small
+#          position: bottom-right
+#          transparency: 100%
+#          color: black
+#          interrupt: 0
+#          image:
+#            url: "http://192.168.1.185:8123/local/images/garbage-day.jpg"
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.nesthub
+        volume_level: 1.0
+    - service: media_player.play_media
+      data:
+        entity_id: media_player.whole_house
+        media_content_id: "http://192.168.1.185:8123/local/audio/garbage-day.mp3"
+        media_content_type: audio/mp3
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.nesthub
+        volume_level: .9
+
+# Shitter Full notifications
+- alias: Shitter Full
+  initial_state: on
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.kitty_throne_waste_drawer
+      above: 96
+  action:
+    - service: notify.notify
+      data:
+        message: ""
+        data:
+          image: "http://192.168.1.185:8123/local/images/shitter.png"
+        title: ""
+#    - service: notify.shield
+#      data:
+#        message: ""
+#        title: ""
+#        data:
+#          duration: 7
+#          fontsize: small
+#          position: bottom-right
+#          transparency: 100%
+#          color: black
+#          interrupt: 0
+#          image:
+#            url: "http://192.168.1.185:8123/local/images/shitter.png"

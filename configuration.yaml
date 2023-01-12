@@ -6,17 +6,20 @@ homeassistant:
         - 192.168.1.0/24
         - 127.0.0.1
       allow_bypass_login: true
-    - type: legacy_api_password
-      api_password: !secret api_password
   name: Home
   latitude: !secret latitude
   longitude: !secret longitude
-  elevation: 338
+  elevation: 107
   unit_system: imperial
   time_zone: America/New_York
   customize: !include customize.yaml
+  country: US
+
+my:
 
 map:
+
+energy:
 
 mqtt:
   discovery: true
@@ -27,13 +30,15 @@ zone:
     longitude: !secret longitude
     radius: 175
 
+device_tracker:
+
 proximity:
   home:
     ignored_zones:
       - work
     devices:
-      - device_tracker.sean_pixel_3
-      - device_tracker.emily_pixel_3
+      - device_tracker.sean_pixel
+      - device_tracker.emily_pixel
     tolerance: 100
     unit_of_measurement: mi
 
@@ -58,11 +63,11 @@ config:
 http:
   base_url: !secret base_url
 
-updater:
+#updater:
 
 # Discover some devices automatically
-discovery:
-  ignore:
+#discovery:
+#  ignore:
 #    - roku
 
 # Allows you to issue voice commands from the frontend in enabled browsers
@@ -72,74 +77,62 @@ discovery:
 history:
   include:
     domains:
-      - switch
+#      - switch
     entities:
       - group.sean
       - group.emily
-      - light.bathroom
-      - light.bedroom
+      - light.outside
       - light.living_room
       - light.office
-      - sensor.living_room_thermostat_hvac_state
-      - sensor.living_room_thermostat_temperature
+      - light.bedroom
+      - climate.downstairs
+      - climate.upstairs
+      - sensor.downstairs_temperature
+      - sensor.upstairs_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
-      - sensor.bedroom_temp
-      - sensor.bathroom_temperature_f
       - sensor.dark_sky_temperature
-      - sensor.sun_elevation
-      - sensor.dark_sky_nearest_storm_distance
-      - sensor.dark_sky_precip_probability
-      - sensor.illumination_158d0002047afe
-      - sensor.illumination_158d000237a64a
-      - sensor.bedroom_humidity
-      - sensor.office_lux
-      - sensor.living_room_thermostat_humidity
-      - sensor.processor_use
-      - sensor.pi_hole_ads_blocked_today
-      - sensor.pi_hole_ads_percentage_blocked_today
-      - sensor.office_motion_sensor_temperature
-      - sensor.bathroom_sensor_temperature
-      - sensor.living_room_temperature_f
-      - sensor.sean_room_location
-      - sensor.emily_room_location
-      - sensor.living_room_sensor_temperature
+      - switch.air_freshener
+      - switch.bedroom_fan
+      - switch.closet_light
+      - switch.living_room_fan
+      - switch.outside_lights
+      - switch.office_fan
+      - group.patio_door
+      - light.cabinet_lights
+      - switch.litter_robot
+      - sensor.kitty_throne_waste_drawer
 
 recorder:
-  purge_keep_days: 3
+  purge_keep_days: 90
   auto_purge: true
   include:
     domains:
-      - switch
+#      - switch
     entities:
       - group.sean
       - group.emily
-      - light.bathroom
-      - light.bedroom
+      - light.outside
       - light.living_room
       - light.office
-      - sensor.living_room_thermostat_hvac_state
-      - sensor.living_room_thermostat_temperature
+      - light.bedroom
+      - climate.downstairs
+      - climate.upstairs
+      - sensor.downstairs_temperature
+      - sensor.upstairs_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
-      - sensor.bedroom_temp
-      - sensor.bathroom_temperature_f
       - sensor.dark_sky_temperature
-      - sensor.sun_elevation
-      - sensor.dark_sky_nearest_storm_distance
-      - sensor.dark_sky_precip_probability
-      - sensor.illumination_158d0002047afe
-      - sensor.illumination_158d000237a64a
-      - sensor.bedroom_humidity
-      - sensor.office_lux
-      - sensor.living_room_thermostat_humidity
-      - sensor.processor_use
-      - sensor.pi_hole_ads_blocked_today
-      - sensor.pi_hole_ads_percentage_blocked_today
-      - sensor.office_motion_sensor_temperature
-      - sensor.bathroom_sensor_temperature
-      - sensor.living_room_temperature_f
-      - sensor.living_room_sensor_temperature
+      - switch.air_freshener
+      - switch.bedroom_fan
+      - switch.closet_light
+      - switch.living_room_fan
+      - switch.outside_lights
+      - switch.office_fan
+      - group.patio_door
+      - light.cabinet_lights
+      - switch.litter_robot
+      - sensor.kitty_throne_waste_drawer
 
 # View all events in a logbook
 logbook:
@@ -148,25 +141,22 @@ weather:
   - platform: darksky
     api_key: !secret dark_sky_api_key
     mode: daily
-    
-sun:
 
-iqvia:
-  zip_code: !secret zipcode
+sun:
 
 # Nest Temperature
 nest:
   client_id: !secret nest_id
   client_secret: !secret nest_secret
+  project_id: !secret nest_project_id
   binary_sensors:
     monitored_conditions:
-    - 'fan'
-    - 'target'
-    - 'has_leaf'
-    - 'online'
-    - 'is_using_emergency_heat'
-    - 'eta'
-
+      - "fan"
+      - "target"
+      - "has_leaf"
+      - "online"
+      - "is_using_emergency_heat"
+      - "eta"
 
 # Spotify
 spotify:
@@ -182,6 +172,31 @@ spotcast:
 light:
   - platform: hue
     host: !secret hue_ip
+  - platform: group
+    name: Bedroom Lights
+    entities:
+      - light.br1
+      - light.br2
+  - platform: group
+    name: Living Room Lights
+    entities:
+      - light.lr1
+      - light.lr2
+      - light.lr3
+      - light.lr4
+      - light.lr5
+      - light.lr6
+      - light.lr7
+      - light.cabinet_lights
+  - platform: group
+    name: Office Lights
+    entities:
+      - light.of1
+      - light.of2
+  - platform: group
+    name: Outside Lights
+    entities:
+      - light.outside_backdoor
 hue:
   bridges:
     - host: !secret hue_ip
@@ -192,6 +207,18 @@ xiaomi_aqara:
   discovery_retry: 10
   gateways:
     - key: !secret xiaomi_key
+
+
+camera:
+  - platform: xiaomi_cloud_map_extractor
+    host: !secret xiaomi_vacuum_host
+    token: !secret xiaomi_vacuum_token
+    username: !secret xiaomi_cloud_username
+    password: !secret xiaomi_cloud_password
+    draw: ['all']
+    attributes:
+      - calibration_points
+
 
 # Switches
 switch:
@@ -211,7 +238,7 @@ switch:
     name: Office
     lights_brightness:
       - light.office
-    min_brightness: 50
+    min_brightness: 66
 
 tplink:
   switch:
@@ -220,14 +247,7 @@ tplink:
     - host: 192.168.20.63 #Unused Switch
     - host: 192.168.20.59 #Living Room Fan Switch
     - host: 192.168.20.17 #Air fresehner switch
-
-wemo:
-  static:
-    - 192.168.20.70 #Office Fan Switch
-
-#wemo:
-#  static:
-#    - !secret wemo_ip
+    - host: 192.168.20.205 #Cabinet Lights
 
 # Text to speech
 tts:
@@ -236,10 +256,14 @@ tts:
 
 # Media
 
-# Neato Vacuum
-#neato:
-#  username: !secret neato_user
-#  password: !secret neato_password
+wemo:
+  static: 
+    - 192.168.20.70 #litter robot
+
+media_player:
+  - platform: androidtv
+    name: Nvidia Shield Pro
+    host: 192.168.1.62
 
 ##########################
 scene: !include scenes.yaml
@@ -250,4 +274,4 @@ input_boolean: !include input_booleans.yaml
 binary_sensor: !include binary_sensors.yaml
 sensor: !include sensors.yaml
 input_select: !include input_select.yaml
-device_tracker: !include device_tracker.yaml
+# device_tracker: !include device_tracker.yaml

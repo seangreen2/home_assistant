@@ -14,6 +14,16 @@
     - platform: state
       entity_id: binary_sensor.wyzesense_779b29d3
       to: 'on'
+    - platform: state
+      entity_id: sensor.sean_room_location
+      to: 'living_room'
+      for:
+        seconds: 7
+    - platform: state
+      entity_id: sensor.emily_room_location
+      to: 'living_room'
+      for:
+        seconds: 7
   condition:
     - condition: state
       entity_id: group.family
@@ -21,20 +31,24 @@
     - condition: state
       entity_id: light.living_room
       state: 'off'
-    - condition: state
-      entity_id: input_boolean.bedtime_emily
-      state: 'off'
     - condition: template
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
     - condition: template
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
     - condition: template
-      value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}" # NOT condition
   action:
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+    - service: light.turn_on
+      data_template:
+        entity_id: light.cabinet_lights
+        brightness_pct: 100
+        kelvin: 5400
     - delay:
         milliseconds: 250
     - service: light.turn_on
@@ -60,7 +74,9 @@
     - condition: template
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
     - condition: template
-      value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}" # NOT condition
   action:
     - service: light.turn_on
       data_template:
@@ -91,10 +107,16 @@
         state: 'off'
       - condition: template
         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}" # NOT condition
   action:
     - service: light.turn_off
       data:
         entity_id: light.living_room
+        transition: 2
+    - service: light.turn_off
+      data_template:
+        entity_id: light.cabinet_lights
         transition: 2
     - delay:
         milliseconds: 250
@@ -103,32 +125,61 @@
         entity_id: light.living_room
         transition: 2
 
-# Living Room Lights off without Motion NIGHT TIME
-- alias: Living Room Lights off no motion night
+# Turn off LR lights at bedtime if Sean isn't home
+- alias: Living Room Lights off Sean not Home
   initial_state: on
   trigger:
     platform: state
-    entity_id: group.living_room_motion
-    to: 'off'
-    for:
-      minutes: 1
+    entity_id: input_boolean.bedtime_emily
+    to: 'on'
   condition:
-    - condition: state
-      entity_id: input_boolean.bedtime_emily
-      state: 'on'
-    - condition: template
-      value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
     - condition: state
       entity_id: group.emily
       state: 'home'
+    - condition: state
+      entity_id: group.sean
+      state: 'not_home'
   action:
     - service: light.turn_off
       data:
         entity_id: light.living_room
+    - service: automation.turn_off
+      data:
+        entity_id: automation.living_room_auto_brightness
+
+
+# Outside lights on at dusk
+- alias: Outside lights on at dusk
+  initial_state: on
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    - service: switch.turn_on
+      entity_id: switch.outside_lights_switch
+    - service: light.turn_on
+      data_template:
+        entity_id: light.outside
+        brightness_pct: 66
         transition: 2
     - delay:
-        milliseconds: 250
+        milliseconds: 500
+    - service: light.turn_on
+      data_template:
+        entity_id: light.outside
+        brightness_pct: 66
+        transition: 2
+
+# Outside lights off at dawn
+- alias: Outside lights off at dawn
+  initial_state: on
+  trigger:
+    platform: sun
+    event: sunrise
+  action:
+    - service: switch.turn_off
+      entity_id: switch.outside_lights_switch
     - service: light.turn_off
-      data:
-        entity_id: light.living_room
+      data_template:
+        entity_id: light.outside
         transition: 2

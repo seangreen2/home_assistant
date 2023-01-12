@@ -5,12 +5,24 @@
     - platform: state
       entity_id: group.bedroom_motion
       to: 'on'
+    - platform: state
+      entity_id: group.closet_motion
+      to: 'on'
+    - platform: state
+      entity_id: input_boolean.bedroom_occupied
+      to: 'on'
   condition:
     - condition: state
       entity_id: group.family
       state: 'home'
     - condition: state
       entity_id: light.bedroom
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.bedtime_emily
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.bedtime_sean
       state: 'off'
     - condition: template
       value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'playing') }}" # NOT condition
@@ -84,6 +96,47 @@
       data:
         entity_id: light.bedroom
         transition: 2
+
+# Closet lights
+- alias: Closet Lights On
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: group.closet_motion
+      to: 'on'
+  condition:
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_boolean.bedtime_emily
+            state: 'off'
+          - condition: state
+            entity_id: input_boolean.bedtime_sean
+            state: 'off'
+      - condition: state
+        entity_id: group.family
+        state: 'home'
+  action:
+    - service: switch.turn_on
+      data_template:
+        entity_id: switch.closet_light
+
+# Closet Lights Off without Motion
+- alias: Closet Lights off no motion
+  initial_state: on
+  trigger:
+    platform: time_pattern
+    minutes: '/5'
+  condition:
+    - condition: state
+      entity_id: group.closet_motion
+      state: 'off'
+      for:
+        minutes: 2
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.closet_light
 
 # Bedroom Lights off without Motion
 #- alias: Bedroom Lights off no motion

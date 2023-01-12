@@ -1,65 +1,66 @@
-  - platform: template
-    sensors:
-      bathroom_motion:
-        friendly_name: 'Bathroom Motion'
-        device_class: motion
-        value_template: "{{ is_state('binary_sensor.bathroom_sensor_motion', 'on') }}"
+- platform: template
+  sensors:
+    bathroom_motion:
+      friendly_name: "Bathroom Motion"
+      device_class: motion
+      value_template: "{{ is_state('binary_sensor.bathroom_sensor_motion', 'on') }}"
 
-  - platform: template
-    sensors:
-      office_motion:
-        friendly_name: 'Office Motion'
-        device_class: motion
-        value_template: "{{ is_state('binary_sensor.office_motion_sensor_motion', 'on') }}"
+- platform: template
+  sensors:
+    office_motion:
+      friendly_name: "Office Motion"
+      device_class: motion
+      value_template: "{{ is_state('binary_sensor.office_motion_sensor_motion', 'on') }}"
 
-  - platform: huesensor
+#  - platform: huesensor
 
-  - platform: wyzesense
-    device: auto
+- platform: wyzesense
+  device: auto
 
-  - platform: template
-    sensors:
-      office_unoccupied:
-        friendly_name: "Office Unoccupied"
-        delay_off:
-          minutes: 2
-        value_template: >-
-          {{ is_state('binary_sensor.wyzesense_779b1988', 'off')
-             and is_state('binary_sensor.office_motion_motion_sensor', 'off')
-             and not is_state('sensor.sean_room_location', 'office')
-             and not is_state('sensor.emily_room_location', 'office')
-             and not is_state('sensor.steam_76561197976250572', 'online')
-             and not is_state('sensor.steam_76561198154412871', 'online') }}
+- platform: template
+  sensors:
+    office_unoccupied:
+      friendly_name: "Office Unoccupied"
+      delay_off:
+        minutes: 2
+      value_template: >-
+        {{ is_state('binary_sensor.wyzesense_77a67a6c', 'off')
+          and is_state('binary_sensor.office_motion', 'off')
+          and not is_state('sensor.sean_room_location', 'office')
+          and not is_state('sensor.emily_room_location', 'office')
+          and not is_state('sensor.steam_76561197976250572', 'online')
+          and not is_state('sensor.steam_76561198154412871', 'online') }}
 
-  - platform: template
-    sensors:
-      living_room_unoccupied:
-        friendly_name: "Living Room Unoccupied"
-        delay_off:
-          minutes: 2
-        value_template: >-
-          {{ is_state('binary_sensor.wyzesense_77a68665', 'off')
-             and is_state('binary_sensor.wyzesense_77a68ce7', 'off')
-             and not is_state('sensor.sean_room_location', 'living_room')
-             and not is_state('sensor.emily_room_location', 'living_room')
-             and not is_state('media_player.plex_living_room_tv', 'paused')
-             and not is_state('media_player.plex_living_room_tv', 'playing')
-             and not is_state('media_player.sony_xbr_65x900h', 'playing')
-             and is_state('binary_sensor.wyzesense_77a68665', 'off') }}
+- platform: template
+  sensors:
+    living_room_unoccupied:
+      friendly_name: "Living Room Unoccupied"
+      delay_off:
+        minutes: 2
+      value_template: >-
+        {{ is_state('binary_sensor.wyzesense_77a68665', 'off')
+          and is_state('binary_sensor.wyzesense_77a68ce7', 'off')
+          and not is_state('sensor.sean_room_location', 'living_room')
+          and not is_state('sensor.emily_room_location', 'living_room')
+          and not is_state('media_player.plex_living_room_tv', 'paused')
+          and not is_state('media_player.plex_living_room_tv', 'playing')
+          and not is_state('media_player.sony_xbr_65x900h', 'playing')
+          and is_state('binary_sensor.wyzesense_779b29d3', 'off') }}
 
-  - platform: template
-    sensors:
-      bedroom_unoccupied:
-        friendly_name: "Bedroom Unoccupied"
-        delay_off:
-          minutes: 2
-        value_template: >-
-          {{ is_state('binary_sensor.wyzesense_779b1944', 'off')
-             and not is_state('sensor.sean_room_location', 'bedrooom')
-             and not is_state('sensor.emily_room_location', 'bedroom')
-             and not is_state('media_player.bedroom_tv', 'paused')
-             and not is_state('media_player.bedroom_tv', 'playing')
-             and not is_state('media_player.bedroom_speaker', 'playing')
-             and is_state('input_boolean.bedtime_emily', 'off')
-             and is_state('input_boolean.bedtime_sean', 'off') }}
+- platform: template
+  sensors:
+    bedroom_unoccupied:
+      friendly_name: "Bedroom Unoccupied"
+      delay_off:
+        minutes: 2
+      value_template: >-
+        {{ is_state('binary_sensor.wyzesense_779b1944', 'off')
+          and not is_state('sensor.sean_room_location', 'bedrooom')
+          and not is_state('sensor.emily_room_location', 'bedroom')
+          and not is_state('media_player.bedroom_tv', 'paused')
+          and not is_state('media_player.bedroom_tv', 'playing')
+          and not is_state('media_player.bedroom_speaker', 'playing')
+          and is_state('input_boolean.bedtime_emily', 'off')
+          and is_state('input_boolean.bedtime_sean', 'off') }}
+
 #             and is_state('binary_sensor.wyzesense_778c2557', 'off')

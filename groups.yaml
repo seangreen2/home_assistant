@@ -18,22 +18,29 @@ family:
 sean:
   name: Sean
   entities:
-    - device_tracker.sean_phone #Phone
-    - device_tracker.sean_pixel_3 # Mobile App
+    - device_tracker.sean_phone_nmap # Phone Wifi
+    - device_tracker.sean_pixel # Mobile App
+    - person.sean_green
 
 emily:
   name: Emily
   entities:
-    - device_tracker.emily_phone #Phone
-    - device_tracker.emily_pixel_3 # Mobile App
+    - device_tracker.emily_phone_nmap # Phone Wifi
+    - device_tracker.emily_pixel # Mobile App
+    - person.emily_green
 
 # DOOR SENSORS
 patio_door:
-  entities: binary_sensor.wyzesense_778bb85a
+  entities: binary_sensor.wyzesense_77A9603A
+
+# OUTSIDE LIGHTS
+outside_lights:
+  entities:
+    - light.outside
 
 # MEDIA PLAYERS
 living_room_media:
-  entities: 
+  entities:
     - media_player.plex_plex_for_android_tv_bravia_vh1
     - media_player.plex_living_room_tv
 
@@ -41,6 +48,7 @@ living_room_media:
 bedroom_motion:
   entities:
     - binary_sensor.wyzesense_779b1944
+    - binary_sensor.wyzesense_779b149b
 
 living_room_motion:
   entities:
@@ -51,21 +59,18 @@ living_room_motion:
 
 office_motion:
   entities:
-    - binary_sensor.office_motion_motion_sensor
-    - binary_sensor.wyzesense_779b1988
-    - binary_sensor.wyzesense_77A67A6C
-    
-bathroom_motion:
-  name: Bathroom Motion
+    - binary_sensor.office_motion
+    - binary_sensor.wyzesense_77a67a6c
+
+closet_motion:
+  name: Closet Motion
   entities:
     - binary_sensor.wyzesense_779b149b
 
-
-gtracker:
-  name: Google Tracker
+bathroom_motion:
+  name: Bathroom Motion
   entities:
-    - !secret gtracker_one
-    - !secret gtracker_two
+  #   - binary_sensor.wyzesense_779b149b
 
 ### LIGHTS ###
 all_lights:
@@ -75,12 +80,11 @@ all_lights:
     - light.bathroom
     - light.office
     - light.living_room
+    - light.cabinet_lights
 
 bedtime_lights:
   name: Bedtime Lights
   entities:
     - light.bedroom
-    - light.office
     - light.living_room
     - light.bathroom
-    

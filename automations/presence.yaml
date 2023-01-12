@@ -1,130 +1,316 @@
 # Turns on lights before sunset if people are home and if people get home when dark
-  - alias: 'Lights on in the evening'
-    initial_state: on
-    trigger:
-      - platform: state
+- alias: "Lights on in the evening"
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: group.family
+      to: home
+  condition:
+    condition: and
+    conditions:
+      - condition: state
         entity_id: group.family
-        to: home
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'home'
-        - condition: time
-          after: '16:00:00'
-          before: '22:00:00'
-        - condition: template
-          value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
-        - condition: template
-          value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
-        - condition: template
-          value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
-    action:
+        state: "home"
+      - condition: time
+        after: "16:00:00"
+        before: "22:00:00"
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.shield', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.shield', 'paused') }}" # NOT condition
+  action:
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-    - delay: 
-        seconds: '1'
+    - service: light.turn_on
+      data_template:
+        entity_id: light.cabinet_lights
+        brightness_pct: 100
+        kelvin: 5400
+    - delay:
+        seconds: "1"
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+
+# Arm cameras when Away
+- alias: Cameras Armed Away
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.family
+    to: "not_home"
+  action:
+    - service: alarm_control_panel.alarm_arm_away
+      target:
+        entity_id: alarm_control_panel.blink_home
+
+# Disarm Cameras when Home
+- alias: Cameras Disarmed Home
+  initial_state: off
+  trigger:
+    platform: state
+    entity_id: group.family
+    to: "home"
+  condition:
+    - condition: state
+      entity_id: group.emily
+      state: "home"
+  action:
+    - service: alarm_control_panel.alarm_disarm
+      target:
+        entity_id: alarm_control_panel.blink_home
+
+# Arm Garage Camera when Away
+- alias: Garage Cameras Armed Away
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.family
+    to: "not_home"
+  action:
+    - service: camera.enable_motion_detection
+      target:
+        entity_id: camera.blink_garage
+
+# Disarm Garage Camera when Home
+- alias: Garage Cameras Disarmed Home
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.family
+    to: "home"
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
+  action:
+    - service: camera.disable_motion_detection
+      target:
+        entity_id: camera.blink_garage
+
+# Arm Garage Camera Night
+- alias: Garage Cameras Armed Night
+  initial_state: on
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    - service: camera.enable_motion_detection
+      target:
+        entity_id: camera.blink_garage
+
+# Disarm Garage Camera Morning
+- alias: Garage Cameras Disarmed Morning
+  initial_state: on
+  trigger:
+    platform: sun
+    event: sunrise
+  action:
+    - service: camera.disable_motion_detection
+      target:
+        entity_id: camera.blink_garage
+
+# Arm cameras when only Sean is Away
+- alias: Cameras Armed Sean Away
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.sean
+    to: "not_home"
+  condition:
+    - condition: state
+      entity_id: group.emily
+      state: "home"
+  action:
+    - service: alarm_control_panel.alarm_arm_away
+      target:
+        entity_id: alarm_control_panel.blink_home
+    - service: camera.enable_motion_detection
+      target:
+        entity_id: camera.blink_garage
+
+# Arm cameras when only Sean is Back
+- alias: Cameras Armed Sean Back
+  initial_state: off
+  trigger:
+    platform: state
+    entity_id: group.sean
+    to: "home"
+  condition:
+    - condition: state
+      entity_id: group.emily
+      state: "home"
+  action:
+    - service: alarm_control_panel.alarm_disarm
+      target:
+        entity_id: alarm_control_panel.blink_home
+    - service: camera.disable_motion_detection
+      target:
+        entity_id: camera.blink_garage
+
+# Update Camera thumbnails every hour during the day
+- alias: Update Camera Thumbnails
+  initial_state: off
+  trigger:
+    platform: time_pattern
+    hours: '/1'
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
+    - condition: state
+      entity_id: binary_sensor.blink_back_door_motion_detected
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.blink_front_door_motion_detected
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.blink_inside_motion_detected
+      state: 'off'
+  action:
+    - service: blink.trigger_camera
+      data: {}
+      target:
+        entity_id: camera.blink_back_door
+    - delay:
+        seconds: '10'
+    - service: blink.trigger_camera
+      data: {}
+      target:
+        entity_id: camera.blink_front_door
+    - delay:
+        seconds: '10'
+    - service: blink.trigger_camera
+      data: {}
+      target:
+        entity_id: camera.blink_garage
 
 # Turn off light and Media when everyone leaves house
-  - alias: 'Away Mode'
-    initial_state: on
-    trigger:
-      platform: state
-      entity_id: group.family
-      to: 'not_home'
-    action:
-      - service: homeassistant.turn_off
-        entity_id: group.all_lights
-      - service: homeassistant.turn_off
-        entity_id: switch.living_room_fan
-      - service: homeassistant.turn_off
-        entity_id: switch.office_fan
-      - service: homeassistant.turn_off
-        entity_id: switch.bedroom_fan
+- alias: "Away Mode"
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.family
+    to: "not_home"
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.all_lights
+    - service: homeassistant.turn_off
+      entity_id: switch.living_room_fan
+    - service: homeassistant.turn_off
+      entity_id: switch.office_fan
+    - service: homeassistant.turn_off
+      entity_id: switch.bedroom_fan
+    - service: alarm_control_panel.alarm_arm_away
+      target:
+        entity_id: alarm_control_panel.blink_home
 
 # Set Nest to Away Mode
-  - alias: 'Nest Away Mode'
-    initial_state: on
-    trigger:
-      platform: state
-      entity_id: group.family
-      to: 'not_home'
-    condition:
-      - condition: state
-        entity_id: group.patio_door
-        state: 'off'
-    action:
-      - service: climate.set_preset_mode
-        data:
-          entity_id: climate.living_room
-          preset_mode: 'Away and Eco'
+- alias: "Nest Away Mode"
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.family
+    to: "not_home"
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.downstairs
+        preset_mode: "eco"
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.upstairs
+        preset_mode: "eco"
 
 # Turn off Eco Mode Nest
-  - alias: 'Nest Home Mode'
-    initial_state: on
-    trigger:
-      platform: state
-      entity_id: group.family
-      to: 'home'
-    condition:
-      - condition: state
-        entity_id: group.patio_door
-        state: 'off'
-    action:
-      - service: climate.set_preset_mode
-        data:
-          entity_id: climate.living_room
-          preset_mode: 'none'
-      - service: climate.set_hvac_mode
-        data_template:
-          entity_id: climate.living_room
-          hvac_mode: >
-            {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
-              cool
-            {% elif states('sensor.season') == 'autumn' %}
-              auto
-            {% else %}
-              auto
-            {% endif %}
+- alias: "Nest Home Mode"
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.family
+    to: "home"
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.downstairs
+        preset_mode: "none"
+    - service: climate.set_hvac_mode
+      data_template:
+        entity_id: climate.downstairs
+        hvac_mode: >
+          {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
+            cool
+          {% elif states('sensor.season') == 'autumn' %}
+            heat_cool
+          {% else %}
+            heat_cool
+          {% endif %}
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.upstairs
+        preset_mode: "none"
+    - service: climate.set_hvac_mode
+      data_template:
+        entity_id: climate.upstairs
+        hvac_mode: >
+          {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
+            cool
+          {% elif states('sensor.season') == 'autumn' %}
+            heat_cool
+          {% else %}
+            heat_cool
+          {% endif %}
 
 # Turn off Eco Mode Nest Google Tracker
-  - alias: 'Nest Normal Mode Google Tracker'
-    initial_state: on
-    trigger:
-      platform: numeric_state
-      entity_id: proximity.home
-      below: 10
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'not_home'
-        - condition: template
-          value_template: '{{ states.proximity.home.attributes.dir_of_travel == "towards" }}'
-        - condition: state
-          entity_id: group.patio_door
-          state: 'off'
-    action:
-      - service: climate.set_preset_mode
-        data:
-          entity_id: climate.living_room
-          preset_mode: 'none'
-      - service: climate.set_hvac_mode
-        data_template:
-          entity_id: climate.living_room
-          hvac_mode: >
-            {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
-              cool
-            {% elif states('sensor.season') == 'autumn' %}
-              auto
-            {% else %}
-              auto
-            {% endif %}
+- alias: "Nest Normal Mode Google Tracker"
+  initial_state: on
+  trigger:
+    platform: numeric_state
+    entity_id: proximity.home
+    below: 5
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: "not_home"
+      - condition: template
+        value_template: '{{ states.proximity.home.attributes.dir_of_travel == "towards" }}'
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.downstairs
+        preset_mode: "none"
+    - service: climate.set_hvac_mode
+      data_template:
+        entity_id: climate.downstairs
+        hvac_mode: >
+          {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
+            cool
+          {% elif states('sensor.season') == 'autumn' %}
+            heat_cool
+          {% else %}
+            heat_cool
+          {% endif %}
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.upstairs
+        preset_mode: "none"
+    - service: climate.set_hvac_mode
+      data_template:
+        entity_id: climate.upstairs
+        hvac_mode: >
+          {% if states('sensor.season') == 'spring' or states('sensor.season') == 'summer' %}
+            cool
+          {% elif states('sensor.season') == 'autumn' %}
+            heat_cool
+          {% else %}
+            heat_cool
+          {% endif %}

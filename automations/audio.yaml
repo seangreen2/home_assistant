@@ -1,54 +1,77 @@
 # Reset volume on all Speakers
-  - alias: Reset volume on Speakers
-    trigger:
-      - platform: time
-        at: '20:00:00'
-    action:
-      - service: media_player.volume_set
-        data:
-          entity_id: media_player.living_room_speaker
-          volume_level: .75
-      - service: media_player.volume_set
-        data:
-          entity_id: media_player.living_room_speaker_2
-          volume_level: .70
-      - service: media_player.volume_set
-        data:
-          entity_id: media_player.office_speaker
-          volume_level: .65
-      - service: media_player.volume_set
-        data:
-          entity_id: media_player.bedroom_speaker
-          volume_level: .75
-      - service: media_player.volume_set
-        data:
-          entity_id: media_player.bathroom_speaker
-          volume_level: .65
+- alias: Reset volume on Speakers
+  trigger:
+    - platform: time
+      at: "20:00:00"
+  action:
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.living_room_speaker
+        volume_level: .75
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.living_room_speaker_2
+        volume_level: .70
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.office_speaker
+        volume_level: .65
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.bedroom_speaker
+        volume_level: .75
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.bathroom_speaker
+        volume_level: .65
 
 # Set rain audio on repeat every hour
-  - alias: Repeat Rain Audio
-    initial_state: on
-    trigger:
-      - platform: state
+- alias: Repeat Rain Audio
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.bedtime_emily
+      to: "on"
+    - platform: state
+      entity_id: input_boolean.bedtime_sean
+      to: "on"
+    - platform: time_pattern
+      hours: "/1"
+  condition:
+    condition: or
+    conditions:
+      - condition: state
         entity_id: input_boolean.bedtime_emily
-        to: 'on'
-      - platform: state
+        state: "on"
+      - condition: state
         entity_id: input_boolean.bedtime_sean
-        to: 'on'
-      - platform: time_pattern
-        hours: '/1'
-    condition:
-      condition: or
-      conditions:
-        - condition: state
-          entity_id: input_boolean.bedtime_emily
-          state: 'on'
-        - condition: state
-          entity_id: input_boolean.bedtime_sean
-          state: 'on'
-    action:
-      - service: media_player.play_media
-        data:
-          entity_id: media_player.bedroom_speaker
-          media_content_id: !secret rain_audio
-          media_content_type: audio/mp3
+        state: "on"
+  action:
+    - service: media_player.play_media
+      data:
+        entity_id: media_player.bedroom_speaker
+        media_content_id: !secret rain_audio
+        media_content_type: audio/mp3
+
+# If rain pauses, start playing again
+- alias: Play Rain Audio if Paused
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: media_player.bedroom_speaker
+      to: "paused"
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: input_boolean.bedtime_emily
+        state: "on"
+      - condition: state
+        entity_id: input_boolean.bedtime_sean
+        state: "on"
+  action:
+    - service: media_player.play_media
+      data:
+        entity_id: media_player.bedroom_speaker
+        media_content_id: !secret rain_audio
+        media_content_type: audio/mp3

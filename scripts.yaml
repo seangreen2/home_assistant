@@ -1,160 +1,219 @@
-  bedtime:
-    sequence:
-      - condition: and
-        conditions:
-          - condition: state
-            entity_id: group.sean
-            state: 'home'
-          - condition: time
-            after: '21:00:00'
-            before: '07:00:00'
-          - condition: template
-            value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
-          - condition: template
-            value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
-          - condition: template
-            value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
-          - condition: template
-            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT  condition
-          - condition: template
-            value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT conditio
-      - service: automation.turn_off
-        entity_id: automation.bedroom_auto_brightness
-      - service: automation.turn_off
-        entity_id: automation.living_room_auto_brightness
-      - service: automation.turn_off
-        entity_id: automation.office_auto_brightness
-      - service: automation.turn_on
-        entity_id: automation.repeat_rain_audio
-      - service: light.turn_off
-        data:
-          entity_id: group.bedtime_lights
-          transition: 2
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.sean_room_location
-          option: Sleep
-      - service: switch.turn_off
-        entity_id: switch.outside_lights
-      - service: switch.turn_off
-        entity_id: switch.office_fan
-      - service: switch.turn_off
-        entity_id: switch.living_room_fan
-      - service: homeassistant.turn_on
-        entity_id: switch.bedroom_fan
-      - service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.bedtime_sean
+bedtime:
+  sequence:
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: group.sean
+          state: "home"
+        - condition: time
+          after: "20:00:00"
+          before: "07:00:00"
+        - condition: template
+          value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+        - condition: template
+          value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+        - condition: template
+          value_template: "{{ not is_state('media_player.living_room_tv', 'playing') }}" # NOT condition
+        - condition: template
+          value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT  condition
+        - condition: template
+          value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT conditio
+    - service: automation.turn_off
+      entity_id: automation.bedroom_auto_brightness
+    - service: automation.turn_off
+      entity_id: automation.living_room_auto_brightness
+    - service: automation.turn_off
+      entity_id: automation.office_auto_brightness
+    - service: switch.turn_off
+      data_template:
+        entity_id: switch.bias_lighting
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.bedroom_speaker
+        volume_level: .80
+    - service: automation.turn_on
+      entity_id: automation.repeat_rain_audio
+    - service: light.turn_off
+      data:
+        entity_id: group.bedtime_lights
+        transition: 2
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.sean_room_location
+        option: Sleep
+    - service: switch.turn_off
+      entity_id: switch.bias_lighting
+    - service: switch.turn_off
+      entity_id: switch.office_fan
+    - service: switch.turn_off
+      entity_id: switch.living_room_fan
+    - service: homeassistant.turn_on
+      entity_id: switch.bedroom_fan
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.bedtime_sean
 
-  morning:
-    sequence:
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.bedtime_sean
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.sean_room_location
-          option: Home
-      - service: automation.turn_on
-        entity_id: automation.living_room_auto_brightness
-      - service: automation.turn_on
-        entity_id: automation.office_auto_brightness
-      - condition: and
-        conditions:
-          - condition: state
-            entity_id: group.sean
-            state: 'home'
-          - condition: state
-            entity_id: input_boolean.bedtime_emily
-            state: 'off'
-      - service: automation.turn_off
-        entity_id: automation.repeat_rain_audio
-      - service: media_player.media_stop
-        data:
-          entity_id: media_player.bedroom_speaker
-      - service: light.turn_on
-        data_template:
-          entity_id: light.bedroom
-          brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
-          transition: 180
-      - delay:
-          seconds: 180
-      - service: automation.turn_on
-        entity_id: automation.bedroom_auto_brightness
-
-
-  bedtime_emily:
-    sequence:
-      - condition: and
-        conditions:
-          - condition: state
-            entity_id: group.emily
-            state: 'home'
-          - condition: time
-            after: '20:00:00'
-            before: '07:00:00'
-          - condition: template
-            value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
-          - condition: template
-            value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
-      - service: automation.turn_off
-        entity_id: automation.bedroom_auto_brightness
-      - service: automation.turn_off
-        entity_id: automation.living_room_auto_brightness
-      - service: automation.turn_on
-        entity_id: automation.repeat_rain_audio
-      - service: homeassistant.turn_on
-        entity_id: switch.bedroom_fan
-      - service: light.turn_off
-        data:
-          entity_id: light.bedroom
-          transition: 2
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.emily_room_location
-          option: Sleep
-      - service: light.turn_off
-        data:
-          entity_id: light.bathroom
-          transition: 2
-      - service: input_boolean.turn_on
-        data:
+morning:
+  sequence:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.bedtime_sean
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.sean_room_location
+        option: Home
+    - service: automation.turn_on
+      entity_id: automation.living_room_auto_brightness
+    - service: automation.turn_on
+      entity_id: automation.office_auto_brightness
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: group.sean
+          state: "home"
+        - condition: state
           entity_id: input_boolean.bedtime_emily
+          state: "off"
+    - service: automation.turn_off
+      entity_id: automation.repeat_rain_audio
+    - service: media_player.media_stop
+      data:
+        entity_id: media_player.bedroom_speaker
+    - service: light.turn_on
+      data_template:
+        entity_id: light.bedroom
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
+        transition: 180
+    - delay:
+        seconds: 180
+    - service: automation.turn_on
+      entity_id: automation.bedroom_auto_brightness
 
-  morning_emily:
-    sequence:
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.bedtime_emily
-      - service: automation.turn_on
-        entity_id: automation.living_room_auto_brightness
-      - service: automation.turn_on
-        entity_id: automation.office_auto_brightness
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.emily_room_location
-          option: Home
-      - condition: and
-        conditions:
-          - condition: state
-            entity_id: group.emily
-            state: 'home'
-          - condition: state
-            entity_id: input_boolean.bedtime_sean
-            state: 'off'
-      - service: automation.turn_off
-        entity_id: automation.repeat_rain_audio
-      - service: automation.turn_on
-        entity_id: automation.office_auto_brightness
-      - service: media_player.media_stop
-        data:
-          entity_id: media_player.bedroom_speaker
-      - service: light.turn_on
-        data_template:
-          entity_id: light.bedroom
-          brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
-          transition: 180
-      - delay:
-          seconds: 180
-      - service: automation.turn_on
-        entity_id: automation.bedroom_auto_brightness
+bedtime_emily:
+  sequence:
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: group.emily
+          state: "home"
+        - condition: time
+          after: "20:00:00"
+          before: "07:00:00"
+        - condition: template
+          value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
+        - condition: template
+          value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
+    - service: automation.turn_off
+      entity_id: automation.bedroom_auto_brightness
+    - service: automation.turn_off
+      entity_id: automation.living_room_auto_brightness
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.bedroom_speaker
+        volume_level: .80
+    - service: automation.turn_on
+      entity_id: automation.repeat_rain_audio
+    - service: homeassistant.turn_on
+      entity_id: switch.bedroom_fan
+    - service: light.turn_off
+      data:
+        entity_id: light.bedroom
+        transition: 2
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.emily_room_location
+        option: Sleep
+    - service: light.turn_off
+      data:
+        entity_id: light.bathroom
+        transition: 2
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.bedtime_emily
+
+morning_emily:
+  sequence:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.bedtime_emily
+    - service: automation.turn_on
+      entity_id: automation.living_room_auto_brightness
+    - service: automation.turn_on
+      entity_id: automation.office_auto_brightness
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.emily_room_location
+        option: Home
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: group.emily
+          state: "home"
+        - condition: state
+          entity_id: input_boolean.bedtime_sean
+          state: "off"
+    - service: automation.turn_off
+      entity_id: automation.repeat_rain_audio
+    - service: automation.turn_on
+      entity_id: automation.office_auto_brightness
+    - service: media_player.media_stop
+      data:
+        entity_id: media_player.bedroom_speaker
+    - service: light.turn_on
+      data_template:
+        entity_id: light.bedroom
+        brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
+        transition: 180
+    - delay:
+        seconds: 180
+    - service: automation.turn_on
+      entity_id: automation.bedroom_auto_brightness
+
+
+vac_clean_living_room:
+  sequence:
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.roborock_vacuum_a08
+      data:
+        segments: [16, 16, 16]
+
+vac_clean_kitchen:
+  sequence:
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.roborock_vacuum_a08
+      data:
+        segments: [18, 18]
+
+vac_clean_foyer:
+  sequence:
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.roborock_vacuum_a08
+      data:
+        segments: [19, 19]
+
+vac_clean_dining_room:
+  sequence:
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.roborock_vacuum_a08
+      data:
+        segments: [20, 20]
+
+vac_clean_sunroom:
+  sequence:
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.roborock_vacuum_a08
+      data:
+        segments: [21, 21]
+
+vac_clean_multiroom:
+  sequence:
+    - service: xiaomi_miio.vacuum_clean_segment
+      target:
+        entity_id: vacuum.roborock_vacuum_a08
+      data:
+        segments: [18,19,20]

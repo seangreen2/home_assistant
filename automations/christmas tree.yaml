@@ -1,4 +1,5 @@
-- alias: Christmas Tree On
+- id: '3625155246718'
+  alias: Christmas Tree On
   initial_state: off
   trigger:
     - platform: state
@@ -11,10 +12,15 @@
     - condition: state
       entity_id: input_boolean.bedtime_emily
       state: 'off'
-    - condition: state
-      entity_id: input_boolean.bedtime_sean
-      state: 'off'
+    - condition: template
+      value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}" # NOT condition
   action:
     - service: switch.turn_on
       data_template:
-        entity_id: switch.office_fan
+        entity_id: switch.bias_lighting

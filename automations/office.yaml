@@ -1,58 +1,50 @@
 # Turn on Office fan above temp
-  - alias: "Turn on Fan above certain temp"
-    initial_state: on
-    trigger:
-      platform: state
-      entity_id: group.office_motion
-      to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: 'group.family'
-          state: 'home'
-        - condition: numeric_state
-          entity_id: sensor.office_temperature_f
-          above: 72
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: 'sensor.steam_76561197976250572'
-              state: 'online'
-            - condition: state
-              entity_id: 'sensor.steam_76561198154412871'
-              state: 'online'
-    action:
-      service: switch.turn_on
-      entity_id: switch.office_fan
+- alias: "Turn on Fan above certain temp"
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.office_motion
+    to: "on"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: "group.family"
+        state: "home"
+      - condition: numeric_state
+        entity_id: sensor.office_temperature_f
+        above: 73
+  action:
+    service: switch.turn_on
+    entity_id: switch.office_fan
 
 # Turn off Office fan below temp
-  - alias: "Turn off Fan below certain temp"
-    initial_state: on
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.office_temperature_f
-      below: 72
-    action:
-      service: switch.turn_off
-      entity_id: switch.office_fan
+- alias: "Turn off Fan below certain temp"
+  initial_state: on
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.office_temperature_f
+    below: 72
+  action:
+    service: switch.turn_off
+    entity_id: switch.office_fan
 
 # Turn off Office fan after 30 minutes
-  - alias: "Turn off Office Fan"
-    initial_state: on
-    trigger:
-      platform: state
-      entity_id: group.office_motion
-      to: 'off'
-      for:
-        minutes: 15
-    condition:
-      condition: and
-      conditions:
-        - condition: template
-          value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
-        - condition: template
-          value_template: "{{ not is_state('sensor.steam_76561198154412871', 'online') }}" # NOT condition
-    action:
-      service: switch.turn_off
-      entity_id: switch.office_fan
+- alias: "Turn off Office Fan"
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.office_motion
+    to: "off"
+    for:
+      minutes: 15
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('sensor.steam_76561198154412871', 'online') }}" # NOT condition
+  action:
+    service: switch.turn_off
+    entity_id: switch.office_fan

@@ -13,3 +13,7 @@ home-assistant_v2.db
 esphome
 image
 tts
+HSO4UJ~R
+*.db-shm
+*.db-wal
+blueprints/script/homeassistant/confirmable_notification.yaml

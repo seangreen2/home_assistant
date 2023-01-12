@@ -3,11 +3,11 @@
  #   new_device_defaults:
  #     track_new_devices: true
       
-  - platform: nmap_tracker
-    hosts:
-      - 192.168.1.244 #Sean Phone
-      - 192.168.1.13 #Emily Phone
-    home_interval: 5
+#  - platform: nmap_tracker
+ #   hosts:
+  #    - 192.168.1.72 #Sean Phone
+   #   - 192.168.1.128 #Emily Phone
+    #home_interval: 5
 
 #  - platform: huesensor
 #    new_device_defaults:

@@ -1,322 +1,272 @@
-  - platform: template
-    sensors:
-      steam_game:
-        value_template: '{{states.sensor.steam_76561197976250572.attributes.game}}'
+- platform: template
+  sensors:
+    bedroom_temperature_f:
+      friendly_name: "Bedroom Temperature"
+      entity_id:
+        - sensor.bedroom_sensor_temperature
+      unit_of_measurement: °F
+      unique_id: '2264462263826'
+      device_class: temperature
+      value_template: >
+        {{ ((float(states('sensor.bedroom_sensor_temperature'))) + 5) | round(1) }}
 
-  - platform: template
-    sensors:
-      bedroom_sensor_temp:
-        value_template: '{{states.binary_sensor.bedroom_sensor.attributes.temperature}}'
+- platform: template
+  sensors:
+    bedroom_temp:
+      friendly_name: "Bedroom Temperature 2"
+      entity_id:
+        - sensor.temperature_158d0002478a21
+      unit_of_measurement: °F
+      value_template: >
+        {{ ((float(states('sensor.temperature_158d0002478a21'))) + 2) | round(1) }}
 
-  - platform: template
-    sensors:
-      bedroom_battery:
-        friendly_name: 'Bedroom Battery'
-        value_template: '{{states.binary_sensor.bedroom_sensor.attributes.battery}}'
-        unit_of_measurement: '%'
+- platform: template
+  sensors:
+    office_temperature:
+      value_template: "{{states.office_motion_motion_sensor.attributes.temperature}}"
 
-  - platform: template
-    sensors:
-      bedroom_temperature_f:
-        friendly_name: 'Bedroom'
-        entity_id:
-          - sensor.bedroom_sensor_temperature
-        unit_of_measurement: °F
-        value_template: >
-          {{ ((float(states('sensor.living_room_sensor_temperature'))) + 5) | round(1) }}
+- platform: template
+  sensors:
+    office_battery:
+      friendly_name: "Battery"
+      value_template: "{{states.binary_sensor.office_motion_sensor_motion.attributes.battery_level}}"
+      unit_of_measurement: "%"
 
-  - platform: template
-    sensors:
-      bedroom_humidity:
-        friendly_name: 'Bedroom Humidity'
-        entity_id:
-          - sensor.humidity_158d0002478a21
-        unit_of_measurement: '%'
-        value_template: >
-          {{ ((float(states('sensor.humidity_158d0002478a21'))) - 0) | round(0) }}
+- platform: template
+  sensors:
+    office_temperature_f:
+      friendly_name: "Office Temperature"
+      entity_id:
+        - sensor.office_motion_sensor_temperature
+      unit_of_measurement: °F
+      unique_id: '1312912386808'
+      device_class: temperature
+      value_template: >
+        {{ ((float(states('sensor.office_motion_sensor_temperature'))) + 4) | round(1) }}
 
-  - platform: template
-    sensors:
-      bedroom_temp:
-        friendly_name: 'Bedroom Temperature'
-        entity_id:
-          - sensor.temperature_158d0002478a21
-        unit_of_measurement: °F
-        value_template: >
-          {{ ((float(states('sensor.temperature_158d0002478a21'))) + 2) | round(1) }}
+- platform: template
+  sensors:
+    office_lux:
+      friendly_name: "Lux"
+      value_template: >
+        {{ (float(states('sensor.office_motion_sensor_light_level'))) | round(0) }}
+      unit_of_measurement: lx
 
-  - platform: template
-    sensors:
-      office_temperature:
-        value_template: '{{states.office_motion_motion_sensor.attributes.temperature}}'
+- platform: template
+  sensors:
+    sun_elevation:
+      friendly_name: Sun Elevation
+      value_template: "{{states.sun.sun.attributes.elevation}}"
+      unit_of_measurement: "°"
 
-  - platform: template
-    sensors:
-      office_battery:
-        friendly_name: 'Battery'
-        value_template: '{{states.binary_sensor.office_motion_sensor_motion.attributes.battery_level}}'
-        unit_of_measurement: '%'
+- platform: template
+  sensors:
+    sean_room_status:
+      value_template: "{{ states.input_select.sean_room_location.state }}"
+      friendly_name: "Room Location"
+      icon_template: >
+        {% if is_state('input_select.sean_room_location', 'Office') %}
+          mdi:keyboard
+        {% elif is_state('input_select.sean_room_location', 'Bedroom') %}
+          mdi:bed
+        {% elif is_state('input_select.sean_room_location', 'Living Room') %}
+          mdi:sofa
+        {% elif is_state('input_select.sean_room_location', 'Sleep') %}
+          mdi:chat-sleep
+        {% elif is_state('input_select.sean_room_location', 'Away') %}
+          mdi:exit-run
+        {% elif is_state('input_select.sean_room_location', 'Home') %}
+          mdi:home
+        {% else %}
+          mdi:exit-run
+        {% endif %}
 
-  - platform: template
-    sensors:
-      office_temperature_f:
-        friendly_name: 'Office Temperature'
-        entity_id:
-          - sensor.office_motion_sensor_temperature
-        unit_of_measurement: °F
-        value_template: >
-          {{ ((float(states('sensor.office_motion_sensor_temperature'))) + 3) | round(1) }}
+- platform: template
+  sensors:
+    emily_room_status:
+      value_template: "{{ states.input_select.emily_room_location.state }}"
+      friendly_name: "Room Location"
+      icon_template: >
+        {% if is_state('input_select.emily_room_location', 'Office') %}
+          mdi:keyboard
+        {% elif is_state('input_select.emily_room_location', 'Bedroom') %}
+          mdi:bed
+        {% elif is_state('input_select.emily_room_location', 'Living Room') %}
+          mdi:sofa
+        {% elif is_state('input_select.emily_room_location', 'Away') %}
+          mdi:exit-run
+        {% elif is_state('input_select.emily_room_location', 'Sleep') %}
+          mdi:chat-sleep
+        {% elif is_state('input_select.emily_room_location', 'Home') %}
+          mdi:home
+        {% else %}
+          mdi:exit-run
+        {% endif %}
 
-  - platform: template
-    sensors:
-      office_lux:
-        friendly_name: 'Lux'
-        value_template: >
-          {{ (float(states('sensor.office_motion_sensor_light_level'))) | round(0) }}
-        unit_of_measurement: lx
+- platform: template
+  sensors:
+    plex_bandwidth:
+      value_template: "{{states.sensor.total_bandwidth}}"
+      unit_of_measurement: "Mbps"
 
-  - platform: template
-    sensors:
-      laptop_socket:
-        friendly_name: 'Laptop Power'
-        value_template: '{{states.switch.laptop_socket.attributes.current_power_w}}'
 
-  - platform: template
-    sensors:
-      sun_elevation:
-        friendly_name: Sun Elevation
-        value_template: '{{states.sun.sun.attributes.elevation}}'
-        unit_of_measurement: '°'
+- platform: template
+  sensors:
+    plex_bandwidth_mbit:
+#      entity_id:
+#        - sensor.plex_bandwidth
+      unit_of_measurement: Mbps
+      value_template: >
+        {{ ((float(states('sensor.total_bandwidth'))) / 1000) | round(1) }}
 
-  - platform: template
-    sensors:
-      sean_room_status:
-        value_template: '{{ states.input_select.sean_room_location.state }}'
-        friendly_name: 'Room Location'
-        icon_template: >
-          {% if is_state('input_select.sean_room_location', 'Office') %}
-            mdi:keyboard
-          {% elif is_state('input_select.sean_room_location', 'Bedroom') %}
-            mdi:bed
-          {% elif is_state('input_select.sean_room_location', 'Living Room') %}
-            mdi:sofa
-          {% elif is_state('input_select.sean_room_location', 'Sleep') %}
-            mdi:chat-sleep
-          {% elif is_state('input_select.sean_room_location', 'Away') %}
-            mdi:exit-run
-          {% elif is_state('input_select.sean_room_location', 'Home') %}
-            mdi:home
-          {% else %}
-            mdi:exit-run
-          {% endif %}
-
-  - platform: template
-    sensors:
-      emily_room_status:
-        value_template: '{{ states.input_select.emily_room_location.state }}'
-        friendly_name: 'Room Location'
-        icon_template: >
-          {% if is_state('input_select.emily_room_location', 'Office') %}
-            mdi:keyboard
-          {% elif is_state('input_select.emily_room_location', 'Bedroom') %}
-            mdi:bed
-          {% elif is_state('input_select.emily_room_location', 'Living Room') %}
-            mdi:sofa
-          {% elif is_state('input_select.emily_room_location', 'Away') %}
-            mdi:exit-run
-          {% elif is_state('input_select.emily_room_location', 'Sleep') %}
-            mdi:chat-sleep
-          {% elif is_state('input_select.emily_room_location', 'Home') %}
-            mdi:home
-          {% else %}
-            mdi:exit-run
-          {% endif %}
-
-  - platform: template
-    sensors:
-      sean_phone_battery:
-        friendly_name: 'Sean Phone Battery'
-        value_template: '{{states.device_tracker.pixel_3.attributes.battery_level}}'
-        unit_of_measurement: '%'
-
-  - platform: template
-    sensors:
-      emily_phone_battery:
-        friendly_name: 'Emily Phone Battery'
-        value_template: '{{states.device_tracker.pixel_3_2.attributes.battery_level}}'
-        unit_of_measurement: '%'
-
-  - platform: template
-    sensors:
-      plex_bandwidth:
-        value_template: '{{states.sensor.tautulli.attributes.total_bandwidth}}'
-        unit_of_measurement: 'Mbps'
-
-  - platform: template
-    sensors:
-      plex_bandwidth_mbit:
-        entity_id:
-          - sensor.plex_bandwidth
-        unit_of_measurement: Mbps
-        value_template: >
-          {{ ((float(states('sensor.plex_bandwidth'))) / 1000) | round(1) }}
-
-  - platform: template
-    sensors:
-
+- platform: template
+  sensors:
     #----- Count Automations
-      count_automations:
-        entity_id: sensor.date
-        friendly_name: Automations
-        value_template: >
-          {%- set domains = ['automation'] -%}
-          {%- for domain in domains -%}
-            {%- for item in states[domain] -%}
-              {% if loop.first %}
-                {{loop.length}}
-              {% endif %}
-            {%- endfor -%}
+    count_automations:
+      entity_id: sensor.date
+      friendly_name: Automations
+      value_template: >
+        {%- set domains = ['automation'] -%}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {{loop.length}}
+            {% endif %}
           {%- endfor -%}
+        {%- endfor -%}
 
     #----- Count Scripts
-      count_scripts:
-        entity_id: sensor.date
-        friendly_name: Scripts
-        value_template: >
-          {%- set domains = ['script'] -%}
-          {%- for domain in domains -%}
-            {%- for item in states[domain] -%}
-              {% if loop.first %}
-                {{loop.length}}
-              {% endif %}
-            {%- endfor -%}
+    count_scripts:
+      entity_id: sensor.date
+      friendly_name: Scripts
+      value_template: >
+        {%- set domains = ['script'] -%}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {{loop.length}}
+            {% endif %}
           {%- endfor -%}
+        {%- endfor -%}
 
     #----- Count Binary Sensors
-      count_binary_sensors:
-        entity_id: sensor.date
-        friendly_name: Binary Sensors
-        value_template: >
-          {%- set domains = ['binary_sensor'] -%}
-          {%- for domain in domains -%}
-            {%- for item in states[domain] -%}
-              {% if loop.first %}
-                {{loop.length}}
-              {% endif %}
-            {%- endfor -%}
+    count_binary_sensors:
+      entity_id: sensor.date
+      friendly_name: Binary Sensors
+      value_template: >
+        {%- set domains = ['binary_sensor'] -%}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {{loop.length}}
+            {% endif %}
           {%- endfor -%}
+        {%- endfor -%}
 
     #----- Count Sensors
-      count_sensors:
-        entity_id: sensor.date
-        friendly_name: Sensors
-        value_template: >
-          {%- set domains = ['sensor'] -%}
-          {%- for domain in domains -%}
-            {%- for item in states[domain] -%}
-              {% if loop.first %}
-                {{loop.length}}
-              {% endif %}
-            {%- endfor -%}
+    count_sensors:
+      entity_id: sensor.date
+      friendly_name: Sensors
+      value_template: >
+        {%- set domains = ['sensor'] -%}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {{loop.length}}
+            {% endif %}
           {%- endfor -%}
+        {%- endfor -%}
 
     #----- Count Switches
-      count_switches:
-        entity_id: sensor.date
-        friendly_name: Switches
-        value_template: >
-          {%- set domains = ['switch'] -%}
-          {%- for domain in domains -%}
-            {%- for item in states[domain] -%}
-              {% if loop.first %}
-                {{loop.length}}
-              {% endif %}
-            {%- endfor -%}
+    count_switches:
+      entity_id: sensor.date
+      friendly_name: Switches
+      value_template: >
+        {%- set domains = ['switch'] -%}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {{loop.length}}
+            {% endif %}
           {%- endfor -%}
+        {%- endfor -%}
 
     #----- Count Lights
-      count_lights:
-        entity_id: sensor.date
-        friendly_name: Lights
-        value_template: >
-          {%- set domains = ['light'] -%}
-          {%- for domain in domains -%}
-            {%- for item in states[domain] -%}
-              {% if loop.first %}
-                {{loop.length}}
-              {% endif %}
-            {%- endfor -%}
+    count_lights:
+      entity_id: sensor.date
+      friendly_name: Lights
+      value_template: >
+        {%- set domains = ['light'] -%}
+        {%- for domain in domains -%}
+          {%- for item in states[domain] -%}
+            {% if loop.first %}
+              {{loop.length}}
+            {% endif %}
           {%- endfor -%}
+        {%- endfor -%}
 
-  - platform: darksky
-    api_key: !secret dark_sky_api_key
-    scan_interval: '00:05:00'
-    monitored_conditions:
-      - temperature
-      - precip_probability
-      - precip_type
-      - humidity
-      - cloud_cover
-      - nearest_storm_distance
-      - precip_intensity
-      - wind_speed
+- platform: darksky
+  api_key: !secret dark_sky_api_key
+  scan_interval: "00:05:00"
+  monitored_conditions:
+    - temperature
+    - precip_probability
+    - precip_type
+    - humidity
+    - cloud_cover
+    - nearest_storm_distance
+    - precip_intensity
+    - wind_speed
 
-  - platform: systemmonitor
-    resources:
-      - type: processor_use
-      - type: disk_use_percent
-        arg: /home
-      - type: memory_use_percent
-      - type: ipv4_address
-        arg: eth0
-      - type: network_in
-        arg: eth0
-      - type: network_out
-        arg: eth0
-      - type: last_boot
+- platform: systemmonitor
+  resources:
+    - type: processor_use
+    - type: disk_use_percent
+      arg: /home
+    - type: memory_use_percent
+    - type: ipv4_address
+      arg: eth0
+    - type: network_in
+      arg: eth0
+    - type: network_out
+      arg: eth0
+    - type: last_boot
 
-  - platform: steam_online
-    api_key: !secret steam_api
-    accounts:
-      - !secret steam_account
-      - !secret steam_account_2
+- platform: steam_online
+  api_key: !secret steam_api
+  accounts:
+    - !secret steam_account
+    - !secret steam_account_2
 
-  - platform: waze_travel_time
-    origin: !secret travel_origin
-    destination: !secret travel_destination
-    region: 'NA'
-    name: Work Commute
+- platform: waze_travel_time
+  origin: !secret travel_origin
+  destination: !secret travel_destination
+  region: "NA"
+  name: Work Commute
 
-  - platform: season
-    type: astronomical
+- platform: season
+  type: astronomical
 
-  - platform: time_date
-    display_options:
-      - 'time'
+- platform: time_date
+  display_options:
+    - "time"
 
-  - platform: mqtt_room
-    device_id: "9ad13236f8064c4caa1d1be47d75e12e-1-0"
-    name: 'Sean Room Location'
-    state_topic: 'room_presence'
-    timeout: 10
-    away_timeout: 15
+- platform: mqtt_room
+  device_id: "396ec02532fa49658cf8b2cee6e52c1c-1-0"
+  name: "Sean Room Location"
+  state_topic: "room_presence"
+  timeout: 10
+  away_timeout: 20
 
-  - platform: mqtt_room
-    device_id: "605981912f1049a6ae68278952f33bbd-2-0"
-    name: 'Seans Room Location'
-    state_topic: 'room_presence'
-    timeout: 10
-    away_timeout: 15
+- platform: mqtt_room
+  device_id: "3900f72eab4f4d7fa0ec4827c530fa36-1-0"
+  name: "Emily Room Location"
+  state_topic: "room_presence"
+  timeout: 10
+  away_timeout: 20
 
-  - platform: mqtt_room
-    device_id: "3900f72eab4f4d7fa0ec4827c530fa36-1-0"
-    name: 'Emily Room Location'
-    state_topic: 'room_presence'
-    timeout: 10
-    away_timeout: 15
+- platform: spotcast
 
-  - platform: spotcast
-
-  - platform: tautulli
-    api_key: !secret tautulli_api
-    host: 192.168.1.79
+- platform: tautulli
+  api_key: !secret tautulli_api
+  host: 192.168.1.79
