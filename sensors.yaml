@@ -107,7 +107,7 @@
   sensors:
     plex_bandwidth:
       value_template: "{{states.sensor.total_bandwidth}}"
-      unit_of_measurement: "Mbps"
+      unit_of_measurement: "Mb"
 
 
 - platform: template

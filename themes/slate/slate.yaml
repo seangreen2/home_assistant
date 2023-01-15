@@ -15,7 +15,7 @@ slate:
   # Background colors
   primary-background-color: '#222222'
   secondary-background-color: '#222222'
-  divider-color: 'rgba(0, 0, 0, .12)'
+  divider-color: 'rgba(255, 255, 255, .12)'
   table-row-background-color: '#292929'
   table-row-alternative-background-color: '#292929'
   # Nav Menu
@@ -94,6 +94,10 @@ slate:
   # fix white on white markdown code sections (eg. the addons infos)
   markdown-code-background-color: 'var(--secondary-background-color)'
   
+  # Card border radius
+  ha-card-border-width: '0px'
+  ha-card-border-radius: '7px'
+  
   # fix for input text boxes in [2022.3] - Credit to wmaker (Tommy Long) from the HA Forums for the fixes
   input-idle-line-color: 'var(--dark-primary-color)'
   input-hover-line-color: 'var(--primary-text-color)'
@@ -107,3 +111,6 @@ slate:
   input-label-ink-color: 'var(--secondary-text-color)'
   input-disabled-ink-color: 'var(--disabled-text-color)'
   input-dropdown-icon-color: 'var(--primary-text-color)'
+  
+  # fix for card title headers
+  ha-card-header-color: "var(--primary-text-color)"

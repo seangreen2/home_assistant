@@ -170,50 +170,76 @@ morning_emily:
       entity_id: automation.bedroom_auto_brightness
 
 
-vac_clean_living_room:
+vac_clean_livingroom:
   sequence:
-    - service: xiaomi_miio.vacuum_clean_segment
-      target:
-        entity_id: vacuum.roborock_vacuum_a08
-      data:
-        segments: [16, 16, 16]
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.roborock_vacuum_a08
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 16
+          repeat: 3
 
 vac_clean_kitchen:
   sequence:
-    - service: xiaomi_miio.vacuum_clean_segment
-      target:
-        entity_id: vacuum.roborock_vacuum_a08
-      data:
-        segments: [18, 18]
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.roborock_vacuum_a08
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 18
+          repeat: 2
 
 vac_clean_foyer:
   sequence:
-    - service: xiaomi_miio.vacuum_clean_segment
-      target:
-        entity_id: vacuum.roborock_vacuum_a08
-      data:
-        segments: [19, 19]
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.roborock_vacuum_a08
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 19
+          repeat: 2
 
 vac_clean_dining_room:
   sequence:
-    - service: xiaomi_miio.vacuum_clean_segment
-      target:
-        entity_id: vacuum.roborock_vacuum_a08
-      data:
-        segments: [20, 20]
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.roborock_vacuum_a08
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 20
+          repeat: 2
 
 vac_clean_sunroom:
   sequence:
-    - service: xiaomi_miio.vacuum_clean_segment
-      target:
-        entity_id: vacuum.roborock_vacuum_a08
-      data:
-        segments: [21, 21]
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.roborock_vacuum_a08
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 21
+          repeat: 2
 
 vac_clean_multiroom:
   sequence:
-    - service: xiaomi_miio.vacuum_clean_segment
-      target:
-        entity_id: vacuum.roborock_vacuum_a08
-      data:
-        segments: [18,19,20]
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.roborock_vacuum_a08
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 21
+            - 18
+            - 20
+          repeat: 2

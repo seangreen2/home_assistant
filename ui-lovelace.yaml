@@ -13,6 +13,9 @@ resources:
     type: module
   - url: /local/community/vacuum-card/vacuum-card.js
     type: module
+  - url: /local/community/honeywell-smb-card/honeywell-smb-card.js
+    ype: module
+
 
 views:
   - path: default_view
@@ -130,6 +133,9 @@ views:
 
       - type: vertical-stack
         cards:
+          #- type: custom:honeywell-smb-card
+          #  name: Downstairs
+          #  entity: climate.downstairs
           - type: custom:simple-thermostat
             entity: climate.downstairs
             step_size: 1

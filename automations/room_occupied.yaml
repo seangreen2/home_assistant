@@ -280,6 +280,11 @@
     - platform: state
       entity_id: group.emily
       to: "home"
+    - platform: state
+      entity_id: sensor.emily_room_location
+      to: not_home
+      for:
+        minutes: 1
   action:
     - service: input_select.select_option
       data:
@@ -306,6 +311,11 @@
     - platform: state
       entity_id: group.sean
       to: "home"
+    - platform: state
+      entity_id: sensor.sean_room_location
+      to: not_home
+      for:
+        minutes: 1
   action:
     - service: input_select.select_option
       data:

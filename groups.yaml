@@ -31,7 +31,7 @@ emily:
 
 # DOOR SENSORS
 patio_door:
-  entities: binary_sensor.wyzesense_77A9603A
+  entities: binary_sensor.wyzesense_77a9603a
 
 # OUTSIDE LIGHTS
 outside_lights:

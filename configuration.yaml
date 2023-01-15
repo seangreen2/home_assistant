@@ -18,6 +18,7 @@ homeassistant:
 my:
 
 map:
+  dark_mode: true
 
 energy:
 
@@ -54,7 +55,7 @@ hacs:
 system_health:
 
 lovelace:
-  mode: yaml
+  #mode: yaml
 
 frontend:
   themes: !include_dir_merge_named themes
@@ -247,7 +248,7 @@ tplink:
     - host: 192.168.20.63 #Unused Switch
     - host: 192.168.20.59 #Living Room Fan Switch
     - host: 192.168.20.17 #Air fresehner switch
-    - host: 192.168.20.205 #Cabinet Lights
+    - host: 192.168.20.6 #Cabinet Lights
 
 # Text to speech
 tts:

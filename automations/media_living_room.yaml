@@ -14,6 +14,13 @@
       entity_id: media_player.shield
       from: "playing"
       to: "idle"
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.nvidia_shield_pro
+          attribute: source
+          state: "Spotify"
   action:
     - service: light.turn_on
       data_template:
@@ -53,6 +60,13 @@
       entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
       from: "playing"
       to: "unavailable"
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.nvidia_shield_pro
+          attribute: source
+          state: "Spotify"
   action:
     - service: light.turn_on
       data_template:
@@ -92,6 +106,13 @@
       entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
       to: "playing"
       from: "idle"
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.nvidia_shield_pro
+          attribute: source
+          state: "Spotify"
   action:
     - service: light.turn_off
       data:
@@ -118,6 +139,13 @@
     - platform: state
       entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
       to: "playing"
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.nvidia_shield_pro
+          attribute: source
+          state: "Spotify"
   action:
     - service: light.turn_off
       data:
@@ -140,9 +168,20 @@
       from: "playing"
       to: "paused"
     - platform: state
+      entity_id: media_player.shield
+      from: "playing"
+      to: "paused"
+    - platform: state
       entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
       from: "playing"
       to: "paused"
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.nvidia_shield_pro
+          attribute: source
+          state: "Spotify"
   action:
     - service: light.turn_on
       data:
@@ -172,9 +211,20 @@
       from: "paused"
       to: "playing"
     - platform: state
+      entity_id: media_player.shield
+      from: "paused"
+      to: "playing"
+    - platform: state
       entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
       from: "paused"
       to: "playing"
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.nvidia_shield_pro
+          attribute: source
+          state: "Spotify"
   action:
     service: light.turn_off
     data:
@@ -189,9 +239,20 @@
       from: "paused"
       to: "idle"
     - platform: state
+      entity_id: media_player.shield
+      from: "paused"
+      to: "idle"
+    - platform: state
       entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
       from: "paused"
       to: "idle"
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.nvidia_shield_pro
+          attribute: source
+          state: "Spotify"
   action:
     - service: light.turn_on
       data_template:
@@ -224,9 +285,20 @@
       from: "paused"
       to: "unavailable"
     - platform: state
+      entity_id: media_player.shield
+      from: "paused"
+      to: "unavailable"
+    - platform: state
       entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
       from: "paused"
       to: "unavailable"
+  condition:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: media_player.nvidia_shield_pro
+          attribute: source
+          state: "Spotify"
   action:
     - service: light.turn_on
       data_template:

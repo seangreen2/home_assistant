@@ -34,17 +34,12 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - [Plex Server](https://www.plex.tv/)
 
 #### Custom Lovelace Components
-- Mini Graph Cards: https://github.com/kalkih/mini-graph-card
+- Mushroom Cards: https://github.com/piitaya/lovelace-mushroom
 - Mini Media Player Cards: https://github.com/kalkih/mini-media-player
-- Simple Weather Card: https://github.com/kalkih/simple-weather-card
-- Simple Thermostat Card: https://github.com/nervetattoo/simple-thermostat
 - Bar Cards: https://github.com/custom-cards/bar-card
-- Vacuum Card: https://github.com/denysdovhan/vacuum-card
 
 ## Dashboard
-![1](https://i.imgur.com/LWlPtrm.png)
-![2](https://i.imgur.com/B7JDq8C.png)
-![3](https://i.imgur.com/f6s7VB0.png)
-![4](https://i.imgur.com/uPXHERP.png)
-![5](https://i.imgur.com/2dv9MO4.png)
-![6](https://i.imgur.com/INLwMzW.png)
+![1](https://i.imgur.com/DpQZ6eq.png)
+![2](https://i.imgur.com/n3ApBNK.png)
+![3](https://i.imgur.com/pnEflUd.jpg)
+
