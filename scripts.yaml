@@ -239,7 +239,49 @@ vac_clean_multiroom:
       command: app_segment_clean
       params:
         - segments:
-            - 21
             - 18
+            - 19
             - 20
           repeat: 2
+
+vac_clean_mop:
+  sequence:
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.roborock_vacuum_a08
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 18
+            - 21
+            - 20
+          repeat: 2
+
+#show HA on Nest Hub
+cast_ha_nesthub:
+  sequence:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ state_attr('media_player.nesthub', 'app_name') != 'DashCast' }}"
+            - condition: template
+              value_template: "{{ state_attr('media_player.nesthub', 'app_name') != 'Spotify' }}"
+          sequence:
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.0
+              target:
+                entity_id: media_player.nesthub
+            - service: dash_cast.load_url
+              data:
+                entity_id: media_player.nesthub
+                url: http://192.168.1.185:8123/dashboard-hub/0?kiosk
+                force: true
+            - delay:
+                seconds: 15
+            - service: media_player.volume_set
+              data:
+                volume_level: 0.6
+              target:
+                  entity_id: media_player.nesthub

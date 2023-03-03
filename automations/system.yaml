@@ -10,6 +10,84 @@
       name: slate
       mode: dark
 
+# Check  to see if zigbee sensors are offline
+- alias: Zigbee Sensors Offline
+  description: ""
+  use_blueprint:
+    path: Tahutipai/zigbee_zwave_notify_when_battery_devices_have_fallen_offline.yaml
+    input:
+      actions:
+        - service: notify.mobile_app_sean_pixel
+          data:
+            title: "Zigbee Sensors Offline"
+            message: "The following sensors are offline: {{sensors}}"
+
+- alias: Recast Dashboard
+  initial_state: on
+  trigger:
+    - platform: time_pattern
+      minutes: "/1"
+    - platform: state
+      entity_id: input_boolean.living_room_occupied
+      to: "on"
+    #- platform: template
+    #  value_template: "{{ state_attr('media_player.nesthub', 'app_name') != 'DashCast' }}"
+  condition: 
+    - condition: template
+      value_template: "{{ state_attr('media_player.nesthub', 'app_name') != 'Spotify' }}"
+    - condition: template
+      value_template: "{{ state_attr('media_player.nesthub', 'app_name') != 'DashCast' }}"
+    - condition: state
+      entity_id: input_boolean.bedtime_sean
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.living_room_occupied
+      state: "on"
+    - condition: state
+      entity_id: group.family
+      state: home
+    - condition: template
+      value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}"
+  action:
+    - delay:
+        seconds: 5
+    - service: script.cast_ha_nesthub
+
+- alias: Turn off Dashboard Cast
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: media_player.plex_living_room_tv
+      to: playing
+    - platform: state
+      entity_id: input_boolean.living_room_occupied
+      to: "off"
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: media_player.nvidia_shield_pro
+      to: playing
+    - platform: state
+      entity_id: group.family
+      to: not_home
+    - platform: state
+      entity_id: input_boolean.bedtime_sean
+      to: "on"
+    - platform: state
+      entity_id: input_boolean.bedtime_emily
+      to: "on"
+  action:
+    - service: media_player.turn_off
+      data:
+        entity_id: media_player.nesthub
+
+
 # Turn on air fresh after cats use box
 - alias: Turn on air fresh
   initial_state: on
@@ -82,7 +160,7 @@
     - platform: time
       at: "12:00:00"
     - platform: time
-      at: "16:45:00"
+      at: "16:30:00"
   condition: []
   action:
     - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}"
@@ -144,7 +222,9 @@
     - service: media_player.volume_set
       data:
         entity_id: media_player.nesthub
-        volume_level: 1.0
+        volume_level: .99
+    - delay:
+        seconds: 1
     - service: media_player.play_media
       data:
         entity_id: media_player.whole_house
@@ -153,7 +233,7 @@
     - service: media_player.volume_set
       data:
         entity_id: media_player.nesthub
-        volume_level: .9
+        volume_level: .6
 
 # Shitter Full notifications
 - alias: Shitter Full
@@ -161,7 +241,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.kitty_throne_waste_drawer
-      above: 96
+      above: 95
   action:
     - service: notify.notify
       data:
@@ -182,3 +262,29 @@
 #          interrupt: 0
 #          image:
 #            url: "http://192.168.1.185:8123/local/images/shitter.png"
+
+# Vac is stuck
+- alias: Vacuum Error Jeeves
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: vacuum.roborock_vacuum_a08
+      to: "error"
+  action:
+    - service: notify.notify
+      data:
+        message: "Jeeves is stuck. Please help him!"
+        title: "Vacuum Alert"
+
+# Vac is stuck
+- alias: Vacuum Error Rosie
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: vacuum.rosie
+      to: "error"
+  action:
+    - service: notify.notify
+      data:
+        message: "Rosie is stuck. Please help her!"
+        title: "Vacuum Alert"

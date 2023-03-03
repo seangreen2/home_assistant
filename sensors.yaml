@@ -252,18 +252,18 @@
     - "time"
 
 - platform: mqtt_room
-  device_id: "396ec02532fa49658cf8b2cee6e52c1c-1-0"
+  device_id: "iBeacon:c1743f70-b82c-444f-8410-7d6af9624c8b-100-1"
   name: "Sean Room Location"
-  state_topic: "room_presence"
+  state_topic: "espresense/devices/iBeacon:c1743f70-b82c-444f-8410-7d6af9624c8b-100-1"
   timeout: 10
-  away_timeout: 20
+  away_timeout: 120
 
 - platform: mqtt_room
-  device_id: "3900f72eab4f4d7fa0ec4827c530fa36-1-0"
+  device_id: "iBeacon:be0ffc1d-2bc3-4c21-9d0c-c2148b54ca06-100-1"
   name: "Emily Room Location"
-  state_topic: "room_presence"
+  state_topic: "espresense/devices/iBeacon:be0ffc1d-2bc3-4c21-9d0c-c2148b54ca06-100-1"
   timeout: 10
-  away_timeout: 20
+  away_timeout: 120
 
 - platform: spotcast
 

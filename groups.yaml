@@ -31,7 +31,7 @@ emily:
 
 # DOOR SENSORS
 patio_door:
-  entities: binary_sensor.wyzesense_77a9603a
+  entities: binary_sensor.patio_door
 
 # OUTSIDE LIGHTS
 outside_lights:
@@ -49,12 +49,16 @@ bedroom_motion:
   entities:
     - binary_sensor.wyzesense_779b1944
     - binary_sensor.wyzesense_779b149b
+    - binary_sensor.bedroom_sensor_motion
+    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone
 
 living_room_motion:
   entities:
     - binary_sensor.wyzesense_77a68ce7
     - binary_sensor.wyzesense_77a68665
     - binary_sensor.wyzesense_779b29d3
+    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_2
+    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_3
 #    - binary_sensor.living_room_motion_sensor
 
 office_motion:
@@ -66,6 +70,7 @@ closet_motion:
   name: Closet Motion
   entities:
     - binary_sensor.wyzesense_779b149b
+    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone
 
 bathroom_motion:
   name: Bathroom Motion

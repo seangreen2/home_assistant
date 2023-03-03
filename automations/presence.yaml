@@ -81,7 +81,7 @@
 
 # Disarm Garage Camera when Home
 - alias: Garage Cameras Disarmed Home
-  initial_state: on
+  initial_state: off
   trigger:
     platform: state
     entity_id: group.family
@@ -97,7 +97,7 @@
 
 # Arm Garage Camera Night
 - alias: Garage Cameras Armed Night
-  initial_state: on
+  initial_state: off
   trigger:
     platform: sun
     event: sunset
@@ -108,7 +108,7 @@
 
 # Disarm Garage Camera Morning
 - alias: Garage Cameras Disarmed Morning
-  initial_state: on
+  initial_state: off
   trigger:
     platform: sun
     event: sunrise

@@ -5,6 +5,9 @@ homeassistant:
       trusted_networks:
         - 192.168.1.0/24
         - 127.0.0.1
+        - 192.168.1.80
+      trusted_users:
+        192.168.1.80: !secret ha_user_id #Nest Hub Display
       allow_bypass_login: true
   name: Home
   latitude: !secret latitude
@@ -103,6 +106,9 @@ history:
       - light.cabinet_lights
       - switch.litter_robot
       - sensor.kitty_throne_waste_drawer
+      - sensor.emily_room_location
+      - sensor.sean_room_location
+      - sensor.patio_door_temperature
 
 recorder:
   purge_keep_days: 90
@@ -134,6 +140,9 @@ recorder:
       - light.cabinet_lights
       - switch.litter_robot
       - sensor.kitty_throne_waste_drawer
+      - sensor.emily_room_location
+      - sensor.sean_room_location
+      - sensor.patio_door_temperature
 
 # View all events in a logbook
 logbook:
@@ -176,8 +185,8 @@ light:
   - platform: group
     name: Bedroom Lights
     entities:
-      - light.br1
-      - light.br2
+      - light.hue_color_lamp_1
+      - light.hue_color_lamp_2
   - platform: group
     name: Living Room Lights
     entities:
@@ -219,6 +228,24 @@ camera:
     draw: ['all']
     attributes:
       - calibration_points
+    colors:
+      color_map_outside: [0x29, 0x29, 0x29]
+      color_grey_wall: [0x22, 0x22, 0x22]
+      color_map_wall_v2: [0x22, 0x22, 0x22]
+    room_colors:
+      16: [0x29, 0x80, 0xb9] #blue living room
+      17: [0x29, 0x29, 0x29] #dark gray outside
+      18: [0x29, 0x80, 0xb9] #[0xb5, 0x8e, 0x31] #yellow kitchen
+      19: [0x29, 0x80, 0xb9] #[0xb8, 0x38, 0x29] #red foyer
+      20: [0x29, 0x80, 0xb9] #[0xb8, 0x38, 0x29] #red dining
+      21: [0x29, 0x80, 0xb9] #blue sunroom
+    map_transformation:
+      scale: 2
+      trim:
+        top: 20
+        bottom: 20
+        left: 10
+        right: 10
 
 
 # Switches

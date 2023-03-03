@@ -18,7 +18,7 @@
     - condition: not
       conditions:
         - condition: state
-          entity_id: media_player.nvidia_shield_pro
+          entity_id: media_player.shield
           attribute: source
           state: "Spotify"
   action:
@@ -32,7 +32,7 @@
         entity_id: light.cabinet_lights
         brightness_pct: 100
         kelvin: 5400
-        transition: 15
+        transition: 10
     - service: switch.turn_on
       data_template:
         entity_id: switch.bias_lighting
@@ -42,7 +42,7 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-        transition: 15
+        transition: 10
 
 # Lights back to full after media stops
 - alias: "Media player stopped unavailable"
@@ -64,7 +64,7 @@
     - condition: not
       conditions:
         - condition: state
-          entity_id: media_player.nvidia_shield_pro
+          entity_id: media_player.shield
           attribute: source
           state: "Spotify"
   action:
@@ -72,7 +72,7 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-        transition: 15
+        transition: 10
     - service: light.turn_on
       data_template:
         entity_id: light.cabinet_lights
@@ -88,7 +88,7 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-        transition: 15
+        transition: 10
 
 # Lights turn off while media is playing
 - alias: "Media player playing"
@@ -101,7 +101,6 @@
     - platform: state
       entity_id: media_player.shield
       to: "playing"
-      from: "idle"
     - platform: state
       entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
       to: "playing"
@@ -110,7 +109,7 @@
     - condition: not
       conditions:
         - condition: state
-          entity_id: media_player.nvidia_shield_pro
+          entity_id: media_player.shield
           attribute: source
           state: "Spotify"
   action:
@@ -143,7 +142,7 @@
     - condition: not
       conditions:
         - condition: state
-          entity_id: media_player.nvidia_shield_pro
+          entity_id: media_player.shield
           attribute: source
           state: "Spotify"
   action:
@@ -179,7 +178,7 @@
     - condition: not
       conditions:
         - condition: state
-          entity_id: media_player.nvidia_shield_pro
+          entity_id: media_player.shield
           attribute: source
           state: "Spotify"
   action:
@@ -187,7 +186,7 @@
       data:
         entity_id: light.living_room
         brightness_pct: 33
-        transition: 4
+        transition: 43
     - service: light.turn_on
       data_template:
         entity_id: light.cabinet_lights
@@ -222,7 +221,7 @@
     - condition: not
       conditions:
         - condition: state
-          entity_id: media_player.nvidia_shield_pro
+          entity_id: media_player.shield
           attribute: source
           state: "Spotify"
   action:
@@ -250,7 +249,7 @@
     - condition: not
       conditions:
         - condition: state
-          entity_id: media_player.nvidia_shield_pro
+          entity_id: media_player.shield
           attribute: source
           state: "Spotify"
   action:
@@ -258,13 +257,13 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-        transition: 10
+        transition: 6
     - service: light.turn_on
       data_template:
         entity_id: light.cabinet_lights
         brightness_pct: 100
         kelvin: 5400
-        transition: 10
+        transition: 6
     - service: switch.turn_on
       data_template:
         entity_id: switch.bias_lighting
@@ -274,7 +273,7 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-        transition: 10
+        transition: 6
 
 # Lights dim to full going from paused to idle
 - alias: "Media player pause to unavailable"
@@ -296,7 +295,7 @@
     - condition: not
       conditions:
         - condition: state
-          entity_id: media_player.nvidia_shield_pro
+          entity_id: media_player.shield
           attribute: source
           state: "Spotify"
   action:
@@ -304,13 +303,13 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-        transition: 10
+        transition: 6
     - service: light.turn_on
       data_template:
         entity_id: light.cabinet_lights
         brightness_pct: 100
         kelvin: 5400
-        transition: 10
+        transition: 6
     - service: switch.turn_on
       data_template:
         entity_id: switch.bias_lighting
@@ -320,7 +319,7 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
-        transition: 10
+        transition: 6
 
 ################
 ##### ROKU #####
@@ -328,7 +327,7 @@
 
 # Lights turn off while roku media is playing
 - alias: "Roku player playing"
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: template
       value_template: >
@@ -341,7 +340,7 @@
         transition: 2
 
 - alias: "Roku player stopped"
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: template
       value_template: >
@@ -366,7 +365,7 @@
 
 # Bias Lighting Off
 - alias: "Bias Lights stopped unavailable"
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: template
       value_template: >
@@ -381,7 +380,7 @@
 
 # Lights dim while steamlink is playing
 - alias: "Steamlink playing"
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: template
       value_template: >

@@ -85,6 +85,10 @@
     - condition: state
       entity_id: group.bedroom_motion
       state: 'off'
+    - condition: template
+      value_template: "{{ not is_state('sensor.sean_room_location', 'bedroom') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('sensor.emily_room_location', 'bedroom') }}" # NOT condition
   action:
     - service: light.turn_off
       data:

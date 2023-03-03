@@ -18,10 +18,8 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - [Hue Bridge](https://amzn.to/30v9YND)
   - [A19 soft white bulbs](https://amzn.to/2LIFW4F)
   - [Hue Motion / Temperature Sensors](https://amzn.to/2JmF1FE)
-- [Wyze Sense](https://wyze.com/wyze-sense.html) - Requires a [custom component](https://github.com/kevinvincent/ha-wyzesense) to function. (Not recommended. Plan on moving to Aqara in the future)
-  - Motion Sensors
-  - Door/Window Sensors
-- [ESP32 Development Boards](https://amazon.com/gp/product/B086MLNH7N/) - Used to determine Room Presence using BTLE. [Docs and setup information](https://jptrsn.github.io/ESP32-mqtt-room/)
+- [Home Assistant SkyConnect](https://www.home-assistant.io/skyconnect/) - Zigbee controller with Matter support
+- [ESP32 Development Boards](https://amazon.com/gp/product/B086MLNH7N/) - Used to determine Room Presence using BTLE. [Docs and setup information](https://espresense.com/)
 - [Nest Thermostats - 3rd / 2nd Gen](https://amzn.to/2YELTn2)
 - [Nvidia Shield Pro](https://smile.amazon.com/gp/product/B07YP9FBMM)
 - [Google Home - Minis / Show](https://store.google.com/product/google_home_mini)

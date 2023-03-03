@@ -16,3 +16,24 @@
   - service: switch.turn_on
     data_template:
       entity_id: switch.bias_lighting
+- id: '1677553587721'
+  alias: Zigbee/ZWave battery device has gone offline
+  description: Alerts when a zigbee device has gone offline
+  use_blueprint:
+    path: Tahutipai/zigbee_zwave_notify_when_battery_devices_have_fallen_offline.yaml
+    input:
+      actions:
+      - service: notify.mobile_app_sean_pixel
+        data:
+          message: 'The following Zigbee sensors are offline: "{{sensors}}"'
+- id: '1677678793412'
+  alias: Zigbee Sensors Offline
+  description: ''
+  use_blueprint:
+    path: Tahutipai/zigbee_zwave_notify_when_battery_devices_have_fallen_offline.yaml
+    input:
+      actions:
+      - service: notify.mobile_app_sean_pixel
+        data:
+          title: Zigbee Sensors Offline
+          message: 'The following sensors are offline: {{sensors}}'

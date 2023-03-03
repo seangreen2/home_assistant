@@ -52,7 +52,7 @@
 
 # Hurricane Winds
 - alias: "Hurricane Winds"
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: numeric_state
       entity_id: sensor.dark_sky_wind_speed
