@@ -163,15 +163,15 @@
       entity_id: switch.outside_lights_switch
     - service: light.turn_on
       data_template:
-        entity_id: light.outside
-        brightness_pct: 66
+        entity_id: light.signify_netherlands_b_v_lwb014_huelight
+        brightness_pct: 60
         transition: 2
     - delay:
         milliseconds: 500
     - service: light.turn_on
       data_template:
-        entity_id: light.outside
-        brightness_pct: 66
+        entity_id: light.signify_netherlands_b_v_lwb014_huelight
+        brightness_pct: 60
         transition: 2
 
 # Outside lights off at dawn
@@ -185,5 +185,5 @@
       entity_id: switch.outside_lights_switch
     - service: light.turn_off
       data_template:
-        entity_id: light.outside
+        entity_id: light.signify_netherlands_b_v_lwb014_huelight
         transition: 2

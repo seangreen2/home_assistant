@@ -36,7 +36,7 @@ patio_door:
 # OUTSIDE LIGHTS
 outside_lights:
   entities:
-    - light.outside
+    - light.signify_netherlands_b_v_lwb014_huelight_2
 
 # MEDIA PLAYERS
 living_room_media:
@@ -47,30 +47,30 @@ living_room_media:
 # MOTION SENSORS
 bedroom_motion:
   entities:
-    - binary_sensor.wyzesense_779b1944
-    - binary_sensor.wyzesense_779b149b
+    #- binary_sensor.wyzesense_779b1944
+    #- binary_sensor.wyzesense_779b149b
     - binary_sensor.bedroom_sensor_motion
-    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone
+    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_3
 
 living_room_motion:
   entities:
-    - binary_sensor.wyzesense_77a68ce7
-    - binary_sensor.wyzesense_77a68665
-    - binary_sensor.wyzesense_779b29d3
+    #- binary_sensor.wyzesense_77a68ce7
+    #- binary_sensor.wyzesense_77a68665
+    #- binary_sensor.wyzesense_779b29d3
     - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_2
-    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_3
+    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone
 #    - binary_sensor.living_room_motion_sensor
 
 office_motion:
   entities:
     - binary_sensor.office_motion
-    - binary_sensor.wyzesense_77a67a6c
+    #- binary_sensor.wyzesense_77a67a6c
 
 closet_motion:
   name: Closet Motion
   entities:
-    - binary_sensor.wyzesense_779b149b
-    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone
+    #- binary_sensor.wyzesense_779b149b
+    - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_3
 
 bathroom_motion:
   name: Bathroom Motion
@@ -83,7 +83,7 @@ all_lights:
   entities:
     - light.bedroom
     - light.bathroom
-    - light.office
+    - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
     - light.living_room
     - light.cabinet_lights
 

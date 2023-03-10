@@ -15,7 +15,7 @@
   action:
     - service: light.turn_on
       data_template:
-        entity_id: light.office
+        entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
         brightness_pct: "{{ state_attr('switch.circadian_lighting_office', 'brightness') | int }}"
     - service: switch.turn_on
       data:
@@ -24,7 +24,7 @@
         milliseconds: 250
     - service: light.turn_on
       data_template:
-        entity_id: light.office
+        entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
         brightness_pct: "{{ state_attr('switch.circadian_lighting_office', 'brightness') | int }}"
     - service: switch.turn_on
       data:
@@ -41,12 +41,12 @@
       entity_id: group.family
       state: "home"
     - condition: state
-      entity_id: light.office
+      entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
       state: "on"
   action:
     - service: light.turn_on
       data_template:
-        entity_id: light.office
+        entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
         brightness_pct: "{{ state_attr('switch.circadian_lighting_office', 'brightness') | int }}"
         transition: 60
 
@@ -78,17 +78,11 @@
   action:
     - service: light.turn_off
       data:
-        entity_id: light.office
+        entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
         transition: 2
-    - service: switch.turn_off
-      data:
-        entity_id: switch.office_light
     - delay:
         milliseconds: 250
     - service: light.turn_off
       data:
-        entity_id: light.office
+        entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
         transition: 2
-    - service: switch.turn_off
-      data:
-        entity_id: switch.office_light

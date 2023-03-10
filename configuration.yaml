@@ -20,6 +20,17 @@ homeassistant:
 
 my:
 
+panel_custom:
+  - name: integrations
+    sidebar_title: Integrations
+    sidebar_icon: mdi:cog-outline
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: "config/integrations"
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator
+
 map:
   dark_mode: true
 
@@ -109,6 +120,7 @@ history:
       - sensor.emily_room_location
       - sensor.sean_room_location
       - sensor.patio_door_temperature
+      - switch.air_freshener_switch
 
 recorder:
   purge_keep_days: 90
@@ -143,6 +155,7 @@ recorder:
       - sensor.emily_room_location
       - sensor.sean_room_location
       - sensor.patio_door_temperature
+      - switch.air_freshener_switch
 
 # View all events in a logbook
 logbook:

@@ -16,8 +16,12 @@ tts
 HSO4UJ~R
 *.db-shm
 *.db-wal
+*.db
 blueprints/script/homeassistant/confirmable_notification.yaml
 home-assistant.log.1
 home-assistant.log.fault
 blueprints/automation
 node-red
+zigbee.db
+zigbee.db-shm
+zigbee.db-wal

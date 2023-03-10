@@ -94,11 +94,11 @@
       entity_id: group.living_room_motion
       to: "on"
     - platform: template
-      value_template: "{{ states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','dining_room'] }}"
+      value_template: "{{ states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
       for:
         seconds: 10
     - platform: template
-      value_template: "{{ states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','dining_room'] }}"
+      value_template: "{{ states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
       for:
         seconds: 10
   #      - platform: template
@@ -117,11 +117,11 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','dining_room'] }}" # NOT condition
+      value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
       for:
         minutes: 3
     - platform: template
-      value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','dining_room'] }}" # NOT condition
+      value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
       for:
         minutes: 3
     - platform: time_pattern
@@ -136,9 +136,9 @@
         entity_id: group.living_room_motion
         state: "off"
       - condition: template
-        value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','dining_room'] }}" # NOT condition
+        value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
       - condition: template
-        value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','dining_room'] }}" # NOT condition
+        value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
   action:
     - service: input_boolean.turn_off
       data:
@@ -148,7 +148,7 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','dining_room'] }}"
+      value_template: "{{ states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
       for:
         seconds: 5
   action:
@@ -161,7 +161,7 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','dining_room'] }}"
+      value_template: "{{ states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
       for:
         seconds: 5
   action:

@@ -12,6 +12,7 @@
 
 # Check  to see if zigbee sensors are offline
 - alias: Zigbee Sensors Offline
+  initial_state: on
   description: ""
   use_blueprint:
     path: Tahutipai/zigbee_zwave_notify_when_battery_devices_have_fallen_offline.yaml
@@ -102,11 +103,11 @@
       state: "home"
   action:
     - service: switch.turn_on
-      entity_id: switch.air_freshener
+      entity_id: switch.air_freshener_switch
     - delay:
         minutes: "30"
     - service: switch.turn_off
-      entity_id: switch.air_freshener
+      entity_id: switch.air_freshener_switch
 
 - alias: Restart Litter Robot
   description: If litter robot is in error for at least 30 minutes, the switch will toggle power to reset robot
