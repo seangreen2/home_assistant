@@ -11,7 +11,7 @@ I also made the popular dark theme [Slate](https://github.com/seangreen2/slate_t
 To ensure detection in our home, we use the following integrations with 100% success:
 - [NMap](https://www.home-assistant.io/integrations/nmap_tracker/)
 - [Home Assistant Mobile App](https://www.home-assistant.io/integrations/mobile_app/)
-- [Room Presence using BTLE](https://jptrsn.github.io/ESP32-mqtt-room/)
+- [Room Presence using BTLE](https://espresense.com/)
 
 ## Equipment
 - [Home Assistant](https://www.home-assistant.io/) on a [HassOS](https://www.home-assistant.io/hassio/installation/) VM
@@ -25,7 +25,6 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - [Google Home - Minis / Show](https://store.google.com/product/google_home_mini)
 - [TP Link Smart Plugs (HS 100)](https://amzn.to/2XAKm4J)
 - [TP Link Smart Switches (HS 200)](https://amzn.to/2Xyo8vy)
-- [Wemo Mini Smart Plug](https://amzn.to/2JmSkpw)
 - [Roborock S6 Pure](https://smile.amazon.com/gp/product/B084Z5P2BX)
 - [Neato Botvac D3 Connected](https://amzn.to/30oP7v8)
 - [PiHole (Network-Wide Ad Blocking)](https://pi-hole.net/)
