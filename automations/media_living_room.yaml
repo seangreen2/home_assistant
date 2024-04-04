@@ -1,3 +1,30 @@
+# Turn off cabinet lights if alone
+- alias: Turn off Cabinet Lights
+  initial_state: on
+  trigger:
+    - platform: time_pattern
+      minutes: '/5'
+    - platform: template
+      value_template: "{{ not states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch'] }}" # NOT condition
+      for:
+        minutes: 5
+  condition:
+    - condition: template
+      value_template: "{{ is_state('media_player.plex_living_room_tv', 'playing') }}"
+    - condition: template
+      value_template: "{{ is_state('media_player.nvidia_shield_pro', 'playing') }}"
+    - condition: template
+      value_template: "{{ not states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch'] }}" # NOT condition
+    - condition: state
+      entity_id: light.cabinet_lights
+      state: 'on'
+  action:
+    - service: light.turn_on
+      data_template:
+        entity_id: light.cabinet_lights
+        brightness_pct: 1
+        kelvin: 5400
+
 # Lights back to full after media stops
 - alias: "Media player stopped"
   initial_state: on
@@ -14,17 +41,11 @@
       entity_id: media_player.shield
       from: "playing"
       to: "idle"
-  condition:
-    - condition: not
-      conditions:
-        - condition: state
-          entity_id: media_player.shield
-          attribute: source
-          state: "Spotify"
   action:
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 15
     - service: light.turn_on
@@ -33,16 +54,17 @@
         brightness_pct: 100
         kelvin: 5400
         transition: 10
-    - service: switch.turn_on
-      data_template:
-        entity_id: switch.bias_lighting
     - delay:
         seconds: 1
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 10
+    - service: automation.turn_on
+      target:
+        entity_id: automation.living_room_auto_brightness_transition
 
 # Lights back to full after media stops
 - alias: "Media player stopped unavailable"
@@ -60,17 +82,11 @@
       entity_id: media_player.plex_plex_for_android_tv_bravia_vh1
       from: "playing"
       to: "unavailable"
-  condition:
-    - condition: not
-      conditions:
-        - condition: state
-          entity_id: media_player.shield
-          attribute: source
-          state: "Spotify"
   action:
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 10
     - service: light.turn_on
@@ -79,14 +95,12 @@
         brightness_pct: 100
         kelvin: 5400
         transition: 15
-    - service: switch.turn_on
-      data_template:
-        entity_id: switch.bias_lighting
     - delay:
         seconds: 1
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 10
 
@@ -113,17 +127,25 @@
           attribute: source
           state: "Spotify"
   action:
-    - service: light.turn_off
-      data:
-        entity_id: light.living_room
-        transition: 4
-    - service: light.turn_off
-      data:
-        entity_id: light.cabinet_lights
-        transition: 6
-    - service: switch.turn_off
-      data_template:
-        entity_id: switch.bias_lighting
+    - if:
+        - condition: template
+          value_template: "{{ states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom'] }}"
+      then:
+        - service: light.turn_off
+          data:
+            entity_id: light.living_room
+            transition: 4
+      else:
+        - service: light.turn_off
+          data:
+            entity_id: light.living_room
+            transition: 4
+        - service: light.turn_on
+          data_template:
+            entity_id: light.cabinet_lights
+            brightness_pct: 1
+            kelvin: 5400
+
 
 # Lights turn off while media is playing
 - alias: "Media player playing unavailable"
@@ -146,17 +168,24 @@
           attribute: source
           state: "Spotify"
   action:
-    - service: light.turn_off
-      data:
-        entity_id: light.living_room
-        transition: 4
-    - service: light.turn_off
-      data:
-        entity_id: light.cabinet_lights
-        transition: 6
-    - service: switch.turn_off
-      data_template:
-        entity_id: switch.bias_lighting
+    - if:
+        - condition: template
+          value_template: "{{ states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom'] }}"
+      then:
+        - service: light.turn_off
+          data:
+            entity_id: light.living_room
+            transition: 4
+      else:
+        - service: light.turn_off
+          data:
+            entity_id: light.living_room
+            transition: 4
+        - service: light.turn_on
+          data_template:
+            entity_id: light.cabinet_lights
+            brightness_pct: 1
+            kelvin: 5400
 
 # Lights dim when media is paused
 - alias: "Media player paused"
@@ -182,24 +211,47 @@
           attribute: source
           state: "Spotify"
   action:
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room
-        brightness_pct: 33
-        transition: 43
-    - service: light.turn_on
-      data_template:
-        entity_id: light.cabinet_lights
-        brightness_pct: 50
-        kelvin: 5400
-        transition: 4
-    - delay:
-        seconds: 1
-    - service: light.turn_on
-      data:
-        entity_id: light.living_room
-        brightness_pct: 33
-        transition: 4
+    - if:
+        - condition: template
+          value_template: "{{ states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom'] }}"
+      then:
+        - service: light.turn_on
+          data:
+            entity_id: light.living_room
+            brightness_pct: 33
+            transition: 4
+        - service: light.turn_on
+          data_template:
+            entity_id: light.cabinet_lights
+            brightness_pct: 100
+            kelvin: 5400
+            transition: 4
+        - delay:
+            seconds: 1
+        - service: light.turn_on
+          data:
+            entity_id: light.living_room
+            brightness_pct: 33
+            transition: 4
+      else:
+        - service: light.turn_on
+          data:
+            entity_id: light.living_room
+            brightness_pct: 33
+            transition: 4
+        - service: light.turn_on
+          data_template:
+            entity_id: light.cabinet_lights
+            brightness_pct: 50
+            kelvin: 5400
+            transition: 4
+        - delay:
+            seconds: 1
+        - service: light.turn_on
+          data:
+            entity_id: light.living_room
+            brightness_pct: 33
+            transition: 4
 
 # Lights turn off when media is unpaused
 - alias: "Media player unpaused"
@@ -225,9 +277,24 @@
           attribute: source
           state: "Spotify"
   action:
-    service: light.turn_off
-    data:
-      entity_id: light.living_room
+    - if:
+        - condition: template
+          value_template: "{{ states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom'] }}"
+      then:
+        - service: light.turn_off
+          data:
+            entity_id: light.living_room
+            transition: 4
+        - service: light.turn_on
+          data_template:
+            entity_id: light.cabinet_lights
+            brightness_pct: 1
+            kelvin: 5400
+      else:
+        - service: light.turn_off
+          data:
+            entity_id: light.living_room
+            transition: 4
 
 # Lights dim to full going from paused to idle
 - alias: "Media player pause to idle"
@@ -256,6 +323,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 6
     - service: light.turn_on
@@ -264,14 +332,12 @@
         brightness_pct: 100
         kelvin: 5400
         transition: 6
-    - service: switch.turn_on
-      data_template:
-        entity_id: switch.bias_lighting
     - delay:
         seconds: 1
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 6
 
@@ -302,6 +368,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 6
     - service: light.turn_on
@@ -310,14 +377,12 @@
         brightness_pct: 100
         kelvin: 5400
         transition: 6
-    - service: switch.turn_on
-      data_template:
-        entity_id: switch.bias_lighting
     - delay:
         seconds: 1
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 6
 
@@ -353,6 +418,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 10
     - delay:
@@ -360,6 +426,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 10
 

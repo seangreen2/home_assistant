@@ -43,6 +43,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
     - service: light.turn_on
       data_template:
@@ -55,6 +56,9 @@
       data_template:
         entity_id: light.living_room
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+    - service: automation.turn_on
+      target:
+        entity_id: automation.living_room_auto_brightness_transition
 
 # Auto Living Room Brightness Transition
 - alias: Living Room Auto Brightness Transition
@@ -81,6 +85,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
         transition: 60
 
@@ -118,12 +123,13 @@
       data:
         entity_id: light.living_room
         transition: 2
-    - service: light.turn_off
+    - service: light.turn_on
       data_template:
         entity_id: light.cabinet_lights
-        transition: 2
+        brightness_pct: 1
+        kelvin: 5400
     - delay:
-        milliseconds: 250
+        milliseconds: 500
     - service: light.turn_off
       data:
         entity_id: light.living_room
@@ -151,7 +157,6 @@
       data:
         entity_id: automation.living_room_auto_brightness
 
-
 # Outside lights on at dusk
 - alias: Outside lights on at dusk
   initial_state: on
@@ -163,14 +168,14 @@
       entity_id: switch.outside_lights_switch
     - service: light.turn_on
       data_template:
-        entity_id: light.signify_netherlands_b_v_lwb014_huelight
+        entity_id: light.signify_netherlands_b_v_lwb014_huelight_2
         brightness_pct: 60
         transition: 2
     - delay:
         milliseconds: 500
     - service: light.turn_on
       data_template:
-        entity_id: light.signify_netherlands_b_v_lwb014_huelight
+        entity_id: light.signify_netherlands_b_v_lwb014_huelight_2
         brightness_pct: 60
         transition: 2
 
@@ -183,7 +188,89 @@
   action:
     - service: switch.turn_off
       entity_id: switch.outside_lights_switch
+    - service: automation.turn_on
+      target:
+        entity_id: automation.living_room_auto_brightness_transition
     - service: light.turn_off
       data_template:
-        entity_id: light.signify_netherlands_b_v_lwb014_huelight
+        entity_id: light.signify_netherlands_b_v_lwb014_huelight_2
+        transition: 2
+
+- alias: Randomize Hue Scenes
+  initial_state: on
+  trigger:
+    - platform: time_pattern
+      minutes: '/7'
+  condition: 
+    - condition: state
+      entity_id: group.family
+      state: 'home'
+    - condition: sun
+      after: sunset
+      before: sunrise
+    - condition: state
+      entity_id: input_boolean.bedtime_sean
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.bedtime_emily
+      state: "off"
+    - condition: state
+      entity_id: light.living_room
+      state: 'on'
+    - condition: time
+      after: '19:00:00'
+      before: '18:00:00'
+    - condition: template
+      value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+  action:
+    - variables:
+        options: "{{ state_attr('input_select.hue_scenes', 'options') }}"
+        num_options: "{{ options | length }}"
+        random_index: "{{ range(num_options) | random }}"
+    - service: input_select.select_option
+      data:
+        option: "{{ options[random_index] }}"
+      target:
+        entity_id: input_select.hue_scenes
+    - service: scene.turn_on
+      data:
+        entity_id: "{{ options[random_index] }}"
+        transition: 60
+      target:
+        entity_id: "{{ options[random_index] }}"
+    - service: automation.turn_off
+      target:
+        entity_id: automation.living_room_auto_brightness_transition
+
+
+# Turn on Cabinet lights if watching TV
+- alias: Joyce Cabinet Lights On
+  initial_state: on
+  trigger:
+    - platform: time_pattern
+      minutes: '/3'
+    - platform: template
+      value_template: "{{ states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom'] }}"
+      for:
+        seconds: 30
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: 'home'
+    - condition: template
+      value_template: "{{ states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom'] }}"
+    - condition: state
+      entity_id: input_boolean.bedtime_emily
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.bedtime_sean
+      state: 'off'
+  action:
+    - service: light.turn_on
+      data_template:
+        entity_id: light.cabinet_lights
+        brightness_pct: 100
+        kelvin: 5400
         transition: 2

@@ -14,6 +14,7 @@ family:
   entities:
     - group.sean
     - group.emily
+    - group.joyce
 
 sean:
   name: Sean
@@ -28,6 +29,13 @@ emily:
     - device_tracker.emily_phone_nmap # Phone Wifi
     - device_tracker.emily_pixel # Mobile App
     - person.emily_green
+
+joyce:
+  name: Joyce
+  entities:
+    - device_tracker.joyce_phone_nmap # Phone Wifi
+    - device_tracker.joyce_phone # Mobile App
+    - person.joyce
 
 # DOOR SENSORS
 patio_door:

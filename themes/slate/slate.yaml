@@ -8,6 +8,7 @@ slate:
   primary-text-color: '#FFFFFF'
   text-primary-color: 'var(--primary-text-color)'
   secondary-text-color: '#b58e31'
+  mush-card-secondary-color: '#b58e31'
   disabled-text-color: '#777777'
   label-badge-border-color: 'green'
   # Sidebar
@@ -15,6 +16,7 @@ slate:
   # Background colors
   primary-background-color: '#222222'
   secondary-background-color: '#222222'
+  clear-background-color: '#212121'
   divider-color: 'rgba(255, 255, 255, .12)'
   table-row-background-color: '#292929'
   table-row-alternative-background-color: '#292929'

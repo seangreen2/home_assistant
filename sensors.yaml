@@ -42,7 +42,7 @@
       unique_id: '1312912386808'
       device_class: temperature
       value_template: >
-        {{ ((float(states('sensor.office_motion_sensor_temperature'))) + 4) | round(1) }}
+        {{ ((float(states('sensor.office_motion_sensor_temperature'))) + 2) | round(1) }}
 
 - platform: template
   sensors:
@@ -106,7 +106,7 @@
 - platform: template
   sensors:
     plex_bandwidth:
-      value_template: "{{states.sensor.total_bandwidth}}"
+      value_template: "{{'sensor.tautulli_total_bandwidth'}}"
       unit_of_measurement: "Mb"
 
 
@@ -117,7 +117,7 @@
 #        - sensor.plex_bandwidth
       unit_of_measurement: Mbps
       value_template: >
-        {{ ((float(states('sensor.total_bandwidth'))) / 1000) | round(1) }}
+        {{ ((float(states('sensor.tautulli_total_bandwidth'))) / 1000) | round(1) }}
 
 - platform: template
   sensors:
@@ -205,63 +205,32 @@
           {%- endfor -%}
         {%- endfor -%}
 
-- platform: darksky
-  api_key: !secret dark_sky_api_key
-  scan_interval: "00:05:00"
-  monitored_conditions:
-    - temperature
-    - precip_probability
-    - precip_type
-    - humidity
-    - cloud_cover
-    - nearest_storm_distance
-    - precip_intensity
-    - wind_speed
-
-- platform: systemmonitor
-  resources:
-    - type: processor_use
-    - type: disk_use_percent
-      arg: /home
-    - type: memory_use_percent
-    - type: ipv4_address
-      arg: eth0
-    - type: network_in
-      arg: eth0
-    - type: network_out
-      arg: eth0
-    - type: last_boot
-
-- platform: steam_online
-  api_key: !secret steam_api
-  accounts:
-    - !secret steam_account
-    - !secret steam_account_2
-
-- platform: waze_travel_time
-  origin: !secret travel_origin
-  destination: !secret travel_destination
-  region: "NA"
-  name: Work Commute
-
-- platform: season
-  type: astronomical
+#- platform: season
+#  type: astronomical
 
 - platform: time_date
   display_options:
     - "time"
 
 - platform: mqtt_room
-  device_id: "iBeacon:c1743f70-b82c-444f-8410-7d6af9624c8b-100-1"
+  device_id: "iBeacon:d66d9c0d-3217-4f00-8a4f-d0487e5da7b7-100-1"
+#  device_id: "iBeacon:87429662-3b1c-4f44-9caa-74b4b2c08a6e-100-1"
   name: "Sean Room Location"
-  state_topic: "espresense/devices/iBeacon:c1743f70-b82c-444f-8410-7d6af9624c8b-100-1"
+  state_topic: "espresense/devices/iBeacon:d66d9c0d-3217-4f00-8a4f-d0487e5da7b7-100-1"
   timeout: 5
   away_timeout: 120
 
 - platform: mqtt_room
-  device_id: "iBeacon:be0ffc1d-2bc3-4c21-9d0c-c2148b54ca06-100-1"
+  device_id: "iBeacon:7153a57a-6fbd-4207-b0b1-2d871944de58-100-1"
   name: "Emily Room Location"
-  state_topic: "espresense/devices/iBeacon:be0ffc1d-2bc3-4c21-9d0c-c2148b54ca06-100-1"
+  state_topic: "espresense/devices/iBeacon:7153a57a-6fbd-4207-b0b1-2d871944de58-100-1"
+  timeout: 5
+  away_timeout: 120
+
+- platform: mqtt_room
+  device_id: "iBeacon:4c77e15d-48b1-46bc-9972-8a54a70f8eec-100-1"
+  name: "Joyce Room Location"
+  state_topic: "espresense/devices/iBeacon:4c77e15d-48b1-46bc-9972-8a54a70f8eec-100-1"
   timeout: 5
   away_timeout: 120
 
@@ -270,3 +239,13 @@
 - platform: tautulli
   api_key: !secret tautulli_api
   host: 192.168.1.79
+
+
+- platform: template
+  sensors:
+    downstairs_hvac_state:
+      value_template: "{{states.climate.downstairs.attributes.hvac_action}}"
+- platform: template
+  sensors:
+    upstairs_hvac_state:
+      value_template: "{{states.climate.upstairs.attributes.hvac_action}}"

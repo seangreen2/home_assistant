@@ -8,12 +8,6 @@
   condition:
     condition: and
     conditions:
-      - condition: state
-        entity_id: group.family
-        state: "home"
-      - condition: time
-        after: "16:00:00"
-        before: "22:00:00"
       - condition: template
         value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
       - condition: template
@@ -26,6 +20,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
     - service: light.turn_on
       data_template:
@@ -37,6 +32,7 @@
     - service: light.turn_on
       data_template:
         entity_id: light.living_room
+        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
         brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
 
 # Arm cameras when Away
@@ -157,7 +153,7 @@
 
 # Update Camera thumbnails every hour during the day
 - alias: Update Camera Thumbnails
-  initial_state: off
+  initial_state: on
   trigger:
     platform: time_pattern
     hours: '/1'
@@ -166,27 +162,9 @@
       after: sunrise
       before: sunset
     - condition: state
-      entity_id: binary_sensor.blink_back_door_motion_detected
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.blink_front_door_motion_detected
-      state: 'off'
-    - condition: state
       entity_id: binary_sensor.blink_inside_motion_detected
       state: 'off'
   action:
-    - service: blink.trigger_camera
-      data: {}
-      target:
-        entity_id: camera.blink_back_door
-    - delay:
-        seconds: '10'
-    - service: blink.trigger_camera
-      data: {}
-      target:
-        entity_id: camera.blink_front_door
-    - delay:
-        seconds: '10'
     - service: blink.trigger_camera
       data: {}
       target:
@@ -219,6 +197,8 @@
     platform: state
     entity_id: group.family
     to: "not_home"
+    for:
+      minutes: 60
   action:
     - service: climate.set_preset_mode
       data:
@@ -252,6 +232,8 @@
           {% else %}
             heat_cool
           {% endif %}
+    - delay:
+        seconds: 30
     - service: climate.set_preset_mode
       data:
         entity_id: climate.upstairs
@@ -272,9 +254,9 @@
 - alias: "Nest Normal Mode Google Tracker"
   initial_state: on
   trigger:
-    platform: numeric_state
-    entity_id: proximity.home
-    below: 5
+    - platform: numeric_state
+      entity_id: proximity.home
+      below: 7
   condition:
     condition: and
     conditions:
@@ -299,6 +281,8 @@
           {% else %}
             heat_cool
           {% endif %}
+    - delay:
+        seconds: 30
     - service: climate.set_preset_mode
       data:
         entity_id: climate.upstairs

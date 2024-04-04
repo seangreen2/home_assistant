@@ -10,6 +10,161 @@
       name: slate
       mode: dark
 
+- alias: Low battery level detection & notification for all battery sensors
+  use_blueprint:
+    path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
+    input:
+      exclude:
+        entity_id:
+          - sensor.emily_pixel_battery_level
+          - sensor.sean_pixel_battery_level
+          - sensor.joyce_phone_battery_level
+          - binary_sensor.blink_inside_battery
+      actions:
+        - service: notify.mobile_app_sean_pixel
+          metadata: {}
+          data:
+            title: Low Battery Warning
+            message: "{{sensors}} have low batteries! Consider changing them soon"
+
+# Reload Google Nest Integration for better reliability
+- alias: 'Reload Upstairs Nest'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: climate.upstairs
+      to: 'unavailable'
+      for:
+        seconds: 10
+  action:
+    - service: homeassistant.reload_config_entry
+      target:
+        device_id: 41cf689fe0938c4721204e1c10eb5ba8
+
+# Reload TP Link Cabinet Integration for better reliability
+- alias: 'Reload Cabinet Lights'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: light.cabinet_lights
+      to: 'unavailable'
+      for:
+        seconds: 30
+  action:
+    - service: homeassistant.reload_config_entry
+      target:
+        device_id: f9fa94da90dd552cf02b9376899b49d3
+
+# Reload TP Link Cabinet Integration for better reliability
+- alias: 'Reload Cabinet Lights Check Every Minute'
+  initial_state: on
+  trigger:
+    - platform: time_pattern
+      minutes: "/3"
+  condition: 
+    - condition: state
+      entity_id: light.cabinet_lights
+      state: 'unavailable'
+  action:
+    - service: homeassistant.reload_config_entry
+      target:
+        device_id: f9fa94da90dd552cf02b9376899b49d3
+
+# Reload TP Link Cabinet Integration for better reliability
+- alias: 'Toggle Cabinet Lights Switch'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: light.cabinet_lights
+      to: 'unavailable'
+      for:
+        minutes: 5
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.cabinet_light_switch
+    - delay:
+        seconds: 5
+    - service: switch.turn_on
+      target:
+        entity_id: switch.cabinet_light_switch
+
+# Bedtime Sean
+- alias: 'Sean Bedtime'
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: sensor.sean_pixel_battery_state
+    to: 'charging'
+  action:
+    - service: script.bedtime
+
+# Morning Sean
+- alias: 'Sean Morning'
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: sensor.sean_pixel_battery_state
+    to: 'discharging'
+  action:
+    - service: script.morning
+
+# Bedtime Emily
+- alias: 'Emily Bedtime'
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: sensor.emily_pixel_battery_state
+    to: 'charging'
+  action:
+    - service: script.bedtime_emily
+
+# Morning Emily
+- alias: 'Emily Morning'
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: sensor.emily_pixel_battery_state
+    to: 'discharging'
+  action:
+    - service: script.morning_emily
+
+# Bedtime Joyce
+- alias: 'Joyce Bedtime'
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: sensor.joyce_phone_battery_state
+    to: 'charging'
+  action:
+    - service: script.bedtime_joyce
+
+# Bedtime Joyce
+- alias: 'Joyce Bedtime Battery Full'
+  initial_state: on
+  trigger:
+    - platform: time_pattern
+      minutes: "/10"
+  condition: 
+    - condition: state
+      entity_id: sensor.joyce_phone_battery_state
+      state: 'full'
+    - condition: time
+      after: "22:00:00"
+      before: "03:00:00"
+  action:
+    - service: script.bedtime_joyce
+
+# Morning Joyce
+- alias: 'Joyce Morning'
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: sensor.joyce_phone_battery_state
+    to: 'discharging'
+  action:
+    - service: script.morning_joyce
+
 # Check  to see if zigbee sensors are offline
 - alias: Zigbee Sensors Offline
   initial_state: on
@@ -23,8 +178,100 @@
             title: "Zigbee Sensors Offline"
             message: "The following sensors are offline: {{sensors}}"
 
-- alias: Recast Dashboard
+# Kitchen Water Leak Sensor
+- alias: 'Water Leak - Kitchen'
   initial_state: on
+  trigger:
+    platform: state
+    entity_id: binary_sensor.kitchen_leak_sensor_moisture
+    to: "on"
+    for:
+      seconds: 5
+  action:
+    - service: notify.notify
+      data:
+        message: "There is a leak under the Kitchen sink!"
+        title: "Leak Alert"    
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.whole_house
+        volume_level: .99
+    - service: tts.google_translate_say
+      data:
+        entity_id: media_player.whole_house
+        message: "Warning! There is a leak under the kitchen sink!"
+    - delay: "00:00:05"
+    - service: tts.google_translate_say
+      data:
+        entity_id: media_player.whole_house
+        message: "Warning! There is a leak under the kitchen sink!"
+
+# Bedroom Water Leak Sensor
+- alias: 'Water Leak - Bedroom'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_leak_sensor_moisture
+      to: "on"
+      for:
+        seconds: 5
+    - platform: state
+      entity_id: binary_sensor.bedroom_leak_sensor_2_moisture
+      to: "on"
+      for:
+        seconds: 5
+  action:
+    - service: notify.notify
+      data:
+        message: "There is a leak under the Bedroom sink!"
+        title: "Leak Alert"    
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.whole_house
+        volume_level: .99
+    - service: tts.google_translate_say
+      data:
+        entity_id: media_player.whole_house
+        message: "Warning! There is a leak under the bedroom sink!"
+    - delay: "00:00:05"
+    - service: tts.google_translate_say
+      data:
+        entity_id: media_player.whole_house
+        message: "Warning! There is a leak under the bedroom sink!"
+
+# Guest Bathroom Water Leak Sensor
+- alias: 'Water Leak - Guest Bathroom'
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: binary_sensor.guest_leak_sensor_moisture
+    to: "on"
+    for:
+      seconds: 5
+  action:
+    - service: notify.notify
+      data:
+        message: "There is a leak under the Guest Bathroom sink!"
+        title: "Leak Alert"    
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.whole_house
+        volume_level: .99
+    - service: tts.google_translate_say
+      data:
+        entity_id: media_player.whole_house
+        message: "Warning! There is a leak under the guest bathroom sink!"
+    - delay: "00:00:05"
+    - service: tts.google_translate_say
+      data:
+        entity_id: media_player.whole_house
+        message: "Warning! There is a leak under the guest bathroom sink!"
+
+
+
+
+- alias: Recast Dashboard
+  initial_state: off
   trigger:
     - platform: time_pattern
       minutes: "/1"
@@ -61,7 +308,7 @@
     - service: script.cast_ha_nesthub
 
 - alias: Turn off Dashboard Cast
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: state
       entity_id: media_player.plex_living_room_tv
@@ -105,51 +352,84 @@
     - service: switch.turn_on
       entity_id: switch.air_freshener_switch
     - delay:
-        minutes: "30"
+        minutes: "20"
     - service: switch.turn_off
       entity_id: switch.air_freshener_switch
 
-- alias: Restart Litter Robot
-  description: If litter robot is in error for at least 30 minutes, the switch will toggle power to reset robot
+- alias: Restart Litter Robot Cat Interrupted
+  description: If litter robot is in error for at least 5 minutes, the switch will toggle power to reset robot
   trigger:
     - platform: state
       entity_id:
-        - vacuum.kitty_throne_litter_box
+        - sensor.kitty_throne_status_code
+      to: 'Cat Sensor Interrupted'
+      for:
+        minutes: 3
+  action:
+    - service: vacuum.stop
+      target:
+        entity_id: vacuum.kitty_throne_litter_box
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 10
+        milliseconds: 0
+    - service: vacuum.start
+      target:
+        entity_id: vacuum.kitty_throne_litter_box
+  mode: single
+
+- alias: Restart Litter Robot
+  description: If litter robot is in error for at least 5 minutes, the switch will toggle power to reset robot
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.kitty_throne_status_code
       from: "Ready"
       attribute: status
       for:
-        hours: 0
-        minutes: 30
-        seconds: 0
+        minutes: 5
   condition:
     - condition: not
       conditions:
         - condition: state
-          entity_id: vacuum.kitty_throne_litter_box
+          entity_id: sensor.kitty_throne_status_code
           attribute: status
-          state: "Cat Sensor Timing"
+          state: "Cat Sensor Timing" #cat sensor timing
         - condition: state
-          entity_id: vacuum.kitty_throne_litter_box
+          entity_id: sensor.kitty_throne_status_code
           attribute: status
-          state: "Drawer Full"
+          state: "Empty Cycle" #empty cycle
         - condition: state
-          entity_id: vacuum.kitty_throne_litter_box
+          entity_id: sensor.kitty_throne_status_code
           attribute: status
-          state: "Drawer Full At Startup"
+          state: "Drawer Full At Startup" #drawer full at startup
+        - condition: state
+          entity_id: sensor.kitty_throne_status_code
+          attribute: status
+          state: "Drawer Full 2 Cycles Left" #drawer full 2 cycles left
+        - condition: state
+          entity_id: sensor.kitty_throne_status_code
+          attribute: status
+          state: "Drawer Full One Cycle Left" #drawer full one cycle left
+        - condition: state
+          entity_id: sensor.kitty_throne_status_code
+          attribute: status
+          state: "Cat Detected" #cat detected
   action:
-    - service: switch.turn_off
+    - service: vacuum.stop
       data: {}
       target:
-        entity_id: switch.litter_robot
+        entity_id: vacuum.kitty_throne_litter_box
     - delay:
         hours: 0
         minutes: 0
-        seconds: 5
+        seconds: 10
         milliseconds: 0
-    - service: switch.turn_on
+    - service: vacuum.start
       data: {}
       target:
-        entity_id: switch.litter_robot
+        entity_id: vacuum.kitty_throne_litter_box
   mode: single
 
 # Turn on Vacuum three times a day to clean litter
@@ -157,7 +437,7 @@
   initial_state: on
   trigger:
     - platform: time
-      at: "06:30:00"
+      at: "06:00:00"
     - platform: time
       at: "12:00:00"
     - platform: time
@@ -182,6 +462,14 @@
         - mon
         - wed
         - fri
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: person.emily_green
+          state: 'home'
+        - condition: state
+          entity_id: person.sean_green
+          state: 'home'
   action:
     - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}"
     - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}"
@@ -189,6 +477,28 @@
     - wait_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}"
     - service: script.vac_clean_multiroom
 
+# Upstairs vac three times a week
+- alias: Vacuum Upstairs
+  initial_state: on
+  trigger:
+    - platform: time
+      at: "18:00:00"
+  condition:
+    - condition: time
+      weekday:
+        - mon
+        - wed
+        - fri
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: person.emily_green
+          state: 'home'
+        - condition: state
+          entity_id: person.sean_green
+          state: 'home'
+  action:
+    - service: script.vac_clean_upstairs
 
 # Garbage Day notifications
 - alias: Garbage Day
@@ -223,9 +533,9 @@
     - service: media_player.volume_set
       data:
         entity_id: media_player.nesthub
-        volume_level: .99
+        volume_level: 1
     - delay:
-        seconds: 1
+        seconds: 2
     - service: media_player.play_media
       data:
         entity_id: media_player.whole_house
@@ -234,7 +544,7 @@
     - service: media_player.volume_set
       data:
         entity_id: media_player.nesthub
-        volume_level: .6
+        volume_level: .7
 
 # Shitter Full notifications
 - alias: Shitter Full
@@ -248,7 +558,7 @@
       data:
         message: ""
         data:
-          image: "http://192.168.1.185:8123/local/images/shitter.png"
+          image: "http://192.168.1.185:8123/local/images/shitter.jpg"
         title: ""
 #    - service: notify.shield
 #      data:
@@ -289,3 +599,37 @@
       data:
         message: "Rosie is stuck. Please help her!"
         title: "Vacuum Alert"
+
+# Litter Robot offline for 30 minutes
+- alias: Litter Robot Offline
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: sensor.kitty_throne_status_code
+      to: "offline"
+      for:
+        minutes: 15
+  action:
+    - service: switch.turn_on
+      entity_id: switch.litter_robot
+    - service: notify.notify
+      data:
+        message: "The Cat Shitter is powered down. Turn it back on!"
+        title: "Cat Shitter Offline"
+        
+# Turn Off Litter Robot Pinch Detect
+- alias: Litter Robot Pinch Error
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: sensor.kitty_throne_status_code
+      to: 'Pinch Detect'
+      for:
+        seconds: 15
+  action:
+    - service: vacuum.stop
+      entity_id: vacuum.kitty_throne_litter_box
+    - delay:
+        seconds: 10
+    - service: vacuum.start
+      entity_id: vacuum.kitty_throne_litter_box

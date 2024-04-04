@@ -33,10 +33,10 @@
   action:
     - service: light.turn_on
       data_template:
-        entity_id: light.bedroom
+        entity_id: 
         brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
     - delay:
-        milliseconds: 250
+        milliseconds: 500
     - service: light.turn_on
       data_template:
         entity_id: light.bedroom
@@ -89,13 +89,15 @@
       value_template: "{{ not is_state('sensor.sean_room_location', 'bedroom') }}" # NOT condition
     - condition: template
       value_template: "{{ not is_state('sensor.emily_room_location', 'bedroom') }}" # NOT condition
+    - condition: template
+      value_template: "{{ not is_state('sensor.steam_76561198154412871', 'online') }}" # NOT condition
   action:
     - service: light.turn_off
       data:
         entity_id: light.bedroom
         transition: 2
     - delay:
-        milliseconds: 250
+        milliseconds: 500
     - service: light.turn_off
       data:
         entity_id: light.bedroom
@@ -130,7 +132,7 @@
   initial_state: on
   trigger:
     platform: time_pattern
-    minutes: '/5'
+    minutes: '/2'
   condition:
     - condition: state
       entity_id: group.closet_motion

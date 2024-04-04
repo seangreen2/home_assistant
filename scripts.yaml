@@ -20,13 +20,10 @@ bedtime:
           value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT conditio
     - service: automation.turn_off
       entity_id: automation.bedroom_auto_brightness
-    - service: automation.turn_off
-      entity_id: automation.living_room_auto_brightness
+#    - service: automation.turn_off
+#      entity_id: automation.living_room_auto_brightness
     - service: automation.turn_off
       entity_id: automation.office_auto_brightness
-    - service: switch.turn_off
-      data_template:
-        entity_id: switch.bias_lighting
     - service: media_player.volume_set
       data:
         entity_id: media_player.bedroom_speaker
@@ -42,7 +39,7 @@ bedtime:
         entity_id: input_select.sean_room_location
         option: Sleep
     - service: switch.turn_off
-      entity_id: switch.bias_lighting
+      entity_id: switch.air_freshener_switch
     - service: switch.turn_off
       entity_id: switch.office_fan
     - service: switch.turn_off
@@ -55,6 +52,14 @@ bedtime:
 
 morning:
   sequence:
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: group.sean
+          state: "home"
+        - condition: time
+          after: "05:00:00"
+          before: "10:00:00"
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.bedtime_sean
@@ -66,6 +71,8 @@ morning:
       entity_id: automation.living_room_auto_brightness
     - service: automation.turn_on
       entity_id: automation.office_auto_brightness
+    - service: switch.turn_on
+      entity_id: switch.bias_lights
     - condition: and
       conditions:
         - condition: state
@@ -105,8 +112,6 @@ bedtime_emily:
           value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
     - service: automation.turn_off
       entity_id: automation.bedroom_auto_brightness
-    - service: automation.turn_off
-      entity_id: automation.living_room_auto_brightness
     - service: media_player.volume_set
       data:
         entity_id: media_player.bedroom_speaker
@@ -133,6 +138,14 @@ bedtime_emily:
 
 morning_emily:
   sequence:
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: group.emily
+          state: "home"
+        - condition: time
+          after: "04:00:00"
+          before: "10:00:00"
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.bedtime_emily
@@ -144,6 +157,12 @@ morning_emily:
       data:
         entity_id: input_select.emily_room_location
         option: Home
+#    - delay:
+#        seconds: 60
+#    - service: androidtv.adb_command
+#      data:
+#        entity_id: media_player.nvidia_shield_pro
+#        command: "POWER"
     - condition: and
       conditions:
         - condition: state
@@ -154,8 +173,6 @@ morning_emily:
           state: "off"
     - service: automation.turn_off
       entity_id: automation.repeat_rain_audio
-    - service: automation.turn_on
-      entity_id: automation.office_auto_brightness
     - service: media_player.media_stop
       data:
         entity_id: media_player.bedroom_speaker
@@ -169,96 +186,293 @@ morning_emily:
     - service: automation.turn_on
       entity_id: automation.bedroom_auto_brightness
 
+bedtime_joyce:
+  sequence:
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: group.joyce
+          state: "home"
+        - condition: time
+          after: "20:00:00"
+          before: "07:00:00"
+    - service: automation.turn_off
+      entity_id: automation.living_room_auto_brightness
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.bedtime_joyce
 
+morning_joyce:
+  sequence:
+    - condition: and
+      conditions:
+        - condition: state
+          entity_id: group.joyce
+          state: "home"
+        - condition: time
+          after: "05:00:00"
+          before: "10:00:00"
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.bedtime_joyce
+    - service: automation.turn_on
+      entity_id: automation.living_room_auto_brightness
+    - service: automation.turn_on
+      entity_id: automation.living_room_auto_brightness_transition
+
+
+# office lights toggle button
+office_lights_toggle:
+  sequence:
+    - if:
+        - condition: state
+          entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
+          state: 'on'
+      then:
+        service: light.turn_off
+        data:
+          entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
+      else:
+        service: light.turn_on
+        data:
+          entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_office', 'brightness') | int }}"
+
+# bedroom lights toggle button
+bedroom_lights_toggle:
+  sequence:
+    - if:
+        - condition: state
+          entity_id: light.bedroom
+          state: 'on'
+      then:
+        service: light.turn_off
+        data:
+          entity_id: light.bedroom
+      else:
+        service: light.turn_on
+        data:
+          entity_id: light.bedroom
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
+
+# downstairs lights toggle button
+downstairs_lights_toggle:
+  sequence:
+    - if:
+        - condition: state
+          entity_id: light.living_room
+          state: 'on'
+      then:
+        service: light.turn_off
+        data:
+          entity_id: light.living_room
+      else:
+        service: light.turn_on
+        data:
+          entity_id: light.living_room
+          kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
+          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+
+# cabinet lights toggle button
+cabinet_lights_toggle:
+  sequence:
+    - if:
+        - condition: state
+          entity_id: light.cabinet_lights
+          attribute: brightness
+          state: 3
+      then:
+        service: light.turn_on
+        data_template:
+          entity_id: light.cabinet_lights
+          brightness_pct: 100
+          kelvin: 5400
+      else:
+        service: light.turn_on
+        data_template:
+          entity_id: light.cabinet_lights
+          brightness_pct: 1
+          kelvin: 5400
+
+# vac scripts
 vac_clean_livingroom:
   sequence:
-    service: vacuum.send_command
-    target:
-      entity_id: vacuum.roborock_vacuum_a08
-    data:
-      command: app_segment_clean
-      params:
-        - segments:
-            - 16
-          repeat: 3
+    - service: vacuum.send_command
+      target:
+        entity_id: vacuum.rosie
+      data:
+        command: app_segment_clean
+        params:
+          - segments:
+              - 18
+            repeat: 3
+    - delay: 01:07:00
+    - service: vacuum.send_command
+      target:
+        entity_id: vacuum.rosie
+      data:
+        command: app_start_collect_dust
+    - delay: 00:00:20
+    - service: vacuum.send_command
+      target:
+        entity_id: vacuum.rosie
+      data:
+        command: app_stop_collect_dust
+
 
 vac_clean_kitchen:
   sequence:
     service: vacuum.send_command
     target:
-      entity_id: vacuum.roborock_vacuum_a08
+      entity_id: vacuum.rosie
     data:
       command: app_segment_clean
       params:
         - segments:
-            - 18
+            - 20
           repeat: 2
 
 vac_clean_foyer:
   sequence:
     service: vacuum.send_command
     target:
-      entity_id: vacuum.roborock_vacuum_a08
+      entity_id: vacuum.rosie
     data:
       command: app_segment_clean
       params:
         - segments:
-            - 19
+            - 17
           repeat: 2
 
 vac_clean_dining_room:
   sequence:
     service: vacuum.send_command
     target:
-      entity_id: vacuum.roborock_vacuum_a08
+      entity_id: vacuum.rosie
     data:
       command: app_segment_clean
       params:
         - segments:
-            - 20
+            - 19
           repeat: 2
 
 vac_clean_sunroom:
   sequence:
     service: vacuum.send_command
     target:
-      entity_id: vacuum.roborock_vacuum_a08
+      entity_id: vacuum.rosie
     data:
       command: app_segment_clean
       params:
         - segments:
-            - 21
+            - 16
           repeat: 2
 
 vac_clean_multiroom:
   sequence:
-    service: vacuum.send_command
-    target:
-      entity_id: vacuum.roborock_vacuum_a08
-    data:
-      command: app_segment_clean
-      params:
-        - segments:
-            - 18
-            - 19
-            - 20
-          repeat: 2
+    - service: vacuum.send_command
+      target:
+        entity_id: vacuum.rosie
+      data:
+        command: app_segment_clean
+        params:
+          - segments:
+              - 19
+              - 20
+              - 17
+            repeat: 2
+    - delay: 00:50:00
+    - service: vacuum.send_command
+      target:
+        entity_id: vacuum.rosie
+      data:
+        command: app_start_collect_dust
+    - delay: 00:00:15
+    - service: vacuum.send_command
+      target:
+        entity_id: vacuum.rosie
+      data:
+        command: app_stop_collect_dust
 
 vac_clean_mop:
   sequence:
+    - service: vacuum.send_command
+      target:
+        entity_id: vacuum.rosie
+      data:
+        command: app_segment_clean
+        params:
+          - segments:
+              - 16
+              - 19
+              - 20
+            repeat: 3
+
+vac_test_bin:
+  sequence:
+    - service: vacuum.send_command
+      target:
+        entity_id: vacuum.rosie
+      data:
+        command: app_start_collect_dust
+    - delay: 00:00:15
+    - service: vacuum.send_command
+      target:
+        entity_id: vacuum.rosie
+      data:
+        command: app_stop_collect_dust
+
+vac_clean_office:
+  sequence:
     service: vacuum.send_command
     target:
-      entity_id: vacuum.roborock_vacuum_a08
+      entity_id: vacuum.jeeves
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 17
+          repeat: 2
+
+vac_clean_hallway:
+  sequence:
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.jeeves
     data:
       command: app_segment_clean
       params:
         - segments:
             - 18
-            - 21
-            - 20
           repeat: 2
 
-#show HA on Nest Hub
+vac_clean_bedroom:
+  sequence:
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.jeeves
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 16
+          repeat: 2
+
+vac_clean_upstairs:
+  sequence:
+    service: vacuum.send_command
+    target:
+      entity_id: vacuum.jeeves
+    data:
+      command: app_segment_clean
+      params:
+        - segments:
+            - 17
+            - 16
+            - 18
+          repeat: 1
+
+# show HA on Nest Hub
 cast_ha_nesthub:
   sequence:
     - choose:
@@ -279,9 +493,9 @@ cast_ha_nesthub:
                 url: http://192.168.1.185:8123/dashboard-hub/0?kiosk
                 force: true
             - delay:
-                seconds: 15
+                seconds: 5
             - service: media_player.volume_set
               data:
-                volume_level: 0.6
+                volume_level: 0.7
               target:
                   entity_id: media_player.nesthub

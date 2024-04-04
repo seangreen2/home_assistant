@@ -14,9 +14,6 @@
 
 #  - platform: huesensor
 
-- platform: wyzesense
-  device: auto
-
 - platform: template
   sensors:
     office_unoccupied:
@@ -24,8 +21,7 @@
       delay_off:
         minutes: 5
       value_template: >-
-        {{ is_state('binary_sensor.wyzesense_77a67a6c', 'off')
-          and is_state('binary_sensor.office_motion', 'off')
+        {{ is_state('binary_sensor.office_motion', 'off')
           and not is_state('sensor.sean_room_location', 'office')
           and not is_state('sensor.emily_room_location', 'office')
           and is_state('input_boolean.office_occupied', 'off')
@@ -38,15 +34,15 @@
       delay_off:
         minutes: 5
       value_template: >-
-        {{ is_state('binary_sensor.wyzesense_77a68665', 'off')
-          and is_state('binary_sensor.wyzesense_77a68ce7', 'off')
+        {{ is_state('binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_2', 'off')
+          and is_state('binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone', 'off')
           and not is_state('sensor.sean_room_location', 'living_room')
           and not is_state('sensor.emily_room_location', 'living_room')
+          and not is_state('sensor.joyce_room_location', 'living_room')
           and not is_state('media_player.plex_living_room_tv', 'paused')
           and not is_state('media_player.plex_living_room_tv', 'playing')
           and not is_state('media_player.sony_xbr_65x900h', 'playing')
-          and is_state('input_boolean.living_room_occupied', 'off')
-          and is_state('binary_sensor.wyzesense_779b29d3', 'off') }}
+          and is_state('input_boolean.living_room_occupied', 'off') }}
 
 - platform: template
   sensors:
@@ -64,5 +60,3 @@
           and is_state('input_boolean.bedtime_emily', 'off')
           and is_state('input_boolean.bedroom_occupied', 'off')
           and is_state('input_boolean.bedtime_sean', 'off') }}
-
-#             and is_state('binary_sensor.wyzesense_778c2557', 'off')

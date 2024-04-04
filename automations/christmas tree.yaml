@@ -5,6 +5,25 @@
     - platform: state
       entity_id: group.living_room_motion
       to: 'on'
+    - platform: state
+      entity_id: binary_sensor.wyzesense_77a68ce7
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.wyzesense_77a68665
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.wyzesense_779b29d3
+      to: 'on'
+    - platform: state
+      entity_id: sensor.sean_room_location
+      to: 'living_room'
+      for:
+        seconds: 7
+    - platform: state
+      entity_id: sensor.emily_room_location
+      to: 'living_room'
+      for:
+        seconds: 7
   condition:
     - condition: state
       entity_id: group.family
@@ -23,4 +42,4 @@
   action:
     - service: switch.turn_on
       data_template:
-        entity_id: switch.bias_lighting
+        entity_id: switch.air_freshener_switch

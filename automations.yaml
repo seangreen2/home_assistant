@@ -1,39 +1,38 @@
-- id: '3625155246718'
-  alias: Christmas Tree On
-  initial_state: true
-  trigger:
-  - platform: state
-    entity_id: group.living_room_motion
-    to: 'on'
-  condition:
-  - condition: state
-    entity_id: group.family
-    state: home
-  - condition: state
-    entity_id: input_boolean.bedtime_emily
-    state: 'off'
-  action:
-  - service: switch.turn_on
-    data_template:
-      entity_id: switch.bias_lighting
-- id: '1677553587721'
-  alias: Zigbee/ZWave battery device has gone offline
-  description: Alerts when a zigbee device has gone offline
-  use_blueprint:
-    path: Tahutipai/zigbee_zwave_notify_when_battery_devices_have_fallen_offline.yaml
-    input:
-      actions:
-      - service: notify.mobile_app_sean_pixel
-        data:
-          message: 'The following Zigbee sensors are offline: "{{sensors}}"'
-- id: '1677678793412'
-  alias: Zigbee Sensors Offline
+- id: '1711548521595'
+  alias: Frontdoor Snapshot Notification
   description: ''
   use_blueprint:
-    path: Tahutipai/zigbee_zwave_notify_when_battery_devices_have_fallen_offline.yaml
+    path: vorion/send-camera-snapshot-notification-on-motion.yaml
+    input:
+      camera: camera.door_bell
+      notify_device: b457d6c1bbed3d192a7deb91c32ab191
+      delay: 3
+      motion_sensor: binary_sensor.door_bell_motion
+      notification_title: Front Door Motion detected!
+- id: '1711548684986'
+  alias: Low battery level detection & notification for all battery sensors
+  description: ''
+  use_blueprint:
+    path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
     input:
       actions:
-      - service: notify.mobile_app_sean_pixel
+      - service: notify.notify
+        metadata: {}
         data:
-          title: Zigbee Sensors Offline
-          message: 'The following sensors are offline: {{sensors}}'
+          message: '{{sensors}}'
+      exclude:
+        entity_id:
+        - sensor.emily_pixel_battery_level
+        - sensor.joyce_phone_battery_level
+        - sensor.sean_pixel_battery_level
+- id: '1711548743791'
+  alias: Back Door Snapshot Notification
+  description: ''
+  use_blueprint:
+    path: vorion/send-camera-snapshot-notification-on-motion.yaml
+    input:
+      motion_sensor: binary_sensor.blink_back_door_motion_detected
+      camera: camera.blink_back_door
+      notify_device: b457d6c1bbed3d192a7deb91c32ab191
+      notification_title: Back Door Motion detected!
+      delay: 3

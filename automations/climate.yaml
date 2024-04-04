@@ -1,3 +1,262 @@
+# Adjust the downstairs HVAC cooler depending when present
+- alias: Adjust Downstairs HVAC down
+  initial_state: on
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
+      for:
+        minutes: 7
+    - platform: template
+      value_template: "{{ states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
+      for:
+        minutes: 7
+    - platform: template
+      value_template: "{{ states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
+      for:
+        minutes: 7
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: "home"
+      - condition: state
+        entity_id: input_boolean.bedtime_emily
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.bedtime_sean
+        state: 'off'
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: climate.downstairs
+            attribute: temperature
+            state: 75
+          - condition: state
+            entity_id: climate.downstairs
+            attribute: 'target_temp_high'
+            state: 75
+  action:
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.downstairs
+        temperature: >
+          {% if states('climate.downstairs') == 'cool' %}
+            {{ state_attr('climate.downstairs' , 'temperature')|int - 1 }}
+          {% elif states('climate.downstairs') == 'heat_cool' %}
+            {{ state_attr('climate.downstairs' , 'target_temp_high')|int - 1 }}
+          {% endif %}
+
+# Adjust the downstairs HVAC warmer depending when present
+- alias: Adjust Downstairs HVAC up
+  initial_state: on
+  trigger:
+    - platform: template
+      value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
+      for:
+        minutes: 7
+    - platform: template
+      value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
+      for:
+        minutes: 7
+    - platform: template
+      value_template: "{{ not states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
+      for:
+        minutes: 7
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: "home"
+      - condition: state
+        entity_id: input_boolean.bedtime_emily
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.bedtime_sean
+        state: 'off'
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.shield', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.shield', 'paused') }}" # NOT condition
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: climate.downstairs
+            attribute: temperature
+            state: 74
+          - condition: state
+            entity_id: climate.downstairs
+            attribute: target_temp_high
+            state: 74
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
+          - condition: template
+            value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
+          - condition: template
+            value_template: "{{ not states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
+  action:
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.downstairs
+        temperature: >
+          {% if states('climate.downstairs') == 'cool' %}
+            {{ state_attr('climate.downstairs' , 'temperature')|int + 1 }}
+          {% elif states('climate.downstairs') == 'heat_cool' %}
+            {{ state_attr('climate.downstairs' , 'target_temp_high')|int + 1 }}
+          {% endif %}
+
+# Adjust the upstairs HVAC cooler depending when present
+- alias: Adjust Upstairs HVAC down
+  initial_state: on
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.sean_room_location') in ['office','bedroom','bedroom2','guest'] }}"
+      for:
+        minutes: 5
+    - platform: template
+      value_template: "{{ states('sensor.emily_room_location') in ['office','bedroom','bedroom2','guest'] }}"
+      for:
+        minutes: 5
+    - platform: template
+      value_template: "{{ states('sensor.joyce_room_location') in ['office','bedroom','bedroom2','guest'] }}"
+      for:
+        minutes: 5
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: "home"
+      - condition: state
+        entity_id: input_boolean.bedtime_emily
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.bedtime_sean
+        state: 'off'
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: climate.upstairs
+            attribute: temperature
+            state: 74
+          - condition: state
+            entity_id: climate.upstairs
+            attribute: target_temp_high
+            state: 74
+  action:
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.upstairs
+        temperature: >
+          {% if states('climate.upstairs') == 'cool' %}
+            {{ state_attr('climate.upstairs' , 'temperature')|int - 1 }}
+          {% elif states('climate.upstairs') == 'heat_cool' %}
+            {{ state_attr('climate.upstairs' , 'target_temp_high')|int - 1 }}
+          {% endif %}
+
+# Adjust the upstairs HVAC warmer depending when present
+- alias: Adjust Upstairs HVAC up
+  initial_state: on
+  trigger:
+    - platform: template
+      value_template: "{{ not states('sensor.sean_room_location') in ['office','bedroom','bedroom2','guest'] }}"
+      for:
+        minutes: 5
+    - platform: template
+      value_template: "{{ not states('sensor.emily_room_location') in ['office','bedroom','bedroom2','guest'] }}"
+      for:
+        minutes: 5
+    - platform: template
+      value_template: "{{ not states('sensor.joyce_room_location') in ['office','bedroom','bedroom2','guest'] }}"
+      for:
+        minutes: 5
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family
+        state: "home"
+      - condition: state
+        entity_id: input_boolean.bedtime_emily
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.bedtime_sean
+        state: 'off'
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'playing') }}" # NOT condition
+      - condition: template
+        value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'paused') }}" # NOT condition
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: climate.upstairs
+            attribute: temperature
+            state: 73
+          - condition: state
+            entity_id: climate.upstairs
+            attribute: target_temp_high
+            state: 73
+          - condition: state
+            entity_id: climate.upstairs
+            attribute: temperature
+            state: 72
+          - condition: state
+            entity_id: climate.upstairs
+            attribute: target_temp_high
+            state: 72
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ not states('sensor.sean_room_location') in ['office','bedroom','bedroom2','guest'] }}"
+          - condition: template
+            value_template: "{{ not states('sensor.emily_room_location') in ['office','bedroom','bedroom2','guest'] }}"
+          - condition: template
+            value_template: "{{ not states('sensor.joyce_room_location') in ['office','bedroom','bedroom2','guest'] }}"
+  action:
+    - service: climate.set_temperature
+      data_template:
+        entity_id: climate.upstairs
+        temperature: >
+          {% if states('climate.upstairs') == 'cool' %}
+            {{ state_attr('climate.upstairs' , 'temperature')|int + 1 }}
+          {% elif states('climate.upstairs') == 'heat_cool' %}
+            {{ state_attr('climate.upstairs' , 'target_temp_high')|int + 1 }}
+          {% endif %}
+
+# Circulate air when home
+- alias: Circulate Downstairs HVAC Fan
+  initial_state: off
+  trigger:
+    - platform: time_pattern
+      hours: "/1"
+  condition:
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: person.sean_green
+            state: "home"
+          - condition: state
+            entity_id: person.emily_green
+            state: "home"
+  action:
+    - service: climate.set_fan_mode
+      data:  
+        entity_id: climate.downstairs
+        fan_mode: 'on'
+    - delay:
+        minutes: 15
+    - service: climate.set_fan_mode
+      data:  
+        entity_id: climate.downstairs
+        fan_mode: 'off'
+
 # When porch door is open turn off nest
 - alias: Door open turn off nest
   initial_state: on
@@ -43,7 +302,7 @@
     entity_id: input_boolean.living_room_occupied
     to: "on"
     for:
-      minutes: "5"
+      minutes: "4"
   condition:
     condition: and
     conditions:
@@ -52,10 +311,10 @@
         state: "home"
       - condition: time
         after: "07:00:00"
-        before: "22:00:00"
+        before: "23:00:00"
       - condition: numeric_state
         entity_id: sensor.downstairs_temperature
-        above: "72.5"
+        above: "72"
       - condition: state
         entity_id: group.family
         state: "home"
@@ -63,41 +322,8 @@
     - service: switch.turn_on
       entity_id: switch.living_room_fan
 
-# Turn off living room fan under certain conditions
-- alias: Turn off Living Room Fan
-  initial_state: on
-  trigger:
-    platform: time_pattern
-    minutes: "/10"
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: input_boolean.sean_living_room_presence
-        state: "off"
-      - condition: state
-        entity_id: input_boolean.emily_living_room_presence
-        state: "off"
-      - condition: state
-        entity_id: input_boolean.living_room_occupied
-        state: "off"
-      - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
-      - condition: template
-        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
-      - condition: template
-        value_template: "{{ not is_state('media_player.shield', 'playing') }}" # NOT condition
-      - condition: template
-        value_template: "{{ not is_state('media_player.shield', 'paused') }}" # NOT condition
-      - condition: numeric_state
-        entity_id: sensor.downstairs_temperature
-        below: "72"
-  action:
-    - service: switch.turn_off
-      entity_id: switch.living_room_fan
-
 # Turn off living room fan when no one is in room
-- alias: Turn off Living Room Fan no presence
+- alias: Turn off Living Room Fan
   initial_state: on
   trigger:
     platform: state
@@ -124,8 +350,11 @@
 - alias: Turn on Bedroom Fan
   initial_state: on
   trigger:
-    platform: time_pattern
-    minutes: "/3"
+    platform: state
+    entity_id: input_boolean.bedroom_occupied
+    to: "on"
+    for:
+      minutes: "4"
   condition:
     condition: and
     conditions:
@@ -134,10 +363,7 @@
         state: "home"
       - condition: numeric_state
         entity_id: sensor.bedroom_temperature_f
-        above: "73.5"
-      - condition: state
-        entity_id: input_boolean.bedroom_occupied
-        state: "on"
+        above: "71"
   action:
     - service: switch.turn_on
       entity_id: switch.bedroom_fan
@@ -146,29 +372,14 @@
 - alias: Turn off Bedroom Fan
   initial_state: on
   trigger:
-    platform: time_pattern
-    minutes: "/10"
+    platform: state
+    entity_id: input_boolean.bedroom_occupied
+    to: "off"
+    for:
+      minutes: "2"
   condition:
     condition: and
     conditions:
-      - condition: state
-        entity_id: input_boolean.sean_bedroom_presence
-        state: "off"
-      - condition: state
-        entity_id: input_boolean.emily_bedroom_presence
-        state: "off"
-      - condition: state
-        entity_id: input_boolean.bedroom_occupied
-        state: "off"
-      - condition: time
-        after: "09:00:00"
-        before: "21:00:00"
-      - condition: state
-        entity_id: group.bedroom_motion
-        state: "off"
-      - condition: numeric_state
-        entity_id: sensor.bedroom_temperature_f
-        below: "73.5"
       - condition: template
         value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
       - condition: template

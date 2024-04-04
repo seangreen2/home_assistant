@@ -42,3 +42,19 @@
     name: Bedroom Occupied
     initial: false
 
+  bedtime_joyce:
+    name: Joyce Bedtime
+    initial: false
+
+  joyce_office_presence:
+    name: Joyce Office Presence
+    initial: false
+
+  joyce_living_room_presence:
+    name: Joyce Living Room Presence
+    initial: false
+
+  joyce_bedroom_presence:
+    name: Joyce Bedroom Presence
+    initial: false
+

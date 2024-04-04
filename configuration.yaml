@@ -1,14 +1,14 @@
 homeassistant:
+  external_url: !secret external_url
   auth_providers:
-    - type: homeassistant
     - type: trusted_networks
       trusted_networks:
-        - 192.168.1.0/24
-        - 127.0.0.1
-        - 192.168.1.80
+        - 192.168.1.80/32
       trusted_users:
-        192.168.1.80: !secret ha_user_id #Nest Hub Display
+        192.168.1.80/32: !secret ha_user_id #Nest Hub Display
       allow_bypass_login: true
+    - type: homeassistant
+
   name: Home
   latitude: !secret latitude
   longitude: !secret longitude
@@ -16,7 +16,17 @@ homeassistant:
   unit_system: imperial
   time_zone: America/New_York
   customize: !include customize.yaml
+  currency: USD
   country: US
+  internal_url: !secret internal_url
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.1.80/32
+    - 172.19.0.0/24
+    - 192.168.1.0/24
+    - 192.168.1.185
 
 my:
 
@@ -30,20 +40,26 @@ panel_custom:
     require_admin: true
     config:
       ingress: core_configurator
-
-map:
-  dark_mode: true
+  - name: mqtt
+    sidebar_title: MQTT
+    sidebar_icon: mdi:wifi
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: "config/integrations/integration/mqtt"
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator
 
 energy:
 
-mqtt:
-  discovery: true
+#mqtt:
+#  discovery: true
 
 zone:
   - name: home
     latitude: !secret latitude
     longitude: !secret longitude
-    radius: 175
+    radius: 225
 
 device_tracker:
 
@@ -54,7 +70,7 @@ proximity:
     devices:
       - device_tracker.sean_pixel
       - device_tracker.emily_pixel
-    tolerance: 100
+    tolerance: 50
     unit_of_measurement: mi
 
 cloud:
@@ -62,6 +78,8 @@ cloud:
 mobile_app:
 
 circadian_lighting:
+  max_colortemp: 3000
+  interval: 30
 
 hacs:
   token: !secret hacs_token
@@ -75,8 +93,6 @@ frontend:
   themes: !include_dir_merge_named themes
 
 config:
-http:
-  base_url: !secret base_url
 
 #updater:
 
@@ -98,7 +114,7 @@ history:
       - group.emily
       - light.outside
       - light.living_room
-      - light.office
+      - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
       - light.bedroom
       - climate.downstairs
       - climate.upstairs
@@ -106,7 +122,6 @@ history:
       - sensor.upstairs_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
-      - sensor.dark_sky_temperature
       - switch.air_freshener
       - switch.bedroom_fan
       - switch.closet_light
@@ -121,10 +136,22 @@ history:
       - sensor.sean_room_location
       - sensor.patio_door_temperature
       - switch.air_freshener_switch
+      - weather.pirateweather
+      - sensor.energy_production_today
+      - switch.washer
+      - sensor.washer_current_consumption
+      - sensor.washer_today_s_consumption
+      - sensor.washer_total_consumption
+      - sensor.kitty_throne_status_code
+      - switch.cabinet_light_switch
+      - vacuum.rosie
+      - vacuum.jeeves
+      - sensor.joyce_room_location
+      - binary_sensor.dryer_vibration_sensor_vibration
 
 recorder:
-  purge_keep_days: 90
-  auto_purge: true
+  #purge_keep_days: 365
+  auto_purge: false
   include:
     domains:
 #      - switch
@@ -133,7 +160,7 @@ recorder:
       - group.emily
       - light.outside
       - light.living_room
-      - light.office
+      - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
       - light.bedroom
       - climate.downstairs
       - climate.upstairs
@@ -141,7 +168,6 @@ recorder:
       - sensor.upstairs_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
-      - sensor.dark_sky_temperature
       - switch.air_freshener
       - switch.bedroom_fan
       - switch.closet_light
@@ -156,14 +182,22 @@ recorder:
       - sensor.sean_room_location
       - sensor.patio_door_temperature
       - switch.air_freshener_switch
+      - weather.pirateweather
+      - sensor.energy_production_today
+      - switch.washer
+      - sensor.washer_current_consumption
+      - sensor.washer_today_s_consumption
+      - sensor.washer_total_consumption
+      - sensor.kitty_throne_status_code
+      - switch.cabinet_light_switch
+      - vacuum.rosie
+      - vacuum.jeeves
+      - sensor.joyce_room_location
+      - binary_sensor.dryer_vibration_sensor_vibration
+
 
 # View all events in a logbook
 logbook:
-
-weather:
-  - platform: darksky
-    api_key: !secret dark_sky_api_key
-    mode: daily
 
 sun:
 
@@ -182,83 +216,42 @@ nest:
       - "eta"
 
 # Spotify
-spotify:
-  client_id: !secret spotify_client_id
-  client_secret: !secret spotify_client_secret
+#spotify:
+#  client_id: !secret spotify_client_id
+#  client_secret: !secret spotify_client_secret
 
 # Spotcast
 spotcast:
   sp_dc: !secret spotcast_sp_dc
   sp_key: !secret spotcast_sp_key
 
-# Hue
-light:
-  - platform: hue
-    host: !secret hue_ip
-  - platform: group
-    name: Bedroom Lights
-    entities:
-      - light.hue_color_lamp_1
-      - light.hue_color_lamp_2
-  - platform: group
-    name: Living Room Lights
-    entities:
-      - light.lr1
-      - light.lr2
-      - light.lr3
-      - light.lr4
-      - light.lr5
-      - light.lr6
-      - light.lr7
-      - light.cabinet_lights
-  - platform: group
-    name: Office Lights
-    entities:
-      - light.of1
-      - light.of2
-  - platform: group
-    name: Outside Lights
-    entities:
-      - light.outside_backdoor
-hue:
-  bridges:
-    - host: !secret hue_ip
-      allow_hue_groups: true
-
-# Xiaomi
-xiaomi_aqara:
-  discovery_retry: 10
-  gateways:
-    - key: !secret xiaomi_key
-
-
-camera:
-  - platform: xiaomi_cloud_map_extractor
-    host: !secret xiaomi_vacuum_host
-    token: !secret xiaomi_vacuum_token
-    username: !secret xiaomi_cloud_username
-    password: !secret xiaomi_cloud_password
-    draw: ['all']
-    attributes:
-      - calibration_points
-    colors:
-      color_map_outside: [0x29, 0x29, 0x29]
-      color_grey_wall: [0x22, 0x22, 0x22]
-      color_map_wall_v2: [0x22, 0x22, 0x22]
-    room_colors:
-      16: [0x29, 0x80, 0xb9] #blue living room
-      17: [0x29, 0x29, 0x29] #dark gray outside
-      18: [0x29, 0x80, 0xb9] #[0xb5, 0x8e, 0x31] #yellow kitchen
-      19: [0x29, 0x80, 0xb9] #[0xb8, 0x38, 0x29] #red foyer
-      20: [0x29, 0x80, 0xb9] #[0xb8, 0x38, 0x29] #red dining
-      21: [0x29, 0x80, 0xb9] #blue sunroom
-    map_transformation:
-      scale: 2
-      trim:
-        top: 20
-        bottom: 20
-        left: 10
-        right: 10
+#camera:
+#  - platform: xiaomi_cloud_map_extractor
+#    host: !secret xiaomi_vacuum_host
+#    token: !secret xiaomi_vacuum_token
+#    username: !secret xiaomi_cloud_username
+#    password: !secret xiaomi_cloud_password
+#    draw: ['all']
+#    attributes:
+#      - calibration_points
+#    colors:
+#      color_map_outside: [0x29, 0x29, 0x29]
+#      color_grey_wall: [0x22, 0x22, 0x22]
+#      color_map_wall_v2: [0x22, 0x22, 0x22]
+#    room_colors:
+#      16: [0x29, 0x80, 0xb9] #blue living room
+#      17: [0x29, 0x29, 0x29] #dark gray outside
+#      18: [0x29, 0x80, 0xb9] #[0xb5, 0x8e, 0x31] #yellow kitchen
+#      19: [0x29, 0x80, 0xb9] #[0xb8, 0x38, 0x29] #red foyer
+#      20: [0x29, 0x80, 0xb9] #[0xb8, 0x38, 0x29] #red dining
+#      21: [0x29, 0x80, 0xb9] #blue sunroom
+#    map_transformation:
+#      scale: 2
+#      trim:
+#        top: 20
+#        bottom: 20
+#        left: 10
+ #       right: 10
 
 
 # Switches
@@ -267,7 +260,9 @@ switch:
     name: Living Room
     lights_brightness:
       - light.living_room
-    min_brightness: 50
+    lights_rgb:
+      - light.living_room
+    min_brightness: 60
 
   - platform: circadian_lighting
     name: Bedroom
@@ -279,21 +274,24 @@ switch:
     name: Office
     lights_brightness:
       - light.office
-    min_brightness: 66
+    min_brightness: 20
 
-tplink:
-  switch:
-    - host: 192.168.20.51 #Bias Light Switch
-    - host: 192.168.20.202 #Bedroom Fan Switch
-    - host: 192.168.20.63 #Unused Switch
-    - host: 192.168.20.59 #Living Room Fan Switch
-    - host: 192.168.20.17 #Air fresehner switch
-    - host: 192.168.20.6 #Cabinet Lights
+  - platform: wake_on_lan
+    mac: 2C-F0-5D-0E-BB-7C
+    host: 192.168.1.108
+    broadcast_address: 192.168.1.108
+
+#tplink:
+#  discovery: false
+#  switch:
+#    - host: 192.168.20.51 #Bias Light Switch
+#    - host: 192.168.20.202 #Bedroom Fan Switch
+#    - host: 192.168.20.63 #Unused Switch
+#    - host: 192.168.20.59 #Living Room Fan Switch
+#    - host: 192.168.20.17 #Air fresehner switch
+#    - host: 192.168.20.6 #Cabinet Lights
 
 # Text to speech
-tts:
-  - platform: google_translate
-#    service_name: google_say
 
 # Media
 
@@ -301,15 +299,11 @@ wemo:
   static: 
     - 192.168.20.70 #litter robot
 
-media_player:
-  - platform: androidtv
-    name: Nvidia Shield Pro
-    host: 192.168.1.62
-
 ##########################
 scene: !include scenes.yaml
 group: !include groups.yaml
 automation: !include_dir_merge_list automations
+#automation: !include automations.yaml
 script: !include scripts.yaml
 input_boolean: !include input_booleans.yaml
 binary_sensor: !include binary_sensors.yaml
