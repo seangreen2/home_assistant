@@ -27,6 +27,36 @@
             title: Low Battery Warning
             message: "{{sensors}} have low batteries! Consider changing them soon"
 
+# Restart Room Presence Sensors
+- alias: 'Restart Room Sensors'
+  initial_state: on
+  trigger:
+    - platform: time_pattern
+      minutes: "/10"
+  action:
+    - service: button.press
+      target:
+        entity_id: button.espresence_living_room_restart
+    - service: button.press
+      target:
+        entity_id: button.espresense_bedroom_restart
+    - service: button.press
+      target:
+        entity_id: button.espresense_foyer_restart
+    - service: button.press
+      target:
+        entity_id: button.espresense_couch_restart
+    - service: button.press
+      target:
+        entity_id: button.espresense_kitchen_restart
+    - service: button.press
+      target:
+        entity_id: button.espresense_office_restart
+    - service: button.press
+      target:
+        entity_id: button.espresense_sunroom_restart
+
+
 # Reload Google Nest Integration for better reliability
 - alias: 'Reload Upstairs Nest'
   initial_state: on
@@ -365,14 +395,25 @@
       to: 'Cat Sensor Interrupted'
       for:
         minutes: 3
+    - platform: state
+      entity_id:
+        - sensor.kitty_throne_status_code
+      to: 'Pinch Detect'
+      for:
+        minutes: 3
   action:
-    - service: vacuum.stop
+    - service: switch.turn_off
       target:
-        entity_id: vacuum.kitty_throne_litter_box
+        entity_id: switch.litter_robot
+    - delay:
+        seconds: 10
+    - service: switch.turn_on
+      target:
+        entity_id: switch.litter_robot
     - delay:
         hours: 0
         minutes: 0
-        seconds: 10
+        seconds: 5
         milliseconds: 0
     - service: vacuum.start
       target:
@@ -417,14 +458,18 @@
           attribute: status
           state: "Cat Detected" #cat detected
   action:
-    - service: vacuum.stop
-      data: {}
+    - service: switch.turn_off
       target:
-        entity_id: vacuum.kitty_throne_litter_box
+        entity_id: switch.litter_robot
+    - delay:
+        seconds: 10
+    - service: switch.turn_on
+      target:
+        entity_id: switch.litter_robot
     - delay:
         hours: 0
         minutes: 0
-        seconds: 10
+        seconds: 5
         milliseconds: 0
     - service: vacuum.start
       data: {}
@@ -633,3 +678,27 @@
         seconds: 10
     - service: vacuum.start
       entity_id: vacuum.kitty_throne_litter_box
+
+# Turn off Washer at night
+- alias: Turn off Washer
+  initial_state: on
+  trigger:
+    - platform: time
+      at: "19:00:00"
+  condition:
+    condition: numeric_state
+    entity_id: sensor.washer_current_consumption
+    below: 10
+  action:
+    - service: switch.turn_off
+      entity_id: switch.washer
+
+# Turn on Washer at morning
+- alias: Turn on Washer
+  initial_state: on
+  trigger:
+    - platform: time
+      at: "07:00:00"
+  action:
+    - service: switch.turn_on
+      entity_id: switch.washer

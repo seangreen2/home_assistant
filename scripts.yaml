@@ -89,7 +89,7 @@ morning:
     - service: light.turn_on
       data_template:
         entity_id: light.bedroom
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
+        brightness_pct: 100
         transition: 180
     - delay:
         seconds: 180
@@ -118,6 +118,9 @@ bedtime_emily:
         volume_level: .80
     - service: automation.turn_on
       entity_id: automation.repeat_rain_audio
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.bedtime_emily
     - service: homeassistant.turn_on
       entity_id: switch.bedroom_fan
     - service: light.turn_off
@@ -132,9 +135,6 @@ bedtime_emily:
       data:
         entity_id: light.bathroom
         transition: 2
-    - service: input_boolean.turn_on
-      data:
-        entity_id: input_boolean.bedtime_emily
 
 morning_emily:
   sequence:
@@ -157,12 +157,6 @@ morning_emily:
       data:
         entity_id: input_select.emily_room_location
         option: Home
-#    - delay:
-#        seconds: 60
-#    - service: androidtv.adb_command
-#      data:
-#        entity_id: media_player.nvidia_shield_pro
-#        command: "POWER"
     - condition: and
       conditions:
         - condition: state
@@ -179,12 +173,64 @@ morning_emily:
     - service: light.turn_on
       data_template:
         entity_id: light.bedroom
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
+        brightness_pct: 100
         transition: 180
     - delay:
         seconds: 180
     - service: automation.turn_on
       entity_id: automation.bedroom_auto_brightness
+
+
+emily_naptime:
+  sequence:
+    - if:
+        - condition: state
+          entity_id: media_player.bedroom_speaker
+          state: 'off'
+        - condition: state
+          entity_id: group.emily
+          state: "home"
+      then:
+        - service: automation.turn_off
+          entity_id: automation.bedroom_auto_brightness
+        - service: media_player.volume_set
+          data:
+            entity_id: media_player.bedroom_speaker
+            volume_level: .80
+        - service: input_boolean.turn_on
+          data:
+            entity_id: input_boolean.bedtime_emily
+        - service: automation.turn_on
+          entity_id: automation.repeat_rain_audio
+        - service: media_player.play_media
+          data:
+            entity_id: media_player.bedroom_speaker
+            media_content_id: !secret rain_audio
+            media_content_type: audio/mp3
+        - service: homeassistant.turn_on
+          entity_id: switch.bedroom_fan
+        - service: light.turn_off
+          data:
+            entity_id: light.bedroom
+            transition: 2
+      else:
+        - service: automation.turn_off
+          entity_id: automation.repeat_rain_audio
+        - service: media_player.media_stop
+          data:
+            entity_id: media_player.bedroom_speaker
+        - service: input_boolean.turn_off
+          data:
+            entity_id: input_boolean.bedtime_emily
+        - service: light.turn_on
+          data_template:
+            entity_id: light.bedroom
+            brightness_pct: 100
+            transition: 180
+        - delay:
+            seconds: 180
+        - service: automation.turn_on
+          entity_id: automation.bedroom_auto_brightness
 
 bedtime_joyce:
   sequence:
@@ -233,10 +279,14 @@ office_lights_toggle:
         data:
           entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
       else:
-        service: light.turn_on
-        data:
-          entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
-          brightness_pct: "{{ state_attr('switch.circadian_lighting_office', 'brightness') | int }}"
+        - service: adaptive_lighting.apply
+          data:
+            lights:
+              - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
+            adapt_brightness: true
+            adapt_color: true
+            turn_on_lights: true
+            entity_id: switch.adaptive_lighting_adapt_brightness_default
 
 # bedroom lights toggle button
 bedroom_lights_toggle:
@@ -250,10 +300,14 @@ bedroom_lights_toggle:
         data:
           entity_id: light.bedroom
       else:
-        service: light.turn_on
-        data:
-          entity_id: light.bedroom
-          brightness_pct: "{{ state_attr('switch.circadian_lighting_bedroom', 'brightness') | int }}"
+        - service: adaptive_lighting.apply
+          data:
+            lights:
+              - light.bedroom
+            adapt_brightness: true
+            adapt_color: true
+            turn_on_lights: true
+            entity_id: switch.adaptive_lighting_adapt_brightness_default
 
 # downstairs lights toggle button
 downstairs_lights_toggle:
@@ -267,11 +321,14 @@ downstairs_lights_toggle:
         data:
           entity_id: light.living_room
       else:
-        service: light.turn_on
-        data:
-          entity_id: light.living_room
-          kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-          brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+        - service: adaptive_lighting.apply
+          data:
+            lights:
+              - light.living_room
+            adapt_brightness: true
+            adapt_color: true
+            turn_on_lights: true
+            entity_id: switch.adaptive_lighting_adapt_brightness_default
 
 # cabinet lights toggle button
 cabinet_lights_toggle:

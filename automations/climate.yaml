@@ -10,10 +10,6 @@
       value_template: "{{ states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
       for:
         minutes: 7
-    - platform: template
-      value_template: "{{ states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
-      for:
-        minutes: 7
   condition:
     condition: and
     conditions:
@@ -34,17 +30,25 @@
             state: 75
           - condition: state
             entity_id: climate.downstairs
-            attribute: 'target_temp_high'
+            attribute: target_temp_high
             state: 75
+          - condition: state
+            entity_id: climate.downstairs
+            attribute: temperature
+            state: 76
+          - condition: state
+            entity_id: climate.downstairs
+            attribute: target_temp_high
+            state: 76
   action:
     - service: climate.set_temperature
       data_template:
         entity_id: climate.downstairs
         temperature: >
           {% if states('climate.downstairs') == 'cool' %}
-            {{ state_attr('climate.downstairs' , 'temperature')|int - 1 }}
+            {{ state_attr('climate.downstairs' , 'temperature')|int - 2 }}
           {% elif states('climate.downstairs') == 'heat_cool' %}
-            {{ state_attr('climate.downstairs' , 'target_temp_high')|int - 1 }}
+            {{ state_attr('climate.downstairs' , 'target_temp_high')|int - 2 }}
           {% endif %}
 
 # Adjust the downstairs HVAC warmer depending when present
@@ -54,15 +58,11 @@
     - platform: template
       value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
       for:
-        minutes: 7
+        minutes: 10
     - platform: template
       value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
       for:
-        minutes: 7
-    - platform: template
-      value_template: "{{ not states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
-      for:
-        minutes: 7
+        minutes: 10
   condition:
     condition: and
     conditions:
@@ -88,6 +88,14 @@
           - condition: state
             entity_id: climate.downstairs
             attribute: temperature
+            state: 73
+          - condition: state
+            entity_id: climate.downstairs
+            attribute: target_temp_high
+            state: 73
+          - condition: state
+            entity_id: climate.downstairs
+            attribute: temperature
             state: 74
           - condition: state
             entity_id: climate.downstairs
@@ -99,17 +107,15 @@
             value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
           - condition: template
             value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
-          - condition: template
-            value_template: "{{ not states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
   action:
     - service: climate.set_temperature
       data_template:
         entity_id: climate.downstairs
         temperature: >
           {% if states('climate.downstairs') == 'cool' %}
-            {{ state_attr('climate.downstairs' , 'temperature')|int + 1 }}
+            {{ state_attr('climate.downstairs' , 'temperature')|int + 2 }}
           {% elif states('climate.downstairs') == 'heat_cool' %}
-            {{ state_attr('climate.downstairs' , 'target_temp_high')|int + 1 }}
+            {{ state_attr('climate.downstairs' , 'target_temp_high')|int + 2 }}
           {% endif %}
 
 # Adjust the upstairs HVAC cooler depending when present
@@ -122,10 +128,6 @@
         minutes: 5
     - platform: template
       value_template: "{{ states('sensor.emily_room_location') in ['office','bedroom','bedroom2','guest'] }}"
-      for:
-        minutes: 5
-    - platform: template
-      value_template: "{{ states('sensor.joyce_room_location') in ['office','bedroom','bedroom2','guest'] }}"
       for:
         minutes: 5
   condition:
@@ -145,20 +147,28 @@
           - condition: state
             entity_id: climate.upstairs
             attribute: temperature
-            state: 74
+            state: 75
           - condition: state
             entity_id: climate.upstairs
             attribute: target_temp_high
-            state: 74
+            state: 75
+          - condition: state
+            entity_id: climate.upstairs
+            attribute: temperature
+            state: 76
+          - condition: state
+            entity_id: climate.upstairs
+            attribute: target_temp_high
+            state: 76
   action:
     - service: climate.set_temperature
       data_template:
         entity_id: climate.upstairs
         temperature: >
           {% if states('climate.upstairs') == 'cool' %}
-            {{ state_attr('climate.upstairs' , 'temperature')|int - 1 }}
+            {{ state_attr('climate.upstairs' , 'temperature')|int - 2 }}
           {% elif states('climate.upstairs') == 'heat_cool' %}
-            {{ state_attr('climate.upstairs' , 'target_temp_high')|int - 1 }}
+            {{ state_attr('climate.upstairs' , 'target_temp_high')|int - 2 }}
           {% endif %}
 
 # Adjust the upstairs HVAC warmer depending when present
@@ -168,15 +178,13 @@
     - platform: template
       value_template: "{{ not states('sensor.sean_room_location') in ['office','bedroom','bedroom2','guest'] }}"
       for:
-        minutes: 5
+        minutes: 10
     - platform: template
       value_template: "{{ not states('sensor.emily_room_location') in ['office','bedroom','bedroom2','guest'] }}"
       for:
-        minutes: 5
-    - platform: template
-      value_template: "{{ not states('sensor.joyce_room_location') in ['office','bedroom','bedroom2','guest'] }}"
-      for:
-        minutes: 5
+        minutes: 10
+    - platform: time_pattern
+      minutes: "/10"
   condition:
     condition: and
     conditions:
@@ -206,28 +214,26 @@
           - condition: state
             entity_id: climate.upstairs
             attribute: temperature
-            state: 72
+            state: 74
           - condition: state
             entity_id: climate.upstairs
             attribute: target_temp_high
-            state: 72
+            state: 74
       - condition: and
         conditions:
           - condition: template
             value_template: "{{ not states('sensor.sean_room_location') in ['office','bedroom','bedroom2','guest'] }}"
           - condition: template
             value_template: "{{ not states('sensor.emily_room_location') in ['office','bedroom','bedroom2','guest'] }}"
-          - condition: template
-            value_template: "{{ not states('sensor.joyce_room_location') in ['office','bedroom','bedroom2','guest'] }}"
   action:
     - service: climate.set_temperature
       data_template:
         entity_id: climate.upstairs
         temperature: >
           {% if states('climate.upstairs') == 'cool' %}
-            {{ state_attr('climate.upstairs' , 'temperature')|int + 1 }}
+            {{ state_attr('climate.upstairs' , 'temperature')|int + 2 }}
           {% elif states('climate.upstairs') == 'heat_cool' %}
-            {{ state_attr('climate.upstairs' , 'target_temp_high')|int + 1 }}
+            {{ state_attr('climate.upstairs' , 'target_temp_high')|int + 2 }}
           {% endif %}
 
 # Circulate air when home
@@ -307,7 +313,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: group.family
+        entity_id: group.seanemily
         state: "home"
       - condition: time
         after: "07:00:00"
@@ -315,9 +321,6 @@
       - condition: numeric_state
         entity_id: sensor.downstairs_temperature
         above: "72"
-      - condition: state
-        entity_id: group.family
-        state: "home"
   action:
     - service: switch.turn_on
       entity_id: switch.living_room_fan
@@ -359,7 +362,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: group.family
+        entity_id: group.seanemily
         state: "home"
       - condition: numeric_state
         entity_id: sensor.bedroom_temperature_f

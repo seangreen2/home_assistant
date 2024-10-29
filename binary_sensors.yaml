@@ -36,6 +36,8 @@
       value_template: >-
         {{ is_state('binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_2', 'off')
           and is_state('binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone', 'off')
+          and is_state('binary_sensor.humen_sensor_1m_91d78c_presence', 'clear')
+          and is_state('binary_sensor.humen_sensor_1m_91d9f0_presence', 'clear')
           and not is_state('sensor.sean_room_location', 'living_room')
           and not is_state('sensor.emily_room_location', 'living_room')
           and not is_state('sensor.joyce_room_location', 'living_room')

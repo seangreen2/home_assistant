@@ -3,7 +3,7 @@
   initial_state: on
   trigger:
     - platform: state
-      entity_id: group.family
+      entity_id: group.seanemily
       to: home
   condition:
     condition: and
@@ -17,11 +17,14 @@
       - condition: template
         value_template: "{{ not is_state('media_player.shield', 'paused') }}" # NOT condition
   action:
-    - service: light.turn_on
-      data_template:
-        entity_id: light.living_room
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+    - service: adaptive_lighting.apply
+      data:
+        lights:
+          - light.living_room
+        adapt_brightness: true
+        adapt_color: true
+        turn_on_lights: true
+        entity_id: switch.adaptive_lighting_adapt_brightness_default
     - service: light.turn_on
       data_template:
         entity_id: light.cabinet_lights
@@ -29,11 +32,14 @@
         kelvin: 5400
     - delay:
         seconds: "1"
-    - service: light.turn_on
-      data_template:
-        entity_id: light.living_room
-        kelvin: "{{ state_attr('sensor.circadian_values', 'colortemp') | int }}"
-        brightness_pct: "{{ state_attr('switch.circadian_lighting_living_room', 'brightness') | int }}"
+    - service: adaptive_lighting.apply
+      data:
+        lights:
+          - light.living_room
+        adapt_brightness: true
+        adapt_color: true
+        turn_on_lights: true
+        entity_id: switch.adaptive_lighting_adapt_brightness_default
 
 # Arm cameras when Away
 - alias: Cameras Armed Away
@@ -192,13 +198,13 @@
 
 # Set Nest to Away Mode
 - alias: "Nest Away Mode"
-  initial_state: on
+  initial_state: off
   trigger:
     platform: state
     entity_id: group.family
     to: "not_home"
     for:
-      minutes: 60
+      minutes: 10
   action:
     - service: climate.set_preset_mode
       data:
@@ -211,11 +217,17 @@
 
 # Turn off Eco Mode Nest
 - alias: "Nest Home Mode"
-  initial_state: on
+  initial_state: off
   trigger:
-    platform: state
-    entity_id: group.family
-    to: "home"
+    - platform: state
+      entity_id: group.family
+      to: "home"
+    - platform: time_pattern
+      minutes: "/15"
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: "home"
   action:
     - service: climate.set_preset_mode
       data:
@@ -252,11 +264,11 @@
 
 # Turn off Eco Mode Nest Google Tracker
 - alias: "Nest Normal Mode Google Tracker"
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: numeric_state
       entity_id: proximity.home
-      below: 7
+      below: 10
   condition:
     condition: and
     conditions:

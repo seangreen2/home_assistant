@@ -9,12 +9,28 @@ default_view:
     - group.weather_two
 
 ### FAMILY ###
+seanemily:
+  name: Sean and Emily
+  entities:
+    - device_tracker.sean_phone_nmap # Phone Wifi
+    - device_tracker.sean_pixel # Mobile App
+    - person.sean_green
+    - device_tracker.emily_phone_nmap # Phone Wifi
+    - device_tracker.emily_pixel # Mobile App
+    - person.emily_green
+
 family:
   name: Family
   entities:
-    - group.sean
-    - group.emily
-    - group.joyce
+    - device_tracker.sean_phone_nmap # Phone Wifi
+    - device_tracker.sean_pixel # Mobile App
+    - person.sean_green
+    - device_tracker.emily_phone_nmap # Phone Wifi
+    - device_tracker.emily_pixel # Mobile App
+    - person.emily_green
+    - device_tracker.joyce_phone_nmap # Phone Wifi
+    - device_tracker.joyce_phone # Mobile App
+    - person.joyce
 
 sean:
   name: Sean
@@ -65,6 +81,10 @@ living_room_motion:
     #- binary_sensor.wyzesense_77a68ce7
     #- binary_sensor.wyzesense_77a68665
     #- binary_sensor.wyzesense_779b29d3
+    - binary_sensor.humen_sensor_1m_91d9f0_moving_target
+    - binary_sensor.humen_sensor_1m_91d9f0_presence
+    - binary_sensor.humen_sensor_1m_91d78c_presence
+    - binary_sensor.humen_sensor_1m_91d78c_moving_target
     - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone_2
     - binary_sensor.lumi_lumi_sensor_motion_aq2_iaszone
 #    - binary_sensor.living_room_motion_sensor

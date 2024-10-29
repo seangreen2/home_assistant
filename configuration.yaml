@@ -30,12 +30,23 @@ http:
 
 my:
 
+assist_pipeline:
+
 panel_custom:
   - name: integrations
     sidebar_title: Integrations
     sidebar_icon: mdi:cog-outline
     js_url: /api/hassio/app/entrypoint.js
     url_path: "config/integrations"
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator
+  - name: zha
+    sidebar_title: ZHA
+    sidebar_icon: mdi:zigbee
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: "config/integrations/integration/zha"
     embed_iframe: true
     require_admin: true
     config:
@@ -77,12 +88,8 @@ cloud:
 
 mobile_app:
 
-circadian_lighting:
-  max_colortemp: 3000
-  interval: 30
-
-hacs:
-  token: !secret hacs_token
+#hacs:
+#  token: !secret hacs_token
 
 system_health:
 
@@ -254,28 +261,16 @@ spotcast:
  #       right: 10
 
 
+adaptive_lighting:
+  lights:
+    #- light.living_room
+    #- light.bedroom
+    - light.office
+  max_color_temp: 3300
+  min_brightness: 33
+
 # Switches
 switch:
-  - platform: circadian_lighting
-    name: Living Room
-    lights_brightness:
-      - light.living_room
-    lights_rgb:
-      - light.living_room
-    min_brightness: 60
-
-  - platform: circadian_lighting
-    name: Bedroom
-    lights_brightness:
-      - light.bedroom
-    min_brightness: 50
-
-  - platform: circadian_lighting
-    name: Office
-    lights_brightness:
-      - light.office
-    min_brightness: 20
-
   - platform: wake_on_lan
     mac: 2C-F0-5D-0E-BB-7C
     host: 192.168.1.108

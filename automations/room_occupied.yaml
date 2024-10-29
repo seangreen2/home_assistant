@@ -236,8 +236,6 @@
       value_template: "{{ not states('sensor.sean_room_location') in ['bedroom','bedroom2'] }}" # NOT condition
     - condition: template
       value_template: "{{ not states('sensor.emily_room_location') in ['bedroom','bedroom2'] }}" # NOT condition
-    - condition: template
-      value_template: "{{ not states('sensor.joyce_room_location') in ['bedroom','bedroom2'] }}" # NOT condition
   action:
     - service: input_boolean.turn_off
       target:
