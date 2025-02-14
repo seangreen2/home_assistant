@@ -1,29 +1,10 @@
 - id: '3625155246718'
   alias: Christmas Tree On
-  initial_state: off
+  initial_state: on
   trigger:
     - platform: state
       entity_id: group.living_room_motion
       to: 'on'
-    - platform: state
-      entity_id: binary_sensor.wyzesense_77a68ce7
-      to: 'on'
-    - platform: state
-      entity_id: binary_sensor.wyzesense_77a68665
-      to: 'on'
-    - platform: state
-      entity_id: binary_sensor.wyzesense_779b29d3
-      to: 'on'
-    - platform: state
-      entity_id: sensor.sean_room_location
-      to: 'living_room'
-      for:
-        seconds: 7
-    - platform: state
-      entity_id: sensor.emily_room_location
-      to: 'living_room'
-      for:
-        seconds: 7
   condition:
     - condition: state
       entity_id: group.family
@@ -35,11 +16,7 @@
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}" # NOT condition
     - condition: template
       value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT condition
-    - condition: template
-      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}" # NOT condition
-    - condition: template
-      value_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}" # NOT condition
   action:
     - service: switch.turn_on
       data_template:
-        entity_id: switch.air_freshener_switch
+        entity_id: switch.christmas_tree

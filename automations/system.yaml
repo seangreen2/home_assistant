@@ -32,7 +32,7 @@
   initial_state: on
   trigger:
     - platform: time_pattern
-      minutes: "/10"
+      minutes: "/5"
   action:
     - service: button.press
       target:
@@ -158,6 +158,19 @@
     to: 'discharging'
   action:
     - service: script.morning_emily
+
+# Naptime Emily
+- alias: 'Emily Naptime'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.naptime_emily
+      to: 'on'
+    - platform: state
+      entity_id: input_boolean.naptime_emily
+      to: 'off'
+  action:
+    - service: script.emily_naptime
 
 # Bedtime Joyce
 - alias: 'Joyce Bedtime'

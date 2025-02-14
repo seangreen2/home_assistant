@@ -6,7 +6,7 @@ bedtime:
           entity_id: group.sean
           state: "home"
         - condition: time
-          after: "20:00:00"
+          after: "22:00:00"
           before: "07:00:00"
         - condition: template
           value_template: "{{ not is_state('media_player.bedroom_tv', 'playing') }}" # NOT condition
@@ -20,10 +20,12 @@ bedtime:
           value_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}" # NOT conditio
     - service: automation.turn_off
       entity_id: automation.bedroom_auto_brightness
-#    - service: automation.turn_off
-#      entity_id: automation.living_room_auto_brightness
+    - service: automation.turn_off
+      entity_id: automation.living_room_auto_brightness
     - service: automation.turn_off
       entity_id: automation.office_auto_brightness
+    - service: automation.turn_off
+      entity_id: automation.media_player_automations
     - service: media_player.volume_set
       data:
         entity_id: media_player.bedroom_speaker
@@ -44,8 +46,8 @@ bedtime:
       entity_id: switch.office_fan
     - service: switch.turn_off
       entity_id: switch.living_room_fan
-    - service: homeassistant.turn_on
-      entity_id: switch.bedroom_fan
+    - service: homeassistant.turn_off
+      entity_id: switch.christmas_tree
     - service: input_boolean.turn_on
       data:
         entity_id: input_boolean.bedtime_sean
@@ -71,6 +73,8 @@ morning:
       entity_id: automation.living_room_auto_brightness
     - service: automation.turn_on
       entity_id: automation.office_auto_brightness
+    - service: automation.turn_on
+      entity_id: automation.media_player_automations
     - service: switch.turn_on
       entity_id: switch.bias_lights
     - condition: and
@@ -112,6 +116,10 @@ bedtime_emily:
           value_template: "{{ not is_state('media_player.bedroom_tv', 'paused') }}" # NOT condition
     - service: automation.turn_off
       entity_id: automation.bedroom_auto_brightness
+    - service: automation.turn_off
+      entity_id: automation.living_room_auto_brightness
+    - service: automation.turn_off
+      entity_id: automation.media_player_automations
     - service: media_player.volume_set
       data:
         entity_id: media_player.bedroom_speaker
@@ -123,6 +131,8 @@ bedtime_emily:
         entity_id: input_boolean.bedtime_emily
     - service: homeassistant.turn_on
       entity_id: switch.bedroom_fan
+    - service: homeassistant.turn_off
+      entity_id: switch.air_purifier
     - service: light.turn_off
       data:
         entity_id: light.bedroom
@@ -131,6 +141,8 @@ bedtime_emily:
       data:
         entity_id: input_select.emily_room_location
         option: Sleep
+    - service: homeassistant.turn_off
+      entity_id: switch.christmas_tree
     - service: light.turn_off
       data:
         entity_id: light.bathroom
@@ -179,17 +191,19 @@ morning_emily:
         seconds: 180
     - service: automation.turn_on
       entity_id: automation.bedroom_auto_brightness
+    - service: switch.turn_on
+      entity_id: switch.air_purifier
 
 
 emily_naptime:
   sequence:
     - if:
         - condition: state
-          entity_id: media_player.bedroom_speaker
-          state: 'off'
-        - condition: state
-          entity_id: group.emily
-          state: "home"
+          entity_id: input_boolean.naptime_emily
+          state: 'on'
+#        - condition: state
+#          entity_id: group.emily
+#          state: "home"
       then:
         - service: automation.turn_off
           entity_id: automation.bedroom_auto_brightness
@@ -216,9 +230,6 @@ emily_naptime:
       else:
         - service: automation.turn_off
           entity_id: automation.repeat_rain_audio
-        - service: media_player.media_stop
-          data:
-            entity_id: media_player.bedroom_speaker
         - service: input_boolean.turn_off
           data:
             entity_id: input_boolean.bedtime_emily
@@ -227,44 +238,13 @@ emily_naptime:
             entity_id: light.bedroom
             brightness_pct: 100
             transition: 180
+        - service: media_player.media_stop
+          data:
+            entity_id: media_player.bedroom_speaker
         - delay:
             seconds: 180
         - service: automation.turn_on
           entity_id: automation.bedroom_auto_brightness
-
-bedtime_joyce:
-  sequence:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: group.joyce
-          state: "home"
-        - condition: time
-          after: "20:00:00"
-          before: "07:00:00"
-    - service: automation.turn_off
-      entity_id: automation.living_room_auto_brightness
-    - service: input_boolean.turn_on
-      data:
-        entity_id: input_boolean.bedtime_joyce
-
-morning_joyce:
-  sequence:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: group.joyce
-          state: "home"
-        - condition: time
-          after: "05:00:00"
-          before: "10:00:00"
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.bedtime_joyce
-    - service: automation.turn_on
-      entity_id: automation.living_room_auto_brightness
-    - service: automation.turn_on
-      entity_id: automation.living_room_auto_brightness_transition
 
 
 # office lights toggle button

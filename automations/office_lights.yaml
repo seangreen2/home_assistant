@@ -1,21 +1,18 @@
-# Auto Office Brightness
+# Office Auto Brightness
 - alias: "Office Auto Brightness"
   initial_state: on
   trigger:
     - platform: state
       entity_id: group.office_motion
       to: "on"
-    - platform: state
-      entity_id: input_boolean.office_occupied
-      to: "on"
+#    - platform: state
+#      entity_id: input_boolean.office_occupied
+#      to: "on"
   condition:
     - condition: state
-      entity_id: group.family
+      entity_id: group.seanemily
       state: "home"
   action:
-    #- service: switch.turn_on
-    #  data:
-    #    entity_id: switch.wake_on_lan
     - service: adaptive_lighting.apply
       data:
         lights:
@@ -24,8 +21,7 @@
         adapt_color: true
         turn_on_lights: true
         entity_id: switch.adaptive_lighting_adapt_brightness_default
-    - delay:
-        milliseconds: 500
+    - delay: "00:00:00.500"  # 500ms delay
     - service: adaptive_lighting.apply
       data:
         lights:
@@ -35,12 +31,13 @@
         turn_on_lights: true
         entity_id: switch.adaptive_lighting_adapt_brightness_default
 
-# Auto Office Brightness Transition
+# Office Auto Brightness Transition (based on Sun)
 - alias: "Office Auto Brightness Transition"
   initial_state: on
   trigger:
     - platform: state
-      entity_id: sun.sun
+      entity_id: 
+        - sun.sun
   condition:
     - condition: state
       entity_id: group.family
@@ -59,8 +56,8 @@
         transition: 60
         entity_id: switch.adaptive_lighting_adapt_brightness_default
 
-# Turn off Office Lights after one minute of no activity
-- alias: "Turn office lights without motion one min"
+# Turn Off Office Lights After No Activity for 3 Minutes
+- alias: "Turn Office Lights Off After No Activity"
   initial_state: on
   trigger:
     platform: time_pattern
@@ -79,31 +76,30 @@
       entity_id: input_boolean.office_occupied
       state: "off"
     - condition: template
-      value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
+      value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}"
     - condition: template
-      value_template: "{{ not is_state('sensor.sean_room_location', 'office') }}" # NOT condition
+      value_template: "{{ not is_state('sensor.sean_room_location', 'office') }}"
     - condition: template
-      value_template: "{{ not is_state('sensor.emily_room_location', 'office') }}" # NOT condition
+      value_template: "{{ not is_state('sensor.emily_room_location', 'office') }}"
   action:
     - service: light.turn_off
       data:
         entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
         transition: 2
-    - delay:
-        milliseconds: 250
+    - delay: "00:00:00.250"  # 250ms delay before turning off again
     - service: light.turn_off
       data:
         entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
         transition: 2
 
-# Auto Office Brightness
-- alias: Steam dim office lights
+# Steam Game Mode: Dim Office Lights
+- alias: "Steam Game Mode - Dim Office Lights"
   initial_state: off
   trigger:
     - platform: state
       entity_id: sensor.steam_76561197976250572
       attribute: game
-      to:
+      to: "playing"
   condition:
     - condition: state
       entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002

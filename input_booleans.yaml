@@ -6,6 +6,10 @@
     name: Emily Bedtime
     initial: false
 
+  naptime_emily:
+    name: Emily Naptime
+    initial: false
+
   sean_office_presence:
     name: Sean Office Presence
     initial: false

@@ -119,31 +119,17 @@ history:
     entities:
       - group.sean
       - group.emily
-      - light.outside
-      - light.living_room
-      - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
-      - light.bedroom
       - climate.downstairs
       - climate.upstairs
       - sensor.downstairs_temperature
       - sensor.upstairs_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
-      - switch.air_freshener
-      - switch.bedroom_fan
-      - switch.closet_light
-      - switch.living_room_fan
-      - switch.outside_lights
-      - switch.office_fan
       - group.patio_door
       - light.cabinet_lights
       - switch.litter_robot
       - sensor.kitty_throne_waste_drawer
-      - sensor.emily_room_location
-      - sensor.sean_room_location
       - sensor.patio_door_temperature
-      - switch.air_freshener_switch
-      - weather.pirateweather
       - sensor.energy_production_today
       - switch.washer
       - sensor.washer_current_consumption
@@ -153,8 +139,10 @@ history:
       - switch.cabinet_light_switch
       - vacuum.rosie
       - vacuum.jeeves
-      - sensor.joyce_room_location
       - binary_sensor.dryer_vibration_sensor_vibration
+      - light.bedroom
+      - light.living_room
+      - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
 
 recorder:
   #purge_keep_days: 365
@@ -165,31 +153,18 @@ recorder:
     entities:
       - group.sean
       - group.emily
-      - light.outside
-      - light.living_room
-      - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
-      - light.bedroom
       - climate.downstairs
       - climate.upstairs
       - sensor.downstairs_temperature
       - sensor.upstairs_temperature
       - sensor.bedroom_temperature_f
       - sensor.office_temperature_f
-      - switch.air_freshener
-      - switch.bedroom_fan
-      - switch.closet_light
-      - switch.living_room_fan
-      - switch.outside_lights
-      - switch.office_fan
       - group.patio_door
       - light.cabinet_lights
       - switch.litter_robot
       - sensor.kitty_throne_waste_drawer
-      - sensor.emily_room_location
-      - sensor.sean_room_location
       - sensor.patio_door_temperature
       - switch.air_freshener_switch
-      - weather.pirateweather
       - sensor.energy_production_today
       - switch.washer
       - sensor.washer_current_consumption
@@ -199,8 +174,10 @@ recorder:
       - switch.cabinet_light_switch
       - vacuum.rosie
       - vacuum.jeeves
-      - sensor.joyce_room_location
       - binary_sensor.dryer_vibration_sensor_vibration
+      - light.bedroom
+      - light.living_room
+      - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
 
 
 # View all events in a logbook

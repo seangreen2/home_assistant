@@ -1,4 +1,5 @@
 ## OFFICE ##
+
 - alias: Office occupied
   initial_state: on
   trigger:
@@ -6,12 +7,12 @@
       entity_id: group.office_motion
       to: "on"
     - platform: template
-      value_template: "{{ states('sensor.sean_room_location') in ['office','guest'] }}"
-      for:
+      value_template: "{{ states('sensor.sean_room_location') in ['office', 'guest'] }}"
+      for: 
         seconds: 5
     - platform: template
-      value_template: "{{ states('sensor.emily_room_location') in ['office','guest'] }}"
-      for:
+      value_template: "{{ states('sensor.emily_room_location') in ['office', 'guest'] }}"
+      for: 
         seconds: 5
     - platform: state
       entity_id: sensor.steam_76561197976250572
@@ -29,28 +30,23 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ not states('sensor.sean_room_location') in ['office','guest'] }}" # NOT condition
-      for:
+      value_template: "{{ not states('sensor.sean_room_location') in ['office', 'guest'] }}"
+      for: 
         minutes: 6
     - platform: template
-      value_template: "{{ not states('sensor.emily_room_location') in ['office','guest'] }}" # NOT condition
-      for:
+      value_template: "{{ not states('sensor.emily_room_location') in ['office', 'guest'] }}"
+      for: 
         minutes: 6
     - platform: time_pattern
       minutes: "/7"
   condition:
-    condition: and
-    conditions:
-#      - condition: state
-#        entity_id: binary_sensor.office_unoccupied
-#        state: "on"
-      - condition: state
-        entity_id: group.office_motion
-        state: "off"
-      - condition: template
-        value_template: "{{ not states('sensor.sean_room_location') in ['office','guest'] }}" # NOT condition
-      - condition: template
-        value_template: "{{ not states('sensor.emily_room_location') in ['office','guest'] }}" # NOT condition
+    - condition: state
+      entity_id: group.office_motion
+      state: "off"
+    - condition: template
+      value_template: "{{ not states('sensor.sean_room_location') in ['office', 'guest'] }}"
+    - condition: template
+      value_template: "{{ not states('sensor.emily_room_location') in ['office', 'guest'] }}"
   action:
     - service: input_boolean.turn_off
       data:
@@ -62,7 +58,7 @@
     - platform: state
       entity_id: sensor.sean_room_location
       to: "office"
-      for:
+      for: 
         seconds: 5
   action:
     - service: input_select.select_option
@@ -76,7 +72,7 @@
     - platform: state
       entity_id: sensor.emily_room_location
       to: "office"
-      for:
+      for: 
         seconds: 5
   action:
     - service: input_select.select_option
@@ -85,6 +81,7 @@
         option: Office
 
 ## LIVING ROOM ##
+
 - alias: Living Room occupied
   initial_state: on
   trigger:
@@ -92,19 +89,17 @@
       entity_id: group.living_room_motion
       to: "on"
     - platform: template
-      value_template: "{{ states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
-      for:
+      value_template: "{{ states('sensor.sean_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+      for: 
         seconds: 10
     - platform: template
-      value_template: "{{ states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
-      for:
+      value_template: "{{ states('sensor.emily_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+      for: 
         seconds: 10
     - platform: template
-      value_template: "{{ states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
-      for:
+      value_template: "{{ states('sensor.joyce_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+      for: 
         seconds: 10
-  #      - platform: template
-  #        value_template: "{{ not is_state('media_player.plex_living_room_tv', 'unavailable') }}" # NOT condition
   condition:
     - condition: state
       entity_id: group.family
@@ -114,39 +109,33 @@
       data:
         entity_id: input_boolean.living_room_occupied
 
-# Only when one person is home.
 - alias: Living Room unoccupied
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
-      for:
+      value_template: "{{ not states('sensor.sean_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+      for: 
         minutes: 3
     - platform: template
-      value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
-      for:
+      value_template: "{{ not states('sensor.emily_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+      for: 
         minutes: 3
     - platform: template
-      value_template: "{{ not states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
-      for:
+      value_template: "{{ not states('sensor.joyce_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+      for: 
         minutes: 3
     - platform: time_pattern
       minutes: "/5"
   condition:
-    condition: and
-    conditions:
-#      - condition: state
-#        entity_id: binary_sensor.living_room_unoccupied
-#        state: "on"
-      - condition: state
-        entity_id: group.living_room_motion
-        state: "off"
-      - condition: template
-        value_template: "{{ not states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
-      - condition: template
-        value_template: "{{ not states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
-      - condition: template
-        value_template: "{{ not states('sensor.joyce_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}" # NOT condition
+    - condition: state
+      entity_id: group.living_room_motion
+      state: "off"
+    - condition: template
+      value_template: "{{ not states('sensor.sean_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+    - condition: template
+      value_template: "{{ not states('sensor.emily_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+    - condition: template
+      value_template: "{{ not states('sensor.joyce_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
   action:
     - service: input_boolean.turn_off
       data:
@@ -156,8 +145,8 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.sean_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
-      for:
+      value_template: "{{ states('sensor.sean_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+      for: 
         seconds: 5
   action:
     - service: input_select.select_option
@@ -169,8 +158,8 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.emily_room_location') in ['living_room','kitchen','sunroom','couch','foyer'] }}"
-      for:
+      value_template: "{{ states('sensor.emily_room_location') in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] }}"
+      for: 
         seconds: 5
   action:
     - service: input_select.select_option
@@ -179,6 +168,7 @@
         option: Living Room
 
 ## BEDROOM ##
+
 - alias: Bedroom occupied
   initial_state: on
   trigger:
@@ -186,12 +176,12 @@
       entity_id: group.bedroom_motion
       to: "on"
     - platform: template
-      value_template: "{{ states('sensor.sean_room_location') in ['bedroom','bedroom2'] }}"
-      for:
+      value_template: "{{ states('sensor.sean_room_location') in ['bedroom', 'bedroom2'] }}"
+      for: 
         seconds: 10
     - platform: template
-      value_template: "{{ states('sensor.emily_room_location') in ['bedroom','bedroom2'] }}"
-      for:
+      value_template: "{{ states('sensor.emily_room_location') in ['bedroom', 'bedroom2'] }}"
+      for: 
         seconds: 10
     - platform: state
       entity_id: input_boolean.sean_bedtime
@@ -200,9 +190,9 @@
       entity_id: input_boolean.emily_bedtime
       to: "on"
     - platform: template
-      value_template: "{{ not is_state('media_player.bedroom_tv', 'unavailable') }}" # NOT condition
+      value_template: "{{ not is_state('media_player.bedroom_tv', 'unavailable') }}"
     - platform: template
-      value_template: "{{ not is_state('media_player.bedroom_tv', 'idle') }}" # NOT condition
+      value_template: "{{ not is_state('media_player.bedroom_tv', 'idle') }}"
   condition:
     - condition: state
       entity_id: group.family
@@ -216,26 +206,23 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ not states('sensor.sean_room_location') in ['bedroom','bedroom2'] }}" # NOT condition
-      for:
+      value_template: "{{ not states('sensor.sean_room_location') in ['bedroom', 'bedroom2'] }}"
+      for: 
         minutes: 3
     - platform: template
-      value_template: "{{ not states('sensor.emily_room_location') in ['bedroom','bedroom2'] }}" # NOT condition
-      for:
+      value_template: "{{ not states('sensor.emily_room_location') in ['bedroom', 'bedroom2'] }}"
+      for: 
         minutes: 3
     - platform: time_pattern
       minutes: "/5"
   condition:
-#    - condition: state
-#      entity_id: binary_sensor.bedroom_unoccupied
-#      state: "on"
     - condition: state
       entity_id: group.bedroom_motion
       state: "off"
     - condition: template
-      value_template: "{{ not states('sensor.sean_room_location') in ['bedroom','bedroom2'] }}" # NOT condition
+      value_template: "{{ not states('sensor.sean_room_location') in ['bedroom', 'bedroom2'] }}"
     - condition: template
-      value_template: "{{ not states('sensor.emily_room_location') in ['bedroom','bedroom2'] }}" # NOT condition
+      value_template: "{{ not states('sensor.emily_room_location') in ['bedroom', 'bedroom2'] }}"
   action:
     - service: input_boolean.turn_off
       target:
@@ -245,8 +232,8 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.sean_room_location') in ['bedroom','bedroom2'] }}"
-      for:
+      value_template: "{{ states('sensor.sean_room_location') in ['bedroom', 'bedroom2'] }}"
+      for: 
         seconds: 5
   action:
     - service: input_select.select_option
@@ -258,8 +245,8 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.emily_room_location') in ['bedroom','bedroom2'] }}"
-      for:
+      value_template: "{{ states('sensor.emily_room_location') in ['bedroom', 'bedroom2'] }}"
+      for: 
         seconds: 5
   action:
     - service: input_select.select_option
@@ -267,7 +254,7 @@
         entity_id: input_select.emily_room_location
         option: Bedroom
 
-# Emily is now home and location is unknown
+# Emily is home and location is unknown
 - alias: "Emily is Home"
   initial_state: on
   trigger:
@@ -276,8 +263,8 @@
       to: "home"
     - platform: state
       entity_id: sensor.emily_room_location
-      to: not_home
-      for:
+      to: "not_home"
+      for: 
         minutes: 1
   action:
     - service: input_select.select_option
@@ -298,7 +285,7 @@
         entity_id: input_select.emily_room_location
         option: Away
 
-# Sean is now home and location is unknown
+# Sean is home and location is unknown
 - alias: "Sean is Home"
   initial_state: on
   trigger:
@@ -307,8 +294,8 @@
       to: "home"
     - platform: state
       entity_id: sensor.sean_room_location
-      to: not_home
-      for:
+      to: "not_home"
+      for: 
         minutes: 1
   action:
     - service: input_select.select_option

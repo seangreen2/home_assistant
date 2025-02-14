@@ -1,15 +1,12 @@
 # Auto Bedroom Brightness
 - alias: Bedroom Auto Brightness
-  initial_state: on
+  initial_state: true
   trigger:
     - platform: state
-      entity_id: group.bedroom_motion
-      to: 'on'
-    - platform: state
-      entity_id: group.closet_motion
-      to: 'on'
-    - platform: state
-      entity_id: input_boolean.bedroom_occupied
+      entity_id:
+        - group.bedroom_motion
+        - group.closet_motion
+#        - input_boolean.bedroom_occupied
       to: 'on'
   condition:
     - condition: state
@@ -19,17 +16,15 @@
       entity_id: light.bedroom
       state: 'off'
     - condition: state
-      entity_id: input_boolean.bedtime_emily
+      entity_id:
+        - input_boolean.bedtime_emily
+        - input_boolean.bedtime_sean
       state: 'off'
-    - condition: state
-      entity_id: input_boolean.bedtime_sean
-      state: 'off'
     - condition: template
-      value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'playing') }}" # NOT condition
-    - condition: template
-      value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'paused') }}" # NOT condition
-    - condition: template
-      value_template: "{{ not is_state('media_player.bedroom_speaker', 'playing') }}" # NOT condition
+      value_template: >
+        {{ not is_state('media_player.plex_bedroom_stick', 'playing') and
+           not is_state('media_player.plex_bedroom_stick', 'paused') and
+           not is_state('media_player.bedroom_speaker', 'playing') }}
   action:
     - service: adaptive_lighting.apply
       data:
@@ -52,10 +47,11 @@
 
 # Auto Bedroom Brightness Transition
 - alias: Bedroom Auto Brightness Transition
-  initial_state: on
+  initial_state: true
   trigger:
     - platform: state
-      entity_id: sun.sun
+      entity_id: 
+        - sun.sun
   condition:
     - condition: state
       entity_id: group.family
@@ -64,9 +60,9 @@
       entity_id: light.bedroom
       state: 'on'
     - condition: template
-      value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'playing') }}" # NOT condition
-    - condition: template
-      value_template: "{{ not is_state('media_player.plex_bedroom_tv', 'paused') }}" # NOT condition
+      value_template: >
+        {{ not is_state('media_player.plex_bedroom_stick', 'playing') and
+           not is_state('media_player.plex_bedroom_stick', 'paused') }}
   action:
     - service: adaptive_lighting.apply
       data:
@@ -78,31 +74,25 @@
         transition: '60'
         entity_id: switch.adaptive_lighting_adapt_brightness_default
 
-# Bedroom Lights off without Motion
-- alias: Bedroom Lights off no motion
-  initial_state: on
+# Bedroom Lights Off Without Motion
+- alias: Bedroom Lights Off No Motion
+  initial_state: true
   trigger:
-    platform: time_pattern
-    minutes: '/3'
+    - platform: time_pattern
+      minutes: '/3'
   condition:
     - condition: state
-      entity_id: input_boolean.sean_bedroom_presence
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.emily_bedroom_presence
-      state: 'off'
-    - condition: state
-      entity_id: input_boolean.bedroom_occupied
-      state: 'off'
-    - condition: state
-      entity_id: group.bedroom_motion
+      entity_id:
+        - input_boolean.sean_bedroom_presence
+        - input_boolean.emily_bedroom_presence
+        - input_boolean.bedroom_occupied
+        - group.bedroom_motion
       state: 'off'
     - condition: template
-      value_template: "{{ not is_state('sensor.sean_room_location', 'bedroom') }}" # NOT condition
-    - condition: template
-      value_template: "{{ not is_state('sensor.emily_room_location', 'bedroom') }}" # NOT condition
-    - condition: template
-      value_template: "{{ not is_state('sensor.steam_76561198154412871', 'online') }}" # NOT condition
+      value_template: >
+        {{ not is_state('sensor.sean_room_location', 'bedroom') and
+           not is_state('sensor.emily_room_location', 'bedroom') and
+           not is_state('sensor.steam_76561198154412871', 'online') }}
   action:
     - service: light.turn_off
       data:
@@ -115,36 +105,36 @@
         entity_id: light.bedroom
         transition: 2
 
-# Closet lights
+# Closet Lights On
 - alias: Closet Lights On
-  initial_state: on
+  initial_state: true
   trigger:
     - platform: state
       entity_id: group.closet_motion
       to: 'on'
   condition:
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: input_boolean.bedtime_emily
-            state: 'off'
-          - condition: state
-            entity_id: input_boolean.bedtime_sean
-            state: 'off'
-      - condition: state
-        entity_id: group.family
-        state: 'home'
+    - condition: state
+      entity_id: group.family
+      state: 'home'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_boolean.bedtime_emily
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.bedtime_sean
+          state: 'off'
   action:
     - service: switch.turn_on
-      data_template:
+      data:
         entity_id: switch.closet_light
 
-# Closet Lights Off without Motion
-- alias: Closet Lights off no motion
-  initial_state: on
+# Closet Lights Off Without Motion
+- alias: Closet Lights Off No Motion
+  initial_state: true
   trigger:
-    platform: time_pattern
-    minutes: '/2'
+    - platform: time_pattern
+      minutes: '/2'
   condition:
     - condition: state
       entity_id: group.closet_motion
@@ -152,21 +142,6 @@
       for:
         minutes: 2
   action:
-    service: switch.turn_off
-    data:
-      entity_id: switch.closet_light
-
-# Bedroom Lights off without Motion
-#- alias: Bedroom Lights off no motion
-#  initial_state: on
-#  trigger:
-#    platform: state
-#    entity_id: binary_sensor.motion_sensor_158d000237a64a
-#    to: 'off'
-#    for:
-#      minutes: 3
-#  action:
-#    service: light.turn_off
-#    data:
-#      entity_id: light.bedroom
-#      transition: 2
+    - service: switch.turn_off
+      data:
+        entity_id: switch.closet_light
