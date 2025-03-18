@@ -142,7 +142,16 @@ history:
       - binary_sensor.dryer_vibration_sensor_vibration
       - light.bedroom
       - light.living_room
-      - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
+      - light.office
+      - sensor.tp_link_power_strip_d754_today_s_consumption
+      - sensor.tp_link_power_strip_d754_this_month_s_consumption
+      - sensor.freezer_plug_power
+      - sensor.freezer_plug_summation_delivered
+      - sensor.main_server_cpu_usage
+      - sensor.main_server_memory_usage
+      - sensor.plex_server_cpu_usage
+      - sensor.plex_server_memory_usage
+
 
 recorder:
   #purge_keep_days: 365
@@ -177,7 +186,15 @@ recorder:
       - binary_sensor.dryer_vibration_sensor_vibration
       - light.bedroom
       - light.living_room
-      - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
+      - light.office
+      - sensor.tp_link_power_strip_d754_today_s_consumption
+      - sensor.tp_link_power_strip_d754_this_month_s_consumption
+      - sensor.freezer_plug_power
+      - sensor.freezer_plug_summation_delivered
+      - sensor.main_server_cpu_usage
+      - sensor.main_server_memory_usage
+      - sensor.plex_server_cpu_usage
+      - sensor.plex_server_memory_usage
 
 
 # View all events in a logbook
@@ -245,6 +262,7 @@ adaptive_lighting:
     - light.office
   max_color_temp: 3300
   min_brightness: 33
+  max_brightness: 100
 
 # Switches
 switch:

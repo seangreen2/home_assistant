@@ -50,7 +50,9 @@
           {% if states('climate.downstairs') == 'cool' %}
             {{ state_attr('climate.downstairs', 'temperature')|int - 2 }}
           {% elif states('climate.downstairs') == 'heat_cool' %}
+            # Just adjust target_temp_high for cooling, but leave target_temp_low as is
             {{ state_attr('climate.downstairs', 'target_temp_high')|int - 2 }}
+            {{ state_attr('climate.downstairs', 'target_temp_low')|int + 0 }}
           {% elif states('sensor.sean_room_location') not in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] and states('sensor.emily_room_location') not in ['living_room', 'kitchen', 'sunroom', 'couch', 'foyer'] %}
             {{ state_attr('climate.downstairs', 'temperature')|int + 2 }}
           {% endif %}
@@ -104,10 +106,11 @@
       data_template:
         entity_id: climate.upstairs
         temperature: >
-          {% if states('climate.upstairs') == 'cool' %}
+          {% if is_state('climate.upstairs', 'cool') %}
             {{ state_attr('climate.upstairs', 'temperature')|int - 2 }}
-          {% elif states('climate.upstairs') == 'heat_cool' %}
+          {% elif is_state('climate.upstairs', 'heat_cool') %}
             {{ state_attr('climate.upstairs', 'target_temp_high')|int - 2 }}
+            {{ state_attr('climate.upstairs', 'target_temp_low')|int + 0 }}
           {% elif states('sensor.sean_room_location') not in ['office', 'bedroom', 'bedroom2', 'guest'] and states('sensor.emily_room_location') not in ['office', 'bedroom', 'bedroom2', 'guest'] %}
             {{ state_attr('climate.upstairs', 'temperature')|int + 2 }}
           {% endif %}

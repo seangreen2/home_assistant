@@ -42,7 +42,7 @@
       unique_id: '1312912386808'
       device_class: temperature
       value_template: >
-        {{ ((float(states('sensor.office_motion_sensor_temperature'))) + 2) | round(1) }}
+        {{ ((float(states('sensor.office_motion_sensor_temperature'))) + 3.4) | round(1) }}
 
 - platform: template
   sensors:

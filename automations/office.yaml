@@ -13,7 +13,7 @@
         state: "home"
       - condition: numeric_state
         entity_id: sensor.office_temperature_f
-        above: '71'
+        above: '72'
   action:
     service: switch.turn_on
     entity_id: switch.office_fan
@@ -24,7 +24,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.office_temperature_f
-      above: '71'
+      above: '72'
   condition:
     condition: and
     conditions:
@@ -44,7 +44,7 @@
   trigger:
     platform: numeric_state
     entity_id: sensor.office_temperature_f
-    below: '70'
+    below: '71'
   action:
     service: switch.turn_off
     entity_id: switch.office_fan

@@ -7,8 +7,8 @@ slate:
   # Text colors
   primary-text-color: '#FFFFFF'
   text-primary-color: 'var(--primary-text-color)'
-  secondary-text-color: '#b58e31'
-  mush-card-secondary-color: '#b58e31'
+  secondary-text-color: '#a1a1a1'
+  mush-card-secondary-color: '#a1a1a1'
   disabled-text-color: '#777777'
   label-badge-border-color: 'green'
   # Sidebar

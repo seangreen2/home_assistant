@@ -36,3 +36,23 @@
       notify_device: b457d6c1bbed3d192a7deb91c32ab191
       notification_title: Back Door Motion detected!
       delay: 3
+- id: '1742049083278'
+  alias: Office Lights Lux
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.office_motion_sensor_motion
+      light_switch:
+        entity_id: script.office_lights_toggle
+      boolean_scenes_scripts: office
+      include_light_control: []
+      dynamic_lighting_lux_sensor: sensor.office_motion_sensor_illuminance
+      include_dynamic_lighting: enable_sun_elevation_brightness
+      dynamic_lighting_min_brightness: 20
+      include_sun: sun_disabled
+      include_ambient: ambient_enabled
+      ambient_light_options: ambient_light_option_enabled
+      ambient_light_sensor: sensor.office_motion_sensor_illuminance
+      include_device_tracker: device_tracker_disabled

@@ -29,7 +29,7 @@
 
 # Restart Room Presence Sensors
 - alias: 'Restart Room Sensors'
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: time_pattern
       minutes: "/5"
@@ -381,57 +381,29 @@
 
 # Turn on air fresh after cats use box
 - alias: Turn on air fresh
-  initial_state: on
-  trigger:
-    - platform: state
-      entity_id: vacuum.kitty_throne_litter_box
-      attribute: status
-      to: 'Cat Sensor Timing'
-  condition:
-    - condition: state
-      entity_id: group.family
-      state: "home"
-  action:
-    - service: switch.turn_on
-      entity_id: switch.air_freshener_switch
-    - delay:
-        minutes: "20"
-    - service: switch.turn_off
-      entity_id: switch.air_freshener_switch
-
-- alias: Restart Litter Robot Cat Interrupted
-  description: If litter robot is in error for at least 5 minutes, the switch will toggle power to reset robot
-  trigger:
-    - platform: state
+  mode: single
+  triggers:
+    - trigger: state
       entity_id:
         - sensor.kitty_throne_status_code
-      to: 'Cat Sensor Interrupted'
-      for:
-        minutes: 3
-    - platform: state
-      entity_id:
-        - sensor.kitty_throne_status_code
-      to: 'Pinch Detect'
-      for:
-        minutes: 3
-  action:
-    - service: switch.turn_off
+      to: cst
+  conditions: []
+  actions:
+    - action: switch.turn_on
+      metadata: {}
+      data: {}
       target:
-        entity_id: switch.litter_robot
-    - delay:
-        seconds: 10
-    - service: switch.turn_on
-      target:
-        entity_id: switch.litter_robot
+        entity_id: switch.air_freshener_switch
     - delay:
         hours: 0
-        minutes: 0
-        seconds: 5
+        minutes: 20
+        seconds: 0
         milliseconds: 0
-    - service: vacuum.start
+    - action: switch.turn_off
+      metadata: {}
+      data: {}
       target:
-        entity_id: vacuum.kitty_throne_litter_box
-  mode: single
+        entity_id: switch.air_freshener_switch
 
 - alias: Restart Litter Robot
   description: If litter robot is in error for at least 5 minutes, the switch will toggle power to reset robot
@@ -439,8 +411,7 @@
     - platform: state
       entity_id:
         - sensor.kitty_throne_status_code
-      from: "Ready"
-      attribute: status
+      from: rdy
       for:
         minutes: 5
   condition:
@@ -448,28 +419,22 @@
       conditions:
         - condition: state
           entity_id: sensor.kitty_throne_status_code
-          attribute: status
-          state: "Cat Sensor Timing" #cat sensor timing
+          state: cst #cat sensor timing
         - condition: state
           entity_id: sensor.kitty_throne_status_code
-          attribute: status
-          state: "Empty Cycle" #empty cycle
+          state: ec #empty cycle
         - condition: state
           entity_id: sensor.kitty_throne_status_code
-          attribute: status
-          state: "Drawer Full At Startup" #drawer full at startup
+          state: dfs #drawer full at startup
         - condition: state
           entity_id: sensor.kitty_throne_status_code
-          attribute: status
-          state: "Drawer Full 2 Cycles Left" #drawer full 2 cycles left
+          state: df2 #drawer full 2 cycles left
         - condition: state
           entity_id: sensor.kitty_throne_status_code
-          attribute: status
-          state: "Drawer Full One Cycle Left" #drawer full one cycle left
+          state: df1 #drawer full one cycle left
         - condition: state
           entity_id: sensor.kitty_throne_status_code
-          attribute: status
-          state: "Cat Detected" #cat detected
+          state: cd #cat detected
   action:
     - service: switch.turn_off
       target:
@@ -482,7 +447,7 @@
     - delay:
         hours: 0
         minutes: 0
-        seconds: 5
+        seconds: 30
         milliseconds: 0
     - service: vacuum.start
       data: {}
@@ -495,9 +460,9 @@
   initial_state: on
   trigger:
     - platform: time
-      at: "06:00:00"
+      at: "09:00:00"
     - platform: time
-      at: "12:00:00"
+      at: "12:30:00"
     - platform: time
       at: "16:30:00"
   condition: []
@@ -715,3 +680,39 @@
   action:
     - service: switch.turn_on
       entity_id: switch.washer
+
+- alias: 'Freezer Plug - Notification'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: switch.freezer_plug_switch
+      to: "off"
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: switch.freezer_plug_switch
+      to: "unavailable"
+      for:
+        minutes: 10
+  action:
+    - service: switch.turn_on
+      entity_id: switch.freezer_plug_switch
+    - service: notify.notify
+      data:
+        message: "The freezer plug is off! Turn it back on!"
+        title: "Freezer Alert"
+
+- alias: 'Freezer Plug Turn Back On'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: switch.freezer_plug_switch
+      to: "off"
+    - platform: state
+      entity_id: switch.freezer_plug_switch
+      to: "unavailable"
+    - platform: time_pattern
+      minutes: "/5"
+  action:
+    - service: switch.turn_on
+      entity_id: switch.freezer_plug_switch

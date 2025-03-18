@@ -74,6 +74,8 @@ morning:
     - service: automation.turn_on
       entity_id: automation.office_auto_brightness
     - service: automation.turn_on
+      entity_id: automation.office_auto_brightness_transition
+    - service: automation.turn_on
       entity_id: automation.media_player_automations
     - service: switch.turn_on
       entity_id: switch.bias_lights
@@ -132,7 +134,7 @@ bedtime_emily:
     - service: homeassistant.turn_on
       entity_id: switch.bedroom_fan
     - service: homeassistant.turn_off
-      entity_id: switch.air_purifier
+      entity_id: switch.cat_mat
     - service: light.turn_off
       data:
         entity_id: light.bedroom
@@ -165,6 +167,8 @@ morning_emily:
       entity_id: automation.living_room_auto_brightness
     - service: automation.turn_on
       entity_id: automation.office_auto_brightness
+    - service: automation.turn_on
+      entity_id: automation.office_auto_brightness_transition
     - service: input_select.select_option
       data:
         entity_id: input_select.emily_room_location
@@ -192,7 +196,7 @@ morning_emily:
     - service: automation.turn_on
       entity_id: automation.bedroom_auto_brightness
     - service: switch.turn_on
-      entity_id: switch.air_purifier
+      entity_id: switch.cat_mat
 
 
 emily_naptime:
@@ -252,17 +256,17 @@ office_lights_toggle:
   sequence:
     - if:
         - condition: state
-          entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
+          entity_id: light.office
           state: 'on'
       then:
-        service: light.turn_off
-        data:
-          entity_id: light.silicon_labs_ezsp_office_lights_zha_group_0x0002
+        - service: light.turn_off
+          data:
+            entity_id: light.office
       else:
         - service: adaptive_lighting.apply
           data:
             lights:
-              - light.silicon_labs_ezsp_office_lights_zha_group_0x0002
+              - light.office
             adapt_brightness: true
             adapt_color: true
             turn_on_lights: true
@@ -366,7 +370,7 @@ vac_clean_kitchen:
       command: app_segment_clean
       params:
         - segments:
-            - 20
+            - 16
           repeat: 2
 
 vac_clean_foyer:
@@ -378,7 +382,7 @@ vac_clean_foyer:
       command: app_segment_clean
       params:
         - segments:
-            - 17
+            - 20
           repeat: 2
 
 vac_clean_dining_room:
@@ -402,7 +406,7 @@ vac_clean_sunroom:
       command: app_segment_clean
       params:
         - segments:
-            - 16
+            - 17
           repeat: 2
 
 vac_clean_multiroom:
@@ -415,8 +419,8 @@ vac_clean_multiroom:
         params:
           - segments:
               - 19
+              - 16
               - 20
-              - 17
             repeat: 2
     - delay: 00:50:00
     - service: vacuum.send_command
@@ -440,9 +444,9 @@ vac_clean_mop:
         command: app_segment_clean
         params:
           - segments:
+              - 17
               - 16
               - 19
-              - 20
             repeat: 3
 
 vac_test_bin:
