@@ -26,7 +26,6 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - [TP Link Smart Plugs (HS 100)](https://amzn.to/2XAKm4J)
 - [TP Link Smart Switches (HS 200)](https://amzn.to/2Xyo8vy)
 - [Roborock S6 Pure](https://smile.amazon.com/gp/product/B084Z5P2BX)
-- [Neato Botvac D3 Connected](https://amzn.to/30oP7v8)
 - [PiHole (Network-Wide Ad Blocking)](https://pi-hole.net/)
 - [Plex Server](https://www.plex.tv/)
 
@@ -36,7 +35,8 @@ To ensure detection in our home, we use the following integrations with 100% suc
 - Bar Cards: https://github.com/custom-cards/bar-card
 
 ## Dashboard
-![1](https://i.imgur.com/DpQZ6eq.png)
-![2](https://i.imgur.com/n3ApBNK.png)
-![3](https://i.imgur.com/pnEflUd.jpg)
+![1](https://i.imgur.com/mN2CWjr.jpeg)
+![2](https://i.imgur.com/8PTwdXW.jpeg)
+![3](https://i.imgur.com/YmjjfMt.jpeg)
+![4](https://i.imgur.com/ZdSqZI0.png)
 
