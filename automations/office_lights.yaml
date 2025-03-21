@@ -1,171 +1,144 @@
-- alias: "Adaptive Office Settings"
+# Office Auto Brightness
+- alias: "Office Auto Brightness"
   initial_state: on
-
   trigger:
-    # Motion-Based Trigger (Immediate Response)
     - platform: state
       entity_id: group.office_motion
       to: "on"
-
-    # Time-Based Trigger (Reevaluates Every 3 Minutes for Inactivity Check)
-    - platform: time_pattern
-      minutes: "/3"
-
-    # Trigger when Emily leaves the office while Sean is still there (2-minute delay)
-    - platform: state
-      entity_id: sensor.emily_room_location
-      from: "office"
-      to: ["living_room", "kitchen", "sunroom", "couch", "foyer", "guest", "not_home"]
-      for:
-        minutes: 2
-
-    # Trigger when temperature drops below threshold (turn fan off)
-    - platform: numeric_state
-      entity_id: sensor.office_temperature_f
-      below: 71.5
-
-    # Trigger when the room becomes empty (BTLE & Motion-Based) (2-minute delay)
-    - platform: state
-      entity_id: sensor.sean_room_location
-      from: "office"
-      to: ["living_room", "kitchen", "sunroom", "couch", "foyer", "guest", "not_home"]
-      for:
-        minutes: 2
-    - platform: state
-      entity_id: sensor.emily_room_location
-      from: "office"
-      to: ["living_room", "kitchen", "sunroom", "couch", "foyer", "guest", "not_home"]
-      for:
-        minutes: 2
-
-    # Failsafe: Motion has been off for 10 minutes
-    - platform: state
-      entity_id: group.office_motion
-      to: "off"
-      for:
-        minutes: 10
-
+#    - platform: state
+#      entity_id: input_boolean.office_occupied
+#      to: "on"
+  condition:
+    - condition: state
+      entity_id: group.seanemily
+      state: "home"
+    - condition: state
+      entity_id: light.office
+      state: 'off'
   action:
-    - choose:
-        # **Step 1: DEFAULT SETTINGS ONLY IF NO ONE IS DETECTED YET**
-        - conditions:
-            - condition: state
-              entity_id: light.office
-              state: "off"
-          sequence:
-            - service: adaptive_lighting.apply
-              data:
-                lights:
-                  - light.office
-                adapt_brightness: true
-                adapt_color: true
-                turn_on_lights: true
-                transition: 1
-                entity_id: switch.adaptive_lighting_adapt_brightness_default
-            - service: adaptive_lighting.set_manual_control
-              data:
-                entity_id: switch.adaptive_lighting_adapt_brightness_default
-                lights: light.office
-                manual_control: true
-            - choose:
-                - conditions:
-                    - condition: numeric_state
-                      entity_id: sensor.office_temperature_f
-                      above: 71.5
-                  sequence:
-                    - service: fan.turn_on
-                      target:
-                        entity_id: fan.office_fan
-              default: []
+    - service: adaptive_lighting.apply
+      data:
+        lights:
+          - light.office
+        adapt_brightness: true
+        adapt_color: true
+        turn_on_lights: true
+        transition: 1
+        entity_id: switch.adaptive_lighting_adapt_brightness_default
+    - delay: "00:00:00.500"  # 500ms delay
+    - service: adaptive_lighting.apply
+      data:
+        lights:
+          - light.office
+        adapt_brightness: true
+        adapt_color: true
+        turn_on_lights: true
+        entity_id: switch.adaptive_lighting_adapt_brightness_default
 
-        # **Step 2: PERSONALIZED SETTINGS IF BTLE ALREADY DETECTED SOMEONE**
-        - conditions:
-            - condition: template
-              value_template: "{{ states('sensor.sean_room_location') in ['office'] }}"
-            - condition: template
-              value_template: "{{ states('sensor.emily_room_location') not in ['office'] }}"
-          sequence:
-            - service: adaptive_lighting.apply
-              data:
-                lights:
-                  - light.office
-                adapt_brightness: true
-                adapt_color: true
-                turn_on_lights: false
-                transition: 60
-                entity_id: switch.adaptive_lighting_adapt_brightness_office
+# Office Auto Brightness Transition (based on Sun)
+- alias: "Office Auto Brightness Transition"
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: 
+        - sun.sun
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: "home"
+    - condition: state
+      entity_id: light.office
+      state: "on"
+  action:
+    - service: adaptive_lighting.apply
+      data:
+        lights:
+          - light.office
+        adapt_brightness: true
+        adapt_color: true
+        turn_on_lights: true
+        transition: 60
+        entity_id: switch.adaptive_lighting_adapt_brightness_default
+    - service: adaptive_lighting.apply
+      data:
+        lights:
+          - light.office
+        adapt_brightness: true
+        adapt_color: true
+        turn_on_lights: true
+        transition: 60
+        entity_id: switch.adaptive_lighting_default
 
-        - conditions:
-            - condition: template
-              value_template: "{{ states('sensor.emily_room_location') in ['office'] }}"
-            - condition: template
-              value_template: "{{ states('sensor.sean_room_location') not in ['office'] }}"
-          sequence:
-            - service: adaptive_lighting.apply
-              data:
-                lights:
-                  - light.office
-                adapt_brightness: true
-                adapt_color: true
-                turn_on_lights: false
-                transition: 60
-                entity_id: switch.adaptive_lighting_adapt_brightness_default
-            - choose:
-                - conditions:
-                    - condition: numeric_state
-                      entity_id: sensor.office_temperature_f
-                      above: 72.5
-                  sequence:
-                    - service: fan.turn_on
-                      target:
-                        entity_id: fan.office_fan
-              default: []
+# Turn Off Office Lights After No Activity for 3 Minutes
+- alias: "Turn Office Lights Off After No Activity"
+  initial_state: on
+  trigger:
+    platform: time_pattern
+    minutes: "/3"
+  condition:
+    - condition: state
+      entity_id: input_boolean.sean_office_presence
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.emily_office_presence
+      state: "off"
+    - condition: state
+      entity_id: group.office_motion
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.office_occupied
+      state: "off"
+    - condition: template
+      value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}"
+    - condition: template
+      value_template: "{{ not is_state('sensor.sean_room_location', 'office') }}"
+    - condition: template
+      value_template: "{{ not is_state('sensor.emily_room_location', 'office') }}"
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.office
+        transition: 2
+    - delay: "00:00:01"
+    - service: light.turn_off
+      data:
+        entity_id: light.office
+        transition: 2
 
-        # **Step 3: IF BOTH ARE IN OFFICE, USE EMILY'S LIGHTING, SEAN'S FAN PREFERENCE**
-        - conditions:
-            - condition: template
-              value_template: "{{ states('sensor.sean_room_location') in ['office'] }}"
-            - condition: template
-              value_template: "{{ states('sensor.emily_room_location') in ['office'] }}"
-          sequence:
-            - service: adaptive_lighting.apply
-              data:
-                lights:
-                  - light.office
-                adapt_brightness: true
-                adapt_color: true
-                turn_on_lights: false
-                transition: 60
-                entity_id: switch.adaptive_lighting_adapt_brightness_default
-            - choose:
-                - conditions:
-                    - condition: numeric_state
-                      entity_id: sensor.office_temperature_f
-                      above: 71.5
-                  sequence:
-                    - service: fan.turn_on
-                      target:
-                        entity_id: fan.office_fan
-              default: []
-
-        # **Step 4: IF ROOM BECOMES EMPTY, TURN EVERYTHING OFF SMOOTHLY**
-        - conditions:
-            - condition: template
-              value_template: >-
-                {{
-                  states('sensor.sean_room_location') not in ['office'] and
-                  states('sensor.emily_room_location') not in ['office'] and
-                  is_state('group.office_motion','off') and
-                  is_state('input_boolean.sean_office_presence','off') and
-                  is_state('input_boolean.emily_office_presence','off') and
-                  is_state('input_boolean.office_occupied','off') and
-                  (not is_state('sensor.steam_76561197976250572','online'))
-                }}
-          sequence:
-            - service: light.turn_off
-              data:
-                entity_id: light.office
-                transition: 2
-            - service: fan.turn_off
-              target:
-                entity_id: fan.office_fan
+# Randomize Hue Scenes at Sunset
+- alias: Randomize Office Hue Scenes
+  initial_state: off
+  trigger:
+    platform: time_pattern
+    minutes: '/5'
+  condition:
+    - condition: state
+      entity_id: group.seanemily
+      state: 'home'
+    - condition: sun
+      after: sunset
+      before: sunrise
+    - condition: state
+      entity_id: input_boolean.bedtime_sean
+      state: 'off'
+    - condition: state
+      entity_id: light.office
+      state: 'on'
+    - condition: time
+      after: '19:00:00'
+      before: '03:00:00'
+  action:
+    - variables:
+        options: "{{ state_attr('input_select.hue_office', 'options') }}"
+        random_index: "{{ range(options | length) | random }}"
+    - service: input_select.select_option
+      data:
+        option: "{{ options[random_index] }}"
+      target:
+        entity_id: input_select.hue_office
+    - service: scene.turn_on
+      data:
+        entity_id: "{{ options[random_index] }}"
+    - service: automation.turn_off
+      target:
+        entity_id: automation.office_auto_brightness_transition

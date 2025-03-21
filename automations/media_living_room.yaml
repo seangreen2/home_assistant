@@ -1,11 +1,10 @@
-# General Media Player Automations
+# General Media Player Automations with Smart Delay for Idle/Unavailable State
 - alias: "Media Player Automations"
   initial_state: true
   trigger:
     - platform: state
       entity_id:
         - media_player.plex_living_room_tv
-#        - media_player.plex_plex_for_android_tv_bravia_vh1
       from: 
         - "playing"
         - "paused"
@@ -16,6 +15,7 @@
         - "paused"
         - "idle"
         - "unavailable"
+
   condition:
     - condition: not
       conditions:
@@ -23,9 +23,10 @@
           entity_id: media_player.nvidia_shield_pro
           attribute: source
           state: "Spotify"
+
   action:
     - choose:
-        # Media player playing
+        # ▶ **Media player is playing**
         - conditions:
             - condition: template
               value_template: "{{ trigger.to_state.state == 'playing' }}"
@@ -42,7 +43,7 @@
                 brightness_pct: 1
                 kelvin: 5400
 
-        # Media player paused
+        # ⏸ **Media player is paused**
         - conditions:
             - condition: template
               value_template: "{{ trigger.to_state.state == 'paused' }}"
@@ -66,11 +67,15 @@
                 brightness_pct: 33
                 transition: 4
 
-        # Media player idle or unavailable
+        # ⏹ **Media player goes idle or unavailable (Smart Delay with State Re-Check)**
         - conditions:
             - condition: template
               value_template: "{{ trigger.to_state.state in ['idle', 'unavailable'] }}"
           sequence:
+            - delay:
+                seconds: 3  # ⏳ Waits 2 seconds before making changes
+            - condition: template  # 🔄 **Re-check the media player state!**
+              value_template: "{{ states('media_player.plex_living_room_tv') in ['idle', 'unavailable'] }}"
             - service: adaptive_lighting.apply
               data:
                 lights:

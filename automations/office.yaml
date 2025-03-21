@@ -1,10 +1,17 @@
-# Turn on Office fan above temp
-- alias: "Turn on Fan on motion"
+# ✅ Turn on Office Fan Based on Motion & Temperature
+- alias: "Turn on Office Fan on Motion or Temperature"
   initial_state: on
   trigger:
+    # Motion detected in the office
     - platform: state
       entity_id: group.office_motion
       to: "on"
+
+    # Temperature goes above 72°F
+    - platform: numeric_state
+      entity_id: sensor.office_temperature_f
+      above: 72
+
   condition:
     condition: and
     conditions:
@@ -13,56 +20,50 @@
         state: "home"
       - condition: numeric_state
         entity_id: sensor.office_temperature_f
-        above: '72'
-  action:
-    service: switch.turn_on
-    entity_id: switch.office_fan
+        above: 72
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_boolean.office_occupied
+            state: "on"
+          - condition: state
+            entity_id: group.office_motion
+            state: "on"
 
-# Turn on Office fan above temp
-- alias: "Turn on Fan above certain temp"
+  action:
+    - service: switch.turn_on
+      entity_id: switch.office_fan
+
+# ✅ Turn off Office Fan When Room Cools or Becomes Unoccupied
+- alias: "Turn off Office Fan When Temp Drops or Room Empty"
   initial_state: on
   trigger:
+    # Temperature drops below 71°F
     - platform: numeric_state
       entity_id: sensor.office_temperature_f
-      above: '72'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: person.sean_green
-        state: "home"
-      - condition: state
-        entity_id: input_boolean.office_occupied
-        state: "on"
-  action:
-    service: switch.turn_on
-    entity_id: switch.office_fan
+      below: 71
 
-# Turn off Office fan below temp
-- alias: "Turn off Fan below certain temp"
-  initial_state: on
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.office_temperature_f
-    below: '71'
-  action:
-    service: switch.turn_off
-    entity_id: switch.office_fan
+    # Office occupancy turns off for 10 minutes
+    - platform: state
+      entity_id: input_boolean.office_occupied
+      to: "off"
+      for:
+        minutes: 10
 
-# Turn off Office fan after 30 minutes
-- alias: "Turn off Office Fan"
-  initial_state: on
-  trigger:
-    platform: state
-    entity_id: input_boolean.office_occupied
-    to: "off"
-    for:
-      minutes: 5
   condition:
     condition: and
     conditions:
       - condition: template
-        value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # NOT condition
+        value_template: "{{ not is_state('sensor.steam_76561197976250572', 'online') }}" # Ensures Steam status doesn't override shutdown
+      - condition: or
+        conditions:
+          - condition: numeric_state
+            entity_id: sensor.office_temperature_f
+            below: 71
+          - condition: state
+            entity_id: input_boolean.office_occupied
+            state: "off"
+
   action:
-    service: switch.turn_off
-    entity_id: switch.office_fan
+    - service: switch.turn_off
+      entity_id: switch.office_fan

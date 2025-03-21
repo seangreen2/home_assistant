@@ -54,47 +54,6 @@
         entity_id: climate.upstairs
         preset_mode: "eco"
 
-# Set Nest to Home Mode when Family Returns
-- alias: "Nest Home Mode"
-  initial_state: on
-  trigger:
-    platform: state
-    entity_id: group.family
-    to: "home"
-  action:
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.downstairs
-        preset_mode: "none"
-    - service: climate.set_hvac_mode
-      data_template:
-        entity_id: climate.downstairs
-        hvac_mode: >
-          {% if states('sensor.season') in ['spring', 'summer'] %}
-            cool
-          {% elif states('sensor.season') == 'autumn' %}
-            heat_cool
-          {% else %}
-            heat_cool
-          {% endif %}
-    - delay:
-        seconds: 30
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.upstairs
-        preset_mode: "none"
-    - service: climate.set_hvac_mode
-      data_template:
-        entity_id: climate.upstairs
-        hvac_mode: >
-          {% if states('sensor.season') in ['spring', 'summer'] %}
-            cool
-          {% elif states('sensor.season') == 'autumn' %}
-            heat_cool
-          {% else %}
-            heat_cool
-          {% endif %}
-
 # Turn on Lights when People Arrive (if it's dark)
 - alias: "Lights On in the Evening"
   initial_state: on

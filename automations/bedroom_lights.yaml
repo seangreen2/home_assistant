@@ -10,7 +10,7 @@
       to: 'on'
   condition:
     - condition: state
-      entity_id: group.family
+      entity_id: group.seanemily
       state: 'home'
     - condition: state
       entity_id: light.bedroom
@@ -54,7 +54,7 @@
         - sun.sun
   condition:
     - condition: state
-      entity_id: group.family
+      entity_id: group.seanemily
       state: 'home'
     - condition: state
       entity_id: light.bedroom
@@ -114,7 +114,7 @@
       to: 'on'
   condition:
     - condition: state
-      entity_id: group.family
+      entity_id: group.seanemily
       state: 'home'
     - condition: or
       conditions:

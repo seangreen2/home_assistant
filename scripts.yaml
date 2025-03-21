@@ -74,8 +74,6 @@ morning:
     - service: automation.turn_on
       entity_id: automation.office_auto_brightness
     - service: automation.turn_on
-      entity_id: automation.office_auto_brightness_transition
-    - service: automation.turn_on
       entity_id: automation.media_player_automations
     - service: switch.turn_on
       entity_id: switch.bias_lights
@@ -270,7 +268,8 @@ office_lights_toggle:
             adapt_brightness: true
             adapt_color: true
             turn_on_lights: true
-            entity_id: switch.adaptive_lighting_adapt_brightness_default
+            entity_id: switch.adaptive_lighting_office
+
 
 # bedroom lights toggle button
 bedroom_lights_toggle:

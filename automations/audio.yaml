@@ -87,3 +87,183 @@
     - service: media_player.media_pause
       data:
         entity_id: media_player.spotify_sean
+
+# Whole House Audio
+# Whole House Audio (Only Unmute if Whole House is Playing)
+- alias: "Unmute Speakers in Occupied Rooms Only If Whole House Is Playing"
+  initial_state: off
+  trigger:
+    - platform: state
+      entity_id: media_player.whole_house
+      to: "playing"
+    - platform: state
+      entity_id:
+        - input_boolean.living_room_occupied
+        - input_boolean.office_occupied
+        - input_boolean.bedroom_occupied
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: media_player.whole_house
+      state: "playing"
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.living_room_occupied
+              state: "on"
+          sequence:
+            - service: media_player.volume_set
+              target:
+                entity_id:
+                  - media_player.nesthub
+                  - media_player.living_room_speaker
+              data:
+                volume_level: 0.3
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.office_occupied
+              state: "on"
+          sequence:
+            - service: media_player.volume_set
+              target:
+                entity_id: media_player.office_speaker
+              data:
+                volume_level: 0.35
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.bedroom_occupied
+              state: "on"
+          sequence:
+            - service: media_player.volume_set
+              target:
+                entity_id:
+                  - media_player.bathroom_speaker
+                  - media_player.bedroom_speaker
+              data:
+                volume_level: 0.6
+
+# Gradually Mute Speakers in Empty Rooms
+- alias: "Gradually Mute Speakers in Empty Rooms"
+  initial_state: off
+  trigger:
+    - platform: state
+      entity_id:
+        - input_boolean.living_room_occupied
+        - input_boolean.office_occupied
+        - input_boolean.bedroom_occupied
+      to: "off"
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.living_room_occupied
+              state: "off"
+          sequence:
+            - service: media_player.volume_set
+              target:
+                entity_id:
+                  - media_player.nesthub
+                  - media_player.living_room_speaker
+              data:
+                volume_level: 0.4
+            - delay: "00:00:02"
+            - service: media_player.volume_set
+              target:
+                entity_id:
+                  - media_player.nesthub
+                  - media_player.living_room_speaker
+              data:
+                volume_level: 0.2
+            - delay: "00:00:03"
+            - service: media_player.volume_set
+              target:
+                entity_id:
+                  - media_player.nesthub
+                  - media_player.living_room_speaker
+              data:
+                volume_level: 0
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.office_occupied
+              state: "off"
+          sequence:
+            - service: media_player.volume_set
+              target:
+                entity_id: media_player.office_speaker
+              data:
+                volume_level: 0.5
+            - delay: "00:00:02"
+            - service: media_player.volume_set
+              target:
+                entity_id: media_player.office_speaker
+              data:
+                volume_level: 0.2
+            - delay: "00:00:03"
+            - service: media_player.volume_set
+              target:
+                entity_id: media_player.office_speaker
+              data:
+                volume_level: 0
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.bedroom_occupied
+              state: "off"
+          sequence:
+            - service: media_player.volume_set
+              target:
+                entity_id:
+                  - media_player.bathroom_speaker
+                  - media_player.bedroom_speaker
+              data:
+                volume_level: 0.5
+            - delay: "00:00:02"
+            - service: media_player.volume_set
+              target:
+                entity_id:
+                  - media_player.bathroom_speaker
+                  - media_player.bedroom_speaker
+              data:
+                volume_level: 0.2
+            - delay: "00:00:03"
+            - service: media_player.volume_set
+              target:
+                entity_id:
+                  - media_player.bathroom_speaker
+                  - media_player.bedroom_speaker
+              data:
+                volume_level: 0
+
+# Restore Default Volume When Whole House Stops Playing
+- alias: "Restore Default Speaker Volumes When Whole House Stops Playing"
+  initial_state: off
+  trigger:
+    - platform: state
+      entity_id: media_player.whole_house
+      to: "off"
+  action:
+    - service: media_player.volume_set
+      target:
+        entity_id: media_player.nesthub
+      data:
+        volume_level: 0.7
+    - service: media_player.volume_set
+      target:
+        entity_id: media_player.living_room_speaker
+      data:
+        volume_level: 0.4
+    - service: media_player.volume_set
+      target:
+        entity_id: media_player.office_speaker
+      data:
+        volume_level: 0.5
+    - service: media_player.volume_set
+      target:
+        entity_id: media_player.bedroom_speaker
+      data:
+        volume_level: 0.7
+    - service: media_player.volume_set
+      target:
+        entity_id: media_player.bathroom_speaker
+      data:
+        volume_level: 0.6

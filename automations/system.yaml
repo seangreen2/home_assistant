@@ -174,7 +174,7 @@
 
 # Bedtime Joyce
 - alias: 'Joyce Bedtime'
-  initial_state: on
+  initial_state: off
   trigger:
     platform: state
     entity_id: sensor.joyce_phone_battery_state
@@ -184,7 +184,7 @@
 
 # Bedtime Joyce
 - alias: 'Joyce Bedtime Battery Full'
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: time_pattern
       minutes: "/10"
@@ -200,7 +200,7 @@
 
 # Morning Joyce
 - alias: 'Joyce Morning'
-  initial_state: on
+  initial_state: off
   trigger:
     platform: state
     entity_id: sensor.joyce_phone_battery_state
@@ -387,11 +387,8 @@
       entity_id:
         - sensor.kitty_throne_status_code
       to: cst
-  conditions: []
   actions:
     - action: switch.turn_on
-      metadata: {}
-      data: {}
       target:
         entity_id: switch.air_freshener_switch
     - delay:
@@ -400,8 +397,6 @@
         seconds: 0
         milliseconds: 0
     - action: switch.turn_off
-      metadata: {}
-      data: {}
       target:
         entity_id: switch.air_freshener_switch
 
@@ -465,13 +460,25 @@
       at: "12:30:00"
     - platform: time
       at: "16:30:00"
-  condition: []
+
   action:
-    - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}"
-    - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}"
-    - wait_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}"
-    - wait_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}"
+    - repeat:
+        while: 
+          - condition: template
+            value_template: >
+              {{ is_state('media_player.plex_living_room_tv', 'playing') 
+              or is_state('media_player.plex_living_room_tv', 'paused') 
+              or is_state('media_player.nvidia_shield_pro', 'playing') 
+              or is_state('media_player.nvidia_shield_pro', 'paused') }}
+        sequence:
+          - delay: 
+              minutes: 5  # Keeps checking every 5 minutes until TV is off
+
+    - delay: 
+        minutes: 10  # After TV is off, wait a full 10 minutes before running
+
     - service: script.vac_clean_sunroom
+
 
 # Vacuum hardwood floors three times a week
 - alias: Vacuum Hardwood Floors
@@ -479,6 +486,7 @@
   trigger:
     - platform: time
       at: "14:00:00"
+
   condition:
     - condition: time
       weekday:
@@ -493,12 +501,25 @@
         - condition: state
           entity_id: person.sean_green
           state: 'home'
+
   action:
-    - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'paused') }}"
-    - wait_template: "{{ not is_state('media_player.plex_living_room_tv', 'playing') }}"
-    - wait_template: "{{ not is_state('media_player.nvidia_shield_pro', 'paused') }}"
-    - wait_template: "{{ not is_state('media_player.nvidia_shield_pro', 'playing') }}"
+    - repeat:
+        while: 
+          - condition: template
+            value_template: >
+              {{ is_state('media_player.plex_living_room_tv', 'playing') 
+              or is_state('media_player.plex_living_room_tv', 'paused') 
+              or is_state('media_player.nvidia_shield_pro', 'playing') 
+              or is_state('media_player.nvidia_shield_pro', 'paused') }}
+        sequence:
+          - delay: 
+              minutes: 5  # Keeps checking every 5 minutes until TV is off
+
+    - delay: 
+        minutes: 10  # After TV is off, wait a full 10 minutes before running
+
     - service: script.vac_clean_multiroom
+
 
 # Upstairs vac three times a week
 - alias: Vacuum Upstairs
@@ -623,7 +644,7 @@
         message: "Rosie is stuck. Please help her!"
         title: "Vacuum Alert"
 
-# Litter Robot offline for 30 minutes
+# Litter Robot offline for 15 minutes
 - alias: Litter Robot Offline
   initial_state: on
   trigger:
@@ -639,23 +660,6 @@
       data:
         message: "The Cat Shitter is powered down. Turn it back on!"
         title: "Cat Shitter Offline"
-        
-# Turn Off Litter Robot Pinch Detect
-- alias: Litter Robot Pinch Error
-  initial_state: on
-  trigger:
-    - platform: state
-      entity_id: sensor.kitty_throne_status_code
-      to: 'Pinch Detect'
-      for:
-        seconds: 15
-  action:
-    - service: vacuum.stop
-      entity_id: vacuum.kitty_throne_litter_box
-    - delay:
-        seconds: 10
-    - service: vacuum.start
-      entity_id: vacuum.kitty_throne_litter_box
 
 # Turn off Washer at night
 - alias: Turn off Washer

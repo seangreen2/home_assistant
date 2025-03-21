@@ -1,31 +1,14 @@
+# Bedroom Media Player Automation with Smart Idle Delay
 - alias: "Bedroom media player automation"
   initial_state: on
   trigger:
     - platform: state
       entity_id: 
         - media_player.plex_bedroom_stick
-  condition: []
+  
   action:
     - choose:
-        # Lights back to full over 7 seconds after media stops
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.from_state.state == 'playing' and trigger.to_state.state == 'idle' }}"
-            - condition: state
-              entity_id: input_boolean.bedtime_emily
-              state: "off"
-          sequence:
-            - service: adaptive_lighting.apply
-              data:
-                lights:
-                  - light.bedroom
-                adapt_brightness: true
-                adapt_color: false
-                turn_on_lights: true
-                transition: 15
-                entity_id: switch.adaptive_lighting_adapt_brightness_default
-
-        # Lights turn off while media is playing
+        # ▶ **Lights turn off when media is playing**
         - conditions:
             - condition: template
               value_template: "{{ trigger.to_state.state == 'playing' }}"
@@ -35,7 +18,7 @@
                 entity_id: light.bedroom
                 transition: 4
 
-        # Lights dim when media is paused
+        # ⏸ **Lights dim when media is paused**
         - conditions:
             - condition: template
               value_template: "{{ trigger.from_state.state == 'playing' and trigger.to_state.state == 'paused' }}"
@@ -49,7 +32,7 @@
                 brightness_pct: 33
                 transition: 7
 
-        # Lights turn off when media is unpaused
+        # ▶ **Lights turn off when media is unpaused**
         - conditions:
             - condition: template
               value_template: "{{ trigger.from_state.state == 'paused' and trigger.to_state.state == 'playing' }}"
@@ -58,14 +41,18 @@
               data:
                 entity_id: light.bedroom
 
-        # Lights dim to full going from paused to idle
+        # ⏹ **Smart Delay Before Lights Change on Idle**
         - conditions:
             - condition: template
-              value_template: "{{ trigger.from_state.state == 'paused' and trigger.to_state.state == 'idle' }}"
+              value_template: "{{ trigger.to_state.state in ['idle', 'unavailable'] }}"
             - condition: state
               entity_id: input_boolean.bedtime_emily
               state: "off"
           sequence:
+            - delay:
+                seconds: 3  # ⏳ Waits 2 seconds before making changes
+            - condition: template  # 🔄 **Re-check the media player state!**
+              value_template: "{{ states('media_player.plex_bedroom_stick') == 'idle' }}"
             - service: adaptive_lighting.apply
               data:
                 lights:
@@ -73,6 +60,5 @@
                 adapt_brightness: true
                 adapt_color: false
                 turn_on_lights: true
-                transition: 10
+                transition: 15
                 entity_id: switch.adaptive_lighting_adapt_brightness_default
-      default: []
