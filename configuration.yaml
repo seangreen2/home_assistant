@@ -96,6 +96,7 @@ system_health:
 lovelace:
   #mode: yaml
 
+    
 frontend:
   themes: !include_dir_merge_named themes
 
@@ -151,6 +152,10 @@ history:
       - sensor.main_server_memory_usage
       - sensor.plex_server_cpu_usage
       - sensor.plex_server_memory_usage
+      - sensor.fridge_plug_power
+      - sensor.fridge_plug_summation_delivered
+      - sensor.radon_plug_power
+      - sensor.radon_plug_summation_delivered
 
 
 recorder:
@@ -195,6 +200,10 @@ recorder:
       - sensor.main_server_memory_usage
       - sensor.plex_server_cpu_usage
       - sensor.plex_server_memory_usage
+      - sensor.fridge_plug_power
+      - sensor.fridge_plug_summation_delivered
+      - sensor.radon_plug_power
+      - sensor.radon_plug_summation_delivered
 
 
 # View all events in a logbook

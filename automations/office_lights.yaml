@@ -15,6 +15,8 @@
     - condition: state
       entity_id: light.office
       state: 'off'
+    - condition: time
+      before: "21:00:00"
   action:
     - service: adaptive_lighting.apply
       data:
@@ -34,6 +36,52 @@
         adapt_color: true
         turn_on_lights: true
         entity_id: switch.adaptive_lighting_adapt_brightness_default
+
+# office mood lighting after 9.
+- alias: "Office Auto Brightness with Time Condition"
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: group.office_motion
+      to: "on"
+    - platform: time
+      at: "21:00:00"
+  condition:
+    - condition: state
+      entity_id: group.seanemily
+      state: "home"
+    - condition: time
+      after: "20:59:59"  # Only run after 9pm
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: light.office
+              state: 'off'
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.office
+                brightness_pct: 1
+                transition: 1
+            - service: automation.turn_off
+              entity_id:
+                - automation.office_auto_brightness
+                - automation.office_auto_brightness_transition
+        - conditions:
+            - condition: state
+              entity_id: light.office
+              state: 'on'
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.office
+                brightness_pct: 1
+                transition: 60
+            - service: automation.turn_off
+              entity_id:
+                - automation.office_auto_brightness
+                - automation.office_auto_brightness_transition
 
 # Office Auto Brightness Transition (based on Sun)
 - alias: "Office Auto Brightness Transition"
@@ -104,6 +152,34 @@
       data:
         entity_id: light.office
         transition: 2
+    - service: switch.turn_off
+      target:
+        entity_id:
+          - switch.led_lamp_left
+          - switch.led_lamp_right
+
+# turn on corner lamps after sunset
+- alias: "Toggle LED Corner Lamps"
+  trigger:
+    - platform: state
+      entity_id:
+        - group.office_motion
+        - input_boolean.office_occupied
+      to: "on"
+    - platform: sun
+      event: sunset
+  condition:
+    - condition: sun
+      after: sunset
+    - condition: state
+      entity_id: group.seanemily
+      state: "home"
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id:
+          - switch.led_lamp_left
+          - switch.led_lamp_right
 
 # Randomize Hue Scenes at Sunset
 - alias: Randomize Office Hue Scenes

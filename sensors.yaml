@@ -249,3 +249,17 @@
   sensors:
     upstairs_hvac_state:
       value_template: "{{states.climate.upstairs.attributes.hvac_action}}"
+
+
+- platform: rest
+  name: NWS Weather Alerts
+  resource: !secret nws_api
+  method: GET
+  headers:
+    User-Agent: "HomeAssistant"
+    Accept: "application/geo+json"
+  value_template: "{{ value_json.features | length }}"
+  json_attributes_path: "$.features"
+  json_attributes:
+    - properties
+  scan_interval: 900  # Updates every 15 minutes

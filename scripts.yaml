@@ -43,6 +43,10 @@ bedtime:
     - service: switch.turn_off
       entity_id: switch.air_freshener_switch
     - service: switch.turn_off
+      entity_id: switch.led_lamp_left
+    - service: switch.turn_off
+      entity_id: switch.led_lamp_right
+    - service: switch.turn_off
       entity_id: switch.office_fan
     - service: switch.turn_off
       entity_id: switch.living_room_fan
@@ -269,6 +273,29 @@ office_lights_toggle:
             adapt_color: true
             turn_on_lights: true
             entity_id: switch.adaptive_lighting_office
+
+# office croner lamps toggle
+toggle_led_lamps:
+  sequence:
+    - if:
+        - condition: state
+          entity_id: switch.led_lamp_left
+          state: 'on'
+        - condition: state
+          entity_id: switch.led_lamp_right
+          state: 'on'
+      then:
+        - service: switch.turn_off
+          target:
+            entity_id:
+              - switch.led_lamp_left
+              - switch.led_lamp_right
+      else:
+        - service: switch.turn_on
+          target:
+            entity_id:
+              - switch.led_lamp_left
+              - switch.led_lamp_right
 
 
 # bedroom lights toggle button
