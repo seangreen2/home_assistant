@@ -102,12 +102,6 @@
           {% set media_blocking = is_state('media_player.plex_living_room_tv', 'playing') 
           or is_state('media_player.shield', 'playing') %}
           {{ not media_blocking }}
-      # Only adjust temperature if it's currently at 75 or 76
-      - condition: template
-        value_template: >
-          {% set temp = state_attr('climate.downstairs', 'temperature') | int(default=0) %}
-          {% set target_high = state_attr('climate.downstairs', 'target_temp_high') | int(default=0) %}
-          {{ temp in [75, 76] or target_high in [75, 76] }}
 
   action:
     - choose:
@@ -126,21 +120,27 @@
                     - condition: state
                       entity_id: climate.downstairs
                       state: "cool"
+                    - condition: template
+                      value_template: >
+                        {{ state_attr('climate.downstairs', 'temperature') | int > 73 }}
                   sequence:
                     - service: climate.set_temperature
                       data:
                         entity_id: climate.downstairs
-                        temperature: "{{ state_attr('climate.downstairs', 'temperature') | int - 2 }}"
+                        temperature: "{{ [73, state_attr('climate.downstairs', 'temperature') | int - 2] | max }}"
                 # If in 'heat_cool' mode, adjust target high temp
                 - conditions:
                     - condition: state
                       entity_id: climate.downstairs
                       state: "heat_cool"
+                    - condition: template
+                      value_template: >
+                        {{ state_attr('climate.downstairs', 'target_temp_high') | int > 73 }}
                   sequence:
                     - service: climate.set_temperature
                       data:
                         entity_id: climate.downstairs
-                        target_temp_high: "{{ state_attr('climate.downstairs', 'target_temp_high') | int - 2 }}"
+                        target_temp_high: "{{ [73, state_attr('climate.downstairs', 'target_temp_high') | int - 2] | max }}"
                         target_temp_low: "{{ state_attr('climate.downstairs', 'target_temp_low') | int }}"
 
         # If no one is downstairs, raise cooling temp, but only if not already maxed
@@ -167,7 +167,7 @@
                     - service: climate.set_temperature
                       data:
                         entity_id: climate.downstairs
-                        temperature: "{{ state_attr('climate.downstairs', 'temperature') | int + 2 }}"
+                        temperature: "{{ [75, state_attr('climate.downstairs', 'temperature') | int + 2] | min }}"
                 # If in 'heat_cool' mode, adjust target high temp
                 - conditions:
                     - condition: state
@@ -177,28 +177,32 @@
                     - service: climate.set_temperature
                       data:
                         entity_id: climate.downstairs
-                        target_temp_high: "{{ state_attr('climate.downstairs', 'target_temp_high') | int + 2 }}"
+                        target_temp_high: "{{ [75, state_attr('climate.downstairs', 'target_temp_high') | int + 2] | min }}"
                         target_temp_low: "{{ state_attr('climate.downstairs', 'target_temp_low') | int }}"
-
-
+#
+#
 # Adjust Upstairs HVAC temperature based on presence
 - alias: Adjust Upstairs HVAC
   initial_state: on
 
   trigger:
-    # Someone is upstairs for 5+ minutes
+    # Someone is upstairs for 7+ minutes
     - platform: template
       value_template: >
-        {{ states('sensor.sean_room_location') in ['office', 'bedroom', 'bedroom2', 'guest'] 
-        or states('sensor.emily_room_location') in ['office', 'bedroom', 'bedroom2', 'guest'] }}
+        {% set sean_location = states('sensor.sean_room_location') | lower %}
+        {% set emily_location = states('sensor.emily_room_location') | lower %}
+        {{ sean_location in ['office', 'bedroom', 'bedroom2', 'guest'] 
+        or emily_location in ['office', 'bedroom', 'bedroom2', 'guest'] }}
       for:
         minutes: 7
 
     # No one is upstairs for 5+ minutes
     - platform: template
       value_template: >
-        {{ not (states('sensor.sean_room_location') in ['office', 'bedroom', 'bedroom2', 'guest']
-        or states('sensor.emily_room_location') in ['office', 'bedroom', 'bedroom2', 'guest']) }}
+        {% set sean_location = states('sensor.sean_room_location') | lower %}
+        {% set emily_location = states('sensor.emily_room_location') | lower %}
+        {{ sean_location not in ['office', 'bedroom', 'bedroom2', 'guest']
+        and emily_location not in ['office', 'bedroom', 'bedroom2', 'guest'] }}
       for:
         minutes: 5
 
@@ -220,12 +224,6 @@
       - condition: template
         value_template: >
           {{ not is_state('media_player.plex_bedroom_tv', 'playing') }}
-      # Only adjust temperature if it's currently at 75 or 76
-      - condition: template
-        value_template: >
-          {% set temp = state_attr('climate.upstairs', 'temperature') | int(default=0) %}
-          {% set target_high = state_attr('climate.upstairs', 'target_temp_high') | int(default=0) %}
-          {{ temp in [75, 76] or target_high in [75, 76] }}
 
   action:
     - choose:
@@ -244,21 +242,27 @@
                     - condition: state
                       entity_id: climate.upstairs
                       state: "cool"
+                    - condition: template
+                      value_template: >
+                        {{ state_attr('climate.upstairs', 'temperature') | int > 73 }}
                   sequence:
                     - service: climate.set_temperature
                       data:
                         entity_id: climate.upstairs
-                        temperature: "{{ state_attr('climate.upstairs', 'temperature') | int - 2 }}"
+                        temperature: "{{ [73, state_attr('climate.upstairs', 'temperature') | int - 2] | max }}"
                 # If in 'heat_cool' mode, adjust target high temp
                 - conditions:
                     - condition: state
                       entity_id: climate.upstairs
                       state: "heat_cool"
+                    - condition: template
+                      value_template: >
+                        {{ state_attr('climate.upstairs', 'target_temp_high') | int > 73 }}
                   sequence:
                     - service: climate.set_temperature
                       data:
                         entity_id: climate.upstairs
-                        target_temp_high: "{{ state_attr('climate.upstairs', 'target_temp_high') | int - 2 }}"
+                        target_temp_high: "{{ [73, state_attr('climate.upstairs', 'target_temp_high') | int - 2] | max }}"
                         target_temp_low: "{{ state_attr('climate.upstairs', 'target_temp_low') | int }}"
 
         # If no one is upstairs, raise cooling temp, but only if not already maxed
@@ -269,7 +273,6 @@
                 {% set emily_location = states('sensor.emily_room_location') %}
                 {{ sean_location not in ['office', 'bedroom', 'bedroom2', 'guest']
                 and emily_location not in ['office', 'bedroom', 'bedroom2', 'guest'] }}
-            # Ensure temperature does not exceed 75
             - condition: template
               value_template: >
                 {% set current_temp = state_attr('climate.upstairs', 'temperature') | int(default=0) %}
@@ -286,7 +289,7 @@
                     - service: climate.set_temperature
                       data:
                         entity_id: climate.upstairs
-                        temperature: "{{ state_attr('climate.upstairs', 'temperature') | int + 2 }}"
+                        temperature: "{{ [75, state_attr('climate.upstairs', 'temperature') | int + 2] | min }}"
                 # If in 'heat_cool' mode, adjust target high temp
                 - conditions:
                     - condition: state
@@ -296,9 +299,8 @@
                     - service: climate.set_temperature
                       data:
                         entity_id: climate.upstairs
-                        target_temp_high: "{{ state_attr('climate.upstairs', 'target_temp_high') | int + 2 }}"
+                        target_temp_high: "{{ [75, state_attr('climate.upstairs', 'target_temp_high') | int + 2] | min }}"
                         target_temp_low: "{{ state_attr('climate.upstairs', 'target_temp_low') | int }}"
-
 
 
 # Circulate Air for Downstairs HVAC when home

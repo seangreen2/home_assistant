@@ -146,6 +146,7 @@ history:
       - light.office
       - sensor.tp_link_power_strip_d754_today_s_consumption
       - sensor.tp_link_power_strip_d754_this_month_s_consumption
+      - sensor.tp_link_power_strip_d754_total_consumption
       - sensor.freezer_plug_power
       - sensor.freezer_plug_summation_delivered
       - sensor.main_server_cpu_usage
@@ -194,6 +195,7 @@ recorder:
       - light.office
       - sensor.tp_link_power_strip_d754_today_s_consumption
       - sensor.tp_link_power_strip_d754_this_month_s_consumption
+      - sensor.tp_link_power_strip_d754_total_consumption
       - sensor.freezer_plug_power
       - sensor.freezer_plug_summation_delivered
       - sensor.main_server_cpu_usage

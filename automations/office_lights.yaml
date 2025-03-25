@@ -121,15 +121,14 @@
 - alias: "Turn Office Lights Off After No Activity"
   initial_state: on
   trigger:
-    platform: time_pattern
-    minutes: "/3"
+    - platform: time_pattern
+      minutes: "/3"
+    - platform: state
+      entity_id: group.office_motion
+      to: "off"
+      for: 
+        minutes: 5
   condition:
-    - condition: state
-      entity_id: input_boolean.sean_office_presence
-      state: "off"
-    - condition: state
-      entity_id: input_boolean.emily_office_presence
-      state: "off"
     - condition: state
       entity_id: group.office_motion
       state: "off"

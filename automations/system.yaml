@@ -437,7 +437,15 @@
       at: "12:30:00"
     - platform: time
       at: "16:30:00"
-
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: person.emily_green
+          state: 'home'
+        - condition: state
+          entity_id: person.sean_green
+          state: 'home'
   action:
     - repeat:
         while: 
