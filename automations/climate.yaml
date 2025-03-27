@@ -9,7 +9,7 @@
       entity_id: binary_sensor.patio_door
       to: "off"
     - platform: time_pattern
-      minutes: "/15"  # Runs every 15 minutes
+      minutes: "/30"  # Runs every 15 minutes
     - platform: numeric_state
       entity_id: sensor.openweathermap_temperature
       above: 76
@@ -49,11 +49,11 @@
           {% else %}
             heat_cool
           {% endif %}
-    - delay: "00:00:10"
+    - delay: "00:00:15"
     - service: homeassistant.reload_config_entry
       target:
         device_id: 41cf689fe0938c4721204e1c10eb5ba8  # Reloads Upstairs Nest
-    - delay: "00:30:00"  # Prevents mode changes for 1 hour
+#    - delay: "00:30:00"  # Prevents mode changes for 1 hour
 
 
 # Adjust Downstairs HVAC temperature based on presence
@@ -434,7 +434,43 @@
               heat_cool
             {% endif %}
           {% endif %}
+    - service: climate.set_hvac_mode
+      data_template:
+        entity_id: climate.upstairs
+        hvac_mode: >
+          {% if is_state('binary_sensor.patio_door', 'on') %}
+            off
+          {% else %}
+            {% set outside_temp = states('sensor.openweathermap_temperature') | float(0) %}
+            {% set downstairs_temp = state_attr('climate.downstairs', 'current_temperature') | float(0) %}
+            
+            {% if outside_temp >= 76 and downstairs_temp >= 72 %}
+              cool
+            {% elif outside_temp < 50 and downstairs_temp < 66 %}
+              heat
+            {% else %}
+              heat_cool
+            {% endif %}
+          {% endif %}
 
+# Set Nest to Away Mode when Family Leaves
+- alias: "Nest Away Mode"
+  initial_state: on
+  trigger:
+    platform: state
+    entity_id: group.seanemily
+    to: "not_home"
+    for:
+      minutes: 10
+  action:
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.downstairs
+        preset_mode: "eco"
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.upstairs
+        preset_mode: "eco"
 
 # Ceiling Fan Control for Living Room based on Occupancy and Temperature
 - alias: Turn on Ceiling Fan (Living Room)

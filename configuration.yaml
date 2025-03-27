@@ -157,6 +157,8 @@ history:
       - sensor.fridge_plug_summation_delivered
       - sensor.radon_plug_power
       - sensor.radon_plug_summation_delivered
+      - sensor.attic_temp_sensor_temperature
+      - sensor.attic_temp_sensor_humidity
 
 
 recorder:
@@ -206,6 +208,8 @@ recorder:
       - sensor.fridge_plug_summation_delivered
       - sensor.radon_plug_power
       - sensor.radon_plug_summation_delivered
+      - sensor.attic_temp_sensor_temperature
+      - sensor.attic_temp_sensor_humidity
 
 
 # View all events in a logbook
@@ -268,9 +272,9 @@ spotcast:
 
 adaptive_lighting:
   lights:
-    #- light.living_room
-    #- light.bedroom
-    - light.office
+    - light.living_room
+    - light.bedroom
+    #- light.office
   max_color_temp: 3300
   min_brightness: 33
   max_brightness: 100

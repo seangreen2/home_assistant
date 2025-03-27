@@ -35,25 +35,6 @@
       target:
         entity_id: camera.blink_garage
 
-# Set Nest to Away Mode when Family Leaves
-- alias: "Nest Away Mode"
-  initial_state: on
-  trigger:
-    platform: state
-    entity_id: group.family
-    to: "not_home"
-    for:
-      minutes: 10
-  action:
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.downstairs
-        preset_mode: "eco"
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.upstairs
-        preset_mode: "eco"
-
 # Turn on Lights when People Arrive (if it's dark)
 - alias: "Lights On in the Evening"
   initial_state: on

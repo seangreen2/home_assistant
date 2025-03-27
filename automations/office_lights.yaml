@@ -1,22 +1,69 @@
-# Office Auto Brightness
-- alias: "Office Auto Brightness"
-  initial_state: on
+- alias: "Office Lux Brightness (Daylight Only)"
+  id: office_lux_brightness_daylight
+  description: >
+    Adjust light.office brightness based on ambient lux, with smooth transitions.
+    Runs only during the day. Adaptive Lighting takes over after sunset.
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: sensor.office_motion_sensor_illuminance
+      for:
+        seconds: 30
+    - platform: time_pattern
+      minutes: "/5"
+  condition:
+    - condition: state
+      entity_id: light.office
+      state: "on"
+    - condition: sun
+      before: sunset
+  action:
+    - variables:
+        lux: "{{ states('sensor.office_motion_sensor_illuminance') | float }}"
+        current_brightness: "{{ (state_attr('light.office', 'brightness') | float(0)) / 2.55 }}"
+        target_brightness: >
+          {% if lux < 85 %}
+            90
+          {% elif lux < 135 %}
+            75
+          {% elif lux < 185 %}
+            60
+          {% elif lux < 230 %}
+            45
+          {% elif lux < 300 %}
+            30
+          {% else %}
+            10
+          {% endif %}
+    - condition: template
+      value_template: >
+        {{ (current_brightness - target_brightness) | abs > 10 }}
+    - service: adaptive_lighting.set_manual_control
+      data:
+        entity_id: switch.adaptive_lighting_office
+        lights: ["light.office"]
+    - service: light.turn_on
+      target:
+        entity_id: light.office
+      data:
+        brightness_pct: "{{ target_brightness }}"
+        transition: 120
+
+
+- alias: "Office Lights On by Motion"
+  id: office_motion_light_on
+  mode: single
   trigger:
     - platform: state
       entity_id: group.office_motion
       to: "on"
-#    - platform: state
-#      entity_id: input_boolean.office_occupied
-#      to: "on"
   condition:
     - condition: state
       entity_id: group.seanemily
       state: "home"
     - condition: state
       entity_id: light.office
-      state: 'off'
-    - condition: time
-      before: "21:00:00"
+      state: "off"
   action:
     - service: adaptive_lighting.apply
       data:
@@ -26,96 +73,46 @@
         adapt_color: true
         turn_on_lights: true
         transition: 1
-        entity_id: switch.adaptive_lighting_adapt_brightness_default
-    - delay: "00:00:00.500"  # 500ms delay
-    - service: adaptive_lighting.apply
-      data:
-        lights:
-          - light.office
-        adapt_brightness: true
-        adapt_color: true
-        turn_on_lights: true
-        entity_id: switch.adaptive_lighting_adapt_brightness_default
+        entity_id: switch.adaptive_lighting_office
 
-# office mood lighting after 9.
-- alias: "Office Auto Brightness with Time Condition"
-  initial_state: on
+
+- alias: "Office Mood Lighting After 9PM"
+  id: office_mood_lighting_9pm
   trigger:
     - platform: state
       entity_id: group.office_motion
       to: "on"
     - platform: time
-      at: "21:00:00"
+      at: "20:00:00"
   condition:
     - condition: state
       entity_id: group.seanemily
       state: "home"
     - condition: time
-      after: "20:59:59"  # Only run after 9pm
+      after: "19:59:59"
   action:
     - choose:
         - conditions:
             - condition: state
               entity_id: light.office
-              state: 'off'
+              state: "off"
           sequence:
             - service: light.turn_on
               data:
                 entity_id: light.office
                 brightness_pct: 1
                 transition: 1
-            - service: automation.turn_off
-              entity_id:
-                - automation.office_auto_brightness
-                - automation.office_auto_brightness_transition
         - conditions:
             - condition: state
               entity_id: light.office
-              state: 'on'
+              state: "on"
           sequence:
             - service: light.turn_on
               data:
                 entity_id: light.office
                 brightness_pct: 1
-                transition: 60
-            - service: automation.turn_off
-              entity_id:
-                - automation.office_auto_brightness
-                - automation.office_auto_brightness_transition
+                transition: 120
 
-# Office Auto Brightness Transition (based on Sun)
-- alias: "Office Auto Brightness Transition"
-  initial_state: on
-  trigger:
-    - platform: state
-      entity_id: 
-        - sun.sun
-  condition:
-    - condition: state
-      entity_id: group.family
-      state: "home"
-    - condition: state
-      entity_id: light.office
-      state: "on"
-  action:
-    - service: adaptive_lighting.apply
-      data:
-        lights:
-          - light.office
-        adapt_brightness: true
-        adapt_color: true
-        turn_on_lights: true
-        transition: 60
-        entity_id: switch.adaptive_lighting_adapt_brightness_default
-    - service: adaptive_lighting.apply
-      data:
-        lights:
-          - light.office
-        adapt_brightness: true
-        adapt_color: true
-        turn_on_lights: true
-        transition: 60
-        entity_id: switch.adaptive_lighting_default
 
 # Turn Off Office Lights After No Activity for 3 Minutes
 - alias: "Turn Office Lights Off After No Activity"

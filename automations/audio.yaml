@@ -22,7 +22,7 @@
   trigger:
     - platform: state
       entity_id: media_player.living_room
-      to: "on"
+      to: "playing"
   action:
     - service: media_player.volume_set
       target:
@@ -33,7 +33,7 @@
       target:
         entity_id: media_player.living_room_speaker
       data:
-        volume_level: 0.35
+        volume_level: 0.3
 
 # Set rain audio on repeat every hour
 - alias: Repeat Rain Audio
