@@ -21,6 +21,7 @@ To ensure detection in our home, we use the following integrations with 100% suc
 ## Dashboard
 ![1](https://i.imgur.com/mN2CWjr.jpeg)
 ![2](https://i.imgur.com/8PTwdXW.jpeg)
-![3](https://i.imgur.com/YmjjfMt.jpeg)
-![4](https://i.imgur.com/ZdSqZI0.png)
+![3](https://i.imgur.com/NKyf7vn.jpeg)
+![4](https://i.imgur.com/BbFnxSC.jpeg)
+![5](https://i.imgur.com/ZdSqZI0.png)
 
