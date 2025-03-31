@@ -29,6 +29,8 @@ bedtime:
     - service: automation.turn_off
       entity_id: automation.office_mood_lighting_after_9pm
     - service: automation.turn_off
+      entity_id: automation.toggle_led_corner_lamps
+    - service: automation.turn_off
       entity_id: automation.media_player_automations
     - service: media_player.volume_set
       data:
@@ -85,6 +87,8 @@ morning:
       entity_id: automation.office_lights_on_by_motion
     - service: automation.turn_on
       entity_id: automation.office_mood_lighting_after_9pm
+    - service: automation.turn_on
+      entity_id: automation.toggle_led_corner_lamps
     - service: automation.turn_on
       entity_id: automation.media_player_automations
     - service: switch.turn_on

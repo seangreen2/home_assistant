@@ -159,6 +159,11 @@ history:
       - sensor.radon_plug_summation_delivered
       - sensor.attic_temp_sensor_temperature
       - sensor.attic_temp_sensor_humidity
+      - sensor.openweathermap_temperature
+      - sensor.openweathermap_humidity
+      - sensor.patio_door_temperature
+      - sensor.downstairs_humidity
+      - sensor.upstairs_humidity
 
 
 recorder:
@@ -210,6 +215,11 @@ recorder:
       - sensor.radon_plug_summation_delivered
       - sensor.attic_temp_sensor_temperature
       - sensor.attic_temp_sensor_humidity
+      - sensor.openweathermap_temperature
+      - sensor.openweathermap_humidity
+      - sensor.patio_door_temperature
+      - sensor.downstairs_humidity
+      - sensor.upstairs_humidity
 
 
 # View all events in a logbook

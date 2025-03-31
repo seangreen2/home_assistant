@@ -97,9 +97,17 @@
               entity_id: light.office
               state: "off"
           sequence:
+            - service: adaptive_lighting.set_manual_control
+              data:
+                entity_id: switch.adaptive_lighting_office
+                lights: ["light.office"]
+            - service: automation.turn_off
+              entity_id: automation.office_lights_on_by_motion
+            - service: automation.turn_off
+              entity_id: automation.office_lux_brightness_daylight_only
             - service: light.turn_on
               data:
-                entity_id: light.office
+                entity_id: light.standing_lamp_bulb
                 brightness_pct: 1
                 transition: 1
         - conditions:
@@ -107,11 +115,23 @@
               entity_id: light.office
               state: "on"
           sequence:
+            - service: adaptive_lighting.set_manual_control
+              data:
+                entity_id: switch.adaptive_lighting_office
+                lights: ["light.office"]
+            - service: automation.turn_off
+              entity_id: automation.office_lights_on_by_motion
+            - service: automation.turn_off
+              entity_id: automation.office_lux_brightness_daylight_only
             - service: light.turn_on
               data:
-                entity_id: light.office
+                entity_id: light.standing_lamp_bulb
                 brightness_pct: 1
                 transition: 120
+            - service: light.turn_off
+              data:
+                entity_id: light.desk_lamp_bulb
+                transition: 15
 
 
 # Turn Off Office Lights After No Activity for 3 Minutes

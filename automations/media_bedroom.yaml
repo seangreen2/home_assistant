@@ -49,16 +49,10 @@
               entity_id: input_boolean.bedtime_emily
               state: "off"
           sequence:
-            - delay:
-                seconds: 3  # ⏳ Waits 2 seconds before making changes
-            - condition: template  # 🔄 **Re-check the media player state!**
-              value_template: "{{ states('media_player.plex_bedroom_stick') == 'idle' }}"
             - service: adaptive_lighting.apply
               data:
                 lights:
                   - light.bedroom
-                adapt_brightness: true
-                adapt_color: false
                 turn_on_lights: true
-                transition: 15
+                transition: 10
                 entity_id: switch.adaptive_lighting_adapt_brightness_default

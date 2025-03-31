@@ -467,7 +467,7 @@
   initial_state: on
   trigger:
     - platform: time
-      at: "14:00:00"
+      at: "12:00:00"
 
   condition:
     - condition: time

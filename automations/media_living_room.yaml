@@ -72,18 +72,12 @@
             - condition: template
               value_template: "{{ trigger.to_state.state in ['idle', 'unavailable'] }}"
           sequence:
-            - delay:
-                seconds: 3  # ⏳ Waits 2 seconds before making changes
-            - condition: template  # 🔄 **Re-check the media player state!**
-              value_template: "{{ states('media_player.plex_living_room_tv') in ['idle', 'unavailable'] }}"
             - service: adaptive_lighting.apply
               data:
                 lights:
                   - light.living_room
-                adapt_brightness: true
-                adapt_color: false
                 turn_on_lights: true
-                transition: 6
+                transition: 10
                 entity_id: switch.adaptive_lighting_adapt_brightness_default
             - service: light.turn_on
               data:
