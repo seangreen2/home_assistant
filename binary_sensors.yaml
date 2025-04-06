@@ -62,3 +62,36 @@
           and is_state('input_boolean.bedtime_emily', 'off')
           and is_state('input_boolean.bedroom_occupied', 'off')
           and is_state('input_boolean.bedtime_sean', 'off') }}
+
+
+
+- platform: template
+  sensors:
+    upstairs_actively_cooling:
+      friendly_name: "Upstairs Actively Cooling"
+      unique_id: upstairs_actively_cooling
+      device_class: running
+      value_template: >
+        {{ state_attr('climate.upstairs', 'hvac_action') == 'cooling' }}
+
+    downstairs_actively_cooling:
+      friendly_name: "Downstairs Actively Cooling"
+      unique_id: downstairs_actively_cooling
+      device_class: running
+      value_template: >
+        {{ state_attr('climate.downstairs', 'hvac_action') == 'cooling' }}
+
+    upstairs_actively_heating:
+      friendly_name: "Upstairs Actively Heating"
+      unique_id: upstairs_actively_heating
+      device_class: running
+      value_template: >
+        {{ state_attr('climate.upstairs', 'hvac_action') == 'heating' }}
+
+    downstairs_actively_heating:
+      friendly_name: "Downstairs Actively Heating"
+      unique_id: downstairs_actively_heating
+      device_class: running
+      value_template: >
+        {{ state_attr('climate.downstairs', 'hvac_action') == 'heating' }}
+

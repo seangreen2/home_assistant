@@ -240,7 +240,6 @@
   api_key: !secret tautulli_api
   host: 192.168.1.79
 
-
 - platform: template
   sensors:
     downstairs_hvac_state:
@@ -263,3 +262,207 @@
   json_attributes:
     - properties
   scan_interval: 900  # Updates every 15 minutes
+
+
+# Dryer usage sensors
+- platform: history_stats
+  name: Dryer Vibration Duration Today
+  entity_id: binary_sensor.dryer_vibration_sensor_vibration
+  state: "on"
+  type: time
+  start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: Dryer Vibration Duration This Month
+  entity_id: binary_sensor.dryer_vibration_sensor_vibration
+  state: "on"
+  type: time
+  start: "{{ now().replace(day=1, hour=0, minute=0, second=0) }}"
+  end: "{{ now() }}"
+
+- platform: template
+  sensors:
+    dryer_energy_use_monthly:
+      friendly_name: "Dryer Energy Use This Month"
+      unique_id: dryer_energy_use_this_month
+      unit_of_measurement: "kWh"
+      value_template: >
+        {% set hours = states('sensor.dryer_vibration_duration_this_month') | float(0) %}
+        {{ (hours * 5) | round(2) }}
+
+- platform: template
+  sensors:
+    dryer_energy_cost_monthly:
+      friendly_name: "Dryer Cost This Month"
+      unit_of_measurement: "$"
+      value_template: >
+        {% set kwh = states('sensor.dryer_energy_use_monthly') | float(0) %}
+        {{ (kwh * 0.12) | round(2) }}
+
+
+# Upstairs HVAC Cooling Duration This Month
+- platform: history_stats
+  name: Upstairs Cooling Duration This Month
+  unique_id: upstairs_cooling_duration_month
+  entity_id: binary_sensor.upstairs_actively_cooling
+  state: 'on'
+  type: time
+  start: "{{ now().replace(day=1, hour=0, minute=0, second=0) }}"
+  end: "{{ now() }}"
+
+# Downstairs HVAC Cooling Duration This Month
+- platform: history_stats
+  name: Downstairs Cooling Duration This Month
+  unique_id: downstairs_cooling_duration_month
+  entity_id: binary_sensor.downstairs_actively_cooling
+  state: 'on'
+  type: time
+  start: "{{ now().replace(day=1, hour=0, minute=0, second=0) }}"
+  end: "{{ now() }}"
+
+# HVAC Energy & Cost Templates
+- platform: template
+  sensors:
+    upstairs_hvac_cost_this_month:
+      friendly_name: "Upstairs HVAC Cost This Month"
+      unique_id: upstairs_hvac_cost_this_month
+      unit_of_measurement: "$"
+      value_template: >
+        {% set hours = states('sensor.upstairs_cooling_duration_this_month') | float(0) %}
+        {% set kwh = hours * 3.5 %}
+        {{ (kwh * 0.12) | round(2) }}
+
+    downstairs_hvac_cost_this_month:
+      friendly_name: "Downstairs HVAC Cost This Month"
+      unique_id: downstairs_hvac_cost_this_month
+      unit_of_measurement: "$"
+      value_template: >
+        {% set hours = states('sensor.downstairs_cooling_duration_this_month') | float(0) %}
+        {% set kwh = hours * 3.5 %}
+        {{ (kwh * 0.12) | round(2) }}
+
+# Upstairs heating costs
+- platform: history_stats
+  name: Upstairs Heating Duration This Month
+  unique_id: upstairs_heating_duration_month
+  entity_id: binary_sensor.upstairs_actively_heating
+  state: 'on'
+  type: time
+  start: '{{ now().replace(day=1, hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'
+
+- platform: template
+  sensors:
+    estimated_upstairs_heating_cost:
+      friendly_name: "Upstairs Estimated Heating Cost"
+      unique_id: estimated_upstairs_heating_cost
+      unit_of_measurement: "$"
+      value_template: >
+        {% set hours = states('sensor.upstairs_heating_duration_this_month') | float(0) %}
+        {% set kwh_per_hour = 1.8 %}
+        {% set cost_per_kwh = 0.12 %}
+        {{ (hours * kwh_per_hour * cost_per_kwh) | round(2) }}
+
+# Downstairs heating costs
+- platform: history_stats
+  name: Downstairs Heating Duration This Month
+  unique_id: downstairs_heating_duration_month
+  entity_id: binary_sensor.downstairs_actively_heating
+  state: 'on'
+  type: time
+  start: '{{ now().replace(day=1, hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'
+
+- platform: template
+  sensors:
+    estimated_downstairs_heating_cost:
+      friendly_name: "Downstairs Estimated Heating Cost"
+      unique_id: estimated_downstairs_heating_cost
+      unit_of_measurement: "$"
+      value_template: >
+        {% set hours = states('sensor.downstairs_heating_duration_this_month') | float(0) %}
+        {% set kwh_per_hour = 1.8 %}
+        {% set cost_per_kwh = 0.12 %}
+        {{ (hours * kwh_per_hour * cost_per_kwh) | round(2) }}
+
+- platform: template
+  sensors:
+    total_cooling_runtime_this_month:
+      friendly_name: "Total Cooling Runtime This Month"
+      unique_id: total_cooling_runtime_this_month
+      unit_of_measurement: "h"
+      value_template: >
+        {% set up = states('sensor.upstairs_cooling_duration_this_month') | float(0) %}
+        {% set down = states('sensor.downstairs_cooling_duration_this_month') | float(0) %}
+        {{ (up + down) | round(2) }}
+
+- platform: template
+  sensors:
+    total_heating_runtime_this_month:
+      friendly_name: "Total Heating Runtime This Month"
+      unique_id: total_heating_runtime_this_month
+      unit_of_measurement: "h"
+      value_template: >
+        {% set up = states('sensor.upstairs_heating_duration_this_month') | float(0) %}
+        {% set down = states('sensor.downstairs_heating_duration_this_month') | float(0) %}
+        {{ (up + down) | round(2) }}
+
+- platform: template
+  sensors:
+    total_hvac_runtime_this_month:
+      friendly_name: "Total HVAC Runtime This Month"
+      unique_id: total_hvac_runtime_this_month
+      unit_of_measurement: "h"
+      value_template: >
+        {% set up_cool = states('sensor.upstairs_cooling_duration_this_month') | float(0) %}
+        {% set down_cool = states('sensor.downstairs_cooling_duration_this_month') | float(0) %}
+        {% set up_heat = states('sensor.upstairs_heating_duration_this_month') | float(0) %}
+        {% set down_heat = states('sensor.downstairs_heating_duration_this_month') | float(0) %}
+        {{ (up_cool + down_cool + up_heat + down_heat) | round(2) }}
+
+
+- platform: template
+  sensors:
+    total_hvac_cost_this_month:
+      friendly_name: "Total HVAC Cost This Month"
+      unique_id: total_hvac_cost_this_month
+      unit_of_measurement: "$"
+      value_template: >
+        {% set cool_up = states('sensor.upstairs_hvac_cost_this_month') | float(0) %}
+        {% set cool_down = states('sensor.downstairs_hvac_cost_this_month') | float(0) %}
+        {% set heat_up = states('sensor.estimated_upstairs_heating_cost') | float(0) %}
+        {% set heat_down = states('sensor.estimated_downstairs_heating_cost') | float(0) %}
+        {{ (cool_up + cool_down + heat_up + heat_down) | round(2) }}
+
+
+
+- platform: template
+  sensors:
+    freezer_monthly_cost:
+      friendly_name: "Freezer Cost This Month"
+      unit_of_measurement: "$"
+      value_template: >
+        {% set kwh = states('sensor.freezer_monthly_energy') | float(0) %}
+        {{ (kwh * 0.12) | round(2) }}
+
+    radon_monthly_cost:
+      friendly_name: "Radon Mitigator Cost This Month"
+      unit_of_measurement: "$"
+      value_template: >
+        {% set kwh = states('sensor.radon_mitigator_monthly_cost') | float(0) %}
+        {{ (kwh * 0.12) | round(2) }}
+
+    attic_fan_monthly_cost:
+      friendly_name: "Attic Fan Cost This Month"
+      unit_of_measurement: "$"
+      value_template: >
+        {% set kwh = states('sensor.attic_fan_monthly_cost') | float(0) %}
+        {{ (kwh * 0.12) | round(2) }}
+
+    washer_monthly_cost:
+      friendly_name: "Washer Cost This Month"
+      unit_of_measurement: "$"
+      value_template: >
+        {% set kwh = states('sensor.washer_energy_usage') | float(0) %}
+        {{ (kwh * 0.12) | round(2) }}

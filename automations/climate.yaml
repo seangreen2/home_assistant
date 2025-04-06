@@ -9,7 +9,7 @@
       entity_id: binary_sensor.patio_door
       to: "off"
     - platform: time_pattern
-      minutes: "/30"  # Runs every 30 minutes
+      minutes: "/35"  # Runs every 35 minutes
     - platform: numeric_state
       entity_id: sensor.openweathermap_temperature
       above: 76
@@ -19,7 +19,7 @@
   condition:
     - condition: state
       entity_id: binary_sensor.patio_door
-      state: "off"  # Prevents redundant calls if already off
+      state: "off"
     - condition: template
       value_template: >
         {{ state_attr('climate.downstairs', 'preset_mode') != 'eco'
@@ -42,14 +42,14 @@
           {% set upstairs_temp = state_attr('climate.upstairs', 'current_temperature') | float(0) %}
           {% set avg_inside_temp = ((downstairs_temp + upstairs_temp) / 2) %}
           
-          {% if outside_temp >= 76 and avg_inside_temp >= 71 %}
+          {% if outside_temp >= 75 and avg_inside_temp >= 71 %}
             cool
           {% elif outside_temp < 55 and avg_inside_temp < 66 %}
             heat
           {% else %}
             heat_cool
           {% endif %}
-    - delay: "00:00:15"
+    - delay: "00:00:30"
     - service: homeassistant.reload_config_entry
       target:
         device_id: 41cf689fe0938c4721204e1c10eb5ba8  # Reloads Upstairs Nest
@@ -301,6 +301,7 @@
 # Circulate air upstairs after cooling downstairs
 - alias: "Post-Cooling Circulation: Move Air Upstairs After Downstairs Cooling"
   id: "postcool_upstairs_airflow"
+  initial_state: off
   mode: single
   description: "Move air upstairs after cooling finishes in downstairs."
   trigger:
@@ -322,20 +323,34 @@
   action:
     - service: climate.set_fan_mode
       data:
-        entity_id: climate.downstairs
+        entity_id: climate.upstairs
         fan_mode: "on"
     
-    - delay: "00:15:00"  # Air circulation time (15 min)
+    - delay: "00:05:00"  # Air circulation time (5 min)
 
     - service: climate.set_fan_mode
       data:
-        entity_id: climate.downstairs
-        fan_mode: "auto"
+        entity_id: climate.upstairs
+        fan_mode: "off"
+
+    - delay: "00:01:00"
+
+    - service: homeassistant.reload_config_entry
+      target:
+        device_id: 41cf689fe0938c4721204e1c10eb5ba8
+
+    - delay: "00:01:00"  # Air circulation time (5 min)
+
+    - service: climate.set_fan_mode
+      data:
+        entity_id: climate.upstairs
+        fan_mode: "off"
 
 
 # Circulate air downstairs after cooling upstairs
 - alias: "Post-Cooling Circulation: Move Air Downstairs After Upstairs Cooling"
   id: "postcool_downstairs_airflow"
+  initial_state: on
   mode: single
   description: "Move air downstairs after cooling finishes in upstairs."
   trigger:
@@ -360,17 +375,121 @@
         entity_id: climate.downstairs
         fan_mode: "on"
     
-    - delay: "00:15:00"  # Air circulation time (15 min)
+    - delay: "00:05:00"  # Air circulation time (5 min)
 
     - service: climate.set_fan_mode
       data:
         entity_id: climate.downstairs
-        fan_mode: "auto"
+        fan_mode: "off"
+
+
+# If upstairs is within 2 degrees of cooling temp, cycle fan to potentially cool more.
+- alias: "Fan Override - Passive Cooling Circulation (Upstairs)"
+  initial_state: off
+  trigger:
+    - platform: time_pattern
+      minutes: "/10"
+
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: person.sean_green
+          state: "home"
+        - condition: state
+          entity_id: person.emily_green
+          state: "home"
+
+    - condition: template
+      value_template: >
+        {{ state_attr('climate.downstairs', 'fan_mode') == 'off' }}
+
+    - condition: template
+      value_template: >
+        {% set mode = state_attr('climate.upstairs', 'hvac_mode') %}
+        {% set action = state_attr('climate.upstairs', 'hvac_action') %}
+        {% set fan = state_attr('climate.upstairs', 'fan_mode') %}
+        {% set current = state_attr('climate.upstairs', 'current_temperature') | int %}
+        {% set target = (
+            state_attr('climate.upstairs', 'target_temp_high') 
+            if mode == 'heat_cool' 
+            else state_attr('climate.upstairs', 'temperature')
+          ) | int %}
+
+        {{ 
+          mode in ['cool', 'heat_cool'] and
+          fan == 'off' and
+          action not in ['cooling', 'heating'] and
+          current == target - 1
+        }}
+
+  action:
+    - service: climate.set_fan_mode
+      data:
+        entity_id: climate.upstairs
+        fan_mode: "on"
+
+    - delay: "00:10:00"
+
+    - service: climate.set_fan_mode
+      data:
+        entity_id: climate.upstairs
+        fan_mode: "off"
+
+    - delay: "01:00:00"
+        
+
+- alias: "Attic Heat Circulation - Passive Cooling Trigger"
+  id: "attic_heat_circulation"
+  mode: single
+  initial_state: off
+  description: "Circulates air upstairs when attic heat hits threshold to reduce temperature imbalance."
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.attic_temp_sensor_temperature
+      above: 95
+
+  condition:
+    - condition: state
+      entity_id: group.family
+      state: "home"
+
+    # Upstairs is not heating/cooling
+    - condition: template
+      value_template: >
+        {{ state_attr('climate.upstairs', 'hvac_action') == 'idle' }}
+
+    # Upstairs fan is not already running
+    - condition: template
+      value_template: >
+        {{ state_attr('climate.upstairs', 'fan_mode') == 'off' }}
+
+    # Downstairs fan isn't running (shared blower protection)
+    - condition: template
+      value_template: >
+        {{ state_attr('climate.downstairs', 'fan_mode') == 'off' }}
+
+  action:
+    - service: climate.set_fan_mode
+      data:
+        entity_id: climate.upstairs
+        fan_mode: "on"
+
+    - delay: "00:15:00"
+
+    - service: climate.set_fan_mode
+      data:
+        entity_id: climate.upstairs
+        fan_mode: "off"
+
+    # Cooldown delay to prevent re-triggering too frequently
+    - delay: "02:00:00"
+
 
 
 # Circulate Air for Downstairs HVAC when home
 - alias: "Hourly Adaptive HVAC Fan Circulation (AQI-Based)"
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: time_pattern
       hours: "/1"  # Runs every hour instead of reacting to every small AQI change
@@ -453,12 +572,126 @@
     - platform: homeassistant
       event: start  # Runs when HA restarts
   action:
+    - service: switch.turn_off
+      entity_id: switch.attic_fan_plug
     - service: climate.set_fan_mode
       data:
         entity_id:
           - climate.downstairs
           - climate.upstairs
         fan_mode: "off"
+
+
+# Attic fan to disperse heat pockets
+- alias: "Attic Heat Fan Circulation (Smarter Triggered)"
+  id: "attic_fan_temp_control"
+  mode: single
+  initial_state: on
+
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.attic_temp_sensor_temperature
+      above: 85
+
+    - platform: time_pattern
+      minutes: "/15"
+
+    - platform: template
+      value_template: >
+        {% set attic = states('sensor.attic_temp_sensor_temperature') | float(0) %}
+        {% set upstairs = states('sensor.upstairs_temperature') | float(0) %}
+        {{ attic < 85 and (attic - upstairs > 10) }}
+
+    - platform: template
+      value_template: >
+        {% set outdoor = states('sensor.openweathermap_temperature') | float(0) %}
+        {% set sun = state_attr('sun.sun', 'elevation') | float(0) %}
+        {{ outdoor > 75 and sun > 20 }}
+
+  condition:
+    - condition: time
+      after: "09:00:00"
+      before: "21:00:00"
+
+    - condition: state
+      entity_id: switch.attic_fan_plug
+      state: "off"
+
+    - condition: template
+      value_template: >
+        {{ state_attr('climate.upstairs', 'hvac_action') == 'idle' }}
+
+  action:
+    - choose:
+        # Severe heat
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.attic_temp_sensor_temperature
+              above: 105
+          sequence:
+            - service: switch.turn_on
+              target:
+                entity_id: switch.attic_fan_plug
+            - delay: "00:30:00"
+
+        # Moderate heat
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.attic_temp_sensor_temperature
+              above: 95
+          sequence:
+            - service: switch.turn_on
+              target:
+                entity_id: switch.attic_fan_plug
+            - delay: "00:25:00"
+
+        # Mild heat
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.attic_temp_sensor_temperature
+              above: 85
+          sequence:
+            - service: switch.turn_on
+              target:
+                entity_id: switch.attic_fan_plug
+            - delay: "00:20:00"
+
+        # Attic delta-only
+        - conditions:
+            - condition: template
+              value_template: >
+                {% set attic = states('sensor.attic_temp_sensor_temperature') | float(0) %}
+                {% set upstairs = states('sensor.upstairs_temperature') | float(0) %}
+                {{ attic < 85 and (attic - upstairs > 10) }}
+          sequence:
+            - service: switch.turn_on
+              target:
+                entity_id: switch.attic_fan_plug
+            - delay: "00:15:00"
+
+        # Sun elevation + outdoor temp fallback
+        - conditions:
+            - condition: template
+              value_template: >
+                {% set outdoor = states('sensor.openweathermap_temperature') | float(0) %}
+                {% set sun = state_attr('sun.sun', 'elevation') | float(0) %}
+                {{ outdoor > 75 and sun > 20 }}
+            - condition: numeric_state
+              entity_id: sensor.attic_temp_sensor_temperature
+              below: 85
+          sequence:
+            - service: switch.turn_on
+              target:
+                entity_id: switch.attic_fan_plug
+            - delay: "00:10:00"
+
+    - service: switch.turn_off
+      target:
+        entity_id: switch.attic_fan_plug
+
+    - delay: "00:30:00"  # Cooldown
+
+
 
 
 
@@ -487,7 +720,7 @@
             {% set outside_temp = states('sensor.openweathermap_temperature') | float(0) %}
             {% set downstairs_temp = state_attr('climate.downstairs', 'current_temperature') | float(0) %}
             
-            {% if outside_temp >= 76 and downstairs_temp >= 72 %}
+            {% if outside_temp >= 75 and downstairs_temp >= 71 %}
               cool
             {% elif outside_temp < 50 and downstairs_temp < 66 %}
               heat
@@ -505,7 +738,7 @@
             {% set outside_temp = states('sensor.openweathermap_temperature') | float(0) %}
             {% set downstairs_temp = state_attr('climate.downstairs', 'current_temperature') | float(0) %}
             
-            {% if outside_temp >= 76 and downstairs_temp >= 72 %}
+            {% if outside_temp >= 75 and downstairs_temp >= 71 %}
               cool
             {% elif outside_temp < 50 and downstairs_temp < 66 %}
               heat
@@ -621,3 +854,234 @@
   action:
     - service: switch.turn_off
       entity_id: switch.bedroom_fan
+
+
+
+- alias: "Guest Room Window Sabotage Alert"
+  id: "guest_window_sabotage_alert"
+  initial_state: off
+  mode: single
+
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.guest_window
+      to: "on"
+      for:
+        minutes: 5
+
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.openweathermap_temperature
+      above: 70
+
+    - condition: numeric_state
+      entity_id: sensor.openweathermap_humidity
+      above: 70
+
+  action:
+    - variables:
+        outside_temp: "{{ states('sensor.openweathermap_temperature') }}"
+        outside_humidity: "{{ states('sensor.openweathermap_humidity') }}"
+        upstairs_temp: "{{ state_attr('climate.upstairs', 'current_temperature') }}"
+        upstairs_hvac: "{{ state_attr('climate.upstairs', 'hvac_action') | title }}"
+        now_time: "{{ now().strftime('%I:%M %p') }}"
+
+    - service: notify.notify
+      data:
+        title: "🪟 Guest Room Window Open 5+ Min"
+        message: >
+          Outside: {{ outside_temp }}°F / {{ outside_humidity }}% humidity
+          Upstairs Temp: {{ upstairs_temp }}°F | HVAC: {{ upstairs_hvac }}
+          Your system is fighting open air. Logged at {{ now_time }}.
+
+    - service: persistent_notification.create
+      data:
+        title: "Guest Room Sabotage Detected"
+        message: >
+          The guest room window has been open for over 5 minutes during high humidity and temperature.
+
+          • Outside Temp: {{ outside_temp }}°F
+          • Humidity: {{ outside_humidity }}%
+          • Upstairs Temp: {{ upstairs_temp }}°F
+          • HVAC Status: {{ upstairs_hvac }}
+          • Logged at: {{ now_time }}
+
+          Consider closing the window to preserve system efficiency.
+        notification_id: guest_window_sabotage
+
+
+# HA Nest Schedule backup for downstairs
+- alias: "Thermostat Backup Schedule - Downstairs Combined"
+  id: "thermostat_backup_downstairs_combined"
+  mode: single
+  trigger:
+    - platform: time
+      at: "07:01:00"
+    - platform: time
+      at: "11:01:00"
+    - platform: time
+      at: "21:01:00"
+
+  action:
+    - choose:
+        # --- 7:00 AM Logic ---
+        - conditions:
+            - condition: time
+              after: "06:59:00"
+              before: "11:00:00"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.downstairs', 'hvac_mode') == 'heat_cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.downstairs
+                        target_temp_low: 66
+                        target_temp_high: 71
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.downstairs', 'hvac_mode') == 'cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.downstairs
+                        temperature: 71
+
+        # --- 11:00 AM Logic ---
+        - conditions:
+            - condition: time
+              after: "10:59:00"
+              before: "21:00:00"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.downstairs', 'hvac_mode') == 'heat_cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.downstairs
+                        target_temp_low: 66
+                        target_temp_high: 73
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.downstairs', 'hvac_mode') == 'cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.downstairs
+                        temperature: 73
+
+        # --- 9:00 PM Logic ---
+        - conditions:
+            - condition: time
+              after: "20:59:00"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.downstairs', 'hvac_mode') == 'heat_cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.downstairs
+                        target_temp_low: 64
+                        target_temp_high: 76
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.downstairs', 'hvac_mode') == 'cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.downstairs
+                        temperature: 76
+
+# Ha Nest Schedule backup for Upstairs
+- alias: "Thermostat Backup Schedule - Upstairs Combined"
+  id: "thermostat_backup_upstairs_combined"
+  mode: single
+  trigger:
+    - platform: time
+      at: "07:01:00"
+    - platform: time
+      at: "11:01:00"
+    - platform: time
+      at: "21:01:00"
+
+  action:
+    - choose:
+        # --- 7:00 AM Logic ---
+        - conditions:
+            - condition: time
+              after: "06:59:00"
+              before: "11:00:00"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.upstairs', 'hvac_mode') == 'heat_cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.upstairs
+                        target_temp_low: 66
+                        target_temp_high: 71
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.upstairs', 'hvac_mode') == 'cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.upstairs
+                        temperature: 71
+
+        # --- 11:00 AM Logic ---
+        - conditions:
+            - condition: time
+              after: "10:59:00"
+              before: "21:00:00"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.upstairs', 'hvac_mode') == 'heat_cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.upstairs
+                        target_temp_low: 66
+                        target_temp_high: 73
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.upstairs', 'hvac_mode') == 'cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.upstairs
+                        temperature: 73
+
+        # --- 9:00 PM Logic (Special Rule: 71°F regardless) ---
+        - conditions:
+            - condition: time
+              after: "20:59:00"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.upstairs', 'hvac_mode') == 'heat_cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.upstairs
+                        target_temp_low: 64
+                        target_temp_high: 71
+                - conditions:
+                    - condition: template
+                      value_template: "{{ state_attr('climate.upstairs', 'hvac_mode') == 'cool' }}"
+                  sequence:
+                    - service: climate.set_temperature
+                      data:
+                        entity_id: climate.upstairs
+                        temperature: 71

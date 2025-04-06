@@ -72,6 +72,12 @@
             - condition: template
               value_template: "{{ trigger.to_state.state in ['idle', 'unavailable'] }}"
           sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.cabinet_lights
+                brightness_pct: 100
+                kelvin: 5400
+                transition: 6
             - service: adaptive_lighting.apply
               data:
                 lights:
@@ -79,11 +85,5 @@
                 turn_on_lights: true
                 transition: 10
                 entity_id: switch.adaptive_lighting_adapt_brightness_default
-            - service: light.turn_on
-              data:
-                entity_id: light.cabinet_lights
-                brightness_pct: 100
-                kelvin: 5400
-                transition: 6
             - service: switch.turn_on
               entity_id: switch.christmas_tree

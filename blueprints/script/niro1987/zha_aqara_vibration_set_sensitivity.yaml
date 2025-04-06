@@ -1,0 +1,51 @@
+blueprint:
+  source_url: https://github.com/niro1987/homeassistant-config/blob/main/blueprints/script/niro1987/zha_aqara_vibration_set_sensitivity.yaml
+  name: ZHA - Aqara Vibration - Set Sensitivity
+  description: Set the sensitivity for the Aqara Vibration sensor. Press the button
+    on the sensor immediately after you run the script, to make sure the sensor is
+    awake, to receive the command.
+  domain: script
+  input:
+    device:
+      name: Device
+      description: The Aqara Vibration Sensor
+      selector:
+        device:
+          integration: zha
+          manufacturer: LUMI
+          model: lumi.vibration.aq1
+          multiple: false
+    sensitivity:
+      name: Sensitivity
+      description: 'The desired sensitivity: 1 = high, 11 = medium, 21 = low.'
+      selector:
+        select:
+          options:
+          - High
+          - Medium
+          - Low
+          mode: list
+          sort: false
+          multiple: false
+          custom_value: false
+mode: restart
+variables:
+  var_device: !input device
+  var_sensitivity: !input sensitivity
+  ieee: '{{ (device_attr(var_device, ''identifiers'')|list).0.1 }}'
+  dict:
+    High: 1
+    Medium: 11
+    Low: 21
+sequence:
+- variables:
+    value: '{{ dict[var_sensitivity] }}'
+- service: zha.set_zigbee_cluster_attribute
+  data:
+    ieee: '{{ ieee }}'
+    endpoint_id: 1
+    cluster_id: 0
+    cluster_type: in
+    attribute: 65293
+    value: '{{ value }}'
+    manufacturer: 4447

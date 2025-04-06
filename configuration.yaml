@@ -153,8 +153,8 @@ history:
       - sensor.main_server_memory_usage
       - sensor.plex_server_cpu_usage
       - sensor.plex_server_memory_usage
-      - sensor.fridge_plug_power
-      - sensor.fridge_plug_summation_delivered
+      - sensor.attic_fan_plug_power
+      - sensor.attic_fan_plug_summation_delivered
       - sensor.radon_plug_power
       - sensor.radon_plug_summation_delivered
       - sensor.attic_temp_sensor_temperature
@@ -164,7 +164,42 @@ history:
       - sensor.patio_door_temperature
       - sensor.downstairs_humidity
       - sensor.upstairs_humidity
-
+      - sensor.upstairs_hvac_fan_on
+      - sensor.downstairs_hvac_fan_on
+      - switch.attic_fan_plug
+      - sensor.sun_elevation
+      - sensor.openweathermap_cloud_coverage
+      - sensor.dryer_vibration_duration_today
+      - sensor.guest_climate_humidity
+      - sensor.guest_climate_temperature
+      - sensor.hassos_server_this_month_s_consumption
+      - sensor.dryer_usage_this_month
+      - sensor.dryer_energy_this_month
+      - sensor.dryer_cost_this_month
+      - sensor.upstairs_cooling_duration_this_month
+      - sensor.upstairs_hvac_cost_this_month
+      - sensor.downstairs_cooling_duration_this_month
+      - sensor.downstairs_hvac_cost_this_month
+      - sensor.upstairs_heating_duration_this_month
+      - sensor.estimated_upstairs_heating_cost
+      - sensor.downstairs_heating_duration_this_month
+      - sensor.estimated_downstairs_heating_cost
+      - sensor.total_cooling_runtime_this_month
+      - sensor.total_heating_runtime_this_month
+      - sensor.total_hvac_runtime_this_month
+      - sensor.total_hvac_cost_this_month
+      - binary_sensor.upstairs_actively_cooling
+      - binary_sensor.downstairs_actively_cooling
+      - binary_sensor.upstairs_actively_heating
+      - binary_sensor.downstairs_actively_heating
+      - sensor.freezer_monthly_cost
+      - sensor.freezer_monthly_energy
+      - sensor.radon_monthly_cost
+      - sensor.radon_mitigator_monthly_cost
+      - sensor.attic_fan_monthly_cost
+      - sensor.attic_fan_monthly_cost_2
+      - sensor.washer_energy_usage
+      - sensor.washer_monthly_cost
 
 recorder:
   #purge_keep_days: 365
@@ -209,8 +244,8 @@ recorder:
       - sensor.main_server_memory_usage
       - sensor.plex_server_cpu_usage
       - sensor.plex_server_memory_usage
-      - sensor.fridge_plug_power
-      - sensor.fridge_plug_summation_delivered
+      - sensor.attic_fan_plug_power
+      - sensor.attic_plug_summation_delivered
       - sensor.radon_plug_power
       - sensor.radon_plug_summation_delivered
       - sensor.attic_temp_sensor_temperature
@@ -220,7 +255,42 @@ recorder:
       - sensor.patio_door_temperature
       - sensor.downstairs_humidity
       - sensor.upstairs_humidity
-
+      - sensor.upstairs_hvac_fan_on
+      - sensor.downstairs_hvac_fan_on
+      - switch.attic_fan_plug
+      - sensor.sun_elevation
+      - sensor.openweathermap_cloud_coverage
+      - sensor.dryer_vibration_duration_today
+      - sensor.guest_climate_humidity
+      - sensor.guest_climate_temperature
+      - sensor.hassos_server_this_month_s_consumption
+      - sensor.dryer_usage_this_month
+      - sensor.dryer_energy_this_month
+      - sensor.dryer_cost_this_month
+      - sensor.upstairs_cooling_duration_this_month
+      - sensor.upstairs_hvac_cost_this_month
+      - sensor.downstairs_cooling_duration_this_month
+      - sensor.downstairs_hvac_cost_this_month
+      - sensor.upstairs_heating_duration_this_month
+      - sensor.estimated_upstairs_heating_cost
+      - sensor.downstairs_heating_duration_this_month
+      - sensor.estimated_downstairs_heating_cost
+      - sensor.total_cooling_runtime_this_month
+      - sensor.total_heating_runtime_this_month
+      - sensor.total_hvac_runtime_this_month
+      - sensor.total_hvac_cost_this_month
+      - binary_sensor.upstairs_actively_cooling
+      - binary_sensor.downstairs_actively_cooling
+      - binary_sensor.upstairs_actively_heating
+      - binary_sensor.downstairs_actively_heating
+      - sensor.freezer_monthly_cost
+      - sensor.freezer_monthly_energy
+      - sensor.radon_monthly_cost
+      - sensor.radon_mitigator_monthly_cost
+      - sensor.attic_fan_monthly_cost
+      - sensor.attic_fan_monthly_cost_2
+      - sensor.washer_energy_usage
+      - sensor.washer_monthly_cost
 
 # View all events in a logbook
 logbook:
